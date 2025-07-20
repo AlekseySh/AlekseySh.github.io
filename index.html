@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Прогноз погоды</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    button { padding: .6rem 1.2rem; font-size: 1rem; }
+    pre    { margin-top: 1rem; padding: 1rem; background: #f6f8fa; border-radius: .5rem; }
+  </style>
+</head>
+<body>
+
+<button id="btn">Показать погоду</button>
+<pre id="result">—</pre>
+
+<script>
+  // Задайте свои координаты (пример: Москва)
+  const lat = 55.7558;
+  const lon = 37.6176;
+
+  document.getElementById('btn').addEventListener('click', async () => {
+    const url =
+      `https://api.open-meteo.com/v1/forecast` +
+      `?latitude=${lat}&longitude=${lon}` +
+      `&current_weather=true&hourly=temperature_2m`;
+
+    try {
+      const resp  = await fetch(url);
+      if (!resp.ok) throw new Error(resp.statusText);
+      const data  = await resp.json();
+
+      const { temperature, windspeed, weathercode } = data.current_weather;
+      document.getElementById('result').textContent =
+        `Температура:  ${temperature} °C\n` +
+        `Ветер:        ${windspeed} м/с\n` +
+        `Weather code: ${weathercode}`;
+    } catch (err) {
+      document.getElementById('result').textContent = 'Ошибка: ' + err.message;
+    }
+  });
+</script>
+
+</body>
+</html>
+
