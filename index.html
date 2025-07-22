@@ -1,46 +1,106 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Прогноз погоды</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; }
-    button { padding: .6rem 1.2rem; font-size: 1rem; }
-    pre    { margin-top: 1rem; padding: 1rem; background: #f6f8fa; border-radius: .5rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Questionnaire - Discover Mutual Interests</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
 </head>
 <body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Anonymous Questionnaire</h1>
+            <p class="subtitle">Discover mutual interests without fear of rejection</p>
+        </header>
 
-<button id="btn">Показать погоду</button>
-<pre id="result">—</pre>
+        <main class="main">
+            <div class="card">
+                <h2>Start Your Questionnaire</h2>
+                <p class="description">
+                    Create a private session where both people answer the same questions. 
+                    Only questions where both of you answer "yes" will be revealed.
+                </p>
 
-<script>
-  // Задайте свои координаты (пример: Москва)
-  const lat = 55.7558;
-  const lon = 37.6176;
+                <form id="session-form" class="form">
+                    <div class="form-group">
+                        <label for="user1" class="label">Your Name</label>
+                        <input 
+                            type="text" 
+                            id="user1" 
+                            name="user1" 
+                            class="input" 
+                            placeholder="Enter your name"
+                            required
+                            maxlength="50"
+                            data-testid="user1-input"
+                        >
+                    </div>
 
-  document.getElementById('btn').addEventListener('click', async () => {
-    const url =
-      `https://api.open-meteo.com/v1/forecast` +
-      `?latitude=${lat}&longitude=${lon}` +
-      `&current_weather=true&hourly=temperature_2m`;
+                    <div class="form-group">
+                        <label for="user2" class="label">Other Person's Name</label>
+                        <input 
+                            type="text" 
+                            id="user2" 
+                            name="user2" 
+                            class="input" 
+                            placeholder="Enter their name"
+                            required
+                            maxlength="50"
+                            data-testid="user2-input"
+                        >
+                    </div>
 
-    try {
-      const resp  = await fetch(url);
-      if (!resp.ok) throw new Error(resp.statusText);
-      const data  = await resp.json();
+                    <button type="submit" class="btn btn-primary" id="go-to-questions-btn" data-testid="create-session-btn">
+                        Go to Questions
+                    </button>
+                </form>
 
-      const { temperature, windspeed, weathercode } = data.current_weather;
-      document.getElementById('result').textContent =
-        `Температура:  ${temperature} °C\n` +
-        `Ветер:        ${windspeed} м/с\n` +
-        `Weather code: ${weathercode}`;
-    } catch (err) {
-      document.getElementById('result').textContent = 'Ошибка: ' + err.message;
-    }
-  });
-</script>
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Creating your session...</p>
+                </div>
 
+                <div id="error" class="error hidden">
+                    <p id="error-message" data-testid="error-message"></p>
+                </div>
+            </div>
+
+            <div id="session-created" class="card hidden">
+                <h2>Session Created!</h2>
+                <p class="success-message">Your questionnaire session is ready.</p>
+
+                <div class="session-info">
+                    <div class="info-group">
+                        <h3>Your Link</h3>
+                        <div class="link-container">
+                            <input type="text" id="user1-link" class="link-input" readonly>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <h3>Share This Link</h3>
+                        <div class="link-container">
+                            <input type="text" id="user2-link" class="link-input" readonly>
+                        </div>
+                        <p class="help-text">Send this link to the other person to complete the questionnaire</p>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a id="start-questionnaire" class="btn btn-primary" href="#" data-testid="start-questionnaire-btn">Start Questionnaire</a>
+                    <button class="btn btn-secondary" onclick="startOver()">Create Another Session</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="privacy-notice">
+                🔒 Your privacy is protected. Only mutual positive responses are shared.
+            </p>
+        </footer>
+    </div>
+
+    <script src="scripts/main.js"></script>
 </body>
 </html>
-

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire - Anonymous Questionnaire Service</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Questionnaire</h1>
+            <p class="subtitle">Answer honestly - only mutual interests will be revealed</p>
+        </header>
+
+        <main class="main">
+            <!-- Loading State -->
+            <div id="loading" class="card loading">
+                <div class="spinner"></div>
+                <p>Loading questions...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="card error hidden">
+                <h2>Session Error</h2>
+                <p id="error-message" data-testid="error-message"></p>
+                <div class="actions">
+                    <a href="/" class="btn btn-primary">Create New Session</a>
+                </div>
+            </div>
+
+            <!-- Questionnaire Form -->
+            <div id="questionnaire" class="card hidden">
+                <div class="questionnaire-header">
+                    <h2 id="session-title">Questions for <span id="current-user" data-testid="current-user"></span></h2>
+                    <p class="description">
+                        Answer each question honestly. Only questions where both you and 
+                        <span id="other-user" data-testid="other-user"></span> answer "yes" will be shown in the results.
+                    </p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progress-text">0 of 0 answered</span>
+                    </div>
+                </div>
+
+                <!-- Questions Container -->
+                <div id="questions-container" class="question-list" data-testid="questions-container">
+                    <!-- Questions will be dynamically loaded here -->
+                </div>
+
+                <!-- Submit Section -->
+                <div id="submit-section" class="submit-section hidden">
+                    <div class="completion-message">
+                        <h3>All questions answered!</h3>
+                        <p>Review your answers and submit when ready.</p>
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="submit-btn" class="btn btn-primary" data-testid="submit-answers-btn">
+                            Submit Answers
+                        </button>
+                        <button id="review-btn" class="btn btn-secondary">
+                            Review Answers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submission Loading -->
+                <div id="submitting" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Submitting your answers...</p>
+                </div>
+            </div>
+
+            <!-- Completion State -->
+            <div id="completion" class="card hidden">
+                <h2>Answers Submitted!</h2>
+                <div id="completion-content">
+                    <!-- Content will be dynamically loaded -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="privacy-notice">
+                🔒 Your individual responses remain private and secure
+            </p>
+        </footer>
+    </div>
+
+    <script src="/scripts/questionnaire.js"></script>
+</body>
+</html>

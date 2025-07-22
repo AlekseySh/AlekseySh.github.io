@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Anonymous Questionnaire Service</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/components.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Your Results</h1>
+            <p class="subtitle">Discover what you both agreed on</p>
+        </header>
+
+        <main class="main">
+            <!-- Loading State -->
+            <div id="loading" class="card loading">
+                <div class="spinner"></div>
+                <p>Loading results...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="card error hidden">
+                <h2>Unable to Load Results</h2>
+                <p id="error-message" data-testid="error-message"></p>
+                <div class="actions">
+                    <a href="/" class="btn btn-primary">Create New Session</a>
+                </div>
+            </div>
+
+            <!-- Results Display -->
+            <div id="results" class="card hidden">
+                <div class="results-header">
+                    <h2>Mutual Interests Found</h2>
+                    <p class="description">
+                        These are the questions where both <span id="user1"></span> and 
+                        <span id="user2"></span> answered "yes".
+                    </p>
+                </div>
+
+                <!-- Match Count Summary -->
+                <div id="summary" class="summary-section">
+                    <div class="match-count">
+                        <span id="match-count" data-testid="match-count">0</span>
+                        <span class="match-label">mutual interests</span>
+                    </div>
+                </div>
+
+                <!-- Results Container -->
+                <div id="results-container" class="results-container" data-testid="results-container">
+                    <!-- Results will be dynamically loaded here -->
+                </div>
+
+                <!-- No Matches State -->
+                <div id="no-matches" class="no-matches hidden" data-testid="no-matches-message">
+                    <h3>No Mutual Interests Found</h3>
+                    <p>You didn't have any questions where both of you answered "yes".</p>
+                    <p>This doesn't mean you're incompatible - perhaps you were just being cautious!</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <a href="/" class="btn btn-primary">Create New Session</a>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p class="privacy-notice">
+                🔒 Results are only visible to participants in this session
+            </p>
+        </footer>
+    </div>
+
+    <script src="/scripts/results.js"></script>
+</body>
+</html>
