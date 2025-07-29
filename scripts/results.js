@@ -49,7 +49,7 @@ class ResultsManager {
   }
 
   async loadResults() {
-    const backendUrl = "http://localhost:8000";
+    const backendUrl = "http://151.115.75.195:8000";
     const response = await fetch(
       `${backendUrl}/sessions/${this.sessionId}/results`
     );
