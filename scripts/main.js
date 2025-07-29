@@ -34,7 +34,7 @@ class SessionManager {
     this.showLoading();
 
     try {
-      const backendUrl = "http://localhost:8000";
+      const backendUrl = "http://151.115.75.195:8000";
       const response = await fetch(`${backendUrl}/sessions`, {
         method: "POST",
         headers: {
@@ -88,7 +88,7 @@ class SessionManager {
     this.showLoading();
 
     try {
-      const backendUrl = "http://localhost:8000";
+      const backendUrl = "http://151.115.75.195:8000";
       const response = await fetch(`${backendUrl}/sessions`, {
         method: "POST",
         headers: {
