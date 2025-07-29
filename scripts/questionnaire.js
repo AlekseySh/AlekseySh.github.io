@@ -55,7 +55,7 @@ class QuestionnaireManager {
   }
 
   async loadQuestions() {
-    const backendUrl = "http://localhost:8000";
+    const backendUrl = "http://151.115.75.195:8000";
     const response = await fetch(
       `${backendUrl}/questions/${this.sessionId}/${encodeURIComponent(
         this.userId
@@ -211,7 +211,7 @@ class QuestionnaireManager {
     this.submitBtn.disabled = true;
 
     try {
-      const backendUrl = "http://localhost:8000";
+      const backendUrl = "http://151.115.75.195:8000";
       const response = await fetch(
         `${backendUrl}/sessions/${this.sessionId}/answers`,
         {
@@ -343,7 +343,7 @@ class QuestionnaireManager {
 async function checkResults() {
   try {
     const sessionId = window.location.pathname.split("/")[2];
-    const backendUrl = "http://localhost:8000";
+    const backendUrl = "http://151.115.75.195:8000";
     const response = await fetch(`${backendUrl}/sessions/${sessionId}`);
     const data = await response.json();
 
