@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cutto — Configuration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/lucide.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/lang/en.js"></script>
+    <script src="assets/lang/ru.js"></script>
+    <script src="assets/js/i18n.js"></script>
+</head>
+<body>
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" onclick="i18n.setLanguage('en')">EN</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn" data-lang="ru" onclick="i18n.setLanguage('ru')">RU</button>
+    </div>
+
+    <div class="config-page">
+        <div class="config-card">
+            <h1 data-i18n="config.heading">Configure Your Processing</h1>
+            <p class="config-placeholder" data-i18n="config.placeholder">Configuration options coming soon. You'll be able to fine-tune how cutto processes your videos right here.</p>
+            <a href="index.html" class="back-link">
+                <i data-lucide="arrow-left"></i>
+                <span data-i18n="config.back">Back to How It Works</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
