@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cutto — How It Works</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="assets/js/lucide.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-light: #a5b4fc;
+            --bg: #f8fafc;
+            --bg-white: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            font-size: 16px;
+        }
+
+        /* CTA Button - full width, text centered on step number column */
+        .cta-section {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .cta-button {
+            display: grid;
+            grid-template-columns: 1.4fr auto 1fr;
+            gap: 3rem;
+            align-items: center;
+            background: var(--gradient);
+            color: white;
+            padding: 1.25rem 2rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.5);
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .cta-button::before {
+            content: '';
+        }
+
+        .cta-button::after {
+            content: '';
+        }
+
+        .cta-button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .cta-button:hover {
+            box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.6);
+        }
+
+        .cta-button i {
+            width: 24px;
+            height: 24px;
+        }
+
+        .cta-section.top {
+            padding-top: 3rem;
+        }
+
+        .cta-section.bottom {
+            padding-bottom: 4rem;
+        }
+
+        @media (max-width: 1100px) {
+            .cta-button {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        /* Section */
+        .how-it-works {
+            padding: 3rem 2rem 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Steps */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 1.4fr 100px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .step:nth-child(even) {
+            direction: rtl;
+            grid-template-columns: 1fr 100px 1.4fr;
+        }
+
+        .step:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        /* Step Number */
+        .step-number-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 2rem;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.5);
+            position: relative;
+        }
+
+        .step-number::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: var(--gradient);
+            border-radius: 27px;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(10px);
+        }
+
+        .step-connector {
+            width: 3px;
+            height: 100px;
+            background: linear-gradient(180deg, var(--primary-light) 0%, transparent 100%);
+            margin-top: 1.5rem;
+            border-radius: 2px;
+        }
+
+
+        /* Cards */
+        .step-content,
+        .step-visual {
+            background: var(--bg-white);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .step-content {
+            padding: 2rem;
+        }
+
+        .step-header {
+            margin-bottom: 1.75rem;
+        }
+
+        .step-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        /* Settings List */
+        .settings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 0.75rem;
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.75rem;
+            background: transparent;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .setting-row:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .setting-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            color: var(--primary);
+        }
+
+        .setting-icon i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .setting-value {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        /* === STEP 1: Upload Visual === */
+        .upload-visual {
+            padding: 1.5rem;
+        }
+
+        /* Upload Options */
+        .upload-options {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0.75rem;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-option:hover {
+            border-color: var(--primary-light);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+        }
+
+        .upload-option.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        .upload-option span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .upload-option.active span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .option-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-icon i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .option-icon.twitch {
+            background: linear-gradient(135deg, #9146FF20, #9146FF40);
+            color: #9146FF;
+        }
+
+        .option-icon.youtube {
+            background: linear-gradient(135deg, #FF000020, #FF000040);
+            color: #FF0000;
+        }
+
+        .option-icon.file {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.3));
+            color: var(--primary);
+        }
+
+        /* Video File Card */
+        .video-file-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .video-file-thumb {
+            width: 100px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .video-file-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-file-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+        }
+
+        .video-file-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .video-file-play i {
+            width: 12px;
+            height: 12px;
+            color: var(--primary);
+            margin-left: 2px;
+        }
+
+        .video-file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-file-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .video-file-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .video-duration-badge {
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* === STEP 2: Processing Visual === */
+        .processing-visual {
+            padding: 1.5rem;
+        }
+
+        .timeline-section {
+            margin-bottom: 1rem;
+        }
+
+        /* Video Timeline */
+        .video-timeline {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .track {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .track-content {
+            flex: 1;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Film Strip Style Video Track */
+        .video-track .track-content {
+            height: 48px;
+            background: #334155;
+            border-radius: 6px;
+            display: flex;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Film perforations (sprocket holes) */
+        .video-track .track-content::before,
+        .video-track .track-content::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            height: 6px;
+            background: repeating-linear-gradient(
+                90deg,
+                #1e293b 0px,
+                #1e293b 6px,
+                transparent 6px,
+                transparent 14px
+            );
+            z-index: 2;
+        }
+
+        .video-track .track-content::before {
+            top: 2px;
+        }
+
+        .video-track .track-content::after {
+            bottom: 2px;
+        }
+
+        .track-segment {
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .track-segment.keep {
+            background: linear-gradient(180deg, #818cf8 0%, #6366f1 100%);
+        }
+
+        .track-segment.cut {
+            background: #334155;
+            opacity: 0.6;
+        }
+
+        /* Film frames inside segments */
+        .track-segment::before {
+            content: '';
+            position: absolute;
+            top: 9px;
+            bottom: 9px;
+            left: 2px;
+            right: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 16px,
+                rgba(255,255,255,0.12) 16px,
+                rgba(255,255,255,0.12) 18px
+            );
+        }
+
+        /* Audio Track - Waveform Style */
+        .audio-track .track-content {
+            height: 44px;
+            background: linear-gradient(180deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .audio-waveform {
+            display: flex;
+            align-items: flex-end;
+            height: 100%;
+            padding: 0;
+            gap: 0;
+        }
+
+        .audio-waveform .wave-bar {
+            flex: 1;
+            background: #6366f1;
+        }
+
+        .audio-waveform .wave-bar.silent {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Markers Track */
+        .markers-track .track-content {
+            background: transparent;
+            height: 24px;
+        }
+
+        .marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(251, 191, 36, 0.3);
+        }
+
+        .marker i {
+            width: 10px;
+            height: 10px;
+            color: white;
+        }
+
+        .playhead {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #ef4444;
+            z-index: 10;
+        }
+
+        .playhead::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #ef4444;
+        }
+
+        /* Processing Columns */
+        .processing-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .column-header i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .cut-column .column-header {
+            color: var(--danger);
+        }
+
+        .generate-column .column-header {
+            color: var(--success);
+        }
+
+        .column-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .column-list li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            padding-left: 0.75rem;
+            position: relative;
+        }
+
+        .column-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* === STEP 3: Output Visual === */
+        .output-visual {
+            padding: 1.5rem;
+        }
+
+        .output-pack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Main Video Block */
+        .main-video-block {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 0.5rem;
+        }
+
+        .block-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        .block-title i {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        /* Main Video Output */
+        .main-output {
+            background: var(--bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .main-output-thumb {
+            width: 100%;
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-output-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-output-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%);
+        }
+
+        .main-output-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+        }
+
+        .main-output-play:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .main-output-play i {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+            margin-left: 3px;
+        }
+
+        .output-badges {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .saved-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.25));
+            color: var(--success);
+            padding: 0.5rem 0.875rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        }
+
+        .saved-badge i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .timecodes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .timecode-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .timecode-time {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 55px;
+        }
+
+        .timecode-label {
+            color: var(--text-muted);
+        }
+
+        .timecode-ellipsis {
+            color: var(--text-muted);
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        /* Highlights Section */
+        .highlights-section {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        .highlights-header {
+            margin-bottom: 1rem;
+        }
+
+        .highlights-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .highlights-title i {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        .clips-count-badge {
+            background: var(--gradient);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .highlight-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .highlight-card {
+            display: flex;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .highlight-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-video {
+            width: 140px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .highlight-video img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .highlight-video::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+        }
+
+        .highlight-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .highlight-play i {
+            width: 12px;
+            height: 12px;
+            color: var(--primary);
+            margin-left: 2px;
+        }
+
+        .highlight-duration {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .highlight-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .highlight-thumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .thumbs-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .thumb-options {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .thumb-option {
+            width: 44px;
+            height: 26px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .thumb-option:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .thumb-option:first-child {
+            border-color: var(--primary);
+        }
+
+        .thumb-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            color: var(--primary);
+            padding: 0.3rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Description Preview */
+        .description-preview {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.4);
+            margin-top: 0.5rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.5);
+        }
+
+        .download-btn i {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .step {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .step:nth-child(even) {
+                direction: ltr;
+                grid-template-columns: 1fr;
+            }
+
+            .step-number-container {
+                flex-direction: row;
+                justify-content: center;
+                padding-top: 0;
+                order: -1;
+            }
+
+            .step-connector {
+                width: 80px;
+                height: 3px;
+                background: linear-gradient(90deg, var(--primary-light), transparent);
+                margin-top: 0;
+                margin-left: 1.5rem;
+            }
+
+            .step-content {
+                order: 0;
+            }
+
+            .step-visual {
+                order: 1;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+            .processing-columns {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .highlight-card {
+                flex-direction: column;
+            }
+
+            .highlight-video {
+                width: 100%;
+                height: 120px;
+            }
+
+            .video-track .track-content {
+                height: 40px;
+            }
+
+            .audio-track .track-content {
+                height: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cta-section top">
+        <a href="#" class="cta-button">
+            <span class="cta-button-content">
+                <i data-lucide="play-circle"></i>
+                Use cutto
+            </span>
+        </a>
+    </div>
+
+    <section class="how-it-works">
+        <div class="steps">
+            <!-- STEP 1: Upload -->
+            <div class="step">
+                <div class="step-visual upload-visual">
+                    <div class="upload-options">
+                        <div class="upload-option">
+                            <div class="option-icon twitch">
+                                <i data-lucide="twitch"></i>
+                            </div>
+                            <span>Twitch link</span>
+                        </div>
+                        <div class="upload-option">
+                            <div class="option-icon youtube">
+                                <i data-lucide="youtube"></i>
+                            </div>
+                            <span>YouTube link</span>
+                        </div>
+                        <div class="upload-option active">
+                            <div class="option-icon file">
+                                <i data-lucide="upload"></i>
+                            </div>
+                            <span>Upload file</span>
+                        </div>
+                    </div>
+
+                    <div class="video-file-card">
+                        <div class="video-file-thumb">
+                            <img src="assets/img/neurobiology-stream.jpg" alt="Stream thumbnail">
+                            <div class="video-file-play">
+                                <i data-lucide="play"></i>
+                            </div>
+                        </div>
+                        <div class="video-file-info">
+                            <div class="video-file-name">neurobiology_stream_03.mp4</div>
+                            <div class="video-file-meta">1080p • 8.4 GB • MP4</div>
+                        </div>
+                        <div class="video-duration-badge">4:02:15</div>
+                    </div>
+                </div>
+
+                <div class="step-number-container">
+                    <div class="step-number">1</div>
+                    <div class="step-connector"></div>
+                </div>
+
+                <div class="step-content">
+                    <div class="step-header">
+                        <h3>Upload & Configure</h3>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="scissors"></i></div>
+                                Cut rate
+                            </div>
+                            <div class="setting-value">Middle</div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="star"></i></div>
+                                Highlights
+                            </div>
+                            <div class="setting-value">3</div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="images"></i></div>
+                                Thumbnails options
+                            </div>
+                            <div class="setting-value">3</div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="list"></i></div>
+                                Timecodes
+                            </div>
+                            <div class="setting-value" style="color: var(--success);">✓</div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="more-horizontal"></i></div>
+                                More settings
+                            </div>
+                            <div class="setting-value" style="color: var(--text-muted);">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: Processing -->
+            <div class="step">
+                <div class="step-content">
+                    <div class="step-header">
+                        <h3>Cloud Processing</h3>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="clock"></i></div>
+                                Estimated time
+                            </div>
+                            <div class="setting-value">~45 min</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-number-container">
+                    <div class="step-number">2</div>
+                    <div class="step-connector"></div>
+                </div>
+
+                <div class="step-visual processing-visual">
+                    <div class="timeline-section">
+                        <!-- Video Timeline -->
+                        <div class="video-timeline">
+                            <!-- Video Track -->
+                            <div class="track video-track">
+                                <div class="track-content">
+                                    <div class="track-segment keep" style="width: 15%"></div>
+                                    <div class="track-segment cut" style="width: 8%"></div>
+                                    <div class="track-segment keep" style="width: 22%"></div>
+                                    <div class="track-segment cut" style="width: 5%"></div>
+                                    <div class="track-segment keep" style="width: 18%"></div>
+                                    <div class="track-segment cut" style="width: 12%"></div>
+                                    <div class="track-segment keep" style="width: 20%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Audio Track -->
+                            <div class="track audio-track">
+                                <div class="track-content">
+                                    <div class="audio-waveform">
+                                        <div class="wave-bar" style="height:8%"></div><div class="wave-bar" style="height:12%"></div><div class="wave-bar" style="height:18%"></div><div class="wave-bar" style="height:15%"></div><div class="wave-bar" style="height:22%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:35%"></div><div class="wave-bar" style="height:30%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:35%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:35%"></div><div class="wave-bar" style="height:30%"></div><div class="wave-bar" style="height:25%"></div><div class="wave-bar" style="height:20%"></div><div class="wave-bar" style="height:15%"></div><div class="wave-bar" style="height:18%"></div><div class="wave-bar" style="height:22%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:35%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:30%"></div><div class="wave-bar" style="height:35%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar silent" style="height:4%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar silent" style="height:4%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar" style="height:15%"></div><div class="wave-bar" style="height:22%"></div><div class="wave-bar" style="height:30%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:45%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:45%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:35%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:20%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar" style="height:18%"></div><div class="wave-bar" style="height:25%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:38%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:46%"></div><div class="wave-bar" style="height:50%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:20%"></div><div class="wave-bar" style="height:16%"></div><div class="wave-bar" style="height:12%"></div><div class="wave-bar" style="height:18%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:30%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:42%"></div><div class="wave-bar" style="height:48%"></div><div class="wave-bar" style="height:44%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:20%"></div><div class="wave-bar" style="height:16%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:3%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar silent" style="height:2%"></div><div class="wave-bar" style="height:12%"></div><div class="wave-bar" style="height:18%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:30%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:34%"></div><div class="wave-bar" style="height:40%"></div><div class="wave-bar" style="height:36%"></div><div class="wave-bar" style="height:32%"></div><div class="wave-bar" style="height:28%"></div><div class="wave-bar" style="height:24%"></div><div class="wave-bar" style="height:20%"></div><div class="wave-bar" style="height:16%"></div><div class="wave-bar" style="height:12%"></div><div class="wave-bar" style="height:8%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Analysis Markers -->
+                            <div class="track markers-track">
+                                <div class="track-content">
+                                    <div class="marker" style="left: 12%">
+                                        <i data-lucide="star"></i>
+                                    </div>
+                                    <div class="marker" style="left: 38%">
+                                        <i data-lucide="star"></i>
+                                    </div>
+                                    <div class="marker" style="left: 72%">
+                                        <i data-lucide="star"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Playhead -->
+                            <div class="playhead" style="left: 45%"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="processing-columns">
+                        <div class="processing-column cut-column">
+                            <div class="column-header">
+                                <i data-lucide="scissors"></i>
+                                <span>Cutting</span>
+                            </div>
+                            <ul class="column-list">
+                                <li>Boring parts</li>
+                                <li>Distracting donations</li>
+                                <li>Silence and noise</li>
+                                <li>Technical issues</li>
+                            </ul>
+                        </div>
+                        <div class="processing-column generate-column">
+                            <div class="column-header">
+                                <i data-lucide="sparkles"></i>
+                                <span>Generating</span>
+                            </div>
+                            <ul class="column-list">
+                                <li>Timecodes</li>
+                                <li>Thumbnails</li>
+                                <li>SEO: tags, descriptions</li>
+                                <li>Highlights</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3: Output -->
+            <div class="step">
+                <div class="step-visual output-visual">
+                    <div class="output-pack">
+                        <!-- Main Video Block (video + timecodes + description + tags) -->
+                        <div class="main-video-block">
+                            <div class="block-header">
+                                <div class="block-title">
+                                    <i data-lucide="video"></i>
+                                    Main Video
+                                </div>
+                                <div class="output-badges">
+                                    <div class="video-duration-badge">2:31:45</div>
+                                    <div class="saved-badge">
+                                        <i data-lucide="trending-down"></i>
+                                        1h 30min cut
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="main-output">
+                                <div class="main-output-thumb">
+                                    <img src="assets/img/neurobiology-stream.jpg" alt="Edited video thumbnail">
+                                    <div class="main-output-play">
+                                        <i data-lucide="play"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="description-preview">
+                                A comprehensive lecture on neuroplasticity and synaptic mechanisms. Topics covered include long-term potentiation, dendritic spine formation...
+                            </div>
+
+                            <div class="timecodes-list">
+                                <div class="timecode-row">
+                                    <span class="timecode-time">0:00</span>
+                                    <span class="timecode-label">Introduction</span>
+                                </div>
+                                <div class="timecode-row">
+                                    <span class="timecode-time">04:12</span>
+                                    <span class="timecode-label">Synaptic transmission basics</span>
+                                </div>
+                                <div class="timecode-row">
+                                    <span class="timecode-time">18:45</span>
+                                    <span class="timecode-label">Neuroplasticity mechanisms</span>
+                                </div>
+                                <div class="timecode-row">
+                                    <span class="timecode-time">42:30</span>
+                                    <span class="timecode-label">Q&A session</span>
+                                </div>
+                                <div class="timecode-row">
+                                    <span class="timecode-ellipsis">...</span>
+                                </div>
+                            </div>
+
+                            <div class="tags-wrap">
+                                <span class="tag">neurobiology</span>
+                                <span class="tag">lecture</span>
+                                <span class="tag">science</span>
+                                <span class="tag">education</span>
+                                <span class="tag">brain</span>
+                            </div>
+                        </div>
+
+                        <!-- Highlight Clips with Thumbnails -->
+                        <div class="highlights-section">
+                            <div class="highlights-header">
+                                <div class="highlights-title">
+                                    <i data-lucide="clapperboard"></i>
+                                    Highlight Clips
+                                    <span class="clips-count-badge">3</span>
+                                </div>
+                            </div>
+
+                            <div class="highlight-cards">
+                                <!-- Highlight 1 -->
+                                <div class="highlight-card">
+                                    <div class="highlight-video">
+                                        <img src="assets/img/neurobiology-stream.jpg" alt="Clip 1">
+                                        <div class="highlight-play">
+                                            <i data-lucide="play"></i>
+                                        </div>
+                                        <span class="highlight-duration">2:47</span>
+                                    </div>
+                                    <div class="highlight-info">
+                                        <div class="highlight-name">How dopamine pathways work?</div>
+                                        <div class="highlight-thumbs">
+                                            <span class="thumbs-label">Thumbnails:</span>
+                                            <div class="thumb-options">
+                                                <div class="thumb-option"><img src="assets/img/neurobiology-stream.jpg" alt=""></div>
+                                                <div class="thumb-option"><img src="assets/img/thumb-crowd.jpg" alt=""></div>
+                                                <div class="thumb-option"><img src="assets/img/thumb-tech.jpg" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Highlight 2 -->
+                                <div class="highlight-card">
+                                    <div class="highlight-video">
+                                        <img src="assets/img/memory-formation.jpg" alt="Clip 2">
+                                        <div class="highlight-play">
+                                            <i data-lucide="play"></i>
+                                        </div>
+                                        <span class="highlight-duration">3:23</span>
+                                    </div>
+                                    <div class="highlight-info">
+                                        <div class="highlight-name">Memory formation explained</div>
+                                        <div class="highlight-thumbs">
+                                            <span class="thumbs-label">Thumbnails:</span>
+                                            <div class="thumb-options">
+                                                <div class="thumb-option"><img src="assets/img/memory-formation.jpg" alt=""></div>
+                                                <div class="thumb-option"><img src="assets/img/thumb-matrix.jpg" alt=""></div>
+                                                <div class="thumb-option"><img src="assets/img/thumb-robot.jpg" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Highlight 3 -->
+                                <div class="highlight-card">
+                                    <div class="highlight-video">
+                                        <img src="assets/img/neuroplasticity.jpg" alt="Clip 3">
+                                        <div class="highlight-play">
+                                            <i data-lucide="play"></i>
+                                        </div>
+                                        <span class="highlight-duration">4:12</span>
+                                    </div>
+                                    <div class="highlight-info">
+                                        <div class="highlight-name">Neuroplasticity key insights</div>
+                                        <div class="highlight-thumbs">
+                                            <span class="thumbs-label">Thumbnails:</span>
+                                            <div class="thumb-options">
+                                                <div class="thumb-option"><img src="assets/img/neuroplasticity.jpg" alt=""></div>
+                                                <div class="thumb-option"><img src="assets/img/thumb-brain.jpg" alt=""></div>
+                                                <div class="thumb-option"><img src="assets/img/thumb-science.jpg" alt=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <button class="download-btn">
+                            <i data-lucide="download"></i>
+                            Download Everything
+                        </button>
+                    </div>
+                </div>
+
+                <div class="step-number-container">
+                    <div class="step-number">3</div>
+                    <div class="step-connector"></div>
+                </div>
+
+                <div class="step-content">
+                    <div class="step-header">
+                        <h3>Get Your Content</h3>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="mail"></i></div>
+                                Email notification
+                            </div>
+                            <div class="setting-value" style="color: var(--success);">Enabled ✓</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-section bottom">
+        <a href="#" class="cta-button">
+            <span class="cta-button-content">
+                <i data-lucide="play-circle"></i>
+                Use cutto
+            </span>
+        </a>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
