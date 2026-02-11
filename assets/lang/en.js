@@ -2,8 +2,15 @@ window.__translations = window.__translations || {};
 window.__translations['en'] = {
     "page.title": "cutto \u2014 How It Works",
     "hero.badge": "Free Beta",
-    "hero.headline": "From raw stream to ready content",
-    "hero.subtitle": "Upload a stream or video \u2014 get a polished cut, highlights, timecodes, thumbnails, and SEO tags. Automatically.",
+    "hero.headline.1": "From raw video to upload-ready content",
+    "hero.headline.2": "in a few clicks",
+    "hero.pain.1": "Recorded a long stream, webinar, or lecture \u2014",
+    "hero.pain.2": "but getting it edited and published takes forever?",
+    "hero.pitch.1": "No software installation or editing skills required.",
+    "hero.pitch.2": "Paste your link to cutto. Get a content pack:",
+    "hero.feature.video": "Cleaned-up video \u2014 no unrelated parts, pauses, and issues",
+    "hero.feature.highlights": "Highlight clips to promote across platforms",
+    "hero.feature.extras": "Thumbnails, timecodes, descriptions, and tags",
     "cta.use": "Use cutto",
 
     "step1.title": "Upload & Configure",

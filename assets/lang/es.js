@@ -2,8 +2,15 @@ window.__translations = window.__translations || {};
 window.__translations['es'] = {
     "page.title": "cutto \u2014 \u00bfC\u00f3mo funciona?",
     "hero.badge": "Beta gratuita",
-    "hero.headline": "Del stream en bruto al contenido listo",
-    "hero.subtitle": "Sube un stream o video \u2014 obt\u00e9n un montaje pulido, highlights, c\u00f3digos de tiempo, miniaturas y etiquetas SEO. Autom\u00e1ticamente.",
+    "hero.headline.1": "De video en bruto a contenido listo para subir",
+    "hero.headline.2": "en unos clics",
+    "hero.pain.1": "\u00bfGrabaste un stream largo, webinar o conferencia \u2014",
+    "hero.pain.2": "pero editarlo y publicarlo toma una eternidad?",
+    "hero.pitch.1": "No necesitas instalar software ni saber editar.",
+    "hero.pitch.2": "Pega tu enlace en cutto. Obt\u00e9n un paquete de contenido:",
+    "hero.feature.video": "Video limpio \u2014 sin partes irrelevantes, pausas ni problemas",
+    "hero.feature.highlights": "Clips destacados para promocionar en distintas plataformas",
+    "hero.feature.extras": "Miniaturas, c\u00f3digos de tiempo, descripciones y etiquetas",
     "cta.use": "Usar cutto",
 
     "step1.title": "Subir y configurar",
