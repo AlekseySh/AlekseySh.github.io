@@ -11,25 +11,55 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <script src="assets/lang/en.js"></script>
     <script src="assets/lang/ru.js"></script>
+    <script src="assets/lang/es.js"></script>
     <script src="assets/js/i18n.js"></script>
 </head>
 <body>
     <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="en" onclick="i18n.setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="en" onclick="i18n.setLanguage('en')"><span class="lang-flag">🇺🇸</span>EN</button>
         <span class="lang-divider">|</span>
-        <button class="lang-btn" data-lang="ru" onclick="i18n.setLanguage('ru')">RU</button>
+        <button class="lang-btn active" data-lang="ru" onclick="i18n.setLanguage('ru')"><span class="lang-flag">🇷🇺</span>RU</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn" data-lang="es" onclick="i18n.setLanguage('es')"><span class="lang-flag">🇪🇸</span>ES</button>
     </div>
 
-    <div class="cta-section top">
-        <a href="app.html" class="cta-button">
+    <section class="hero">
+        <div class="hero-badge">
+            <i data-lucide="sparkles"></i>
+            <span data-i18n="hero.badge">Free Beta</span>
+        </div>
+        <h1 class="hero-product">cutto</h1>
+        <h2 class="hero-headline" data-i18n="hero.headline">From raw stream to ready content</h2>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">Upload a stream or video — get a polished cut, highlights, timecodes, thumbnails, and SEO tags. Automatically.</p>
+        <a href="app.html" class="cta-button hero-cta">
             <span class="cta-button-content">
                 <i data-lucide="play-circle"></i>
                 <span data-i18n="cta.use">Use cutto</span>
             </span>
         </a>
+    </section>
+
+    <div class="examples-marquee">
+        <div class="marquee-track">
+            <!-- set A (fills viewport) -->
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
+            <!-- set B (duplicate for seamless loop) -->
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
+        </div>
     </div>
 
     <section class="how-it-works">
+        <h2 class="section-heading" data-i18n="howItWorks.heading">How It Works?</h2>
         <div class="steps">
             <!-- STEP 1: Upload -->
             <div class="step">
@@ -399,6 +429,24 @@
             </span>
         </a>
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4 data-i18n="footer.contact">Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:cuttoapp@gmail.com"><i data-lucide="mail"></i> cuttoapp@gmail.com</a></li>
+                        <li><a href="https://t.me/lexibender"><i data-lucide="send"></i> Telegram</a></li>
+                        <li><a href="https://wa.me/66946160072"><i data-lucide="message-circle"></i> WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span data-i18n="footer.copyright">&copy; 2025 cutto</span>
+            </div>
+        </div>
+    </footer>
 
     <script>
         lucide.createIcons();

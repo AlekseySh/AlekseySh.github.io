@@ -2,8 +2,8 @@
     'use strict';
 
     var STORAGE_KEY = 'cutto_lang';
-    var DEFAULT_LANG = 'en';
-    var SUPPORTED = ['en', 'ru'];
+    var DEFAULT_LANG = 'ru';
+    var SUPPORTED = ['en', 'ru', 'es'];
 
     function detectLanguage() {
         var stored = localStorage.getItem(STORAGE_KEY);

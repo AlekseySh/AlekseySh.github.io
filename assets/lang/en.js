@@ -1,6 +1,9 @@
 window.__translations = window.__translations || {};
 window.__translations['en'] = {
     "page.title": "cutto \u2014 How It Works",
+    "hero.badge": "Free Beta",
+    "hero.headline": "From raw stream to ready content",
+    "hero.subtitle": "Upload a stream or video \u2014 get a polished cut, highlights, timecodes, thumbnails, and SEO tags. Automatically.",
     "cta.use": "Use cutto",
 
     "step1.title": "Upload & Configure",
@@ -47,5 +50,13 @@ window.__translations['en'] = {
     "config.title": "cutto \u2014 Configuration",
     "config.heading": "Configure Your Processing",
     "config.placeholder": "Configuration options coming soon. You'll be able to fine-tune how cutto processes your videos right here.",
-    "config.back": "Back to How It Works"
+    "config.back": "Back to How It Works",
+
+    "howItWorks.heading": "How It Works?",
+    "examples.1": "Example 1",
+    "examples.2": "Example 2",
+    "examples.3": "Example 3",
+
+    "footer.contact": "Contact",
+    "footer.copyright": "\u00a9 2025 cutto"
 };
