@@ -12,7 +12,7 @@ window.__translations['es'] = {
     "hero.feature.video": "Video limpio \u2014 sin partes irrelevantes, pausas ni problemas",
     "hero.feature.highlights": "Clips destacados para promocionar en distintas plataformas",
     "hero.feature.extras": "Miniaturas, c\u00f3digos de tiempo, descripciones y etiquetas",
-    "cta.use": "Usar cutto",
+    "cta.use": "usar cutto",
     "cta.badge": "Beta gratuita",
 
     "step1.title": "Pega un enlace y configura",
@@ -59,9 +59,12 @@ window.__translations['es'] = {
     "step3.setting.email.value": "\u2713",
 
     "config.title": "cutto \u2014 Configuraci\u00f3n",
-    "config.heading": "Configura tu procesamiento",
-    "config.placeholder": "Las opciones de configuraci\u00f3n llegar\u00e1n pronto. Aqu\u00ed podr\u00e1s ajustar c\u00f3mo cutto procesa tus videos.",
-    "config.back": "Volver a C\u00f3mo funciona",
+    "config.heading": "usa cutto",
+    "config.placeholder": "Durante la beta gratuita, revisamos manualmente la calidad de cada paquete de contenido. Comparte tu email y el enlace a tu video original \u2014 te notificaremos cuando est\u00e9 listo.",
+    "config.thanks": "\u00a1Gracias por tu inter\u00e9s en",
+    "config.thanksEnd": "!",
+    "config.processBtn": "procesar mi video",
+    "config.back": "volver a c\u00f3mo funciona",
 
     "howItWorks.heading": "\u00bfC\u00f3mo funciona?",
     "examples.1": "Ejemplo 1",

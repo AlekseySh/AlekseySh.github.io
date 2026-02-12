@@ -1288,6 +1288,19 @@ body {
     line-height: 1.6;
 }
 
+.config-thanks {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.config-card .cta-button {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 2rem;
+}
+
 .back-link {
     display: inline-flex;
     align-items: center;

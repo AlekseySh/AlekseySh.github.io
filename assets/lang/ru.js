@@ -12,7 +12,7 @@ window.__translations['ru'] = {
     "hero.feature.video": "Чистое видео — без пауз и отступлений от темы",
     "hero.feature.highlights": "Хайлайт-клипы для продвижения на разных платформах",
     "hero.feature.extras": "Обложки, таймкоды, описания и теги",
-    "cta.use": "Использовать cutto",
+    "cta.use": "использовать cutto",
     "cta.badge": "Бесплатная beta",
 
     "step1.title": "Укажите ссылку и настройки",
@@ -28,7 +28,7 @@ window.__translations['ru'] = {
 
     "step2.title": "Обработка в облаке",
     "step2.setting.estimatedTime": "Примерное время",
-    "step2.setting.rendering": "Рендеринг включён",
+    "step2.setting.rendering": "Включая рендеринг",
     "step2.setting.rendering.value": "✓",
     "step2.cut.title": "Вырезает",
     "step2.cut.boring": "Скучные моменты",
@@ -59,9 +59,12 @@ window.__translations['ru'] = {
     "step3.setting.email.value": "✓",
 
     "config.title": "cutto — Настройка",
-    "config.heading": "Настройте обработку",
-    "config.placeholder": "Настройки скоро появятся. Здесь вы сможете точно настроить, как cutto обрабатывает ваши видео.",
-    "config.back": "Назад к описанию",
+    "config.heading": "попробовать cutto",
+    "config.placeholder": "В рамках бесплатной беты мы вручную проверяем качество каждого контент-пака. Укажите email и ссылку на видео — мы сообщим, когда всё будет готово.",
+    "config.thanks": "Спасибо за интерес к",
+    "config.thanksEnd": "!",
+    "config.processBtn": "обработать моё видео",
+    "config.back": "назад к описанию",
 
     "howItWorks.heading": "Как это работает?",
     "examples.1": "Пример 1",
