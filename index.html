@@ -24,14 +24,10 @@
     </div>
 
     <section class="hero">
-        <div class="hero-badge">
-            <i data-lucide="sparkles"></i>
-            <span data-i18n="hero.badge">Free Beta</span>
-        </div>
-        <h1 class="hero-product">cutto</h1>
         <h2 class="hero-headline"><span data-i18n="hero.headline.1">From raw video to upload-ready content</span><br><span data-i18n="hero.headline.2">in a few clicks</span></h2>
+        <h1 class="hero-product">cutto</h1>
         <p class="hero-pain"><span data-i18n="hero.pain.1">Recorded a long stream, webinar, or lecture —</span><br><span data-i18n="hero.pain.2">but getting it edited and published takes forever?</span></p>
-        <p class="hero-pitch"><span data-i18n="hero.pitch.1">No software installation or editing skills required.</span><br><span data-i18n="hero.pitch.2">Paste your link to cutto. Get a content pack:</span></p>
+        <p class="hero-pitch"><span data-i18n="hero.pitch.1">No software installation or editing skills required.</span><br><span data-i18n="hero.pitch.2a">Paste your link to</span> <span class="brand-highlight">cutto</span><span data-i18n="hero.pitch.2b">. Get a content pack:</span></p>
         <ul class="hero-features">
             <li>
                 <div class="hero-feature-icon"><i data-lucide="scissors"></i></div>
@@ -46,17 +42,14 @@
                 <span data-i18n="hero.feature.extras">Thumbnails, timecodes, descriptions, and tags</span>
             </li>
         </ul>
-        <a href="app.html" class="cta-button hero-cta">
-            <span class="cta-button-content">
-                <i data-lucide="play-circle"></i>
-                <span data-i18n="cta.use">Use cutto</span>
-            </span>
-        </a>
     </section>
 
     <div class="examples-marquee">
         <div class="marquee-track">
             <!-- set A (fills viewport) -->
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
+            <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
             <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
             <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
             <a href="#" class="marquee-item" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
@@ -70,8 +63,19 @@
             <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
             <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
             <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.1">Example 1</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.2">Example 2</span></a>
+            <a href="#" class="marquee-item" aria-hidden="true" tabindex="-1" target="_blank" rel="noopener"><i data-lucide="youtube"></i><span data-i18n="examples.3">Example 3</span></a>
         </div>
     </div>
+
+    <a href="app.html" class="cta-button hero-cta">
+        <span class="cta-button-content">
+            <i data-lucide="play-circle"></i>
+            <span data-i18n="cta.use">Use cutto</span>
+            <span class="cta-badge" data-i18n="cta.badge">Free Beta</span>
+        </span>
+    </a>
 
     <section class="how-it-works">
         <h2 class="section-heading" data-i18n="howItWorks.heading">How It Works?</h2>
@@ -93,10 +97,10 @@
                             <span data-i18n="step1.upload.youtube">YouTube link</span>
                         </div>
                         <div class="upload-option active">
-                            <div class="option-icon file">
-                                <i data-lucide="upload"></i>
+                            <div class="option-icon storage">
+                                <i data-lucide="cloud"></i>
                             </div>
-                            <span data-i18n="step1.upload.file">Upload file</span>
+                            <span data-i18n="step1.upload.storage">Storage link</span>
                         </div>
                     </div>
 
@@ -151,7 +155,7 @@
                                 <div class="setting-icon"><i data-lucide="list"></i></div>
                                 <span data-i18n="step1.setting.timecodes">Timecodes</span>
                             </div>
-                            <div class="setting-value" style="color: var(--success);">✓</div>
+                            <div class="setting-value" style="color: var(--success);"><i data-lucide="check" style="width: 1.4rem; height: 1.4rem; stroke-width: 4;"></i></div>
                         </div>
                         <div class="setting-row">
                             <div class="setting-label">
@@ -171,6 +175,13 @@
                         <h3 data-i18n="step2.title">Cloud Processing</h3>
                     </div>
                     <div class="settings-list">
+                        <div class="setting-row">
+                            <div class="setting-label">
+                                <div class="setting-icon"><i data-lucide="cpu"></i></div>
+                                <span data-i18n="step2.setting.rendering">Rendering included</span>
+                            </div>
+                            <div class="setting-value" style="color: var(--success);"><i data-lucide="check" style="width: 1.4rem; height: 1.4rem; stroke-width: 4;"></i></div>
+                        </div>
                         <div class="setting-row">
                             <div class="setting-label">
                                 <div class="setting-icon"><i data-lucide="clock"></i></div>
@@ -428,7 +439,7 @@
                                 <div class="setting-icon"><i data-lucide="mail"></i></div>
                                 <span data-i18n="step3.setting.email">Email notification</span>
                             </div>
-                            <div class="setting-value" data-i18n="step3.setting.email.value" style="color: var(--success);">Enabled ✓</div>
+                            <div class="setting-value" style="color: var(--success);"><i data-lucide="check" style="width: 1.4rem; height: 1.4rem; stroke-width: 4;"></i></div>
                         </div>
                     </div>
                 </div>
@@ -441,6 +452,7 @@
             <span class="cta-button-content">
                 <i data-lucide="play-circle"></i>
                 <span data-i18n="cta.use">Use cutto</span>
+                <span class="cta-badge" data-i18n="cta.badge">Free Beta</span>
             </span>
         </a>
     </div>
