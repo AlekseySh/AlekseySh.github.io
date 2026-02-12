@@ -1,7 +1,6 @@
 window.__translations = window.__translations || {};
 window.__translations['ru'] = {
     "page.title": "cutto — Как это работает",
-    "hero.badge": "Бесплатная beta",
     "hero.headline.1": "От сырого видео к готовому контенту",
     "hero.headline.2": "в несколько кликов",
     "hero.pain.1": "Записали длинный стрим, вебинар или лекцию —",
@@ -15,7 +14,7 @@ window.__translations['ru'] = {
     "cta.use": "использовать cutto",
     "cta.badge": "Бесплатная beta",
 
-    "step1.title": "Укажите ссылку и настройки",
+    "step1.title": "Ссылка на видео и несколько настроек",
     "step1.upload.twitch": "Twitch",
     "step1.upload.youtube": "YouTube",
     "step1.upload.storage": "Диск",
@@ -26,10 +25,9 @@ window.__translations['ru'] = {
     "step1.setting.timecodes": "Таймкоды",
     "step1.setting.more": "Ещё настройки",
 
-    "step2.title": "Обработка в облаке",
+    "step2.title": "Обработка облаке",
     "step2.setting.estimatedTime": "Примерное время",
     "step2.setting.rendering": "Включая рендеринг",
-    "step2.setting.rendering.value": "✓",
     "step2.cut.title": "Вырезает",
     "step2.cut.boring": "Скучные моменты",
     "step2.cut.donations": "Отвлекающие донаты",
@@ -41,7 +39,7 @@ window.__translations['ru'] = {
     "step2.gen.seo": "SEO: теги, описания",
     "step2.gen.highlights": "Хайлайты",
 
-    "step3.title": "Получите контент",
+    "step3.title": "Получите контент, готовый к загрузке",
     "step3.mainVideo": "Видео",
     "step3.saved": "1ч 30мин вырезано",
     "step3.description": "Подробная лекция о нейропластичности и синаптических механизмах. Рассмотрены долговременная потенциация, формирование дендритных шипиков...",
@@ -56,7 +54,6 @@ window.__translations['ru'] = {
     "step3.thumbs.label": "Обложки:",
     "step3.download": "Скачать всё",
     "step3.setting.email": "Уведомление по e-mail",
-    "step3.setting.email.value": "✓",
 
     "config.title": "cutto — Настройка",
     "config.heading": "попробовать cutto",

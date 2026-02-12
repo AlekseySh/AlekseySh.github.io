@@ -1,7 +1,6 @@
 window.__translations = window.__translations || {};
 window.__translations['en'] = {
     "page.title": "cutto \u2014 How It Works",
-    "hero.badge": "Free Beta",
     "hero.headline.1": "From raw video to upload-ready content",
     "hero.headline.2": "in a few clicks",
     "hero.pain.1": "Recorded a long stream, webinar, or lecture \u2014",
@@ -15,7 +14,7 @@ window.__translations['en'] = {
     "cta.use": "use cutto",
     "cta.badge": "Free Beta",
 
-    "step1.title": "Paste Link and Configure",
+    "step1.title": "Provide Video Link and Settings",
     "step1.upload.twitch": "Twitch",
     "step1.upload.youtube": "YouTube",
     "step1.upload.storage": "Storage",
@@ -29,7 +28,6 @@ window.__translations['en'] = {
     "step2.title": "Cloud Processing",
     "step2.setting.estimatedTime": "Estimated time",
     "step2.setting.rendering": "Rendering included",
-    "step2.setting.rendering.value": "✓",
     "step2.cut.title": "Cutting",
     "step2.cut.boring": "Boring parts",
     "step2.cut.donations": "Distracting donations",
@@ -41,7 +39,7 @@ window.__translations['en'] = {
     "step2.gen.seo": "SEO: tags, descriptions",
     "step2.gen.highlights": "Highlights",
 
-    "step3.title": "Get Your Content",
+    "step3.title": "Get Upload-Ready Content Pack",
     "step3.mainVideo": "Main Video",
     "step3.saved": "1h 30min cut",
     "step3.description": "A comprehensive lecture on neuroplasticity and synaptic mechanisms. Topics covered include long-term potentiation, dendritic spine formation...",
@@ -56,7 +54,6 @@ window.__translations['en'] = {
     "step3.thumbs.label": "Thumbnails:",
     "step3.download": "Download Everything",
     "step3.setting.email": "Email notification",
-    "step3.setting.email.value": "\u2713",
 
     "config.title": "cutto \u2014 Configuration",
     "config.heading": "use cutto",

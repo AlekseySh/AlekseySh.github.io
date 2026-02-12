@@ -1,7 +1,6 @@
 window.__translations = window.__translations || {};
 window.__translations['es'] = {
     "page.title": "cutto \u2014 \u00bfC\u00f3mo funciona?",
-    "hero.badge": "Beta gratuita",
     "hero.headline.1": "De video en bruto a contenido listo",
     "hero.headline.2": "para subir en unos clics",
     "hero.pain.1": "\u00bfGrabaste un stream largo, webinar o conferencia \u2014",
@@ -29,7 +28,6 @@ window.__translations['es'] = {
     "step2.title": "Procesamiento en la nube",
     "step2.setting.estimatedTime": "Tiempo estimado",
     "step2.setting.rendering": "Renderizado incluido",
-    "step2.setting.rendering.value": "✓",
     "step2.cut.title": "Recorta",
     "step2.cut.boring": "Partes aburridas",
     "step2.cut.donations": "Donaciones molestas",
@@ -56,7 +54,6 @@ window.__translations['es'] = {
     "step3.thumbs.label": "Miniaturas:",
     "step3.download": "Descargar todo",
     "step3.setting.email": "Notificaci\u00f3n por email",
-    "step3.setting.email.value": "\u2713",
 
     "config.title": "cutto \u2014 Configuraci\u00f3n",
     "config.heading": "usa cutto",
