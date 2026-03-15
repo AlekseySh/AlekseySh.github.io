@@ -35,7 +35,7 @@ window.__translations['es'] = {
     "step2.cut.technical": "Problemas t\u00e9cnicos",
     "step2.gen.title": "Genera",
     "step2.gen.timecodes": "C\u00f3digos de tiempo",
-    "step2.gen.thumbnails": "Miniaturas",
+    "step2.gen.thumbnails": "Miniaturas para elegir",
     "step2.gen.seo": "SEO: etiquetas, descripciones",
     "step2.gen.highlights": "Highlights",
 
@@ -49,9 +49,9 @@ window.__translations['es'] = {
     "step3.timecodes.qa": "Preguntas y respuestas",
     "step3.highlights.title": "Clips destacados",
     "step3.highlight1.name": "\u00bfC\u00f3mo funcionan las v\u00edas dopamin\u00e9rgicas?",
-    "step3.highlight2.name": "C\u00f3mo se forma la memoria",
-    "step3.highlight3.name": "Claves de la neuroplasticidad",
-    "step3.thumbs.label": "Miniaturas:",
+    "step3.highlight2.name": "\u00bfC\u00f3mo se forma la memoria?",
+    "step3.highlight3.name": "Dolor fantasma: \u00bfpor qu\u00e9 duele un brazo que ya no est\u00e1?",
+    "step3.thumbs.label": "Miniaturas para elegir:",
     "step3.download": "Descargar todo",
     "step3.setting.email": "Notificaci\u00f3n por email",
 

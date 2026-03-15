@@ -35,7 +35,7 @@ window.__translations['ru'] = {
     "step2.cut.technical": "Технические проблемы",
     "step2.gen.title": "Генерирует",
     "step2.gen.timecodes": "Таймкоды",
-    "step2.gen.thumbnails": "Обложки",
+    "step2.gen.thumbnails": "Обложки на выбор",
     "step2.gen.seo": "SEO: теги, описания",
     "step2.gen.highlights": "Хайлайты",
 
@@ -49,9 +49,9 @@ window.__translations['ru'] = {
     "step3.timecodes.qa": "Вопросы и ответы",
     "step3.highlights.title": "Хайлайты",
     "step3.highlight1.name": "Как работают дофаминовые пути?",
-    "step3.highlight2.name": "Как формируется память",
-    "step3.highlight3.name": "Ключевые открытия нейропластичности",
-    "step3.thumbs.label": "Обложки:",
+    "step3.highlight2.name": "Как формируется память?",
+    "step3.highlight3.name": "Фантомные боли - почему болит рука, которой уже нет?",
+    "step3.thumbs.label": "Обложки на выбор:",
     "step3.download": "Скачать всё",
     "step3.setting.email": "Уведомление по e-mail",
 
