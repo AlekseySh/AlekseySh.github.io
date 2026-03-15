@@ -29,12 +29,12 @@ body {
     font-size: 16px;
 }
 
-/* Language Switcher */
+/* Language Switcher — temporarily hidden; all languages still supported, change display to flex to re-enable */
 .lang-switcher {
     position: fixed;
     top: 1rem;
     right: 1rem;
-    display: flex;
+    display: none;
     align-items: center;
     gap: 0.25rem;
     background: var(--bg-white);
@@ -117,9 +117,9 @@ body {
     font-weight: 500;
     line-height: 1.6;
     max-width: 600px;
-    text-align: left;
+    text-align: center;
     margin-left: auto;
-    margin-right: -3rem;
+    margin-right: auto;
 }
 
 .hero-pain {
@@ -133,7 +133,7 @@ body {
 .hero-features {
     list-style: none;
     max-width: 600px;
-    margin: 0 -3rem 2.5rem auto;
+    margin: 0 0 2.5rem auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -143,7 +143,6 @@ body {
 .hero-features li {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
     gap: 0.75rem;
     font-size: 1.1rem;
     font-weight: 500;
@@ -273,25 +272,29 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 2rem;
-    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.12));
+    border: 1px solid var(--primary-light);
     border-radius: 100px;
-    color: var(--text-muted);
+    color: var(--text);
     text-decoration: none;
     font-size: 1.25rem;
     font-weight: 500;
     white-space: nowrap;
-    transition: border-color 0.2s, color 0.2s;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 .marquee-item:hover {
-    border-color: var(--primary-light);
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(139, 92, 246, 0.18));
     color: var(--primary);
+    box-shadow: var(--shadow-lg);
 }
 
 .marquee-item i {
     width: 24px;
     height: 24px;
-    color: #FF0000;
+    color: var(--primary);
     flex-shrink: 0;
 }
 

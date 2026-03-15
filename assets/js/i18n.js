@@ -9,9 +9,6 @@
         var stored = localStorage.getItem(STORAGE_KEY);
         if (stored && SUPPORTED.indexOf(stored) !== -1) return stored;
 
-        var nav = (navigator.language || '').slice(0, 2).toLowerCase();
-        if (SUPPORTED.indexOf(nav) !== -1) return nav;
-
         return DEFAULT_LANG;
     }
 

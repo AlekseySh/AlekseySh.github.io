@@ -8,9 +8,9 @@ window.__siteData = {
 
     // Example video links (landing page marquee)
     examples: [
-        "https://google.com",
-        "https://google.com",
-        "https://google.com"
+        "index.html",
+        "index.html",
+        "index.html"
     ],
 
     // "Process my video" button URL (app page)

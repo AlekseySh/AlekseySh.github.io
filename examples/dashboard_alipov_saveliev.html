@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Научный разбор Савельева: Церебральный сортинг, томограф и гипотеза водной обезьяны — Cutto Dashboard</title>
+<style>
+:root {
+  --relevance-high-color: #4CAF50;
+  --relevance-high-tooltip-color: #55efc4;
+  --relevance-mid-color: #FF9800;
+  --relevance-mid-tooltip-color: #fdcb6e;
+  --relevance-low-color: #f44336;
+  --relevance-low-tooltip-color: #ff7675;
+  --silence-color: #c8d0d4;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    line-height: 1.6;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 40px 60px;
+  }
+  .header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #dfe6e9;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .header-main {
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    min-height: 76px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ff2a23, #d80d14);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(216,13,20,0.18);
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .youtube-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+  .youtube-button-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .youtube-button-label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    background: linear-gradient(135deg, #6f5cff, #8c71ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(111,92,255,0.18);
+    letter-spacing: 0.1px;
+    text-decoration: none;
+  }
+  .header .badge:hover {
+    filter: brightness(1.05);
+  }
+  .badge-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .badge-label {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon,
+  .collapsible-details summary .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .section-title .icon svg,
+  .collapsible-details summary .icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .timeline-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 36px;
+  }
+  .timeline-header {
+    margin-bottom: 16px;
+  }
+  .timeline-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .timeline-summary-card {
+    background: #f8fafc;
+    border: 1px solid #e7edf2;
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timeline-summary-card-tags {
+    gap: 10px;
+  }
+  .timeline-summary-label {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .timeline-summary-value {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .timeline-summary-keep-group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .timeline-summary-metric {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .timeline-summary-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #4a5560;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .timeline-summary-tag .legend-dot {
+    margin-top: 0;
+  }
+  .timeline-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .timeline-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: #2d3436;
+    max-width: 520px;
+    flex: 1 1 auto;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    flex: 0 0 12px;
+    margin-top: 3px;
+  }
+  .legend-highlight {
+    color: #0984e3;
+    font-size: 15px;
+    line-height: 1;
+    flex: 0 0 12px;
+    margin-top: 1px;
+  }
+  .legend-text {
+    color: #2d3436;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .legend-name {
+    color: #2d3436;
+    font-weight: 700;
+  }
+  .timeline-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  .timeline-pie-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+  .timeline-pie-chart {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+  .timeline-pie-label {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    color: #1f2933;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+    pointer-events: none;
+  }
+  .timeline-pie-label-dark {
+    color: #1f2933;
+  }
+  .timeline-pie-chart::after {
+    content: '';
+    position: absolute;
+    inset: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #edf1f3;
+    z-index: 0;
+  }
+  .highlight-markers {
+    position: relative;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  .highlight-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    color: #0984e3;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.15s;
+    line-height: 1;
+    top: 4px;
+  }
+  .highlight-marker:hover {
+    transform: translateX(-50%) scale(1.4);
+  }
+  .timeline-bar {
+    position: relative;
+    height: 44px;
+    background: #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  .timeline-segment {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: opacity 0.15s;
+  }
+  .timeline-segment:hover {
+    opacity: 0.85;
+  }
+  .timeline-segment.relevance-HIGH { background: var(--relevance-high-color); }
+  .timeline-segment.relevance-MID { background: var(--relevance-mid-color); }
+  .timeline-segment.relevance-LOW { background: var(--relevance-low-color); }
+  .timeline-silence {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--silence-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .timeline-cut {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  .time-ruler {
+    position: relative;
+    height: 16px;
+    margin-top: 4px;
+  }
+  .time-ruler-mark {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #636e72;
+    font-weight: 500;
+  }
+  .timeline-tooltip {
+    display: none;
+    position: fixed;
+    background: #2d3436;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 340px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    line-height: 1.5;
+  }
+  .timeline-tooltip .tt-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .timeline-tooltip .tt-why {
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .timeline-tooltip .tt-why.HIGH { color: var(--relevance-high-tooltip-color); }
+  .timeline-tooltip .tt-why.MID { color: var(--relevance-mid-tooltip-color); }
+  .timeline-tooltip .tt-why.LOW { color: var(--relevance-low-tooltip-color); }
+  .timeline-tooltip .tt-explanation {
+    font-size: 12px;
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .timeline-tooltip .tt-time {
+    color: #b2bec3;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .chapters-section,
+  .highlights-section,
+  .segments-section {
+    margin-bottom: 36px;
+  }
+  .details-body {
+    padding: 0 28px 24px;
+  }
+  .chapters-table-wrap {
+    overflow-x: auto;
+  }
+  .chapter-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0984e3;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    line-height: 1.3;
+  }
+  .chapter-duration {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 9px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+  }
+  .chapter-empty {
+    color: #b2bec3;
+    font-size: 13px;
+    padding: 6px 0;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .highlight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #0984e3;
+    transition: box-shadow 0.2s;
+  }
+  .highlight-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  .highlight-card .hl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3436;
+    line-height: 1.4;
+  }
+  .highlight-card .hl-title + .hl-meta {
+    margin-top: 8px;
+  }
+  .highlight-card .hl-desc {
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight-card .hl-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .highlight-card .hl-source {
+    font-size: 11px;
+    color: #0984e3;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .highlight-card .hl-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .highlight-card .hl-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .collapsible-details {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .collapsible-details summary {
+    padding: 20px 28px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3436;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    list-style: none;
+    transition: background 0.15s;
+  }
+  .collapsible-details summary:hover {
+    background: #f5f6fa;
+  }
+  .collapsible-details summary::-webkit-details-marker { display: none; }
+  .collapsible-details summary .arrow {
+    transition: transform 0.2s;
+    font-size: 12px;
+    color: #b2bec3;
+  }
+  .collapsible-details[open] summary .arrow {
+    transform: rotate(90deg);
+  }
+  .segments-table-wrap {
+    padding: 0 28px 20px;
+    overflow-x: auto;
+  }
+  .segments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .segments-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #636e72;
+    border-bottom: 2px solid #dfe6e9;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .segments-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+  }
+  .segments-table tr:last-child td {
+    border-bottom: none;
+  }
+  .segments-table tr:hover td {
+    background: #f9f9fb;
+  }
+  .relevance-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .relevance-badge.HIGH { background: var(--relevance-high-color); }
+  .relevance-badge.MID { background: var(--relevance-mid-color); }
+  .relevance-badge.LOW { background: var(--relevance-low-color); }
+  .col-time { white-space: nowrap; }
+  .col-time .chapter-time { font-size: 12px; }
+  .col-dur { white-space: nowrap; text-align: right; }
+  .col-dur .chapter-duration { justify-content: center; }
+  .col-rel { white-space: nowrap; text-align: center; }
+  .col-desc { line-height: 1.5; }
+  #timecodesTable th.col-time,
+  #timecodesTable td.col-time,
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    width: 1%;
+    white-space: nowrap;
+  }
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    text-align: center;
+  }
+  #timecodesTable .col-dur .chapter-duration {
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .header-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .youtube-button, .header .badge { justify-content: center; }
+    .header-main { width: 100%; }
+    .timeline-summary-row { grid-template-columns: 1fr; }
+    .timeline-overview { flex-direction: column; align-items: flex-start; }
+    .timeline-legend { max-width: none; }
+    .timeline-pie-wrap { justify-content: flex-start; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="header-row">
+      <a class="youtube-button" href="https://www.youtube.com/playlist?list=PLXcjjw8fcCyLGceQ58rPXgH5N5rZdI5W3" target="_blank" rel="noopener noreferrer">
+        <span class="youtube-button-copy">
+          <span class="youtube-button-label">Открыть</span>
+          <span class="youtube-button-label">на YouTube</span>
+        </span>
+      </a>
+      <a class="badge" href="https://usecutto.app/" target="_blank" rel="noopener noreferrer">
+        <span class="badge-copy">
+          <span class="badge-label">Использовать</span>
+          <span class="badge-label">cutto</span>
+        </span>
+      </a>
+      <div class="header-main">
+        <h1>Научный разбор Савельева: Церебральный сортинг, томограф и гипотеза водной обезьяны</h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="timeline-section">
+    <div class="timeline-header">
+      <div class="section-title" style="margin-bottom:0">
+        <span class="icon icon-scissors" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M8.12 8.12 12 12"></path><path d="M20 4 8.12 15.88"></path><path d="M14.8 14.8 20 20"></path></svg></span>
+        Автомонтаж
+      </div>
+    </div>
+    <div class="timeline-summary-row">
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Итог</div>
+        <div class="timeline-summary-value">3 ч 44 мин → 1 ч 41 мин</div>
+      </div>
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Сохранено</div>
+        <div class="timeline-summary-content">
+          <span class="timeline-summary-keep-group"><span class="timeline-summary-tag"><span class="legend-dot" style="background:#4CAF50;"></span>high</span><span class="timeline-summary-metric">[45% от оригинала]</span></span>
+        </div>
+      </div>
+      <div class="timeline-summary-card timeline-summary-card-tags">
+        <div class="timeline-summary-label">Удалено</div>
+        <div class="timeline-summary-tags">
+          <span class="timeline-summary-tag"><span class="legend-dot" style="background:#FF9800;"></span>mid</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#f44336;"></span>low</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#c8d0d4;"></span>тишина</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-overview">
+      <div class="timeline-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#4CAF50;"></span><span class="legend-text"><span class="legend-name">high</span> — основная тема — 1 ч 41 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#FF9800;"></span><span class="legend-text"><span class="legend-name">mid</span> — интересно, но не по основной теме — 1 ч 27 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-text"><span class="legend-name">low</span> — заминки и низко информативные сегменты — 31 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#c8d0d4;"></span><span class="legend-text"><span class="legend-name">тишина</span> — вырезанные паузы — 5 мин</span></div><div class="legend-item"><span class="legend-highlight">&#9670;</span><span class="legend-text"><span class="legend-name">хайлайт</span> — отдельная интересная мысль, не обязательно по основной теме</span></div>
+      </div>
+      <div class="timeline-pie-wrap">
+        <div class="timeline-pie-chart" style="background: conic-gradient(#4CAF50 0% 45%, #FF9800 45% 84%, #f44336 84% 98%, #c8d0d4 98% 100%);" title="Распределение high / mid / low / тишина">
+          <span class="timeline-pie-label" style="left:137.3px; top:70.9px;">45%</span><span class="timeline-pie-label" style="left:34.2px; top:115.5px;">39%</span><span class="timeline-pie-label" style="left:48.9px; top:31.0px;">14%</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-wrapper">
+      <div class="highlight-markers" id="highlightMarkers"></div>
+      <div class="timeline-bar" id="timelineBar"></div>
+      <div class="time-ruler" id="timeRuler"></div>
+    </div>
+  </div>
+  <div class="timeline-tooltip" id="tooltip"></div>
+
+  <div class="chapters-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-clock" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
+        Таймкоды [26]
+      </summary>
+      <div class="details-body">
+        <div class="chapters-table-wrap">
+          <table class="segments-table" id="timecodesTable">
+            <thead>
+              <tr>
+                <th class="col-time">Время</th>
+                <th class="col-dur">Длительность</th>
+                <th class="col-desc">Описание</th>
+              </tr>
+            </thead>
+            <tbody id="chaptersBody"></tbody>
+          </table>
+          <div class="chapter-empty" id="chaptersEmpty" hidden>Нет таймкодов</div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="highlights-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-star" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20.2l1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg></span>
+        Хайлайты [5]
+      </summary>
+      <div class="details-body">
+        <div class="highlights-grid" id="highlightsGrid"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="segments-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-search" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
+        Все сегменты [184]
+      </summary>
+      <div class="segments-table-wrap">
+        <table class="segments-table" id="segmentsTable">
+          <thead>
+            <tr>
+              <th class="col-time">Время</th>
+              <th class="col-dur">Длительность</th>
+              <th class="col-rel">Релевантность</th>
+              <th class="col-desc">Описание</th>
+            </tr>
+          </thead>
+          <tbody id="segmentsBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_DURATION = 13440.0;
+const SHORTENED_DURATION = 6077.9;
+const segments = [{"start": 0.0, "end": 32.0, "dur": 32.0, "desc": "Тишина перед началом и первое приветствие зрителей", "relevance": "HIGH", "relevanceExplained": "Первое приветствие всегда имеет высокую ценность - тишина присоединена к нему", "startTime": "00:00", "endTime": "00:32"}, {"start": 32.0, "end": 106.5, "dur": 74.5, "desc": "Проверка звука и настройка музыки", "relevance": "LOW", "relevanceExplained": "Служебный блок - настройка звука и музыки", "startTime": "00:32", "endTime": "01:46"}, {"start": 106.5, "end": 119.5, "dur": 13.0, "desc": "Открытие донатов и подготовка к чтению", "relevance": "LOW", "relevanceExplained": "Служебный блок - подготовка к чтению донатов", "startTime": "01:46", "endTime": "02:00"}, {"start": 119.5, "end": 139.3, "dur": 19.7, "desc": "Упоминание томографов и церебрального сортинга как темы стрима", "relevance": "MID", "relevanceExplained": "Краткое упоминание темы без содержательного раскрытия", "startTime": "02:00", "endTime": "02:19"}, {"start": 139.3, "end": 189.8, "dur": 50.6, "desc": "Настройка микрофона и обсуждение самочувствия", "relevance": "LOW", "relevanceExplained": "Служебный блок - настройка оборудования и бытовые разговоры", "startTime": "02:19", "endTime": "03:10"}, {"start": 189.8, "end": 207.7, "dur": 17.9, "desc": "Анонс темы стрима - церебральный сортинг", "relevance": "MID", "relevanceExplained": "Краткий анонс без содержательного раскрытия", "startTime": "03:10", "endTime": "03:28"}, {"start": 207.7, "end": 267.9, "dur": 60.2, "desc": "Технические настройки экрана и поиск материалов", "relevance": "LOW", "relevanceExplained": "Служебный блок - настройка экрана", "startTime": "03:28", "endTime": "04:28"}, {"start": 267.9, "end": 344.3, "dur": 76.4, "desc": "Ответ на донат Кирилла о социализации в Варшаве для программиста на стыке биотеха и нейронауки", "relevance": "MID", "relevanceExplained": "Ответ на личный вопрос о социализации не относится к основной теме стрима", "startTime": "04:28", "endTime": "05:44"}, {"start": 344.3, "end": 388.3, "dur": 44.1, "desc": "Ответ на вопрос про Убермаргинала и рекомендация совместных стримов", "relevance": "MID", "relevanceExplained": "Отступление от основной темы - рекомендация другого контента", "startTime": "05:44", "endTime": "06:28"}, {"start": 388.3, "end": 411.8, "dur": 23.4, "desc": "Рекомендация канала Бориса Бояршинова", "relevance": "MID", "relevanceExplained": "Рекомендация чужого канала - отступление от основной темы а не self-promo", "startTime": "06:28", "endTime": "06:52"}, {"start": 411.8, "end": 426.4, "dur": 14.6, "desc": "Благодарность за донат и пауза", "relevance": "LOW", "relevanceExplained": "Служебный момент - благодарность за донат", "startTime": "06:52", "endTime": "07:06"}, {"start": 426.4, "end": 437.3, "dur": 10.9, "desc": "Чтение вопроса про IQ выше 110 из доната и обещание ответить", "relevance": "MID", "relevanceExplained": "Тема IQ не связана напрямую с томографом Савельева. Озвучивание вопроса - неотделимо от развёрнутого ответа в блоке далее", "startTime": "07:06", "endTime": "07:17"}, {"start": 437.3, "end": 448.0, "dur": 10.7, "desc": "Чтение имён донатеров (Матье Бал) и благодарности", "relevance": "LOW", "relevanceExplained": "Служебный момент - чтение имён и благодарности", "startTime": "07:17", "endTime": "07:28"}, {"start": 448.0, "end": 467.6, "dur": 19.6, "desc": "Подробный анонс темы стрима - критика Савельева и церебральный сортинг", "relevance": "MID", "relevanceExplained": "Анонс темы с деталями но без нового содержания", "startTime": "07:28", "endTime": "07:48"}, {"start": 467.6, "end": 579.0, "dur": 111.3, "desc": "Ответ на вопрос про идиократию - когда наступит мир как в фильме", "relevance": "MID", "relevanceExplained": "Общее рассуждение о прогрессе, не связано напрямую с томографом Савельева. Интересное рассуждение о критериях технологического регресса и признаках идиократии", "startTime": "07:48", "endTime": "09:39"}, {"start": 579.0, "end": 676.1, "dur": 97.2, "desc": "Ответ на вопрос про IQ выше 110 и нормальное распределение интеллекта", "relevance": "MID", "relevanceExplained": "Тема IQ не связана напрямую с томографом Савельева. Важное обсуждение ограничений тестов IQ и вопрос о реальном распределении интеллекта - контринтуитивная идея", "startTime": "09:39", "endTime": "11:16"}, {"start": 676.1, "end": 740.5, "dur": 64.4, "desc": "Отправка книги в телеграм-чат", "relevance": "LOW", "relevanceExplained": "Служебный момент - поиск и отправка файла", "startTime": "11:16", "endTime": "12:21"}, {"start": 740.5, "end": 751.3, "dur": 10.8, "desc": "Повторный анонс темы - Савельев и церебральный сортинг", "relevance": "LOW", "relevanceExplained": "Повторный краткий анонс без нового содержания", "startTime": "12:21", "endTime": "12:31"}, {"start": 751.3, "end": 885.3, "dur": 134.0, "desc": "Ответ на критику Савельева Трэш Смэшем и формулирование ключевого критерия - безапелляционность суждений как признак псевдонаучности", "relevance": "HIGH", "relevanceExplained": "Важная содержательная мысль - критерий отличия настоящей науки от псевдоинтеллектуального контента по степени уверенности и безапелляционности", "startTime": "12:31", "endTime": "14:45"}, {"start": 885.3, "end": 1112.6, "dur": 227.3, "desc": "Почему настоящие учёные звучат неуверенно - самоанализ и аналогия с уровнями знания в эндокринологии", "relevance": "HIGH", "relevanceExplained": "Яркая иллюстрация идеи через пример с эндокринологией - чем глубже разбираешься тем меньше можешь утверждать", "startTime": "14:45", "endTime": "18:33"}, {"start": 1112.6, "end": 1144.2, "dur": 31.5, "desc": "Вывод о научной журналистике - задача упрощения сложного неизбежно приводит к искажению", "relevance": "HIGH", "relevanceExplained": "Логичное завершение рассуждения - применение критерия к конкретным примерам научных журналистов", "startTime": "18:33", "endTime": "19:04"}, {"start": 1144.2, "end": 1226.6, "dur": 82.4, "desc": "Ответ на вопрос про пропорцию умных людей к населению и распределение IQ", "relevance": "MID", "relevanceExplained": "Тема IQ не связана напрямую с томографом Савельева. Продолжение темы про распределение интеллекта - логарифмическое vs нормальное", "startTime": "19:04", "endTime": "20:27"}, {"start": 1226.6, "end": 1494.7, "dur": 268.1, "desc": "Донат про замедление прогресса и первый аргумент - культурные парадигмы и эгоистичные мемы как причина технологического регресса", "relevance": "MID", "relevanceExplained": "Общее рассуждение о прогрессе, не связано напрямую с томографом Савельева. Глубокое рассуждение о ложных научных парадигмах самоподдерживающихся мемах и культурной эволюции с примером теории струн", "startTime": "20:27", "endTime": "24:55"}, {"start": 1494.7, "end": 1614.9, "dur": 120.2, "desc": "Второй аргумент - уменьшение мозга и снижение IQ ведут к неспособности освоить накопленные знания и деградации институтов", "relevance": "MID", "relevanceExplained": "Общее рассуждение о прогрессе, не связано напрямую с томографом Савельева. Содержательный аргумент о биологической деградации с конкретными примерами - G-фактор IQ уменьшается", "startTime": "24:55", "endTime": "26:55"}, {"start": 1614.9, "end": 1620.1, "dur": 5.2, "desc": "Шутка про копирайт Савельева", "relevance": "LOW", "relevanceExplained": "Краткая несодержательная реплика", "startTime": "26:55", "endTime": "27:00"}, {"start": 1620.1, "end": 1634.8, "dur": 14.7, "desc": "Благодарность за донат Валика Назарова", "relevance": "LOW", "relevanceExplained": "Чисто благодарственный блок без содержания", "startTime": "27:00", "endTime": "27:15"}, {"start": 1634.8, "end": 1729.7, "dur": 94.9, "desc": "Ответ на вопрос про головную боль два месяца при чистых МРТ и ЭЭГ - дифференциальная диагностика типов головной боли", "relevance": "MID", "relevanceExplained": "Медицинская консультация не по основной теме стрима но полезная информация о дифференциальной диагностике головной боли", "startTime": "27:15", "endTime": "28:50"}, {"start": 1729.7, "end": 1775.2, "dur": 45.5, "desc": "Извинения за задержку ответов на сообщения подписчиков", "relevance": "LOW", "relevanceExplained": "Служебные извинения и объяснение задержки ответов - не содержит полезной информации для зрителя", "startTime": "28:50", "endTime": "29:35"}, {"start": 1775.2, "end": 2059.3, "dur": 284.0, "desc": "Ответ на вопрос о механизмах влияния физической активности на продолжительность жизни - почки поджелудочная сердечно-сосудистая система вариабельность ритма вес жировая ткань стресс эндорфины", "relevance": "MID", "relevanceExplained": "Тема здоровья/физактивности не связана напрямую с томографом Савельева. Подробный ответ о множестве механизмов влияния физической активности на здоровье", "startTime": "29:35", "endTime": "34:19"}, {"start": 2059.3, "end": 2152.0, "dur": 92.7, "desc": "Рассуждение о практической пользе физической активности - метафора с забором и мем про диск плюс рекомендация автора хайлайтерам вырезать этот фрагмент", "relevance": "MID", "relevanceExplained": "Тема здоровья/физактивности не связана напрямую с томографом Савельева. Продолжение ответа о физической активности с яркими примерами", "startTime": "34:19", "endTime": "35:52"}, {"start": 2152.0, "end": 2158.1, "dur": 6.2, "desc": "Переходные реплики", "relevance": "LOW", "relevanceExplained": "Служебные фразы без содержания", "startTime": "35:52", "endTime": "35:58"}, {"start": 2158.1, "end": 2284.5, "dur": 126.4, "desc": "Ответ на вопрос о камнях в почках при быстром похудении (2 кг в неделю)", "relevance": "MID", "relevanceExplained": "Полезный медицинский ответ но не по основной теме стрима", "startTime": "35:58", "endTime": "38:05"}, {"start": 2284.5, "end": 2323.8, "dur": 39.3, "desc": "Обсуждение заказа видео на просмотр - расценки и формат", "relevance": "LOW", "relevanceExplained": "Служебная информация о формате стрима - быстро теряет актуальность", "startTime": "38:05", "endTime": "38:44"}, {"start": 2323.8, "end": 2338.8, "dur": 15.0, "desc": "Благодарности за донаты и приветствия зрителей", "relevance": "LOW", "relevanceExplained": "Служебные благодарности и приветствия без содержания", "startTime": "38:44", "endTime": "38:59"}, {"start": 2338.8, "end": 2355.3, "dur": 16.5, "desc": "Ответ на вопрос про возможность скрытых вопросов через DonutPay", "relevance": "LOW", "relevanceExplained": "Служебная информация о платёжной системе", "startTime": "38:59", "endTime": "39:15"}, {"start": 2355.3, "end": 2526.5, "dur": 171.2, "desc": "Ответ на вопрос о приоритизации научных отраслей и непредсказуемости культурной эволюции", "relevance": "MID", "relevanceExplained": "Тема карьеры/образования не связана напрямую с томографом Савельева. Рассуждение о невозможности планировать научный прогресс пример СССР отсутствие IT и генетики", "startTime": "39:15", "endTime": "42:06"}, {"start": 2526.5, "end": 2534.3, "dur": 7.8, "desc": "Благодарность за донаты", "relevance": "LOW", "relevanceExplained": "Краткая благодарность без содержания", "startTime": "42:06", "endTime": "42:14"}, {"start": 2534.3, "end": 2739.8, "dur": 205.5, "desc": "Продолжение дискуссии об идиократии - коэволюция мозга и культуры и обратная петля деградации", "relevance": "MID", "relevanceExplained": "Тема напрямую не связана с заявленной, идёт рассуждение о культурном драйве как механизме роста мозга и обратной петле деградации - уменьшение мозга ведёт к упрощению культуры что ведёт к ещё меньшему мозгу", "startTime": "42:14", "endTime": "45:40"}, {"start": 2739.8, "end": 2770.5, "dur": 30.6, "desc": "Отступление про заборы в городах", "relevance": "LOW", "relevanceExplained": "Несодержательное отступление про городские заборы", "startTime": "45:40", "endTime": "46:10"}, {"start": 2770.5, "end": 2858.6, "dur": 88.1, "desc": "Ответ на вопрос о том что любовь живёт 3 года - серийная моногамия и окситоцин (начало)", "relevance": "MID", "relevanceExplained": "Тема любви/моногамии не связана напрямую с томографом Савельева. Интересный ответ с эволюционной биологией: серийная моногамия окситоцин", "startTime": "46:10", "endTime": "47:39"}, {"start": 2858.6, "end": 2864.5, "dur": 5.9, "desc": "Приветствие зрителя какао в чате", "relevance": "LOW", "relevanceExplained": "Краткое приветствие чата без содержательной нагрузки", "startTime": "47:39", "endTime": "47:45"}, {"start": 2864.5, "end": 3052.3, "dur": 187.8, "desc": "Продолжение ответа о любви - серийная моногамия у животных и разница между влюблённостью и любовью", "relevance": "MID", "relevanceExplained": "Тема любви/моногамии не связана напрямую с томографом Савельева. Продолжение рассуждения с опровержением мифа о полигамности", "startTime": "47:45", "endTime": "50:52"}, {"start": 3052.3, "end": 3253.2, "dur": 200.9, "desc": "Ответ на вопрос почему молодые девушки выбирают мужчин старше - две эволюционные гипотезы", "relevance": "MID", "relevanceExplained": "Тема любви/моногамии не связана напрямую с томографом Савельева. Интересный ответ с двумя эволюционными гипотезами", "startTime": "50:52", "endTime": "54:13"}, {"start": 3253.2, "end": 3269.3, "dur": 16.1, "desc": "Мета-комментарий про нарезку хайлайтов из стрима", "relevance": "LOW", "relevanceExplained": "Служебный комментарий о формате стрима не имеющий содержательной ценности", "startTime": "54:13", "endTime": "54:29"}, {"start": 3269.3, "end": 3277.8, "dur": 8.5, "desc": "Заключение ответа Борису - предложение подумать самому", "relevance": "MID", "relevanceExplained": "Тема любви/моногамии не связана напрямую с томографом Савельева. Завершение ответа с двумя эволюционными версиями", "startTime": "54:29", "endTime": "54:38"}, {"start": 3277.8, "end": 3360.3, "dur": 82.5, "desc": "Ответ на комментарий про приоритет медицины и биологии - аналогия с ректором-математиком", "relevance": "MID", "relevanceExplained": "Тема карьеры/образования не связана напрямую с томографом Савельева. Иллюстрация проблемы доминирования одной дисциплины", "startTime": "54:38", "endTime": "56:00"}, {"start": 3360.3, "end": 3479.5, "dur": 119.2, "desc": "Продолжение ответа про похудение - опасности быстрого сброса веса", "relevance": "MID", "relevanceExplained": "Продолжение медицинской консультации про похудение", "startTime": "56:00", "endTime": "58:00"}, {"start": 3479.5, "end": 3549.3, "dur": 69.8, "desc": "Советы по поиску тематических чатов и сообществ для эмигрантов", "relevance": "MID", "relevanceExplained": "Практические советы по социализации но не по основной теме", "startTime": "58:00", "endTime": "59:09"}, {"start": 3549.3, "end": 3583.4, "dur": 34.1, "desc": "Рекомендации по перспективным направлениям на стыке IT и нейронауки", "relevance": "MID", "relevanceExplained": "Тема карьеры/образования не связана напрямую с томографом Савельева. Конкретные рекомендации: data science и computational neuroscience", "startTime": "59:09", "endTime": "59:43"}, {"start": 3583.4, "end": 3758.2, "dur": 174.8, "desc": "Ответ на вопрос про атомную энергию и термоядерную энергетику", "relevance": "MID", "relevanceExplained": "Интересное отступление про перспективы ядерной и термоядерной энергетики но далеко от основной темы", "startTime": "59:43", "endTime": "1:02:38"}, {"start": 3758.2, "end": 3858.3, "dur": 100.0, "desc": "Ответ на вопрос про снижение числа сперматозоидов", "relevance": "MID", "relevanceExplained": "Медицинская консультация не по теме стрима", "startTime": "1:02:38", "endTime": "1:04:18"}, {"start": 3858.3, "end": 3880.5, "dur": 22.3, "desc": "Служебный блок - проверка экрана", "relevance": "LOW", "relevanceExplained": "Технические манипуляции без содержания", "startTime": "1:04:18", "endTime": "1:04:41"}, {"start": 3880.5, "end": 3906.7, "dur": 26.2, "desc": "Ответ на донат Curious Friend о важности математики и физики для биологии и медицины", "relevance": "MID", "relevanceExplained": "Содержательный ответ о роли точных наук в биологии и медицине", "startTime": "1:04:41", "endTime": "1:05:07"}, {"start": 3906.7, "end": 3948.3, "dur": 41.6, "desc": "Служебный блок - обмен ссылками на Google-таблицу через Telegram", "relevance": "LOW", "relevanceExplained": "Технические действия без содержательной ценности", "startTime": "1:05:07", "endTime": "1:05:48"}, {"start": 3948.3, "end": 3988.0, "dur": 39.7, "desc": "Чтение чата и обсуждение проблем аренды жилья на Западе", "relevance": "LOW", "relevanceExplained": "Короткие несвязные реплики и отступление про недвижимость в Англии и США", "startTime": "1:05:48", "endTime": "1:06:28"}, {"start": 3988.0, "end": 4074.9, "dur": 86.9, "desc": "Ответ на продолжение вопроса про похудение - метаболическая ловушка", "relevance": "MID", "relevanceExplained": "Завершение темы похудения с важным предупреждением о метаболической перестройке", "startTime": "1:06:28", "endTime": "1:07:55"}, {"start": 4074.9, "end": 4130.6, "dur": 55.7, "desc": "Благодарности за донаты призыв к лайкам и анонс лекционной части про церебральный сортинг и профессора Савельева", "relevance": "HIGH", "relevanceExplained": "Self-promo (призыв к лайкам) = HIGH по правилам плюс анонс темы лекции для зрителей", "startTime": "1:07:55", "endTime": "1:08:51"}, {"start": 4130.6, "end": 4148.9, "dur": 18.2, "desc": "Служебные реплики и ответ на вопрос о стоимости заказа ролика", "relevance": "LOW", "relevanceExplained": "Техническая информация о расценках", "startTime": "1:08:51", "endTime": "1:09:09"}, {"start": 4148.9, "end": 4152.4, "dur": 3.5, "desc": "Случайные реплики из чата", "relevance": "LOW", "relevanceExplained": "Бессмысленные реплики", "startTime": "1:09:09", "endTime": "1:09:12"}, {"start": 4152.4, "end": 4197.3, "dur": 45.0, "desc": "Ответ на вопрос зрителя о том как понять генетику - генетика проще чем кажется и Мендель вывел законы на грядке", "relevance": "MID", "relevanceExplained": "Ответ на вопрос из чата с образовательным содержанием о доступности генетики - не основная тема но полезная информация", "startTime": "1:09:12", "endTime": "1:09:57"}, {"start": 4197.3, "end": 4249.4, "dur": 52.1, "desc": "Предложение консультаций и репетиторства по генетике и биологии плюс мысль о том что генетика - обязательное знание для образованного человека", "relevance": "HIGH", "relevanceExplained": "Self-promo репетиторских услуг и консультаций", "startTime": "1:09:57", "endTime": "1:10:49"}, {"start": 4249.4, "end": 4277.3, "dur": 27.9, "desc": "Напоминание о книге-первоисточнике в Телеграм-чате по теме лекции и переход к основной части", "relevance": "HIGH", "relevanceExplained": "Self-promo Телеграм-канала через упоминание книги-первоисточника", "startTime": "1:10:49", "endTime": "1:11:17"}, {"start": 4277.3, "end": 4336.0, "dur": 58.7, "desc": "Введение в тему церебрального сортинга Савельева", "relevance": "HIGH", "relevanceExplained": "Начало основной лекционной части - введение в главную тему стрима", "startTime": "1:11:17", "endTime": "1:12:16"}, {"start": 4336.0, "end": 4359.1, "dur": 23.1, "desc": "Представление Савельева как палеонтолога-антрополога и начало вопроса о мозге человека", "relevance": "HIGH", "relevanceExplained": "Важная лекционная часть - постановка ключевого вопроса об эволюции мозга", "startTime": "1:12:16", "endTime": "1:12:39"}, {"start": 4359.1, "end": 4390.6, "dur": 31.5, "desc": "Благодарности донатерам и напоминание ставить лайки и подписаться на Инстаграм", "relevance": "HIGH", "relevanceExplained": "Self-promo - призыв к лайкам и реклама Инстаграма", "startTime": "1:12:39", "endTime": "1:13:11"}, {"start": 4390.6, "end": 4429.5, "dur": 38.9, "desc": "Уникальность человеческого мозга и интеллекта", "relevance": "HIGH", "relevanceExplained": "Важная часть лекции - обоснование почему вопрос об эволюции мозга так важен", "startTime": "1:13:11", "endTime": "1:13:50"}, {"start": 4429.5, "end": 4599.6, "dur": 170.1, "desc": "Обзор эволюционного древа от проконсула до австралопитеков с показом картинок", "relevance": "HIGH", "relevanceExplained": "Важная фактологическая часть лекции - обзор эволюционного древа гоминид", "startTime": "1:13:50", "endTime": "1:16:40"}, {"start": 4599.6, "end": 4728.3, "dur": 128.7, "desc": "Хронология отделения орангутанов горилл и шимпанзе от предков человека", "relevance": "HIGH", "relevanceExplained": "Важная фактологическая часть лекции с интерактивным опросом зрителей", "startTime": "1:16:40", "endTime": "1:18:48"}, {"start": 4728.3, "end": 4804.0, "dur": 75.7, "desc": "Переход от австралопитеков к роду Homo и ключевые вопросы - прямохождение и рост мозга", "relevance": "HIGH", "relevanceExplained": "Ключевые вопросы лекции сформулированы - откуда бипедальность и откуда большой мозг", "startTime": "1:18:48", "endTime": "1:20:04"}, {"start": 4804.0, "end": 4915.8, "dur": 111.7, "desc": "Австралопитеки орудия труда и динамика роста мозга - медленный рост до Homo и взрывной после", "relevance": "HIGH", "relevanceExplained": "Ключевой факт лекции - мозг почти не рос миллионы лет а потом резко вырос за 2 млн лет", "startTime": "1:20:04", "endTime": "1:21:56"}, {"start": 4915.8, "end": 4961.6, "dur": 45.9, "desc": "Введение гипотезы водной обезьяны Савельева и опрос знакомства аудитории", "relevance": "HIGH", "relevanceExplained": "Начало критики центральной гипотезы Савельева", "startTime": "1:21:56", "endTime": "1:22:42"}, {"start": 4961.6, "end": 5052.2, "dur": 90.6, "desc": "Техническая пауза - поиск картинки водной обезьяны и проблемы с интерфейсом стрима", "relevance": "LOW", "relevanceExplained": "Чисто техническая пауза без содержательной информации", "startTime": "1:22:42", "endTime": "1:24:12"}, {"start": 5052.2, "end": 5214.2, "dur": 161.9, "desc": "Описание гипотезы водной обезьяны - бипедальность из воды и райский период", "relevance": "HIGH", "relevanceExplained": "Подробное изложение гипотезы Савельева которую затем будет опровергать", "startTime": "1:24:12", "endTime": "1:26:54"}, {"start": 5214.2, "end": 5288.6, "dur": 74.4, "desc": "Элейн Морган как автор гипотезы водной обезьяны - отсутствие биологического образования и провал гипотезы", "relevance": "HIGH", "relevanceExplained": "Важный контекст - автор гипотезы не имела биологического образования и гипотеза не подтвердилась", "startTime": "1:26:54", "endTime": "1:28:09"}, {"start": 5288.6, "end": 5348.9, "dur": 60.4, "desc": "Опровержение связи бипедальности с водным образом жизни", "relevance": "HIGH", "relevanceExplained": "Конкретное научное опровержение с примерами (бобры) и анализом стопы", "startTime": "1:28:09", "endTime": "1:29:09"}, {"start": 5348.9, "end": 5631.4, "dur": 282.4, "desc": "Тафономия как главный аргумент против гипотезы водной обезьяны", "relevance": "HIGH", "relevanceExplained": "Сильнейший аргумент - если бы гоминиды жили у воды их останки были бы в изобилии но их крайне мало", "startTime": "1:29:09", "endTime": "1:33:51"}, {"start": 5631.4, "end": 5680.8, "dur": 49.4, "desc": "Первый итог - гипотеза водной обезьяны не подтверждается. Ирония про феминистку Морган и Савельева", "relevance": "HIGH", "relevanceExplained": "Подведение итога первого круга опровержений с забавным фактом", "startTime": "1:33:51", "endTime": "1:34:41"}, {"start": 5680.8, "end": 5771.8, "dur": 91.0, "desc": "Противоречие данных о росте мозга с гипотезой райского периода", "relevance": "HIGH", "relevanceExplained": "Ключевое опровержение - рост мозга произошёл не во время предполагаемого райского периода а после него", "startTime": "1:34:41", "endTime": "1:36:12"}, {"start": 5771.8, "end": 5939.2, "dur": 167.4, "desc": "Опровержение райского периода - кариес медведи как контрпример и проблемы с диетой", "relevance": "HIGH", "relevanceExplained": "Детальное опровержение каждого элемента гипотезы райского периода с конкретными контрпримерами", "startTime": "1:36:12", "endTime": "1:38:59"}, {"start": 5939.2, "end": 6066.2, "dur": 127.0, "desc": "Гипотеза саваннизации как альтернатива - засушливый климат и преимущества бипедальности в саванне", "relevance": "HIGH", "relevanceExplained": "Изложение мейнстримовой альтернативной гипотезы с конкретными аргументами", "startTime": "1:38:59", "endTime": "1:41:06"}, {"start": 6066.2, "end": 6094.0, "dur": 27.8, "desc": "Отступление - совет про ходьбу от донатера и лирическое отступление про русскую тоску по просторам", "relevance": "MID", "relevanceExplained": "Отвлечение от основной темы - личный совет и поэтическое отступление не несут научной ценности", "startTime": "1:41:06", "endTime": "1:41:34"}, {"start": 6094.0, "end": 6278.4, "dur": 184.4, "desc": "Диета австралопитеков и парантропы - ошибки Савельева в понимании палеонтологического материала", "relevance": "HIGH", "relevanceExplained": "Разбор конкретных ошибок Савельева: парантропы были травоядными а не каннибалами", "startTime": "1:41:34", "endTime": "1:44:38"}, {"start": 6278.4, "end": 6405.1, "dur": 126.6, "desc": "Итог по гипотезе саваннизации и анекдот про Савельева с Яськовым", "relevance": "HIGH", "relevanceExplained": "Завершение блока про саваннизацию с ярким примером реакции профессионального палеонтолога на Савельева", "startTime": "1:44:38", "endTime": "1:46:45"}, {"start": 6405.1, "end": 6474.9, "dur": 69.9, "desc": "Рекомендация статьи 150 ошибок Савельева на антропогенез.ру", "relevance": "HIGH", "relevanceExplained": "Полезная ссылка для тех кто хочет углубиться в тему", "startTime": "1:46:45", "endTime": "1:47:55"}, {"start": 6474.9, "end": 6499.7, "dur": 24.8, "desc": "Краткое служебное пояснение личного отношения к Савельеву с мямлением и паузами", "relevance": "LOW", "relevanceExplained": "Служебная ремарка без содержательной ценности - мямление с паузами и общие слова о профессиональной неприязни", "startTime": "1:47:55", "endTime": "1:48:20"}, {"start": 6499.7, "end": 6565.5, "dur": 65.8, "desc": "Параллельные ветви эволюции - Homo habilis и Australopithecus garhi", "relevance": "HIGH", "relevanceExplained": "Интересный факт о параллельных ветвях которые развивались одновременно но одна вымерла", "startTime": "1:48:20", "endTime": "1:49:25"}, {"start": 6565.5, "end": 6568.1, "dur": 2.7, "desc": "Техническое замечание - что-то закрывается на экране", "relevance": "LOW", "relevanceExplained": "Служебный комментарий без информационной ценности", "startTime": "1:49:25", "endTime": "1:49:28"}, {"start": 6568.1, "end": 6641.6, "dur": 73.5, "desc": "Три параллельных человечества - неандертальцы сапиенсы денисовцы", "relevance": "HIGH", "relevanceExplained": "Захватывающий факт о трёх параллельных человечествах которые жили отдельно миллионы лет а потом встретились", "startTime": "1:49:28", "endTime": "1:50:42"}, {"start": 6641.6, "end": 6760.7, "dur": 119.1, "desc": "Теория Савельева о надгеномной эволюции мозга и её сходство с культурным драйвом", "relevance": "HIGH", "relevanceExplained": "Важный разбор - Савельев фактически описывает культурный драйв но не знает о нём и изобретает велосипед", "startTime": "1:50:42", "endTime": "1:52:41"}, {"start": 6760.7, "end": 6845.0, "dur": 84.3, "desc": "Цитаты из книги Савельева о ненаследуемости мозга и огромной изменчивости между родственниками", "relevance": "HIGH", "relevanceExplained": "Ключевые цитаты из первоисточника которые затем будут использованы для выявления противоречия", "startTime": "1:52:41", "endTime": "1:54:05"}, {"start": 6845.0, "end": 6969.9, "dur": 124.9, "desc": "Разбор того что морфологическая изменчивость мозга не транслируется в когнитивную разницу", "relevance": "HIGH", "relevanceExplained": "Важный аналитический блок - если бы Савельев был прав мы бы видели колоссальные когнитивные различия в семьях но не видим", "startTime": "1:54:05", "endTime": "1:56:10"}, {"start": 6969.9, "end": 7044.4, "dur": 74.5, "desc": "Главное противоречие Савельева - утверждает отбор мозгов но отрицает наследование мозга", "relevance": "HIGH", "relevanceExplained": "Центральный логический аргумент - церебральный сортинг бессмыслен если мозг детей не похож на мозг родителей", "startTime": "1:56:10", "endTime": "1:57:24"}, {"start": 7044.4, "end": 7078.4, "dur": 34.0, "desc": "Переходная фраза о книге и ответ на сообщение Сергея в чате", "relevance": "LOW", "relevanceExplained": "Чат-взаимодействие без информационной ценности перебивающее содержательный блок", "startTime": "1:57:24", "endTime": "1:57:58"}, {"start": 7078.4, "end": 7232.4, "dur": 154.0, "desc": "Итог по церебральному сортингу - теория не работает из-за отсутствия механизма наследования и внутренних противоречий", "relevance": "HIGH", "relevanceExplained": "Финальное заключение первой части лекции с чётким выводом о несостоятельности церебрального сортинга", "startTime": "1:57:58", "endTime": "2:00:32"}, {"start": 7232.4, "end": 7238.7, "dur": 6.3, "desc": "Переход к донатам после лекционной части", "relevance": "LOW", "relevanceExplained": "Служебный переходный момент", "startTime": "2:00:32", "endTime": "2:00:39"}, {"start": 7238.7, "end": 7427.7, "dur": 189.0, "desc": "Ответ на вопрос о самообразовании vs обучение в вузе", "relevance": "MID", "relevanceExplained": "Тема карьеры/образования не связана напрямую с томографом Савельева. Рассуждение о роли конкурентной среды внешнего контроля и обратной связи в образовании", "startTime": "2:00:39", "endTime": "2:03:48"}, {"start": 7427.7, "end": 7483.8, "dur": 56.1, "desc": "Ответ на вопрос об эффективности обучения после 25 лет", "relevance": "MID", "relevanceExplained": "Тема карьеры/образования не связана напрямую с томографом Савельева. Краткий ответ о снижении пластичности мозга с двумя гипотезами", "startTime": "2:03:48", "endTime": "2:04:44"}, {"start": 7483.8, "end": 7511.5, "dur": 27.7, "desc": "Шутка нейробиолога про перерождение в аниме мире", "relevance": "LOW", "relevanceExplained": "Несодержательная шутка", "startTime": "2:04:44", "endTime": "2:05:11"}, {"start": 7511.5, "end": 7523.5, "dur": 12.1, "desc": "Короткая реплика про диплом", "relevance": "LOW", "relevanceExplained": "Несодержательная короткая реплика", "startTime": "2:05:11", "endTime": "2:05:24"}, {"start": 7523.5, "end": 7559.2, "dur": 35.7, "desc": "Благодарность подписчикам приветствие новых зрителей и призыв к лайкам донатам комментариям", "relevance": "HIGH", "relevanceExplained": "Self-promo блок - призыв к взаимодействию донатам и лайкам по правилам всегда HIGH", "startTime": "2:05:24", "endTime": "2:05:59"}, {"start": 7559.2, "end": 7697.6, "dur": 138.4, "desc": "Ответ на вопрос о зеркальных нейронах и позиции Савельева", "relevance": "HIGH", "relevanceExplained": "Содержательный ответ о зеркальных нейронах: они не банальны потому что не приводят к действию находятся между восприятием и движением связаны с эмоциями", "startTime": "2:05:59", "endTime": "2:08:18"}, {"start": 7697.6, "end": 7784.8, "dur": 87.2, "desc": "Савельев застрял в нейробиологии 70-х годов", "relevance": "HIGH", "relevanceExplained": "Важный обобщающий тезис о Савельеве - он соответствовал мейнстриму 70-х но игнорирует 50 лет новых данных", "startTime": "2:08:18", "endTime": "2:09:45"}, {"start": 7784.8, "end": 7808.3, "dur": 23.5, "desc": "Обсуждение проблем интерфейса YouTube", "relevance": "LOW", "relevanceExplained": "Несодержательная жалоба на YouTube", "startTime": "2:09:45", "endTime": "2:10:08"}, {"start": 7808.3, "end": 7839.3, "dur": 31.0, "desc": "Ценность общения с аудиторией не из нейробиологии", "relevance": "MID", "relevanceExplained": "Приятная мысль но не содержит фактологии", "startTime": "2:10:08", "endTime": "2:10:39"}, {"start": 7839.3, "end": 7872.6, "dur": 33.3, "desc": "<начало про зеркальные нейроны - конструкция> Ответ на вопрос о конструкции зеркального нейрона", "relevance": "HIGH", "relevanceExplained": "Краткий но точный ответ о локализации и типе зеркальных нейронов", "startTime": "2:10:39", "endTime": "2:11:13"}, {"start": 7872.6, "end": 7915.3, "dur": 42.8, "desc": "Шутки и несвязные реплики", "relevance": "LOW", "relevanceExplained": "Несодержательные шутки и реплики", "startTime": "2:11:13", "endTime": "2:11:55"}, {"start": 7915.3, "end": 7944.3, "dur": 29.0, "desc": "Переход к теме томографа Савельева", "relevance": "LOW", "relevanceExplained": "Служебный переходный момент", "startTime": "2:11:55", "endTime": "2:12:24"}, {"start": 7944.3, "end": 8013.6, "dur": 69.2, "desc": "Жалобы на мобильную версию YouTube", "relevance": "LOW", "relevanceExplained": "Несодержательное отступление про интерфейс YouTube", "startTime": "2:12:24", "endTime": "2:13:34"}, {"start": 8013.6, "end": 8026.4, "dur": 12.8, "desc": "Переход к теме томографа и благодарность за донаты", "relevance": "LOW", "relevanceExplained": "Служебный переходный блок", "startTime": "2:13:34", "endTime": "2:13:46"}, {"start": 8026.4, "end": 8056.9, "dur": 30.5, "desc": "Чтение личного доната про себя и эмоциональная реакция", "relevance": "LOW", "relevanceExplained": "Ответ на личный донат без содержательной информации", "startTime": "2:13:46", "endTime": "2:14:17"}, {"start": 8056.9, "end": 8064.9, "dur": 8.0, "desc": "Чтение доната с шуткой про Маска и YouTube", "relevance": "LOW", "relevanceExplained": "Служебное зачитывание доната", "startTime": "2:14:17", "endTime": "2:14:25"}, {"start": 8064.9, "end": 8184.7, "dur": 119.8, "desc": "Рассуждение о роли случайности в успехе Илона Маска и когнитивных искажениях", "relevance": "MID", "relevanceExplained": "Тема случайности не связана напрямую с томографом Савельева. Контринтуитивное рассуждение о теории случайности и мании величия", "startTime": "2:14:25", "endTime": "2:16:25"}, {"start": 8184.7, "end": 8278.8, "dur": 94.1, "desc": "Ответ на личный донат - совет про отношения и жертвенность", "relevance": "MID", "relevanceExplained": "Жизненный совет но не по основной теме", "startTime": "2:16:25", "endTime": "2:17:59"}, {"start": 8278.8, "end": 8353.4, "dur": 74.6, "desc": "<продолжение про зеркальные нейроны - конструкция> Продолжение обсуждения зеркальных нейронов - проблема онтогенеза", "relevance": "HIGH", "relevanceExplained": "Важное дополнение к теме зеркальных нейронов - нерешённый вопрос их формирования в онтогенезе", "startTime": "2:17:59", "endTime": "2:19:13"}, {"start": 8353.4, "end": 8381.3, "dur": 27.9, "desc": "Благодарности и организационные моменты перед переходом к томографу", "relevance": "LOW", "relevanceExplained": "Служебный переходный блок с благодарностями", "startTime": "2:19:13", "endTime": "2:19:41"}, {"start": 8381.3, "end": 8436.2, "dur": 54.9, "desc": "Введение в тему томографа Савельева - напоминание о противоречии и постановка проблемы", "relevance": "HIGH", "relevanceExplained": "Начало второй части лекции - постановка проблемы томографа с содержательным вступлением", "startTime": "2:19:41", "endTime": "2:20:36"}, {"start": 8436.2, "end": 8603.9, "dur": 167.7, "desc": "Разбор абсурдной цитаты Савельева из статьи Наука и жизнь", "relevance": "HIGH", "relevanceExplained": "Разбор цитаты в которой Савельев в одном абзаце противоречит сам себе - отрицает мутации но говорит о генах", "startTime": "2:20:36", "endTime": "2:23:24"}, {"start": 8603.9, "end": 8617.2, "dur": 13.3, "desc": "Реакция на донат - спасибо за 50 рублей и анекдоты", "relevance": "LOW", "relevanceExplained": "Реакция на донат - служебное действие", "startTime": "2:23:24", "endTime": "2:23:37"}, {"start": 8617.2, "end": 8662.1, "dur": 44.9, "desc": "Отправка цитаты Савельева в телеграм как мем со ссылкой на статью", "relevance": "LOW", "relevanceExplained": "Служебное действие - отправка материала в телеграм", "startTime": "2:23:37", "endTime": "2:24:22"}, {"start": 8662.1, "end": 8678.5, "dur": 16.4, "desc": "Переход к обсуждению идеи томографа", "relevance": "LOW", "relevanceExplained": "Короткий переходный момент", "startTime": "2:24:22", "endTime": "2:24:38"}, {"start": 8678.5, "end": 8751.2, "dur": 72.8, "desc": "Опрос аудитории - хороша ли идея отбора людей по структуре мозга", "relevance": "HIGH", "relevanceExplained": "Интерактивное введение в обсуждение идеи томографа", "startTime": "2:24:38", "endTime": "2:25:51"}, {"start": 8751.2, "end": 8844.9, "dur": 93.7, "desc": "Анализ проблемы корреляции между структурой мозга и способностями", "relevance": "HIGH", "relevanceExplained": "Ключевой вопрос - нет тестов для определения способностей по Савельеву но тогда как установить корреляцию со структурой мозга", "startTime": "2:25:51", "endTime": "2:27:25"}, {"start": 8844.9, "end": 8976.3, "dur": 131.4, "desc": "Проблема золотого стандарта: нет тестов для определения способностей и если мы и так знаем кто гениальный то зачем томограф", "relevance": "HIGH", "relevanceExplained": "Два связанных внутренних противоречия Савельева: отрицает тесты но предлагает корреляцию без них и если гениальность определяется без томографа то зачем он нужен", "startTime": "2:27:25", "endTime": "2:29:36"}, {"start": 8976.3, "end": 9009.1, "dur": 32.8, "desc": "Уточнение про качественные различия полей - наличие или отсутствие целых полей", "relevance": "HIGH", "relevanceExplained": "Важная деталь - речь не только о размерах но о наличии/отсутствии полей", "startTime": "2:29:36", "endTime": "2:30:09"}, {"start": 9009.1, "end": 9044.3, "dur": 35.2, "desc": "Проблема золотого стандарта для корреляции и внутреннее противоречие Савельева", "relevance": "HIGH", "relevanceExplained": "Второе внутреннее противоречие: если мы уже знаем кто гениальный зачем томограф", "startTime": "2:30:09", "endTime": "2:30:44"}, {"start": 9044.3, "end": 9239.1, "dur": 194.9, "desc": "Противоречие с возрастом: мозг созревает к 25 но гениальные открытия делают до 25", "relevance": "HIGH", "relevanceExplained": "Ещё одно важное противоречие - томограф полезен только после 25 но пик гениальности до 25", "startTime": "2:30:44", "endTime": "2:33:59"}, {"start": 9239.1, "end": 9426.3, "dur": 187.1, "desc": "Генетика как альтернатива томографу - можно определять способности до рождения", "relevance": "HIGH", "relevanceExplained": "Ключевой альтернативный подход: генетические тесты могут предсказывать интеллект с рождения в отличие от томографа", "startTime": "2:33:59", "endTime": "2:37:06"}, {"start": 9426.3, "end": 9516.2, "dur": 90.0, "desc": "Введение в технический вопрос о методе исследования Савельева и ответ - синхротрон", "relevance": "MID", "relevanceExplained": "Интерактивный опрос с длительными паузами (11 и 15 секунд) и минимальным содержанием - сам ответ (синхротрон) важен но подача растянута", "startTime": "2:37:06", "endTime": "2:38:36"}, {"start": 9516.2, "end": 9542.7, "dur": 26.5, "desc": "Ответ Александру из чата: генетика определяет структуру тела включая пальцы и мозг", "relevance": "HIGH", "relevanceExplained": "Важный научный аргумент - аналогия между генетическим определением количества пальцев и структуры мозга", "startTime": "2:38:36", "endTime": "2:39:03"}, {"start": 9542.7, "end": 9663.8, "dur": 121.1, "desc": "Синхротрон: принцип работы и проблема смертельной дозы облучения при сканировании мозга", "relevance": "HIGH", "relevanceExplained": "Ключевой технический аргумент: синхротрон даёт смертельную дозу облучения и требует многократных сканирований", "startTime": "2:39:03", "endTime": "2:41:04"}, {"start": 9663.8, "end": 9827.4, "dur": 163.5, "desc": "Дискуссия с Александром: генетическое определение развития организма - примеры с пальцами и зоной Брока", "relevance": "HIGH", "relevanceExplained": "Важное научное обсуждение: все процессы развития связаны с генами - примеры с количеством пальцев зоной Брока и опровержение тезиса о случайности структуры мозга", "startTime": "2:41:04", "endTime": "2:43:47"}, {"start": 9827.4, "end": 10018.3, "dur": 190.9, "desc": "Концепция эмерджентности: простые генетические правила создают сложные структуры - рекомендации книг и примеры клеточных автоматов", "relevance": "HIGH", "relevanceExplained": "Важное научное объяснение эмерджентности с конкретными примерами (клеточные автоматы программа Маркова книга Докинза) - редкие факты и наглядные иллюстрации фундаментального принципа", "startTime": "2:43:47", "endTime": "2:46:58"}, {"start": 10018.3, "end": 10074.7, "dur": 56.4, "desc": "Альтернатива синхротрону - уже существующая МРТ 7 Тесла", "relevance": "HIGH", "relevanceExplained": "Важный факт: МРТ с цитоархитектоническим разрешением уже существует с 2005 года", "startTime": "2:46:58", "endTime": "2:47:55"}, {"start": 10074.7, "end": 10146.8, "dur": 72.2, "desc": "Поиск и отправка статьи 2005 года про МРТ высокого разрешения", "relevance": "MID", "relevanceExplained": "Техническое действие но с важной ссылкой", "startTime": "2:47:55", "endTime": "2:49:07"}, {"start": 10146.8, "end": 10356.4, "dur": 209.6, "desc": "Проблемы определения границ полей даже при клеточном разрешении и вероятностные карты", "relevance": "HIGH", "relevanceExplained": "Важный нюанс: даже видя клетки сложно определить границы полей. Описание probability maps как работающего решения", "startTime": "2:49:07", "endTime": "2:52:36"}, {"start": 10356.4, "end": 10385.9, "dur": 29.5, "desc": "Ссылка на вебинар по архитектонике", "relevance": "HIGH", "relevanceExplained": "Self-promo - рекомендация своего вебинара и контента = HIGH по правилам", "startTime": "2:52:36", "endTime": "2:53:06"}, {"start": 10385.9, "end": 10401.4, "dur": 15.5, "desc": "Краткое приветствие нового зрителя и сводка текущей темы", "relevance": "LOW", "relevanceExplained": "Служебная реплика", "startTime": "2:53:06", "endTime": "2:53:21"}, {"start": 10401.4, "end": 10542.2, "dur": 140.8, "desc": "Проблема окрашивания и миелоархитектоники при томографии", "relevance": "HIGH", "relevanceExplained": "Технический анализ: томограф не может заменить гистологические окраски а без них нельзя определить тип клеток и слои", "startTime": "2:53:21", "endTime": "2:55:42"}, {"start": 10542.2, "end": 10709.4, "dur": 167.1, "desc": "Проблема объёма данных - одно сканирование занимает тысячи терабайт", "relevance": "HIGH", "relevanceExplained": "Критический технический аргумент: колоссальный объём данных делает подход нереалистичным", "startTime": "2:55:42", "endTime": "2:58:29"}, {"start": 10709.4, "end": 10737.2, "dur": 27.9, "desc": "Отступление про проблему охлаждения серверов пресной водой", "relevance": "MID", "relevanceExplained": "Интересный но побочный факт про серверную инфраструктуру", "startTime": "2:58:29", "endTime": "2:58:57"}, {"start": 10737.2, "end": 10872.1, "dur": 134.9, "desc": "Главная мысль - нужен более изящный метод а не грубое сканирование каждой клетки. Нужно искать интегральные предикторы", "relevance": "HIGH", "relevanceExplained": "Ключевой вывод всей лекции: нужно искать интегральные предикторы а не сканировать каждую клетку", "startTime": "2:58:57", "endTime": "3:01:12"}, {"start": 10872.1, "end": 10982.8, "dur": 110.7, "desc": "Аналогия с фантомными конечностями - ящик с зеркалом Рамачандрана вместо сложных технологий", "relevance": "HIGH", "relevanceExplained": "Блестящая аналогия: простой ящик с зеркалом вместо сложных нейрохирургических технологий - то же самое с томографом", "startTime": "3:01:12", "endTime": "3:03:03"}, {"start": 10982.8, "end": 10999.5, "dur": 16.7, "desc": "Отступление про теорию хаоса и прогноз погоды", "relevance": "MID", "relevanceExplained": "Краткое отступление связанное с темой но побочное", "startTime": "3:03:03", "endTime": "3:03:20"}, {"start": 10999.5, "end": 11013.9, "dur": 14.4, "desc": "Переходные фразы - что ещё можно сказать наверное на этом всё", "relevance": "LOW", "relevanceExplained": "Чисто служебные переходные фразы без содержания", "startTime": "3:03:20", "endTime": "3:03:34"}, {"start": 11013.9, "end": 11082.6, "dur": 68.6, "desc": "Дополнение про Blue Brain Project и невозможность создания коннектома", "relevance": "HIGH", "relevanceExplained": "Важное дополнение: даже 30 лет работы над коннектомом не привели к результату", "startTime": "3:03:34", "endTime": "3:04:43"}, {"start": 11082.6, "end": 11087.5, "dur": 4.9, "desc": "Закрывающие служебные реплики", "relevance": "LOW", "relevanceExplained": "Служебные фразы без содержания - уважаемые господа ой ну что ж", "startTime": "3:04:43", "endTime": "3:04:48"}, {"start": 11087.5, "end": 11111.8, "dur": 24.3, "desc": "Переход к ответам на вопросы и проверка донатов", "relevance": "LOW", "relevanceExplained": "Служебный переходный блок", "startTime": "3:04:48", "endTime": "3:05:12"}, {"start": 11111.8, "end": 11168.1, "dur": 56.3, "desc": "Анекдоты от нейробиолога", "relevance": "LOW", "relevanceExplained": "Развлекательный блок без информационной ценности", "startTime": "3:05:12", "endTime": "3:06:08"}, {"start": 11168.1, "end": 11253.6, "dur": 85.5, "desc": "Ответ на медицинский вопрос - границы компетенции как врача", "relevance": "MID", "relevanceExplained": "Важное уточнение про границы компетенции автора как фундаментального исследователя а не клинициста", "startTime": "3:06:08", "endTime": "3:07:34"}, {"start": 11253.6, "end": 11273.5, "dur": 19.9, "desc": "Реплика про Илона Маска от нерыбелка", "relevance": "LOW", "relevanceExplained": "Краткая несодержательная реплика", "startTime": "3:07:34", "endTime": "3:07:54"}, {"start": 11273.5, "end": 11396.3, "dur": 122.8, "desc": "Ответ на вопрос о механизме головной боли при недосыпе", "relevance": "MID", "relevanceExplained": "Медицинская тема не связана напрямую с томографом Савельева. Содержательный ответ: головная боль напряжения мигрень невриты синуситы", "startTime": "3:07:54", "endTime": "3:09:56"}, {"start": 11396.3, "end": 11453.9, "dur": 57.6, "desc": "Анекдоты от нейробиолога и проверка донатов", "relevance": "LOW", "relevanceExplained": "Развлекательный блок плюс служебная тишина - всё LOW", "startTime": "3:09:56", "endTime": "3:10:54"}, {"start": 11453.9, "end": 11530.3, "dur": 76.4, "desc": "Благодарности и реклама каналов - ВК Телеграм Инстаграм хайлайтеры", "relevance": "HIGH", "relevanceExplained": "Self promotion - реклама всех каналов и площадок", "startTime": "3:10:54", "endTime": "3:12:10"}, {"start": 11530.3, "end": 11555.3, "dur": 25.0, "desc": "Анекдоты от нейробиолога", "relevance": "LOW", "relevanceExplained": "Развлекательный блок", "startTime": "3:12:10", "endTime": "3:12:35"}, {"start": 11555.3, "end": 11774.2, "dur": 218.9, "desc": "Рассуждение о роли случайности в успехе - история Тимоти Декстера", "relevance": "MID", "relevanceExplained": "Тема случайности не связана напрямую с томографом Савельева. Интересная история Тимоти Декстера как иллюстрация роли случайности", "startTime": "3:12:35", "endTime": "3:16:14"}, {"start": 11774.2, "end": 11784.8, "dur": 10.6, "desc": "Переходные реплики", "relevance": "LOW", "relevanceExplained": "Служебный момент", "startTime": "3:16:14", "endTime": "3:16:25"}, {"start": 11784.8, "end": 11886.3, "dur": 101.5, "desc": "Обсуждение nature vs nurture - роль врождённого в определении поведения", "relevance": "MID", "relevanceExplained": "Тема nature/nurture не связана напрямую с томографом Савельева. Обобщение: чем больше мы изучаем тем больше понимаем что врождённое определяет жизнь", "startTime": "3:16:25", "endTime": "3:18:06"}, {"start": 11886.3, "end": 11910.8, "dur": 24.5, "desc": "Анекдоты от нейробиолога", "relevance": "LOW", "relevanceExplained": "Развлекательный блок", "startTime": "3:18:06", "endTime": "3:18:31"}, {"start": 11910.8, "end": 11936.0, "dur": 25.1, "desc": "Анекдоты от нейробиолога - программист и математики", "relevance": "LOW", "relevanceExplained": "Развлекательный блок", "startTime": "3:18:31", "endTime": "3:18:56"}, {"start": 11936.0, "end": 11974.6, "dur": 38.6, "desc": "Обсуждение правил заказа видео на стриме", "relevance": "LOW", "relevanceExplained": "Служебная информация о правилах стрима", "startTime": "3:18:56", "endTime": "3:19:35"}, {"start": 11974.6, "end": 11991.6, "dur": 17.0, "desc": "Анекдот про Эйнштейна", "relevance": "LOW", "relevanceExplained": "Развлекательный блок", "startTime": "3:19:35", "endTime": "3:19:52"}, {"start": 11991.6, "end": 12009.4, "dur": 17.8, "desc": "Вопрос про стрим с Савельевым - сухой ответ без конкретики", "relevance": "LOW", "relevanceExplained": "Короткий ответ на вопрос из чата без конкретной информации", "startTime": "3:19:52", "endTime": "3:20:09"}, {"start": 12009.4, "end": 12034.4, "dur": 25.0, "desc": "Зависимости определяются врождённым - алкоголизм", "relevance": "MID", "relevanceExplained": "Тема nature/nurture не связана напрямую с томографом Савельева. Контринтуитивный факт: склонность к алкоголизму скорее всего врождённая", "startTime": "3:20:09", "endTime": "3:20:34"}, {"start": 12034.4, "end": 12056.2, "dur": 21.9, "desc": "Проверка донатов и переходные реплики", "relevance": "LOW", "relevanceExplained": "Служебный момент - проверка донатов и нетематические реплики", "startTime": "3:20:34", "endTime": "3:20:56"}, {"start": 12056.2, "end": 12210.6, "dur": 154.3, "desc": "Дополнение к критике Савельева - проблема эндокастов и малых выборок", "relevance": "HIGH", "relevanceExplained": "Важное дополнение: Савельев делает выводы по единичным черепам при колоссальной заявленной изменчивости что статистически бессмысленно", "startTime": "3:20:56", "endTime": "3:23:31"}, {"start": 12210.6, "end": 12251.9, "dur": 41.3, "desc": "Последнее видео Савельева - определение метаболизма по фото руки и лица", "relevance": "HIGH", "relevanceExplained": "Яркий пример деградации идей Савельева - по фото определяет метаболизм мозга", "startTime": "3:23:31", "endTime": "3:24:12"}, {"start": 12251.9, "end": 12323.7, "dur": 71.8, "desc": "Чтение доната и поиск ссылки на статью Пломена", "relevance": "LOW", "relevanceExplained": "Служебный момент - автор ищет ссылку мямлит и просит подождать", "startTime": "3:24:12", "endTime": "3:25:24"}, {"start": 12323.7, "end": 12367.6, "dur": 43.9, "desc": "Статья Пломена Genetics and Intelligence Differences - Five Special Findings", "relevance": "MID", "relevanceExplained": "Конкретная научная ссылка и инструкция как найти по PubMed", "startTime": "3:25:24", "endTime": "3:26:08"}, {"start": 12367.6, "end": 12389.0, "dur": 21.4, "desc": "Ответ про плотный график стримов", "relevance": "LOW", "relevanceExplained": "Бытовая информация о расписании", "startTime": "3:26:08", "endTime": "3:26:29"}, {"start": 12389.0, "end": 12417.9, "dur": 28.9, "desc": "Анекдот от нейробиолога", "relevance": "LOW", "relevanceExplained": "Развлекательный блок", "startTime": "3:26:29", "endTime": "3:26:58"}, {"start": 12417.9, "end": 12506.8, "dur": 88.9, "desc": "Обсуждение цены за минуту заказного видео", "relevance": "LOW", "relevanceExplained": "Обсуждение расценок стрима", "startTime": "3:26:58", "endTime": "3:28:27"}, {"start": 12506.8, "end": 12514.4, "dur": 7.6, "desc": "Проверка донатов", "relevance": "LOW", "relevanceExplained": "Служебный момент", "startTime": "3:28:27", "endTime": "3:28:34"}, {"start": 12514.4, "end": 12632.8, "dur": 118.4, "desc": "Конкурс красоты среди нейронов - анонс и обсуждение формата", "relevance": "MID", "relevanceExplained": "Анонс интерактивного проекта в социальных сетях", "startTime": "3:28:34", "endTime": "3:30:33"}, {"start": 12632.8, "end": 12660.8, "dur": 28.0, "desc": "Анонс завершения стрима и случайная реплика", "relevance": "LOW", "relevanceExplained": "Служебный момент - объявление о завершении", "startTime": "3:30:33", "endTime": "3:31:01"}, {"start": 12660.8, "end": 12702.4, "dur": 41.6, "desc": "Объяснение переезда в США и контент с Савельевым", "relevance": "MID", "relevanceExplained": "Личная информация о переезде - контекст но не основная тема", "startTime": "3:31:01", "endTime": "3:31:42"}, {"start": 12702.4, "end": 12718.1, "dur": 15.7, "desc": "Благодарности за донаты", "relevance": "LOW", "relevanceExplained": "Благодарственный блок", "startTime": "3:31:42", "endTime": "3:31:58"}, {"start": 12718.1, "end": 12976.8, "dur": 258.7, "desc": "Ответ на вопрос про линии на руках - дерматоглифика vs клинические признаки", "relevance": "MID", "relevanceExplained": "Медицинская тема не связана напрямую с томографом Савельева. Интересный ответ с медицинскими примерами: дерматоглифика vs клинические признаки", "startTime": "3:31:58", "endTime": "3:36:17"}, {"start": 12976.8, "end": 12994.7, "dur": 17.9, "desc": "Подготовка к завершению стрима", "relevance": "LOW", "relevanceExplained": "Служебный переходный момент", "startTime": "3:36:17", "endTime": "3:36:35"}, {"start": 12994.7, "end": 13162.5, "dur": 167.8, "desc": "Факт про гринд - дельфинов-рекордсменов по нейронам в коре и провокационный вопрос", "relevance": "MID", "relevanceExplained": "Тема не связана напрямую с томографом Савельева. Малоизвестный факт: у гринд больше нейронов в коре чем у человека", "startTime": "3:36:35", "endTime": "3:39:22"}, {"start": 13162.5, "end": 13179.1, "dur": 16.6, "desc": "Жалобы на Телеграм", "relevance": "LOW", "relevanceExplained": "Служебное отступление не связанное с темой", "startTime": "3:39:22", "endTime": "3:39:39"}, {"start": 13179.1, "end": 13356.3, "dur": 177.1, "desc": "Продолжение про гринд - нахождение статьи и вывод о дельфинах", "relevance": "MID", "relevanceExplained": "Тема не связана напрямую с томографом Савельева. Продолжение факта о гриндах - завершение мысли", "startTime": "3:39:39", "endTime": "3:42:36"}, {"start": 13356.3, "end": 13374.4, "dur": 18.1, "desc": "Факт о человеческой эхолокации", "relevance": "MID", "relevanceExplained": "Тема не связана напрямую с томографом Савельева. Малоизвестный факт о способности людей к эхолокации", "startTime": "3:42:36", "endTime": "3:42:54"}, {"start": 13374.4, "end": 13412.8, "dur": 38.4, "desc": "Последние анекдоты от нейробиолога", "relevance": "LOW", "relevanceExplained": "Развлекательный блок в завершение стрима", "startTime": "3:42:54", "endTime": "3:43:33"}, {"start": 13412.8, "end": 13440.0, "dur": 27.2, "desc": "Прощание со зрителями", "relevance": "HIGH", "relevanceExplained": "Последнее прощание всегда имеет высокую ценность", "startTime": "3:43:33", "endTime": "3:44:00"}];
+const highlights = [{"start": 817.1, "end": 1144.2, "dur": 327.1, "title": "Главный признак псевдоинтеллектуала: как отличить науку от бреда?", "desc": "В чем разница между настоящим ученым и научным популистом? Нейробиолог утверждает, что чем увереннее и безапелляционнее человек говорит о сложных вещах, тем дальше он от науки. Разбор на примере эндокринологии и критика современной научной журналистики.", "tags": "#наука #критическоемышление #научпоп #лженаука #психология", "startTime": "13:37", "endTime": "19:04"}, {"start": 1226.6, "end": 1607.0, "dur": 380.4, "title": "Мы движемся к миру из фильма «Идиократия»? Два тревожных фактора", "desc": "Нейробиолог рассматривает два фактора, которые могут привести к интеллектуальной деградации человечества. Первый — культурный, когда наука застревает в ложных, но самоподдерживающихся парадигмах. Второй — биологический, связанный с уменьшением размера мозга и снижением общего интеллекта.", "tags": "#идиократия #эволюция #деградация #будущее #наука", "startTime": "20:27", "endTime": "26:47"}, {"start": 1780.2, "end": 2145.0, "dur": 364.8, "title": "Как именно спорт продлевает жизнь? Подробное объяснение нейробиолога", "desc": "Почему физическая активность так важна для долголетия? Нейробиолог подробно разбирает механизмы, от работы внутренних органов и сердечно-сосудистой системы до гормональной активности жировой ткани и снятия стресса. Автор сам выделяет этот фрагмент как особенно важный.", "tags": "#спорт #здоровье #долголетие #наука #зож", "startTime": "29:40", "endTime": "35:45"}, {"start": 2535.7, "end": 2737.7, "dur": 202.0, "title": "Как цивилизация может рухнуть? Спираль деградации мозга и культуры", "desc": "Гипотеза коэволюции мозга и культуры объясняет взрывной рост интеллекта человека. Но нейробиолог предупреждает, что этот процесс может пойти в обратную сторону. Упрощение культуры ведет к уменьшению мозга, что еще больше ускоряет культурную деградацию, запуская опасную спираль регресса.", "tags": "#эволюция #цивилизация #антропология #мозг #деградация", "startTime": "42:16", "endTime": "45:38"}, {"start": 3059.8, "end": 3275.1, "dur": 215.3, "title": "Почему молодые девушки выбирают мужчин намного старше себя?", "desc": "В чем причина влечения молодых женщин к мужчинам в возрасте? Нейробиолог предлагает объяснение с точки зрения эволюционной биологии и макиавеллевского интеллекта. Оказывается, старшие самцы исторически были более успешны в получении ресурсов за счет социального интеллекта и интриг, а не грубой силы.", "tags": "#отношения #психология #эволюция #биология #мужчиныиженщины", "startTime": "51:00", "endTime": "54:35"}];
+const silenceCuts = [{"start": 0.0, "end": 16.2}, {"start": 4458.9, "end": 4462.4}, {"start": 4476.4, "end": 4480.2}, {"start": 4526.7, "end": 4530.3}, {"start": 4644.1, "end": 4647.5}, {"start": 4649.1, "end": 4677.9}, {"start": 4768.7, "end": 4773.4}, {"start": 4791.1, "end": 4794.5}, {"start": 4816.4, "end": 4820.5}, {"start": 4935.4, "end": 4950.5}, {"start": 5155.3, "end": 5159.6}, {"start": 5234.6, "end": 5241.6}, {"start": 5627.8, "end": 5631.4}, {"start": 5964.1, "end": 5967.3}, {"start": 5972.7, "end": 5982.9}, {"start": 6120.1, "end": 6125.0}, {"start": 6173.0, "end": 6176.4}, {"start": 6182.7, "end": 6188.3}, {"start": 6278.4, "end": 6283.9}, {"start": 6338.0, "end": 6341.7}, {"start": 6517.0, "end": 6521.3}, {"start": 6574.6, "end": 6579.9}, {"start": 6780.0, "end": 6783.6}, {"start": 7229.3, "end": 7232.4}, {"start": 7550.6, "end": 7553.7}, {"start": 7771.4, "end": 7784.8}, {"start": 7863.9, "end": 7868.2}, {"start": 8281.4, "end": 8290.0}, {"start": 8342.5, "end": 8353.4}, {"start": 8428.3, "end": 8436.2}, {"start": 8701.5, "end": 8721.9}, {"start": 8738.5, "end": 8751.2}, {"start": 8857.9, "end": 8863.1}, {"start": 8971.3, "end": 8976.3}, {"start": 9130.7, "end": 9135.2}, {"start": 9276.7, "end": 9295.4}, {"start": 9347.5, "end": 9350.7}, {"start": 9821.8, "end": 9827.4}, {"start": 9898.2, "end": 9904.5}, {"start": 10171.2, "end": 10174.5}, {"start": 10361.8, "end": 10365.4}, {"start": 10383.0, "end": 10385.9}, {"start": 10428.1, "end": 10431.3}, {"start": 10705.1, "end": 10709.4}, {"start": 11525.9, "end": 11530.3}, {"start": 12204.7, "end": 12210.6}, {"start": 12247.2, "end": 12251.9}];
+const timecodes = [{"time": "00:22", "title": "Критика Савельева: когда разоблачитель позорится не меньше", "secs": 22}, {"time": "01:26", "title": "Главный признак псевдоучёного: безапелляционная уверенность", "secs": 86}, {"time": "02:29", "title": "Почему научный контент так непопулярен? Проблема честных ответов", "secs": 149}, {"time": "03:48", "title": "Эффект Даннинга-Крюгера в науке: почему эксперты менее уверены в своих знаниях", "secs": 228}, {"time": "06:17", "title": "Научпоп-кринж: как упрощение сложных тем убивает науку", "secs": 377}, {"time": "07:11", "title": "Главная тема: Церебральный сортинг и томограф Савельева", "secs": 431}, {"time": "09:04", "title": "Церебральный сортинг: в чём суть теории Савельева?", "secs": 544}, {"time": "11:36", "title": "Краткая история эволюции человека: от проконсула до Homo Sapiens", "secs": 696}, {"time": "18:50", "title": "\"Водная обезьяна\": райская теория происхождения человека от Савельева", "secs": 1130}, {"time": "21:58", "title": "Разбор \"водной обезьяны\": почему эта гипотеза не выдерживает критики", "secs": 1318}, {"time": "28:43", "title": "Главное противоречие теории Савельева: рост мозга начался ПОСЛЕ \"райского периода\"", "secs": 1723}, {"time": "31:08", "title": "Опровержение \"саванной гипотезы\" и ошибки Савельева в палеонтологии", "secs": 1868}, {"time": "43:54", "title": "Надгеномная эволюция: Савельев изобретает велосипед", "secs": 2634}, {"time": "45:50", "title": "Фатальная ошибка теории: Савельев отрицает наследуемость структуры мозга", "secs": 2750}, {"time": "49:22", "title": "Почему церебральный сортинг невозможен, согласно самому Савельеву", "secs": 2962}, {"time": "53:37", "title": "Зеркальные нейроны: фейк или реальное открытие?", "secs": 3217}, {"time": "1:02:05", "title": "Томограф Савельева: как он предлагает отбирать гениев?", "secs": 3725}, {"time": "1:04:23", "title": "Проблема \"золотого стандарта\": как проверить, работает ли томограф?", "secs": 3863}, {"time": "1:07:29", "title": "Мозг созревает до 25 лет. Почему отбор детей по сканам мозга бессмысленен", "secs": 4049}, {"time": "1:11:36", "title": "Генетика против томографа: более точный способ предсказания талантов", "secs": 4296}, {"time": "1:13:49", "title": "Смертельная диагностика: почему нельзя помещать человека в синхротрон", "secs": 4429}, {"time": "1:21:59", "title": "Современные альтернативы: как уже сейчас изучают мозг без опасных технологий", "secs": 4919}, {"time": "1:28:39", "title": "Проблема больших данных: почему идея Савельева технически невыполнима", "secs": 5319}, {"time": "1:33:34", "title": "Ящик с зеркалом против томографа: элегантность против грубой силы", "secs": 5614}, {"time": "1:38:02", "title": "Новая ошибка Савельева: выводы о виде по одному черепу", "secs": 5882}, {"time": "1:40:30", "title": "Определить метаболизм мозга по фото руки? Новые \"открытия\" профессора", "secs": 6030}];
+
+function fmtDuration(secs) {
+  var total = Math.max(0, Math.round(secs));
+  var h = Math.floor(total / 3600);
+  var m = Math.floor((total % 3600) / 60);
+  var s = total % 60;
+  var mm = String(m).padStart(2, '0');
+  var ss = String(s).padStart(2, '0');
+  if (h > 0) {
+    return h + '\u0447 ' + mm + '\u043c ' + ss + '\u0441';
+  }
+  return mm + '\u043c ' + ss + '\u0441';
+}
+
+function fmtTime(secs) {
+  var h = Math.floor(secs / 3600);
+  var m = Math.floor((secs % 3600) / 60);
+  var s = Math.floor(secs % 60);
+  return (h > 0 ? h + ':' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function pct(secs) {
+  return (secs / TOTAL_DURATION) * 100;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderHighlightTags(tags) {
+  return String(tags)
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(function(tag) {
+      return '<span class="hl-tag">' + escapeHtml(tag) + '</span>';
+    })
+    .join('');
+}
+
+function renderTimeline() {
+  var bar = document.getElementById('timelineBar');
+  var markersDiv = document.getElementById('highlightMarkers');
+  var rulerDiv = document.getElementById('timeRuler');
+  var tooltip = document.getElementById('tooltip');
+
+  segments.forEach(function(seg, i) {
+    var el = document.createElement('div');
+    el.className = 'timeline-segment relevance-' + seg.relevance;
+    el.style.left = pct(seg.start) + '%';
+    el.style.width = Math.max(pct(seg.dur), 0.08) + '%';
+    el.dataset.idx = i;
+    bar.appendChild(el);
+  });
+
+  silenceCuts.forEach(function(s) {
+    var dur = s.end - s.start;
+    if (dur < 5) return;
+    var el = document.createElement('div');
+    el.className = 'timeline-silence';
+    el.style.left = pct(s.start) + '%';
+    el.style.width = Math.max(pct(dur), 0.05) + '%';
+    bar.appendChild(el);
+  });
+
+  highlights.forEach(function(h) {
+    var midpoint = (h.start + h.end) / 2;
+    var el = document.createElement('span');
+    el.className = 'highlight-marker';
+    el.innerHTML = '&#9670;';
+    el.style.left = pct(midpoint) + '%';
+    el.title = h.title;
+
+    el.addEventListener('mouseenter', function(e) {
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(h.title) + '</div>' +
+        '<div style="font-size:12px;margin-top:4px;">' + escapeHtml(h.desc) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(h.startTime) + ' — ' + escapeHtml(h.endTime) + ' (' + fmtDuration(h.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+
+    markersDiv.appendChild(el);
+  });
+  for (var t = 1800; t <= TOTAL_DURATION; t += 1800) {
+    var el = document.createElement('div');
+    el.className = 'time-ruler-mark';
+    el.style.left = pct(t) + '%';
+    el.textContent = fmtTime(t);
+    rulerDiv.appendChild(el);
+  }
+
+  bar.addEventListener('mousemove', function(e) {
+    var rect = bar.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var timeSecs = (x / rect.width) * TOTAL_DURATION;
+    var seg = segments.find(function(s) { return timeSecs >= s.start && timeSecs <= s.end; });
+    if (seg) {
+      var relevanceExplained = seg.relevanceExplained || 'No explanation provided';
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(seg.desc) + '</div>' +
+        '<div class="tt-why ' + seg.relevance + '">Why ' + escapeHtml(seg.relevance) + '?</div>' +
+        '<div class="tt-explanation">' + escapeHtml(relevanceExplained) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + ' (' + fmtDuration(seg.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    } else {
+      tooltip.style.display = 'none';
+    }
+  });
+
+  bar.addEventListener('mouseleave', function() {
+    tooltip.style.display = 'none';
+  });
+}
+
+function positionTooltip(e) {
+  var tooltip = document.getElementById('tooltip');
+  var pad = 12;
+  var x = e.clientX + pad;
+  var y = e.clientY + pad;
+  var tw = tooltip.offsetWidth;
+  var th = tooltip.offsetHeight;
+  if (x + tw > window.innerWidth - 20) x = e.clientX - tw - pad;
+  if (y + th > window.innerHeight - 20) y = e.clientY - th - pad;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function renderChapters() {
+  var tbody = document.getElementById('chaptersBody');
+  var empty = document.getElementById('chaptersEmpty');
+  if (timecodes.length === 0) {
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
+  timecodes.forEach(function(tc, i) {
+    var nextSecs = i < timecodes.length - 1 ? timecodes[i + 1].secs : SHORTENED_DURATION;
+    var gap = Math.max(nextSecs - tc.secs, 0);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(tc.time) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(gap) + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(tc.title) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function renderHighlights() {
+  var grid = document.getElementById('highlightsGrid');
+  highlights.forEach(function(h) {
+    var card = document.createElement('div');
+    card.className = 'highlight-card';
+    var tagsHtml = renderHighlightTags(h.tags);
+    card.innerHTML =
+      '<div class="hl-title">' + escapeHtml(h.title) + '</div>' +
+      '<div class="hl-meta">' +
+        '<span class="chapter-duration">' + fmtDuration(h.dur) + '</span>' +
+        '<span class="hl-source">' + escapeHtml(h.startTime) + ' — ' + escapeHtml(h.endTime) + '</span>' +
+      '</div>' +
+      '<div class="hl-desc">' + escapeHtml(h.desc) + '</div>' +
+      (tagsHtml ? '<div class="hl-tags">' + tagsHtml + '</div>' : '');
+    grid.appendChild(card);
+  });
+}
+
+function renderSegments() {
+  var tbody = document.getElementById('segmentsBody');
+  segments.forEach(function(seg) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(seg.dur) + '</span></td>' +
+      '<td class="col-rel"><span class="relevance-badge ' + seg.relevance + '">' + seg.relevance + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(seg.desc) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderTimeline();
+  renderChapters();
+  renderHighlights();
+  renderSegments();
+});
+</script>
+</body>
+</html>
