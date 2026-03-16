@@ -29,6 +29,10 @@ body {
     font-size: 16px;
 }
 
+.hero-line {
+    display: block;
+}
+
 /* Language Switcher — temporarily hidden; all languages still supported, change display to flex to re-enable */
 .lang-switcher {
     position: fixed;
@@ -208,6 +212,7 @@ body {
     transition: all 0.3s;
     box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.5);
     text-decoration: none;
+    max-width: 100%;
 }
 
 .cta-button.hero-cta {
@@ -226,6 +231,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
+    max-width: 100%;
 }
 
 .cta-button:hover {
@@ -282,6 +288,7 @@ body {
     white-space: nowrap;
     box-shadow: var(--shadow);
     transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
+    scroll-snap-align: start;
 }
 
 .marquee-item:hover {
@@ -425,6 +432,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     padding: 0.6rem 0.75rem;
     background: transparent;
     border-radius: 10px;
@@ -441,6 +449,13 @@ body {
     gap: 0.65rem;
     color: var(--text-muted);
     font-size: 1rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.setting-label span {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .setting-icon {
@@ -463,6 +478,8 @@ body {
     font-weight: 600;
     color: var(--text);
     font-size: 1rem;
+    flex-shrink: 0;
+    text-align: right;
 }
 
 .setting-value--success {
@@ -518,6 +535,9 @@ body {
     font-size: 0.8rem;
     font-weight: 500;
     color: var(--text-muted);
+    line-height: 1.35;
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
 .upload-option.active span {
@@ -556,7 +576,8 @@ body {
 
 /* Video File Card */
 .video-file-card {
-    display: flex;
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr) auto;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
@@ -638,6 +659,7 @@ body {
     font-weight: 700;
     font-size: 0.9rem;
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    justify-self: end;
 }
 
 /* === STEP 2: Processing Visual === */
@@ -904,6 +926,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     padding-bottom: 0.5rem;
 }
 
@@ -914,12 +937,18 @@ body {
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--text);
+    min-width: 0;
 }
 
 .block-title i {
     width: 24px;
     height: 24px;
     color: var(--primary);
+}
+
+.block-title span {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 /* Main Video Output */
@@ -981,6 +1010,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .saved-badge {
@@ -1024,6 +1054,8 @@ body {
 
 .timecode-label {
     color: var(--text-muted);
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .timecode-ellipsis {
@@ -1100,12 +1132,15 @@ body {
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.75rem;
+    min-width: 0;
 }
 
 .highlight-name {
     font-weight: 600;
     font-size: 1rem;
     color: var(--text);
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .highlight-duration-pill {
@@ -1234,6 +1269,8 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
     padding: 2rem;
 }
 
@@ -1268,8 +1305,9 @@ body {
 
 .config-card .cta-button {
     display: block;
-    width: fit-content;
+    width: min(100%, 320px);
     margin: 0 auto 2rem;
+    text-align: center;
 }
 
 .back-link {
@@ -1405,7 +1443,7 @@ body {
 
 @media (max-width: 600px) {
     .hero {
-        padding: 4rem 1.5rem 2rem;
+        padding: 4rem 1.25rem 1.75rem;
     }
 
     .hero-product {
@@ -1435,14 +1473,182 @@ body {
         height: 16px;
     }
 
+    .hero-line {
+        display: inline;
+    }
+
+    .hero-line + .hero-line::before {
+        content: ' ';
+    }
+
+    .cta-section {
+        padding: 1.25rem;
+    }
+
+    .cta-section.bottom {
+        padding: 1.5rem 1.25rem 3rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+        border-radius: 14px;
+    }
+
+    .cta-button.hero-cta {
+        width: calc(100% - 2.5rem);
+        padding: 1rem 1.25rem;
+    }
+
+    .cta-button-content {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+        column-gap: 0.625rem;
+    }
+
+    .cta-badge {
+        padding: 0.3rem 0.75rem;
+        font-size: 0.78rem;
+        text-align: center;
+    }
+
+    .examples-marquee {
+        padding: 0.5rem 1rem 1rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x proximity;
+        scroll-padding-inline: 1rem;
+        -webkit-mask-image: none;
+        mask-image: none;
+        scrollbar-width: none;
+    }
+
+    .examples-marquee::-webkit-scrollbar {
+        display: none;
+    }
+
+    .marquee-track {
+        gap: 0.75rem;
+        animation: none;
+        padding-right: 1rem;
+    }
+
     .marquee-item {
-        padding: 0.4rem 1rem;
+        padding: 0.55rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .marquee-track .marquee-item[aria-hidden="true"] {
+        display: none;
+    }
+
+    .how-it-works {
+        padding: 2.25rem 1rem 4rem;
+    }
+
+    .section-heading {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .steps {
+        gap: 3.5rem;
+    }
+
+    .step {
+        gap: 1.25rem;
+    }
+
+    .step-number {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        font-size: 1.5rem;
+    }
+
+    .step-connector {
+        width: 48px;
+        margin-left: 1rem;
+    }
+
+    .step-content,
+    .step-visual {
+        border-radius: 20px;
+    }
+
+    .step-content,
+    .upload-visual,
+    .processing-visual,
+    .output-visual {
+        padding: 1.125rem;
+    }
+
+    .step-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .step-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .settings-list {
+        padding: 0.625rem;
+    }
+
+    .setting-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        padding: 0.7rem;
+    }
+
+    .setting-value {
+        padding-left: calc(32px + 0.65rem);
+        text-align: left;
+    }
+
+    .upload-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .upload-option {
+        min-height: 110px;
+    }
+
+    .upload-option.active {
+        grid-column: 1 / -1;
+    }
+
+    .video-file-card {
+        grid-template-columns: 84px minmax(0, 1fr);
+        align-items: start;
+        gap: 0.75rem;
+    }
+
+    .video-file-thumb {
+        width: 84px;
+        height: 54px;
+        grid-row: 1 / span 2;
+    }
+
+    .video-duration-badge {
+        grid-column: 2;
+        justify-self: start;
         font-size: 0.8rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .timeline-section {
+        margin-bottom: 0.875rem;
     }
 
     .processing-columns {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.875rem;
+        padding: 1rem;
     }
 
     .highlight-card {
@@ -1454,10 +1660,110 @@ body {
     }
 
     .video-track .track-content {
-        height: 40px;
+        height: 38px;
     }
 
     .audio-track .track-content {
-        height: 36px;
+        height: 32px;
+    }
+
+    .video-track .track-content::before,
+    .video-track .track-content::after,
+    .track-segment::before {
+        display: none;
+    }
+
+    .marker {
+        width: 16px;
+        height: 16px;
+    }
+
+    .marker i {
+        width: 8px;
+        height: 8px;
+    }
+
+    .column-list li {
+        font-size: 0.9rem;
+    }
+
+    .block-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 0.25rem;
+    }
+
+    .block-title,
+    .highlights-title {
+        font-size: 1.25rem;
+    }
+
+    .saved-badge {
+        font-size: 0.75rem;
+    }
+
+    .main-output-play {
+        width: 48px;
+        height: 48px;
+    }
+
+    .timecode-row {
+        align-items: flex-start;
+    }
+
+    .timecode-time {
+        min-width: 48px;
+    }
+
+    .highlight-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .highlight-duration-pill {
+        align-self: flex-start;
+    }
+
+    .download-btn {
+        width: 100%;
+        padding: 0.95rem 1.25rem;
+    }
+
+    .config-page {
+        align-items: flex-start;
+        padding: 1.25rem 1rem 2rem;
+    }
+
+    .config-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 20px;
+    }
+
+    .config-card h1 {
+        font-size: 1.75rem;
+    }
+
+    .config-placeholder,
+    .config-thanks {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .config-card .cta-button {
+        width: 100%;
+        max-width: none;
+        margin-bottom: 1.5rem;
+    }
+
+    .back-link {
+        justify-content: center;
+    }
+
+    .footer-links {
+        gap: 0.5rem 1rem;
+    }
+
+    .footer-links a {
+        font-size: 1rem;
     }
 }
