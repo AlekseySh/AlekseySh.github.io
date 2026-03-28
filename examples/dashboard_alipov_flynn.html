@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Падает ли средний IQ человечества? Обратный эффект Флинна — Cutto Dashboard</title>
+<style>
+:root {
+  --relevance-high-color: #4CAF50;
+  --relevance-high-tooltip-color: #55efc4;
+  --relevance-mid-color: #FF9800;
+  --relevance-mid-tooltip-color: #fdcb6e;
+  --relevance-low-color: #f44336;
+  --relevance-low-tooltip-color: #ff7675;
+  --silence-color: #c8d0d4;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    line-height: 1.6;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 40px 60px;
+  }
+  .header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #dfe6e9;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .header-main {
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    min-height: 76px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ff2a23, #d80d14);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(216,13,20,0.18);
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .youtube-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+  .youtube-button-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .youtube-button-label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    background: linear-gradient(135deg, #6f5cff, #8c71ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(111,92,255,0.18);
+    letter-spacing: 0.1px;
+    text-decoration: none;
+  }
+  .header .badge:hover {
+    filter: brightness(1.05);
+  }
+  .badge-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .badge-label {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon,
+  .collapsible-details summary .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .section-title .icon svg,
+  .collapsible-details summary .icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .timeline-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 36px;
+  }
+  .timeline-header {
+    margin-bottom: 16px;
+  }
+  .timeline-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .timeline-summary-card {
+    background: #f8fafc;
+    border: 1px solid #e7edf2;
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timeline-summary-card-tags {
+    gap: 10px;
+  }
+  .timeline-summary-label {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .timeline-summary-value {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .timeline-summary-keep-group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .timeline-summary-metric {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .timeline-summary-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #4a5560;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .timeline-summary-tag .legend-dot {
+    margin-top: 0;
+  }
+  .timeline-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .timeline-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: #2d3436;
+    max-width: 520px;
+    flex: 1 1 auto;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    flex: 0 0 12px;
+    margin-top: 3px;
+  }
+  .legend-highlight {
+    color: #0984e3;
+    font-size: 15px;
+    line-height: 1;
+    flex: 0 0 12px;
+    margin-top: 1px;
+  }
+  .legend-text {
+    color: #2d3436;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .legend-name {
+    color: #2d3436;
+    font-weight: 700;
+  }
+  .timeline-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  .timeline-pie-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+  .timeline-pie-chart {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+  .timeline-pie-label {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    color: #1f2933;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+    pointer-events: none;
+  }
+  .timeline-pie-label-dark {
+    color: #1f2933;
+  }
+  .timeline-pie-chart::after {
+    content: '';
+    position: absolute;
+    inset: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #edf1f3;
+    z-index: 0;
+  }
+  .highlight-markers {
+    position: relative;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  .highlight-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    color: #0984e3;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.15s;
+    line-height: 1;
+    top: 4px;
+  }
+  .highlight-marker:hover {
+    transform: translateX(-50%) scale(1.4);
+  }
+  .timeline-bar {
+    position: relative;
+    height: 44px;
+    background: #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  .timeline-segment {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: opacity 0.15s;
+  }
+  .timeline-segment:hover {
+    opacity: 0.85;
+  }
+  .timeline-segment.relevance-HIGH { background: var(--relevance-high-color); }
+  .timeline-segment.relevance-MID { background: var(--relevance-mid-color); }
+  .timeline-segment.relevance-LOW { background: var(--relevance-low-color); }
+  .timeline-silence {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--silence-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .timeline-cut {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  .time-ruler {
+    position: relative;
+    height: 16px;
+    margin-top: 4px;
+  }
+  .time-ruler-mark {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #636e72;
+    font-weight: 500;
+  }
+  .timeline-tooltip {
+    display: none;
+    position: fixed;
+    background: #2d3436;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 340px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    line-height: 1.5;
+  }
+  .timeline-tooltip .tt-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .timeline-tooltip .tt-why {
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .timeline-tooltip .tt-why.HIGH { color: var(--relevance-high-tooltip-color); }
+  .timeline-tooltip .tt-why.MID { color: var(--relevance-mid-tooltip-color); }
+  .timeline-tooltip .tt-why.LOW { color: var(--relevance-low-tooltip-color); }
+  .timeline-tooltip .tt-explanation {
+    font-size: 12px;
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .timeline-tooltip .tt-time {
+    color: #b2bec3;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .chapters-section,
+  .highlights-section,
+  .segments-section {
+    margin-bottom: 36px;
+  }
+  .details-body {
+    padding: 0 28px 24px;
+  }
+  .chapters-table-wrap {
+    overflow-x: auto;
+  }
+  .chapter-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0984e3;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    line-height: 1.3;
+  }
+  .chapter-duration {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 9px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+  }
+  .chapter-empty {
+    color: #b2bec3;
+    font-size: 13px;
+    padding: 6px 0;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .highlight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #0984e3;
+    transition: box-shadow 0.2s;
+  }
+  .highlight-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  .highlight-card .hl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3436;
+    line-height: 1.4;
+  }
+  .highlight-card .hl-title + .hl-meta {
+    margin-top: 8px;
+  }
+  .highlight-card .hl-desc {
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight-card .hl-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .highlight-card .hl-source {
+    font-size: 11px;
+    color: #0984e3;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .highlight-card .hl-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .highlight-card .hl-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .collapsible-details {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .collapsible-details summary {
+    padding: 20px 28px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3436;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    list-style: none;
+    transition: background 0.15s;
+  }
+  .collapsible-details summary:hover {
+    background: #f5f6fa;
+  }
+  .collapsible-details summary::-webkit-details-marker { display: none; }
+  .collapsible-details summary .arrow {
+    transition: transform 0.2s;
+    font-size: 12px;
+    color: #b2bec3;
+  }
+  .collapsible-details[open] summary .arrow {
+    transform: rotate(90deg);
+  }
+  .segments-table-wrap {
+    padding: 0 28px 20px;
+    overflow-x: auto;
+  }
+  .segments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .segments-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #636e72;
+    border-bottom: 2px solid #dfe6e9;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .segments-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+  }
+  .segments-table tr:last-child td {
+    border-bottom: none;
+  }
+  .segments-table tr:hover td {
+    background: #f9f9fb;
+  }
+  .relevance-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .relevance-badge.HIGH { background: var(--relevance-high-color); }
+  .relevance-badge.MID { background: var(--relevance-mid-color); }
+  .relevance-badge.LOW { background: var(--relevance-low-color); }
+  .col-time { white-space: nowrap; }
+  .col-time .chapter-time { font-size: 12px; }
+  .col-dur { white-space: nowrap; text-align: right; }
+  .col-dur .chapter-duration { justify-content: center; }
+  .col-rel { white-space: nowrap; text-align: center; }
+  .col-desc { line-height: 1.5; }
+  #timecodesTable th.col-time,
+  #timecodesTable td.col-time,
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    width: 1%;
+    white-space: nowrap;
+  }
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    text-align: center;
+  }
+  #timecodesTable .col-dur .chapter-duration {
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .header-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .youtube-button, .header .badge { justify-content: center; }
+    .header-main { width: 100%; }
+    .timeline-summary-row { grid-template-columns: 1fr; }
+    .timeline-overview { flex-direction: column; align-items: flex-start; }
+    .timeline-legend { max-width: none; }
+    .timeline-pie-wrap { justify-content: flex-start; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="header-row">
+      <a class="youtube-button" href="https://www.youtube.com/playlist?list=PLXcjjw8fcCyJFplMSkizgPh78i-ZrHazU" target="_blank" rel="noopener noreferrer">
+        <span class="youtube-button-copy">
+          <span class="youtube-button-label">Открыть</span>
+          <span class="youtube-button-label">на YouTube</span>
+        </span>
+      </a>
+      <a class="badge" href="https://usecutto.app/" target="_blank" rel="noopener noreferrer">
+        <span class="badge-copy">
+          <span class="badge-label">Использовать</span>
+          <span class="badge-label">cutto</span>
+        </span>
+      </a>
+      <div class="header-main">
+        <h1>Падает ли средний IQ человечества? Обратный эффект Флинна</h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="timeline-section">
+    <div class="timeline-header">
+      <div class="section-title" style="margin-bottom:0">
+        <span class="icon icon-scissors" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M8.12 8.12 12 12"></path><path d="M20 4 8.12 15.88"></path><path d="M14.8 14.8 20 20"></path></svg></span>
+        Автомонтаж
+      </div>
+    </div>
+    <div class="timeline-summary-row">
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Итог</div>
+        <div class="timeline-summary-value">4 ч 7 мин → 1 ч 57 мин</div>
+      </div>
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Сохранено</div>
+        <div class="timeline-summary-content">
+          <span class="timeline-summary-keep-group"><span class="timeline-summary-tag"><span class="legend-dot" style="background:#4CAF50;"></span>high</span><span class="timeline-summary-metric">[48% от оригинала]</span></span>
+        </div>
+      </div>
+      <div class="timeline-summary-card timeline-summary-card-tags">
+        <div class="timeline-summary-label">Удалено</div>
+        <div class="timeline-summary-tags">
+          <span class="timeline-summary-tag"><span class="legend-dot" style="background:#FF9800;"></span>mid</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#f44336;"></span>low</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#c8d0d4;"></span>тишина</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-overview">
+      <div class="timeline-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#4CAF50;"></span><span class="legend-text"><span class="legend-name">high</span> — основная тема — 1 ч 57 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#FF9800;"></span><span class="legend-text"><span class="legend-name">mid</span> — интересно, но не по основной теме — 1 ч 11 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-text"><span class="legend-name">low</span> — заминки и низко информативные сегменты — 53 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#c8d0d4;"></span><span class="legend-text"><span class="legend-name">тишина</span> — вырезанные паузы — 5 мин</span></div><div class="legend-item"><span class="legend-highlight">&#9670;</span><span class="legend-text"><span class="legend-name">хайлайт</span> — отдельная интересная мысль, не обязательно по основной теме</span></div>
+      </div>
+      <div class="timeline-pie-wrap">
+        <div class="timeline-pie-chart" style="background: conic-gradient(#4CAF50 0% 47%, #FF9800 47% 76%, #f44336 76% 98%, #c8d0d4 98% 100%);" title="Распределение high / mid / low / тишина">
+          <span class="timeline-pie-label" style="left:137.7px; top:74.5px;">47%</span><span class="timeline-pie-label" style="left:41.6px; top:123.5px;">29%</span><span class="timeline-pie-label" style="left:37.7px; top:40.3px;">22%</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-wrapper">
+      <div class="highlight-markers" id="highlightMarkers"></div>
+      <div class="timeline-bar" id="timelineBar"></div>
+      <div class="time-ruler" id="timeRuler"></div>
+    </div>
+  </div>
+  <div class="timeline-tooltip" id="tooltip"></div>
+
+  <div class="chapters-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-clock" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
+        Таймкоды [25]
+      </summary>
+      <div class="details-body">
+        <div class="chapters-table-wrap">
+          <table class="segments-table" id="timecodesTable">
+            <thead>
+              <tr>
+                <th class="col-time">Время</th>
+                <th class="col-dur">Длительность</th>
+                <th class="col-desc">Описание</th>
+              </tr>
+            </thead>
+            <tbody id="chaptersBody"></tbody>
+          </table>
+          <div class="chapter-empty" id="chaptersEmpty" hidden>Нет таймкодов</div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="highlights-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-star" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20.2l1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg></span>
+        Хайлайты [5]
+      </summary>
+      <div class="details-body">
+        <div class="highlights-grid" id="highlightsGrid"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="segments-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-search" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
+        Все сегменты [181]
+      </summary>
+      <div class="segments-table-wrap">
+        <table class="segments-table" id="segmentsTable">
+          <thead>
+            <tr>
+              <th class="col-time">Время</th>
+              <th class="col-dur">Длительность</th>
+              <th class="col-rel">Релевантность</th>
+              <th class="col-desc">Описание</th>
+            </tr>
+          </thead>
+          <tbody id="segmentsBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_DURATION = 14795.0;
+const SHORTENED_DURATION = 7032.1;
+const segments = [{"start": 0.0, "end": 17.2, "dur": 17.2, "desc": "Приветствие зрителей и анонс темы стрима про IQ и эффект Флинна", "relevance": "HIGH", "relevanceExplained": "Первое приветствие стрима и анонс основной темы эфира - всегда HIGH", "startTime": "00:00", "endTime": "00:17"}, {"start": 17.2, "end": 36.2, "dur": 19.0, "desc": "Приветствие зрителей и анонс темы стрима про IQ и эффект Флинна", "relevance": "LOW", "relevanceExplained": "Проверка связи", "startTime": "00:17", "endTime": "00:36"}, {"start": 36.2, "end": 48.5, "dur": 12.3, "desc": "Вопрос к зрителям о делах и приветствие знакомых лиц", "relevance": "LOW", "relevanceExplained": "Фатическое общение без информационной ценности", "startTime": "00:36", "endTime": "00:49"}, {"start": 48.5, "end": 76.2, "dur": 27.7, "desc": "Представление автора: Владимир Алипов - врач и популяризатор нейробиологии", "relevance": "HIGH", "relevanceExplained": "Представление автора важно для новых зрителей и имеет долгосрочную ценность", "startTime": "00:49", "endTime": "01:16"}, {"start": 76.2, "end": 145.8, "dur": 69.6, "desc": "Объяснение формата стрима: чат, донаты, лайки и поддержка канала", "relevance": "LOW", "relevanceExplained": "Служебная информация о формате трансляции - быстро теряет ценность", "startTime": "01:16", "endTime": "02:26"}, {"start": 145.8, "end": 182.4, "dur": 36.6, "desc": "Анонс темы: обратный эффект Флинна и структура стрима", "relevance": "HIGH", "relevanceExplained": "Прямое описание основной темы эфира - обратный эффект Флинна и поглупение человечества", "startTime": "02:26", "endTime": "03:02"}, {"start": 182.4, "end": 214.6, "dur": 32.2, "desc": "Реклама архива трансляций на канале", "relevance": "LOW", "relevanceExplained": "Служебная самопромо-информация о вкладке «Трансляции» без содержательной ценности", "startTime": "03:02", "endTime": "03:35"}, {"start": 214.6, "end": 235.0, "dur": 20.4, "desc": "Ответы на короткие реплики чата (самолёт, тестостерон, прошлый стрим)", "relevance": "LOW", "relevanceExplained": "Реплики без содержательной ценности - обрывочные ответы на чат", "startTime": "03:35", "endTime": "03:55"}, {"start": 235.0, "end": 294.2, "dur": 59.3, "desc": "Техническая пауза: публикация анонса в телеграм-канал и ожидание зрителей", "relevance": "LOW", "relevanceExplained": "Служебный блок - настройка и ожидание аудитории", "startTime": "03:55", "endTime": "04:54"}, {"start": 294.2, "end": 351.7, "dur": 57.5, "desc": "Приветствие зрителей и рассуждение о самооценке когнитивных способностей", "relevance": "MID", "relevanceExplained": "Интересное замечание о том что большинство людей считают себя чуть выше среднего по IQ - косвенно связано с темой но не является основным содержанием", "startTime": "04:54", "endTime": "05:52"}, {"start": 351.7, "end": 375.3, "dur": 23.6, "desc": "Ответ на вопрос из чата про безопасное количество энергетиков в неделю", "relevance": "MID", "relevanceExplained": "Содержательный ответ на медицинский вопрос но не по основной теме", "startTime": "05:52", "endTime": "06:15"}, {"start": 375.3, "end": 441.6, "dur": 66.3, "desc": "Зачитывание доната Данилы про добрые поступки и техническая настройка DonationAlerts", "relevance": "LOW", "relevanceExplained": "Техническая настройка отображения донатов перемежается с зачитыванием вопроса", "startTime": "06:15", "endTime": "07:22"}, {"start": 441.6, "end": 528.1, "dur": 86.5, "desc": "Ответ на донат про добрые поступки: эволюционный механизм родственного отбора", "relevance": "MID", "relevanceExplained": "Содержательное объяснение эволюционной биологии альтруизма - интересно но не относится к основной теме эффекта Флинна", "startTime": "07:22", "endTime": "08:48"}, {"start": 528.1, "end": 572.4, "dur": 44.3, "desc": "Вторая теория альтруизма: репутационный механизм и социальный успех", "relevance": "MID", "relevanceExplained": "Продолжение содержательного ответа про эволюцию альтруизма - вторая гипотеза (репутация)", "startTime": "08:48", "endTime": "09:32"}, {"start": 572.4, "end": 721.3, "dur": 148.9, "desc": "Забавная история про парня из провинции как иллюстрация репутационного механизма", "relevance": "MID", "relevanceExplained": "Развлекательная иллюстрация репутационного механизма - не по основной теме но яркий пример", "startTime": "09:32", "endTime": "12:01"}, {"start": 721.3, "end": 906.3, "dur": 185.0, "desc": "Возврат к теории: механизм репутации в малых группах vs современный мегаполис", "relevance": "MID", "relevanceExplained": "Содержательное рассуждение о том как эволюционный механизм репутации работает как баг в современном обществе", "startTime": "12:01", "endTime": "15:06"}, {"start": 906.3, "end": 1027.4, "dur": 121.1, "desc": "Обратная сторона репутационного механизма: мошенники в больших городах", "relevance": "MID", "relevanceExplained": "Интересное рассуждение об эволюционной лазейке для мошенников в крупных популяциях", "startTime": "15:06", "endTime": "17:07"}, {"start": 1027.4, "end": 1097.2, "dur": 69.8, "desc": "Завершение мысли о биологии альтруизма: хорошие поступки не перестают быть хорошими из-за наличия эволюционных механизмов. Биология не отвечает на вопрос что хорошо а что плохо", "relevance": "MID", "relevanceExplained": "Содержательная мысль о соотношении биологии и морали но не относится к основной теме эфира (эффект Флинна и IQ)", "startTime": "17:07", "endTime": "18:17"}, {"start": 1097.2, "end": 1120.2, "dur": 23.0, "desc": "Ответ на вопрос из чата о том что важнее - люди или природа Земли", "relevance": "LOW", "relevanceExplained": "Очень краткий и поверхностный ответ на абстрактный вопрос без содержательного развития мысли", "startTime": "18:17", "endTime": "18:40"}, {"start": 1120.2, "end": 1158.0, "dur": 37.8, "desc": "Призыв поставить лайки трансляции и проверка количества зрителей", "relevance": "LOW", "relevanceExplained": "Служебный блок про лайки и количество зрителей - информация быстро теряет ценность", "startTime": "18:40", "endTime": "19:18"}, {"start": 1158.0, "end": 1248.0, "dur": 90.0, "desc": "Анонс очной лекции про нейробиологию боли в Санкт-Петербурге и демонстрация подаренного музыкального инструмента калимбы", "relevance": "LOW", "relevanceExplained": "Информация о конкретном мероприятии быстро теряет актуальность. Рассказ о подарке - личный момент без информационной ценности", "startTime": "19:18", "endTime": "20:48"}, {"start": 1248.0, "end": 1260.1, "dur": 12.0, "desc": "Реплики в чате про калимбу и пауза", "relevance": "LOW", "relevanceExplained": "Технические/служебные реплики без содержательной информации", "startTime": "20:48", "endTime": "21:00"}, {"start": 1260.1, "end": 1284.6, "dur": 24.5, "desc": "Начало лекции: объявление темы - эффект Флинна и обратный эффект Флинна. Ссылка на плейлист «Нейробиология ума и глупости»", "relevance": "HIGH", "relevanceExplained": "Прямое введение в основную тему эфира с указанием контекста предыдущих материалов", "startTime": "21:00", "endTime": "21:25"}, {"start": 1284.6, "end": 1401.4, "dur": 116.8, "desc": "Вводная часть лекции: почему измерение интеллекта важно - когнитивные способности как ключевой фактор успеха. История возникновения идеи измерения интеллекта начиная с Испанской империи XVI века", "relevance": "HIGH", "relevanceExplained": "Ключевая вводная часть лекции - объясняет мотивацию измерения интеллекта и даёт исторический контекст", "startTime": "21:25", "endTime": "23:21"}, {"start": 1401.4, "end": 1513.0, "dur": 111.6, "desc": "История создания IQ-теста: от теста Симона-Бине для французских школьников до Стэнфорд-Бине и теста Векслера. IQ как лучший предиктор успеха - образование, заработок, продолжительность жизни и экономическое развитие стран", "relevance": "HIGH", "relevanceExplained": "Центральная информация лекции - история IQ-тестов и их предсказательная сила. Развенчание мифа о нацистском происхождении IQ-тестов", "startTime": "23:21", "endTime": "25:13"}, {"start": 1513.0, "end": 1613.3, "dur": 100.3, "desc": "Описание эффекта Флинна: рост IQ на протяжении XX века примерно на 3 балла за десятилетие и обнаружение обратного эффекта - снижения IQ в конце 90-х", "relevance": "HIGH", "relevanceExplained": "Ядро лекции - описание самого эффекта Флинна и его обратной формы", "startTime": "25:13", "endTime": "26:53"}, {"start": 1613.3, "end": 1646.5, "dur": 33.2, "desc": "Объяснение названия: эффект назван в честь Джеймса Флинна который обнаружил рост IQ в 70-80-е годы XX века", "relevance": "HIGH", "relevanceExplained": "Продолжение ключевой темы - атрибуция открытия", "startTime": "26:53", "endTime": "27:27"}, {"start": 1646.5, "end": 1661.5, "dur": 15.0, "desc": "Автор ищет и показывает иллюстрацию графика эффекта Флинна", "relevance": "LOW", "relevanceExplained": "Техническая пауза - автор ищет и выводит на экран картинку", "startTime": "27:27", "endTime": "27:42"}, {"start": 1661.5, "end": 1689.0, "dur": 27.5, "desc": "Комментарий к графику: рост IQ до середины 80-90-х и последующее снижение. Ссылка на телеграм-канал", "relevance": "HIGH", "relevanceExplained": "Визуальное подкрепление основной темы лекции с описанием графика", "startTime": "27:42", "endTime": "28:09"}, {"start": 1689.0, "end": 1726.1, "dur": 37.1, "desc": "Рассказ о выступлении учёного Хорварда перед Конгрессом США: его представили как нейробиолога в области образования но он давно не занимается наукой и ведёт бизнес-политическую организацию", "relevance": "HIGH", "relevanceExplained": "Важный контекст для критического анализа источника заявлений о снижении IQ - проверка квалификации спикера", "startTime": "28:09", "endTime": "28:46"}, {"start": 1726.1, "end": 1821.9, "dur": 95.8, "desc": "Автор открывает и настраивает отображение статьи из Daily Mail на экране", "relevance": "LOW", "relevanceExplained": "Техническая пауза - открытие и настройка отображения статьи", "startTime": "28:46", "endTime": "30:22"}, {"start": 1821.9, "end": 1904.1, "dur": 82.2, "desc": "Пересказ заявлений Хорварда: поколение Z - первое поколение с снижающимся интеллектом. Причина - подростки проводят половину времени глядя в экран телефона плюс использование цифровых технологий в образовании", "relevance": "HIGH", "relevanceExplained": "Ключевое содержание обсуждаемого заявления перед Конгрессом - центральный тезис который далее будет критически разобран", "startTime": "30:22", "endTime": "31:44"}, {"start": 1904.1, "end": 1941.3, "dur": 37.1, "desc": "Продолжение тезисов Хорварда: снижение когнитивных способностей связано не с биологией а с использованием телефонов и соцсетей в школах. Упоминание аналогии с «клиповым мышлением»", "relevance": "HIGH", "relevanceExplained": "Продолжение изложения центрального тезиса - причины снижения IQ по мнению Хорварда", "startTime": "31:44", "endTime": "32:21"}, {"start": 1941.3, "end": 2101.5, "dur": 160.2, "desc": "Предложение Хорварда о запрете цифровых устройств в школах. Контекст: проект «цифровая пауза» во Франции и инициатива Макрона. Описание эксперимента по изъятию смартфонов у школьников", "relevance": "HIGH", "relevanceExplained": "Описание практических последствий обсуждаемых тезисов - реальные законодательные инициативы по запрету смартфонов в школах", "startTime": "32:21", "endTime": "35:01"}, {"start": 2101.5, "end": 2176.1, "dur": 74.7, "desc": "Интерактивный вопрос к аудитории: вредят ли смартфоны подросткам вообще - не только в школе но и дома", "relevance": "HIGH", "relevanceExplained": "Переходный блок к критическому анализу - автор формулирует ключевой вопрос для дальнейшего разбора", "startTime": "35:01", "endTime": "36:16"}, {"start": 2176.1, "end": 2243.4, "dur": 67.3, "desc": "Гипотеза о негативном влиянии смартфонов: постоянная стимуляция приводит к неспособности концентрироваться и необходимости геймифицировать образование", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме эфира - мифы о снижении IQ из-за смартфонов и соцсетей", "startTime": "36:16", "endTime": "37:23"}, {"start": 2243.4, "end": 2303.0, "dur": 59.6, "desc": "Контраргумент: снижение IQ наблюдалось до массового распространения смартфонов - поколение зуммеров не так много сидело в смартфонах", "relevance": "HIGH", "relevanceExplained": "Ключевой контраргумент к теории Хорвата - прямое отношение к основной теме эфира", "startTime": "37:23", "endTime": "38:23"}, {"start": 2303.0, "end": 2342.2, "dur": 39.2, "desc": "Реплики из чата: излучение смартфонов и перевес \"тупых\" над \"умными\"", "relevance": "LOW", "relevanceExplained": "Короткие обрывочные реплики из чата без развёрнутого ответа автора не несут самостоятельной ценности", "startTime": "38:23", "endTime": "39:02"}, {"start": 2342.2, "end": 2362.2, "dur": 20.0, "desc": "Результаты голосования в чате - 50 на 50", "relevance": "LOW", "relevanceExplained": "Служебный момент стрима - обсуждение результатов голосования быстро теряет ценность", "startTime": "39:02", "endTime": "39:22"}, {"start": 2362.2, "end": 2416.3, "dur": 54.1, "desc": "Начало разбора научных данных: обратный эффект Флинна существует но его масштаб сильно различается между странами (0.38 балла в Норвегии vs 8 баллов в Эстонии)", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме - фактические данные об обратном эффекте Флинна", "startTime": "39:22", "endTime": "40:16"}, {"start": 2416.3, "end": 2436.4, "dur": 20.1, "desc": "Поиск иллюстрации для показа", "relevance": "LOW", "relevanceExplained": "Техническая пауза - автор ищет картинку", "startTime": "40:16", "endTime": "40:36"}, {"start": 2436.4, "end": 2538.4, "dur": 102.0, "desc": "Анализ данных по США: статья в Intelligence о проекте SAPA (2006-2018) показывает снижение когнитивных способностей и у мужчин и у женщин - опровержение гипотезы про тестостерон", "relevance": "HIGH", "relevanceExplained": "Разбор конкретной научной статьи по основной теме с опровержением побочной гипотезы про тестостерон", "startTime": "40:36", "endTime": "42:18"}, {"start": 2538.4, "end": 2611.6, "dur": 73.2, "desc": "Ключевая оговорка: изменения IQ в США ничтожно малы (0.00009 стандартного отклонения в год) - катастрофическая картинка на превью не соответствует реальности для США", "relevance": "HIGH", "relevanceExplained": "Центральный аргумент лекции - разоблачение преувеличения масштаба проблемы", "startTime": "42:18", "endTime": "43:32"}, {"start": 2611.6, "end": 2624.0, "dur": 12.4, "desc": "Анонс ключевой идеи: не все когнитивные функции снижаются - это будет главная тема стрима", "relevance": "HIGH", "relevanceExplained": "Автор сам выделяет это как ключевую историю стрима", "startTime": "43:32", "endTime": "43:44"}, {"start": 2624.0, "end": 2730.7, "dur": 106.8, "desc": "Техническая подготовка: автор ищет и настраивает отображение картинок и окон", "relevance": "LOW", "relevanceExplained": "Чисто технические действия без содержательной информации", "startTime": "43:44", "endTime": "45:31"}, {"start": 2730.7, "end": 2996.2, "dur": 265.4, "desc": "Объяснение G-фактора: все когнитивные способности взаимосвязаны - Спирман и факторный анализ. IQ как способ измерения G-фактора но не тождественный ему", "relevance": "HIGH", "relevanceExplained": "Фундаментальное объяснение концепции G-фактора необходимо для понимания дальнейшего аргумента о разнонаправленности изменений", "startTime": "45:31", "endTime": "49:56"}, {"start": 2996.2, "end": 3175.6, "dur": 179.4, "desc": "Применение G-фактора к эффекту Флинна: если G растёт - все способности должны расти вместе и если G падает - все должны падать", "relevance": "HIGH", "relevanceExplained": "Логический мост между концепцией G-фактора и парадоксом разнонаправленных изменений - ядро аргументации", "startTime": "49:56", "endTime": "52:56"}, {"start": 3175.6, "end": 3295.3, "dur": 119.7, "desc": "Разбор данных по США (2006-2018): вербальные задачи и память снизились но пространственное 3D-мышление улучшилось - внутреннее противоречие опровергающее простые объяснения", "relevance": "HIGH", "relevanceExplained": "Ключевые эмпирические данные показывающие разнонаправленность изменений - центральный аргумент лекции", "startTime": "52:56", "endTime": "54:55"}, {"start": 3295.3, "end": 3346.1, "dur": 50.8, "desc": "Интерпретация: разнонаправленность изменений означает что нельзя объяснить снижение IQ одним простым фактором вроде соцсетей", "relevance": "HIGH", "relevanceExplained": "Главный вывод из представленных данных - опровержение упрощённых объяснений", "startTime": "54:55", "endTime": "55:46"}, {"start": 3346.1, "end": 3374.4, "dur": 28.3, "desc": "Пауза и реплика из чата про палку похожую на свиток телепортации", "relevance": "LOW", "relevanceExplained": "Нерелевантная шутка из чата между содержательными блоками", "startTime": "55:46", "endTime": "56:14"}, {"start": 3374.4, "end": 3532.7, "dur": 158.2, "desc": "Разнообразие трендов эффекта Флинна в разных странах: в одних снижение выражено, в других слабое, в третьих рост продолжается, что опровергает связь с технологиями", "relevance": "HIGH", "relevanceExplained": "Это ключевой аргумент основной темы - отсутствие единого тренда снижения IQ и невозможность объяснить его влиянием технологий", "startTime": "56:14", "endTime": "58:53"}, {"start": 3532.7, "end": 3578.8, "dur": 46.2, "desc": "Положительный эффект Флинна в России по данным статьи Суганяева и Григорьева 2018 года", "relevance": "HIGH", "relevanceExplained": "Конкретные научные данные по эффекту Флинна в России - прямое отношение к основной теме", "startTime": "58:53", "endTime": "59:39"}, {"start": 3578.8, "end": 3629.2, "dur": 50.3, "desc": "Обобщающий вывод: нельзя говорить о всеобщем поглупении зуммеров, связь с соцсетями и электронными технологиями не подтверждается", "relevance": "HIGH", "relevanceExplained": "Это ключевой вывод первой части лекции по основной теме", "startTime": "59:39", "endTime": "1:00:29"}, {"start": 3629.2, "end": 3683.9, "dur": 54.8, "desc": "Автор ищет статью про обратный эффект Флинна и социальные сети и обещает показать её после перерыва", "relevance": "LOW", "relevanceExplained": "Служебный момент - поиск статьи и организация перерыва, не содержит самостоятельной информации", "startTime": "1:00:29", "endTime": "1:01:24"}, {"start": 3683.9, "end": 3704.8, "dur": 20.9, "desc": "Анонс разбора вопросов перед перерывом и упоминание статей про соцсети и когнитивные способности", "relevance": "LOW", "relevanceExplained": "Служебная организация - автор объясняет структуру дальнейшей работы, информационная ценность минимальна", "startTime": "1:01:24", "endTime": "1:01:45"}, {"start": 3704.8, "end": 3742.5, "dur": 37.7, "desc": "Благодарность за донаты и лайки, просьба ставить лайки", "relevance": "LOW", "relevanceExplained": "Служебный блок - благодарности и призывы к активности, быстро теряющая ценность информация", "startTime": "1:01:45", "endTime": "1:02:23"}, {"start": 3742.5, "end": 3749.9, "dur": 7.4, "desc": "Поздравление всех с праздником", "relevance": "LOW", "relevanceExplained": "Привязка к конкретной дате, быстро теряет актуальность", "startTime": "1:02:23", "endTime": "1:02:30"}, {"start": 3749.9, "end": 3773.5, "dur": 23.5, "desc": "Ответ на вопрос Вейланда: может ли обратный эффект Флинна быть проявлением адаптации мозга к многозадачности и клиповому мышлению", "relevance": "MID", "relevanceExplained": "Интересный вопрос по теме, но автор не отвечает по существу, откладывая ответ на после перерыва", "startTime": "1:02:30", "endTime": "1:02:53"}, {"start": 3773.5, "end": 3798.1, "dur": 24.7, "desc": "Пауза и переходные фразы между вопросами", "relevance": "LOW", "relevanceExplained": "Тишина и служебные междометия без информационного содержания", "startTime": "1:02:53", "endTime": "1:03:18"}, {"start": 3798.1, "end": 4087.9, "dur": 289.8, "desc": "Ответ на вопрос Лиминора о разнице между мозгом в 20 и 25 лет: обсуждение эпох развития мозга, статьи из Nature о топологических точках, миелинизации и влиянии на обучение игре на фортепиано", "relevance": "MID", "relevanceExplained": "Содержательный и интересный ответ с конкретными научными данными, но тема развития мозга по возрастам является побочной относительно основной темы эфира", "startTime": "1:03:18", "endTime": "1:08:08"}, {"start": 4087.9, "end": 4106.4, "dur": 18.5, "desc": "Замечание что в 60 лет поздно начинать учиться играть на инструментах и паузы", "relevance": "MID", "relevanceExplained": "Завершение ответа Лиминору - та же ценность что у основного блока", "startTime": "1:08:08", "endTime": "1:08:26"}, {"start": 4106.4, "end": 4156.2, "dur": 49.9, "desc": "Ответ на вопрос Слака о связи ежовика/БАД с трендами снижения IQ: ироничное замечание о ложных корреляциях и вывод что биохакинг и методики развития мозга не влияют на когнитивные способности", "relevance": "HIGH", "relevanceExplained": "Хотя вопрос шуточный, ответ содержит важный вывод по основной теме: если бы биохакинг и методики работали, мы бы видели продолжающийся рост IQ", "startTime": "1:08:26", "endTime": "1:09:16"}, {"start": 4156.2, "end": 4185.9, "dur": 29.6, "desc": "Рекомендация канала Straight Biology и благодарности за поддержку", "relevance": "LOW", "relevanceExplained": "Служебный блок - рекомендация канала и благодарности", "startTime": "1:09:16", "endTime": "1:09:46"}, {"start": 4185.9, "end": 4204.5, "dur": 18.6, "desc": "Вопрос Татарина об отрицательном эффекте соцсетей для детей и ограничении доступа к смартфонам - ответ отложен на после перерыва", "relevance": "LOW", "relevanceExplained": "Вопрос зачитан но ответ не дан, автор откладывает на потом", "startTime": "1:09:46", "endTime": "1:10:04"}, {"start": 4204.5, "end": 4212.1, "dur": 7.6, "desc": "Шутка про то что только калимба может развивать мозг", "relevance": "LOW", "relevanceExplained": "Мимолётная шутка без информационной ценности", "startTime": "1:10:04", "endTime": "1:10:12"}, {"start": 4212.1, "end": 4596.7, "dur": 384.6, "desc": "Объявление перерыва на 5 минут и прощание до возвращения", "relevance": "LOW", "relevanceExplained": "Служебный блок - организация перерыва", "startTime": "1:10:12", "endTime": "1:16:37"}, {"start": 4596.7, "end": 4643.8, "dur": 47.0, "desc": "Возвращение после перерыва: приветствие, благодарности, показ кошки", "relevance": "LOW", "relevanceExplained": "Служебный блок - возвращение после перерыва, приветствия и благодарности", "startTime": "1:16:37", "endTime": "1:17:24"}, {"start": 4643.8, "end": 4660.2, "dur": 16.5, "desc": "Постановка вопроса: как социальные сети и электронные технологии влияют на когнитивные способности - <начало про влияние соцсетей на когнитивные способности>", "relevance": "HIGH", "relevanceExplained": "Вступление ко второй части лекции - формулировка ключевого вопроса основной темы", "startTime": "1:17:24", "endTime": "1:17:40"}, {"start": 4660.2, "end": 4760.6, "dur": 100.3, "desc": "Разбор французского запрета смартфонов в школах: отсутствие научных данных в основании решения, только отчёт министерства без пир-ревью - <продолжение про влияние соцсетей на когнитивные способности>", "relevance": "HIGH", "relevanceExplained": "Критический анализ конкретного политического решения о запрете смартфонов - ключевой аргумент основной темы о недостаточности доказательной базы", "startTime": "1:17:40", "endTime": "1:19:21"}, {"start": 4760.6, "end": 4888.9, "dur": 128.3, "desc": "Исследование Smart Schools из Lancet: запрет смартфонов в школах не показал никакого эффекта на когнитивные способности и ментальное благополучие подростков", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме - разбор научных данных о влиянии гаджетов на интеллект. Конкретное исследование с выводами", "startTime": "1:19:21", "endTime": "1:21:29"}, {"start": 4888.9, "end": 4897.4, "dur": 8.5, "desc": "Реплика из чата про сдачу телефонов в школе", "relevance": "LOW", "relevanceExplained": "Короткая проходная реплика без содержательной ценности", "startTime": "1:21:29", "endTime": "1:21:37"}, {"start": 4897.4, "end": 4916.6, "dur": 19.2, "desc": "Переход к теме социальных сетей и когнитивных способностей - анонс статьи из JAMA", "relevance": "HIGH", "relevanceExplained": "Начало разбора следующего важного исследования по основной теме эфира", "startTime": "1:21:37", "endTime": "1:21:57"}, {"start": 4916.6, "end": 4985.0, "dur": 68.5, "desc": "Технические проблемы с доступом к статье JAMA из-за ограничений и поиск альтернативы", "relevance": "LOW", "relevanceExplained": "Служебный момент - автор пытается открыть статью и не может из-за блокировки. Информационной ценности нет", "startTime": "1:21:57", "endTime": "1:23:05"}, {"start": 4985.0, "end": 5084.0, "dur": 99.0, "desc": "Статья из Computers in Human Behavior: связь соцсетей и когнитивных способностей на выборке 12 тысяч подростков - эффект преувеличен и крайне мал", "relevance": "HIGH", "relevanceExplained": "Разбор конкретного исследования с большой выборкой по основной теме - влияние соцсетей на интеллект", "startTime": "1:23:05", "endTime": "1:24:44"}, {"start": 5084.0, "end": 5159.9, "dur": 75.9, "desc": "Описание дизайна исследования JAMA: проспективное наблюдение за когортой американских подростков и их использованием соцсетей", "relevance": "HIGH", "relevanceExplained": "Методология ключевого исследования по основной теме эфира", "startTime": "1:24:44", "endTime": "1:26:00"}, {"start": 5159.9, "end": 5238.4, "dur": 78.6, "desc": "Описание групп подростков по времени использования соцсетей (от мало до 3+ часов в день) и подготовка к показу результатов", "relevance": "HIGH", "relevanceExplained": "Продолжение разбора исследования JAMA - описание выборки и групп сравнения по основной теме", "startTime": "1:26:00", "endTime": "1:27:18"}, {"start": 5238.4, "end": 5495.0, "dur": 256.5, "desc": "Результаты исследования JAMA: даже у подростков проводящих 4 часа в соцсетях разница в когнитивных тестах менее 2 баллов из 100 - практически нулевой эффект", "relevance": "HIGH", "relevanceExplained": "Ключевые результаты главного исследования по теме эфира - доказательство отсутствия значимого влияния соцсетей на когнитивные способности", "startTime": "1:27:18", "endTime": "1:31:35"}, {"start": 5495.0, "end": 5689.4, "dur": 194.4, "desc": "Статья из Scientific Reports (Nature): влияние цифровых медиа и компьютерных игр на интеллект - гейминг даёт положительный эффект а соцсети не влияют", "relevance": "HIGH", "relevanceExplained": "Ещё одно важное исследование по основной теме. Контринтуитивный результат про положительное влияние компьютерных игр", "startTime": "1:31:35", "endTime": "1:34:49"}, {"start": 5689.4, "end": 5725.5, "dur": 36.1, "desc": "Ответ на комментарий Димы Клянюка: нет статей показывающих обратное - все крупные работы подтверждают отсутствие эффекта", "relevance": "HIGH", "relevanceExplained": "Важное уточнение по основной теме - подчёркивает консенсус данных", "startTime": "1:34:49", "endTime": "1:35:26"}, {"start": 5725.5, "end": 5827.9, "dur": 102.4, "desc": "Обобщение: нет механизма через который соцсети и гаджеты могли бы влиять на мозг - аналогия с мифами про радио и 5G вышки", "relevance": "HIGH", "relevanceExplained": "Ключевое обобщение по основной теме - объяснение почему отсутствие эффекта логично с научной точки зрения", "startTime": "1:35:26", "endTime": "1:37:08"}, {"start": 5827.9, "end": 5890.1, "dur": 62.2, "desc": "Критика идеи о влиянии соцсетей на развитие мозга подростков: нет механизма воздействия и эффект Флинна продолжается несмотря на гаджеты", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме эфира - развенчание мифа о снижении IQ из-за соцсетей и смартфонов", "startTime": "1:37:08", "endTime": "1:38:10"}, {"start": 5890.1, "end": 5955.3, "dur": 65.1, "desc": "Реальная проблема гаджетов - не в самих устройствах а в том что родители используют их чтобы не проводить время с детьми", "relevance": "HIGH", "relevanceExplained": "Относится к основной теме и содержит важный контринтуитивный тезис: проблема не в гаджетах а в поведении родителей", "startTime": "1:38:10", "endTime": "1:39:15"}, {"start": 5955.3, "end": 6074.5, "dur": 119.2, "desc": "Подведение итогов второй части лекции: подростки не глупеют а умнеют и нет научных данных о вреде соцсетей для интеллекта", "relevance": "HIGH", "relevanceExplained": "Прямое резюме основной темы эфира с ключевыми выводами", "startTime": "1:39:15", "endTime": "1:41:15"}, {"start": 6074.5, "end": 6138.9, "dur": 64.4, "desc": "Переходный блок: призыв поставить лайк и анонс третьей части лекции про причины обратного эффекта Флинна", "relevance": "LOW", "relevanceExplained": "Служебная информация о структуре стрима и призыв к лайкам - быстро теряет актуальность", "startTime": "1:41:15", "endTime": "1:42:19"}, {"start": 6138.9, "end": 6163.0, "dur": 24.1, "desc": "Ответ на донат Айрата Закирова про информационную гигиену: автор сравнивает рекомендацию ограничивать соцсети с шапочкой из фольги", "relevance": "HIGH", "relevanceExplained": "Яркая критика необоснованных рекомендаций по ограничению соцсетей прямо в теме эфира", "startTime": "1:42:19", "endTime": "1:42:43"}, {"start": 6163.0, "end": 6202.6, "dur": 39.6, "desc": "Обещание прочитать донаты с прошлого стрима и поиск вопросов", "relevance": "LOW", "relevanceExplained": "Служебная организационная информация без содержательной ценности", "startTime": "1:42:43", "endTime": "1:43:23"}, {"start": 6202.6, "end": 6277.3, "dur": 74.7, "desc": "Ответ на донат Ежика без ножек: может ли стресс от информационного перенасыщения снижать интеллект - автор разбирает идею и приводит пример ковида", "relevance": "HIGH", "relevanceExplained": "Содержательный ответ с разбором гипотезы о стрессе и данными о влиянии пандемии на обучение - относится к основной теме", "startTime": "1:43:23", "endTime": "1:44:37"}, {"start": 6277.3, "end": 6290.0, "dur": 12.7, "desc": "Переходная пауза и начало чтения следующего доната", "relevance": "LOW", "relevanceExplained": "Служебный переход без содержательной информации", "startTime": "1:44:37", "endTime": "1:44:50"}, {"start": 6290.0, "end": 6443.0, "dur": 153.0, "desc": "Ответ на донат Артура про стрим Ирины Якутенко: разбор её позиции по влиянию гаджетов и геймификации на детей", "relevance": "HIGH", "relevanceExplained": "Содержательное сравнение позиций двух экспертов по основной теме эфира с нюансированным анализом аргументов Якутенко", "startTime": "1:44:50", "endTime": "1:47:23"}, {"start": 6443.0, "end": 6470.1, "dur": 27.1, "desc": "Вопрос от Вейланда о необходимости новых инструментов измерения интеллекта для сетевого человека", "relevance": "HIGH", "relevanceExplained": "Вопрос напрямую связан с основной темой и автор говорит что сейчас будет это обсуждать - анонс следующей части", "startTime": "1:47:23", "endTime": "1:47:50"}, {"start": 6470.1, "end": 6502.1, "dur": 32.0, "desc": "Благодарность за донат на миндальные круассаны и поиск вопросов по теме", "relevance": "LOW", "relevanceExplained": "Служебная благодарность и технический поиск без содержательной информации", "startTime": "1:47:50", "endTime": "1:48:22"}, {"start": 6502.1, "end": 6755.9, "dur": 253.7, "desc": "Рассуждение о мифах и алармизме: от запрета читать за едой до борьбы с мастурбацией и микропластиком - паттерн необоснованных запретов повторяется с соцсетями и смартфонами во Франции", "relevance": "HIGH", "relevanceExplained": "Яркий и содержательный блок с историческими параллелями необоснованных запретов напрямую связанный с основной темой - развенчание мифов о вреде гаджетов", "startTime": "1:48:22", "endTime": "1:52:36"}, {"start": 6755.9, "end": 6792.6, "dur": 36.7, "desc": "Уточнение про одноразовые бутылки для воды и токсичные вещества из пластика", "relevance": "MID", "relevanceExplained": "Краткое уточнение по смежной теме микропластика - не основная тема но содержит полезную информацию", "startTime": "1:52:36", "endTime": "1:53:13"}, {"start": 6792.6, "end": 6808.6, "dur": 16.1, "desc": "Попытка начать говорить о причинах обратного эффекта Флинна", "relevance": "LOW", "relevanceExplained": "Хотя основная тема и упоминается, фрагмент не несёт никакой полезной информации и может быть удалён, особенно учитывая, что дальше автор все равно отвлекается и не развивает тему.", "startTime": "1:53:13", "endTime": "1:53:29"}, {"start": 6808.6, "end": 6862.9, "dur": 54.3, "desc": "Ответы на донаты: про препарат для аппетита (пустышка) и про связь соцсетей с депрессией у подростков (мета-анализы не показывают связи)", "relevance": "MID", "relevanceExplained": "Два коротких ответа на донаты - первый оффтопик а второй по теме но краткий. Объединены потому что оба прерывают основную мысль", "startTime": "1:53:29", "endTime": "1:54:23"}, {"start": 6862.9, "end": 6930.8, "dur": 67.9, "desc": "Благодарности за лайки и анонс плейлиста про нейробиологию ума и глупости с рекомендацией предыдущих стримов", "relevance": "LOW", "relevanceExplained": "Служебная информация и самопромоция плейлиста - быстро теряет актуальность", "startTime": "1:54:23", "endTime": "1:55:31"}, {"start": 6930.8, "end": 6977.9, "dur": 47.1, "desc": "Введение в обсуждение причин эффекта Флинна: рост IQ на 3 балла за десятилетие с 1900 по 1996 год", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме эфира - эффект Флинна и причины роста IQ", "startTime": "1:55:31", "endTime": "1:56:18"}, {"start": 6977.9, "end": 7063.4, "dur": 85.6, "desc": "Объяснение связи генов с развитием мозга и их влияния на G-фактор и подвижный интеллект", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме - механизмы формирования интеллекта и причины эффекта Флинна", "startTime": "1:56:18", "endTime": "1:57:43"}, {"start": 7063.4, "end": 7129.1, "dur": 65.6, "desc": "Роль среды в формировании интеллекта: влияние на G-фактор и на результаты IQ-тестов", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме - средовые факторы как причина эффекта Флинна", "startTime": "1:57:43", "endTime": "1:58:49"}, {"start": 7129.1, "end": 7236.4, "dur": 107.3, "desc": "Понятие нормы реакции: гены задают диапазон а среда определяет конкретное значение IQ (аналогия с весом человека)", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение механизма взаимодействия генов и среды - центральная тема лекции", "startTime": "1:58:49", "endTime": "2:00:36"}, {"start": 7236.4, "end": 7289.0, "dur": 52.6, "desc": "Применение нормы реакции к G-фактору и IQ: роль питания свинца образования и практики решения тестов", "relevance": "HIGH", "relevanceExplained": "Продолжение объяснения нормы реакции применительно к IQ - основная тема", "startTime": "2:00:36", "endTime": "2:01:29"}, {"start": 7289.0, "end": 7351.4, "dur": 62.4, "desc": "Пример негативного сценария: свинец дефицит йода плохое питание и их влияние на снижение IQ до нижней границы нормы реакции", "relevance": "HIGH", "relevanceExplained": "Иллюстрация нижней границы нормы реакции IQ - важная часть объяснения причин эффекта Флинна", "startTime": "2:01:29", "endTime": "2:02:31"}, {"start": 7351.4, "end": 7397.5, "dur": 46.0, "desc": "Шуточное отступление про кошек и реакция на чат", "relevance": "LOW", "relevanceExplained": "Юмористическая вставка без содержательной информации", "startTime": "2:02:31", "endTime": "2:03:17"}, {"start": 7397.5, "end": 7495.4, "dur": 98.0, "desc": "Слушаем голос Флинна", "relevance": "MID", "relevanceExplained": "Слушаем голос Флинна, отступление от темы", "startTime": "2:03:17", "endTime": "2:04:55"}, {"start": 7495.4, "end": 7755.0, "dur": 259.6, "desc": "Cреда изменилась: образование стало повсеместным, питание улучшилось, свинец и йод - проблемы решены, люди привыкли к когнитивным задачам", "relevance": "HIGH", "relevanceExplained": "Центральное объяснение причин эффекта Флинна от самого автора концепции", "startTime": "2:04:55", "endTime": "2:09:15"}, {"start": 7755.0, "end": 7864.7, "dur": 109.7, "desc": "Эффект потолка (ceiling effect): улучшение среды достигает предела нормы реакции и IQ выходит на плато в развитых странах", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение почему рост IQ замедляется - прямо относится к негативному эффекту Флинна", "startTime": "2:09:15", "endTime": "2:11:05"}, {"start": 7864.7, "end": 7961.7, "dur": 97.0, "desc": "При уравнивании среды различия между людьми определяются почти исключительно генами - парадокс для эгалитарных взглядов", "relevance": "HIGH", "relevanceExplained": "Важный контринтуитивный вывод о соотношении генов и среды - ключевая идея лекции", "startTime": "2:11:05", "endTime": "2:12:42"}, {"start": 7961.7, "end": 8035.7, "dur": 74.0, "desc": "Переход к альтернативному объяснению негативного эффекта Флинна и представление статьи", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме - причины обратного эффекта Флинна", "startTime": "2:12:42", "endTime": "2:13:56"}, {"start": 8035.7, "end": 8061.6, "dur": 26.0, "desc": "Описание статьи The Negative Flynn Effect и её авторов (Даттон и Линн)", "relevance": "HIGH", "relevanceExplained": "Относится к основной теме - представление ключевого источника по негативному эффекту Флинна", "startTime": "2:13:56", "endTime": "2:14:22"}, {"start": 8061.6, "end": 8158.5, "dur": 96.9, "desc": "Обзор ключевых слов статьи и данных по снижению IQ в разных странах", "relevance": "HIGH", "relevanceExplained": "Конкретные данные по негативному эффекту Флинна в разных странах - ядро основной темы", "startTime": "2:14:22", "endTime": "2:15:59"}, {"start": 8158.5, "end": 8213.5, "dur": 55.0, "desc": "Первое возможное объяснение - изменение соотношения полов в выборках (опровергнуто)", "relevance": "HIGH", "relevanceExplained": "Разбор и опровержение одной из гипотез снижения IQ - напрямую относится к основной теме", "startTime": "2:15:59", "endTime": "2:16:53"}, {"start": 8213.5, "end": 8297.0, "dur": 83.5, "desc": "Второе возможное объяснение - иммиграция (слабо подтверждено)", "relevance": "HIGH", "relevanceExplained": "Разбор гипотезы иммиграции как причины снижения IQ и её опровержение на примере Эстонии - основная тема", "startTime": "2:16:53", "endTime": "2:18:17"}, {"start": 8297.0, "end": 8570.2, "dur": 273.2, "desc": "Третье объяснение - дисгеника: умные люди оставляют меньше потомства и два встречных процесса (средовой и генетический)", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение обратного эффекта Флинна через дисгенику с метафорой заметания мусора под ковёр - центральная часть лекции", "startTime": "2:18:17", "endTime": "2:22:50"}, {"start": 8570.2, "end": 8746.0, "dur": 175.8, "desc": "Данные в пользу дисгеники: разнонаправленные изменения компонентов IQ-теста и снижение скорости реакции", "relevance": "HIGH", "relevanceExplained": "Эмпирические данные подтверждающие дисгеническую гипотезу - джин-нагруженные компоненты снижались а ненагруженные росли", "startTime": "2:22:50", "endTime": "2:25:46"}, {"start": 8746.0, "end": 8856.0, "dur": 110.0, "desc": "Ответ на вопрос из чата: скорость реакции нельзя натренировать (в том числе в CS:GO и настольном теннисе)", "relevance": "MID", "relevanceExplained": "Интересный факт о нетренируемости скорости реакции но это отступление от основной линии лекции в ответ на вопрос из чата", "startTime": "2:25:46", "endTime": "2:27:36"}, {"start": 8856.0, "end": 8885.9, "dur": 29.8, "desc": "Резюме дисгенической гипотезы и упоминание растущего скептицизма к ней", "relevance": "HIGH", "relevanceExplained": "Завершение блока про дисгенику и переход к скептической позиции - важная связка в основной теме", "startTime": "2:27:36", "endTime": "2:28:06"}, {"start": 8885.9, "end": 9374.0, "dur": 488.1, "desc": "Объявление перерыва на 5 минут и советы зрителям пройтись и налить чай", "relevance": "LOW", "relevanceExplained": "Служебный блок - организация перерыва и бытовые советы не имеющие информационной ценности", "startTime": "2:28:06", "endTime": "2:36:14"}, {"start": 9374.0, "end": 9417.5, "dur": 43.5, "desc": "Возвращение после перерыва и поиск вопросов от зрителей", "relevance": "LOW", "relevanceExplained": "Служебный момент - автор возвращается и ищет вопросы в чате", "startTime": "2:36:14", "endTime": "2:36:57"}, {"start": 9417.5, "end": 9605.8, "dur": 188.3, "desc": "Ответ на вопрос Вейланда: почему наследуемость интеллекта растёт с возрастом и пример с книгами в доме", "relevance": "HIGH", "relevanceExplained": "Развёрнутый ответ про рост наследуемости IQ с возрастом и проблему смешения генетических и средовых эффектов - напрямую относится к теме эффекта Флинна и соотношению генов и среды", "startTime": "2:36:57", "endTime": "2:40:06"}, {"start": 9605.8, "end": 9622.5, "dur": 16.7, "desc": "Вопрос из чата о том что эффект Флинна может быть не про рост интеллекта а про адаптацию к тестам и рост валидности тестов - автор соглашается и обещает обсудить", "relevance": "HIGH", "relevanceExplained": "Вопрос напрямую относится к основной теме эфира (эффект Флинна и валидность IQ-тестов) и автор подтверждает его важность", "startTime": "2:40:06", "endTime": "2:40:22"}, {"start": 9622.5, "end": 9779.0, "dur": 156.5, "desc": "Ответ на вопрос Вейланда о связи скорости нервных импульсов и миелинизации с IQ - объяснение через аналогию со стоянием на одной ноге как предиктором продолжительности жизни", "relevance": "MID", "relevanceExplained": "Это содержательный ответ на вопрос зрителя с интересной аналогией но тема нейрофизиологических коррелятов IQ является побочной относительно основной темы (эффект Флинна и его причины)", "startTime": "2:40:22", "endTime": "2:42:59"}, {"start": 9779.0, "end": 9832.3, "dur": 53.4, "desc": "Ответ на второй вопрос Вейланда о роли глиальных клеток в объяснении дисперсии IQ - автор говорит что данных по глиальным клеткам мало и важнее роль лобных и теменных долей", "relevance": "MID", "relevanceExplained": "Содержательный но краткий ответ на узкоспециальный вопрос не относящийся напрямую к основной теме эффекта Флинна", "startTime": "2:42:59", "endTime": "2:43:52"}, {"start": 9832.3, "end": 9862.8, "dur": 30.5, "desc": "Шутка про стояние на месте и благодарность за донаты с обещанием ответить на вопросы после лекции", "relevance": "LOW", "relevanceExplained": "Служебный переходный блок без содержательной информации - шутка и организационное замечание быстро теряют ценность", "startTime": "2:43:52", "endTime": "2:44:23"}, {"start": 9862.8, "end": 10021.1, "dur": 158.3, "desc": "<начало про дисгенику как объяснение обратного эффекта Флинна> - генетические изменения слишком медленны чтобы объяснить наблюдаемую скорость снижения IQ - визуализация смещения кривой IQ и упоминание фильма Идиократия", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - разбор одного из ключевых объяснений обратного эффекта Флинна (дисгеника) с аргументацией почему оно недостаточно", "startTime": "2:44:23", "endTime": "2:47:01"}, {"start": 10021.1, "end": 10117.4, "dur": 96.3, "desc": "Представление исследования из журнала Intelligence (июнь 2025) о переоценке эффекта Флинна у норвежских новобранцев - описание структуры теста (матрицы Равена математика вербальные задачи)", "relevance": "HIGH", "relevanceExplained": "Блок относится к основной теме - представление ключевого исследования демонстрирующего разнонаправленность эффекта Флинна для разных когнитивных способностей", "startTime": "2:47:01", "endTime": "2:48:37"}, {"start": 10117.4, "end": 10224.5, "dur": 107.1, "desc": "Интерактив с чатом - совместное решение примеров из норвежского когнитивного теста (матрица Равена математика вербальное задание)", "relevance": "MID", "relevanceExplained": "Интерактивная демонстрация примеров из теста - познавательно но не содержит ключевой аналитической информации по теме эффекта Флинна", "startTime": "2:48:37", "endTime": "2:50:25"}, {"start": 10224.5, "end": 10422.3, "dur": 197.8, "desc": "<начало про результаты норвежского исследования> - анализ графиков: матрицы Равена росли сильнее всего и не снизились а вербальные и математические навыки снизились после 1993 года - разная G-нагруженность субтестов менялась со временем", "relevance": "HIGH", "relevanceExplained": "Ключевые результаты исследования напрямую демонстрирующие разнонаправленность эффекта Флинна - центральный аргумент лекции", "startTime": "2:50:25", "endTime": "2:53:42"}, {"start": 10422.3, "end": 10487.4, "dur": 65.1, "desc": "Попытка найти нужную статью и упоминание специального выпуска Intelligence посвящённого наследию Джеймса Флинна", "relevance": "LOW", "relevanceExplained": "Автор ищет материалы переключается между статьями - технический момент без содержательной информации", "startTime": "2:53:42", "endTime": "2:54:47"}, {"start": 10487.4, "end": 10573.5, "dur": 86.1, "desc": "Демонстрация статьи (январь 2024) об эффекте Флинна для внимания - показано что концентрация у взрослых улучшилась с 1995 по 2020 год что опровергает миф о клиповом мышлении", "relevance": "HIGH", "relevanceExplained": "Прямое развенчание популярного мифа о клиповом мышлении зумеров с опорой на научные данные - относится к основной теме эфира", "startTime": "2:54:47", "endTime": "2:56:14"}, {"start": 10573.5, "end": 10700.5, "dur": 127.0, "desc": "Первое объяснение разнонаправленных трендов - современное общество поощряет гиперспециализацию что приводит к расхождению когнитивных способностей и делает IQ-тест неподходящим инструментом оценки", "relevance": "HIGH", "relevanceExplained": "Ключевой вывод лекции о том что IQ-тест теряет валидность из-за расхождения когнитивных факторов - центральная мысль основной темы", "startTime": "2:56:14", "endTime": "2:58:20"}, {"start": 10700.5, "end": 10903.8, "dur": 203.3, "desc": "Подведение итогов лекции: проблемы валидности IQ-тестов и общий вывод о том что катастрофы с интеллектом не происходит", "relevance": "HIGH", "relevanceExplained": "Это финальное резюме всей лекции про эффект Флинна - ключевой итоговый блок по основной теме эфира", "startTime": "2:58:20", "endTime": "3:01:44"}, {"start": 10903.8, "end": 10917.1, "dur": 13.2, "desc": "Переход от лекции к ответам на вопросы зрителей", "relevance": "LOW", "relevanceExplained": "Служебный переходный момент без содержательной информации", "startTime": "3:01:44", "endTime": "3:01:57"}, {"start": 10917.1, "end": 11012.1, "dur": 95.0, "desc": "Ответ на вопрос Заварки про связь изменения IQ с импульсивностью у детей и СДВГ а также уточнение про разные издания тестов", "relevance": "HIGH", "relevanceExplained": "Вопрос напрямую относится к основной теме эфира - автор дополнительно разъясняет проблему сравнения когорт с разными изданиями тестов и перечисляет три основных объяснения эффекта Флинна", "startTime": "3:01:57", "endTime": "3:03:32"}, {"start": 11012.1, "end": 11079.5, "dur": 67.4, "desc": "Служебный переход к блоку донатов", "relevance": "LOW", "relevanceExplained": "Технический момент - автор ищет донаты и объявляет о переходе к ответам на все вопросы. Информация быстро теряет ценность", "startTime": "3:03:32", "endTime": "3:04:39"}, {"start": 11079.5, "end": 11085.6, "dur": 6.1, "desc": "Шуточный вопрос из чата почему умные стримы идут по ночам", "relevance": "LOW", "relevanceExplained": "Короткая проходная реплика без содержательной информации", "startTime": "3:04:39", "endTime": "3:04:46"}, {"start": 11085.6, "end": 11141.9, "dur": 56.3, "desc": "Автор готовится читать донаты по порядку", "relevance": "LOW", "relevanceExplained": "Служебный момент - автор ищет и сортирует донаты с длинными паузами", "startTime": "3:04:46", "endTime": "3:05:42"}, {"start": 11141.9, "end": 11193.1, "dur": 51.2, "desc": "Ответ на донат про позицию относительно Бога и бесконечного времени", "relevance": "MID", "relevanceExplained": "Содержательный ответ автора о своём мировоззрении но не относится к основной теме эфира", "startTime": "3:05:42", "endTime": "3:06:33"}, {"start": 11193.1, "end": 11319.8, "dur": 126.7, "desc": "Ответ на донат о том как правильно выбирать научно-популярные книги - ориентироваться на авторов-специалистов и проверенные издательства", "relevance": "MID", "relevanceExplained": "Полезный и содержательный совет но не относится к основной теме про эффект Флинна и IQ", "startTime": "3:06:33", "endTime": "3:08:40"}, {"start": 11319.8, "end": 11332.6, "dur": 12.8, "desc": "Шутка про Веронику Степанову и переход к следующему донату", "relevance": "LOW", "relevanceExplained": "Короткая шутка без информационной ценности", "startTime": "3:08:40", "endTime": "3:08:53"}, {"start": 11332.6, "end": 11350.7, "dur": 18.1, "desc": "Юмористический донат про удары по голове", "relevance": "LOW", "relevanceExplained": "Шуточный донат без содержательного ответа автора", "startTime": "3:08:53", "endTime": "3:09:11"}, {"start": 11350.7, "end": 11451.8, "dur": 101.1, "desc": "Ответ на вопрос об отношении к евгенике - неэффективность насильственных методов и примеры стимулирования рождаемости у образованных людей", "relevance": "MID", "relevanceExplained": "Содержательный и интересный ответ с конкретными аргументами но не относится к основной теме эфира", "startTime": "3:09:11", "endTime": "3:10:52"}, {"start": 11451.8, "end": 11534.8, "dur": 82.9, "desc": "Ответ на предложение помощи от зрителя - автор рассказывает о своей загруженности и что делает всё сам", "relevance": "LOW", "relevanceExplained": "Личный служебный момент без общеполезной информации - быстро теряет актуальность", "startTime": "3:10:52", "endTime": "3:12:15"}, {"start": 11534.8, "end": 11655.7, "dur": 121.0, "desc": "Ответ на вопрос о том как не дать авторам научпоп книг себя обмануть - единственный надёжный способ это иметь экспертность самому плюс смотреть на репутацию и конвергенцию мнений", "relevance": "MID", "relevanceExplained": "Полезный и содержательный совет с интересной мыслью про мудрость толпы экспертов но не относится к основной теме", "startTime": "3:12:15", "endTime": "3:14:16"}, {"start": 11655.7, "end": 11805.5, "dur": 149.8, "desc": "Ответ на донат про ноотроп D-гекса: нет доказанной эффективности на людях и есть проблемы с безопасностью (влияние на фактор роста гепатоцитов и риск онкогенной трансформации)", "relevance": "MID", "relevanceExplained": "Интересный разбор конкретного ноотропа с развенчиванием мифа о его эффективности, но это побочная тема относительно основной темы эфира (эффект Флинна и IQ)", "startTime": "3:14:16", "endTime": "3:16:46"}, {"start": 11805.5, "end": 11825.6, "dur": 20.0, "desc": "Краткая реплика про СДВГ-стимуляторы", "relevance": "LOW", "relevanceExplained": "Автор просто подтвердил что прочитал сообщение, не дав содержательного ответа", "startTime": "3:16:46", "endTime": "3:17:06"}, {"start": 11825.6, "end": 11838.0, "dur": 12.5, "desc": "Ответ на донат про книгу «Нейробиология мозга для чайников» Роба де Сало", "relevance": "LOW", "relevanceExplained": "Автор не читал книгу и не может ничего сказать — сухой и пустой ответ", "startTime": "3:17:06", "endTime": "3:17:18"}, {"start": 11838.0, "end": 12225.6, "dur": 387.6, "desc": "Ответ на донат про позицию Сапольски о свободе воли: объяснение почему саморефлексия не доказывает свободу воли и почему детерминизм не опровергается самоконтролем", "relevance": "MID", "relevanceExplained": "Развёрнутый и содержательный ответ с интересными примерами (NPC в играх, кружка с чаем, философ Антон Кузнецов), но это побочная тема относительно основной темы эфира про эффект Флинна", "startTime": "3:17:18", "endTime": "3:23:46"}, {"start": 12225.6, "end": 12335.0, "dur": 109.4, "desc": "Ответ на донат Марка про выученную беспомощность и кортизол: объяснение что кортизол нормален и не является причиной выученной беспомощности", "relevance": "MID", "relevanceExplained": "Содержательный ответ с объяснением нейроэндокринологии стресса, но побочная тема относительно основной темы эфира", "startTime": "3:23:46", "endTime": "3:25:35"}, {"start": 12335.0, "end": 12359.6, "dur": 24.6, "desc": "Шуточный донат про мемы и психоз", "relevance": "LOW", "relevanceExplained": "Несодержательная шуточная реплика без информационной ценности", "startTime": "3:25:35", "endTime": "3:26:00"}, {"start": 12359.6, "end": 12532.4, "dur": 172.8, "desc": "Ответ на вопрос о том, можно ли полностью вылечить социальную тревожность: объяснение через контроль ситуации и аналогию с кинологом который боится собак", "relevance": "MID", "relevanceExplained": "Интересный и содержательный ответ с хорошей аналогией, но побочная тема относительно основной темы эфира", "startTime": "3:26:00", "endTime": "3:28:52"}, {"start": 12532.4, "end": 12567.8, "dur": 35.4, "desc": "Ответ на донат про тревожность и страх близости у девушки", "relevance": "LOW", "relevanceExplained": "Автор прямо говорит что не специалист по этому вопросу и даёт только общий совет обратиться к психотерапевту — минимально содержательный ответ", "startTime": "3:28:52", "endTime": "3:29:28"}, {"start": 12567.8, "end": 12576.6, "dur": 8.9, "desc": "Пауза и междометие перед следующим вопросом", "relevance": "LOW", "relevanceExplained": "Служебная пауза без информационного содержания", "startTime": "3:29:28", "endTime": "3:29:37"}, {"start": 12576.6, "end": 12741.9, "dur": 165.2, "desc": "Ответ на вопрос о теории множественного интеллекта Гарднера и почему она несостоятельна — на примере савантов и математиков с иррациональными убеждениями", "relevance": "HIGH", "relevanceExplained": "Развёрнутый и интересный ответ с развенчиванием популярного заблуждения и контринтуитивным объяснением про гиперболизированное нахождение паттернов у математиков", "startTime": "3:29:37", "endTime": "3:32:22"}, {"start": 12741.9, "end": 12759.0, "dur": 17.1, "desc": "Ответ на вопрос об эффективности 5-HTP", "relevance": "LOW", "relevanceExplained": "Очень короткий и сухой ответ без содержательного объяснения — автору явно неинтересна тема", "startTime": "3:32:22", "endTime": "3:32:39"}, {"start": 12759.0, "end": 12836.9, "dur": 77.9, "desc": "Ответ на вопрос о лечении тревожности антидепрессантами (Элицея) — стоит ли пробовать другие способы", "relevance": "MID", "relevanceExplained": "Содержательный ответ о терапии тревожности и антидепрессантах — побочная тема относительно основной темы эфира (эффект Флинна и IQ), но завершённая мысль", "startTime": "3:32:39", "endTime": "3:33:57"}, {"start": 12836.9, "end": 12926.6, "dur": 89.7, "desc": "Ответ на вопрос о столах для работы стоя — нет данных о пользе плюс риски варикоза и рекомендация динамических перерывов", "relevance": "MID", "relevanceExplained": "Законченная и полезная мысль о здоровье с конкретными медицинскими аргументами, но не относится к основной теме эфира", "startTime": "3:33:57", "endTime": "3:35:27"}, {"start": 12926.6, "end": 13127.8, "dur": 201.2, "desc": "Ответ на вопрос о фильтрах синего спектра для очков — это миф, и рассказ о скаме с перфорированными очками", "relevance": "MID", "relevanceExplained": "Развенчание двух популярных мифов — про синий свет мониторов и перфорированные очки. Объясняется механизм обмана с дырочками (рассеивающие линзы). Интересно, но не относится к падению IQ", "startTime": "3:35:27", "endTime": "3:38:48"}, {"start": 13127.8, "end": 13230.7, "dur": 102.9, "desc": "Ответ на вопрос нейрофизиолога о возможных карьерных путях помимо науки и преподавания", "relevance": "MID", "relevanceExplained": "Содержательный ответ с конкретными вариантами карьеры (клинические исследования, BCI, промышленная наука), но не относится к основной теме эфира", "startTime": "3:38:48", "endTime": "3:40:31"}, {"start": 13230.7, "end": 13312.6, "dur": 81.9, "desc": "Ответ на вопрос о пользе свободных радикалов от курения — развенчание мифа о защитных свойствах курения", "relevance": "HIGH", "relevanceExplained": "Развенчание опасного мифа с историческим контекстом про табачный заговор и ложные данные о Паркинсоне и Альцгеймере (люди просто не доживали)", "startTime": "3:40:31", "endTime": "3:41:53"}, {"start": 13312.6, "end": 13353.3, "dur": 40.7, "desc": "Ответ на вопрос про рейтинг в Dota 2", "relevance": "LOW", "relevanceExplained": "Личная информация о хобби автора (рейтинг в видеоигре) — не имеет информационной ценности и быстро устаревает", "startTime": "3:41:53", "endTime": "3:42:33"}, {"start": 13353.3, "end": 13417.0, "dur": 63.7, "desc": "Ответ на вопрос о выработке DMT при предсмертном состоянии — DMT ни при чём, предсмертный опыт вызван другими нейромедиаторами", "relevance": "MID", "relevanceExplained": "Развенчание популярного мифа о DMT и предсмертном опыте с конкретными данными о роли норадреналина, дофамина и других медиаторов. Интересно, не не относится напрямую к основной теме", "startTime": "3:42:33", "endTime": "3:43:37"}, {"start": 13417.0, "end": 13465.0, "dur": 48.1, "desc": "Ответ на вопрос о будущих стримах по онкологии и благодарность от зрителя", "relevance": "LOW", "relevanceExplained": "Короткий ответ без содержательной информации — в основном благодарности и общие слова о том что в онкологии много интересного", "startTime": "3:43:37", "endTime": "3:44:25"}, {"start": 13465.0, "end": 13515.1, "dur": 50.1, "desc": "Ответ на вопрос о гомосексуализме — не болезнь, есть генетическая и средовая компоненты", "relevance": "MID", "relevanceExplained": "Краткий но корректный ответ на чувствительную тему с упоминанием генетической и средовой детерминации. Не относится к основной теме", "startTime": "3:44:25", "endTime": "3:45:15"}, {"start": 13515.1, "end": 13558.8, "dur": 43.7, "desc": "Ответ на донат про кофеин, теанин и фенотропил - есть ли эффект и вредно ли это", "relevance": "MID", "relevanceExplained": "Содержательный ответ на вопрос о ноотропах и кофеине, но не относится к основной теме эфира (эффект Флинна и IQ)", "startTime": "3:45:15", "endTime": "3:45:59"}, {"start": 13558.8, "end": 13625.4, "dur": 66.6, "desc": "Ответ на вопрос про капли для глаз при усталости от чтения - развенчание мифа о полезности глазных капель", "relevance": "MID", "relevanceExplained": "Интересное развенчание мифа про капли для глаз с практическими советами, но не относится к основной теме эфира", "startTime": "3:45:59", "endTime": "3:47:05"}, {"start": 13625.4, "end": 13648.3, "dur": 22.9, "desc": "Предупреждение о скором завершении стрима через 10 минут", "relevance": "LOW", "relevanceExplained": "Служебная информация о тайминге стрима, быстро теряет актуальность", "startTime": "3:47:05", "endTime": "3:47:28"}, {"start": 13648.3, "end": 13683.5, "dur": 35.1, "desc": "Техническая пауза - автор настраивает что-то на экране", "relevance": "LOW", "relevanceExplained": "Служебный момент без информационной ценности - автор что-то настраивает", "startTime": "3:47:28", "endTime": "3:48:03"}, {"start": 13683.5, "end": 13728.3, "dur": 44.8, "desc": "Анонс лекции про боль в Санкт-Петербурге и информация о расписании следующих стримов", "relevance": "LOW", "relevanceExplained": "Рекламный блок и self promotion, но который очень быстро теряет свою актуальность", "startTime": "3:48:03", "endTime": "3:48:48"}, {"start": 13728.3, "end": 13815.9, "dur": 87.6, "desc": "Техническая пауза - автор разбирается с системой донатов и просматривает старые сообщения", "relevance": "LOW", "relevanceExplained": "Бессмысленный набор слов «там-то» и технические действия с платформой донатов, нет информационной ценности", "startTime": "3:48:48", "endTime": "3:50:16"}, {"start": 13815.9, "end": 13878.7, "dur": 62.8, "desc": "Ответ на донат про связь G-фактора интеллекта с личностными чертами и характером", "relevance": "MID", "relevanceExplained": "Содержательный ответ про связь интеллекта и характера, но автор признаётся что не очень погружался в тему и отвечает кратко", "startTime": "3:50:16", "endTime": "3:51:19"}, {"start": 13878.7, "end": 13927.8, "dur": 49.1, "desc": "Техническая пауза и организационное объявление о следующем стриме 8 марта", "relevance": "LOW", "relevanceExplained": "Служебная информация - просмотр донатов и анонс конкретной даты стрима, быстро теряет актуальность", "startTime": "3:51:19", "endTime": "3:52:08"}, {"start": 13927.8, "end": 14057.2, "dur": 129.4, "desc": "Ответ на донат про таксономии обучения Блума и их нейробиологическую обоснованность", "relevance": "HIGH", "relevanceExplained": "Глубокий и развёрнутый ответ о проблеме разрыва между терминологией когнитивной психологии и нейробиологии - контринтуитивная мысль о невозможности прямого наложения одной дисциплины на другую", "startTime": "3:52:08", "endTime": "3:54:17"}, {"start": 14057.2, "end": 14074.5, "dur": 17.3, "desc": "Техническая пауза - переход к следующему донату", "relevance": "LOW", "relevanceExplained": "Короткая пауза без содержания", "startTime": "3:54:17", "endTime": "3:54:34"}, {"start": 14074.5, "end": 14178.1, "dur": 103.7, "desc": "Ответ на донат про синдром отмены антидепрессантов - важность различения синдрома отмены и рецидива депрессии", "relevance": "MID", "relevanceExplained": "Содержательный и полезный ответ про синдром отмены антидепрессантов с практическими рекомендациями, но не относится к основной теме эфира", "startTime": "3:54:34", "endTime": "3:56:18"}, {"start": 14178.1, "end": 14210.8, "dur": 32.7, "desc": "Ответ на донат про связь урбанизации с ростом психорасстройств", "relevance": "MID", "relevanceExplained": "Краткий но содержательный ответ - связь слабая и объясняется разницей в регистрации случаев", "startTime": "3:56:18", "endTime": "3:56:51"}, {"start": 14210.8, "end": 14286.9, "dur": 76.1, "desc": "Ответ на донат про навязчивые мысли и неконтролируемость мыслительного процесса - рекомендация обратиться к специалисту", "relevance": "MID", "relevanceExplained": "Содержательный ответ с упоминанием ментизма и различных причин нарушений мышления, но в целом сводится к рекомендации обратиться к специалисту", "startTime": "3:56:51", "endTime": "3:58:07"}, {"start": 14286.9, "end": 14363.2, "dur": 76.3, "desc": "Техническая пауза - автор ищет вопрос про социальную иерархию в системе донатов", "relevance": "LOW", "relevanceExplained": "Служебный момент поиска конкретного доната без информационной ценности", "startTime": "3:58:07", "endTime": "3:59:23"}, {"start": 14363.2, "end": 14599.6, "dur": 236.4, "desc": "Ответ на вопрос о социальной иерархии альфа-бета: подвижность иерархии в разных контекстах, роль генов и среды, критика одержимости этой темой (Эндрю Тейт, Питерсон и др.), связь с низким социально-экономическим статусом", "relevance": "MID", "relevanceExplained": "Содержательный и интересный ответ с критикой популярных заблуждений, но это побочная тема, не относящаяся к основной теме эфира об эффекте Флинна и IQ", "startTime": "3:59:23", "endTime": "4:03:20"}, {"start": 14599.6, "end": 14617.5, "dur": 17.9, "desc": "Завершение блока ответов и переход к следующему донату", "relevance": "LOW", "relevanceExplained": "Служебные фразы без информационной ценности - автор просто подводит итог и ищет следующий вопрос", "startTime": "4:03:20", "endTime": "4:03:37"}, {"start": 14617.5, "end": 14762.4, "dur": 144.9, "desc": "Ответ на донат про хроническую боль в шее и спине: центральный компонент хронической боли, проблема неэффективности периферических вмешательств, критика назначения антидепрессантов при боли, нефармакологические методы и анонс лекции про боль", "relevance": "MID", "relevanceExplained": "Содержательный ответ с интересной информацией о природе хронической боли и критикой стандартных подходов лечения, но это побочная тема, не относящаяся к основной теме эфира", "startTime": "4:03:37", "endTime": "4:06:02"}, {"start": 14762.4, "end": 14795.0, "dur": 32.6, "desc": "Завершение стрима: благодарности зрителям, прощание и анонс следующих встреч", "relevance": "HIGH", "relevanceExplained": "Последнее прощание всего стрима - всегда HIGH по правилам", "startTime": "4:06:02", "endTime": "4:06:35"}];
+const highlights = [{"start": 441.0, "dur": 378.2, "title": "Почему мы помогаем другим?", "desc": "Нейробиолог объясняет эволюционные причины альтруизма и почему люди совершают добрые поступки. Вы узнаете о родственном отборе, репутации и как помощь окружающим влияла на репродуктивный успех наших предков. Также автор делится забавной историей о хитрости ради любви.", "tags": "#нейробиология #альтруизм #эволюция #психология #наука", "startTime": "07:21"}, {"start": 1253.0, "dur": 178.8, "title": "Для чего на самом деле был придуман тест IQ", "desc": "Оказывается тесты на интеллект создавались вовсе не для дискриминации. Владимир Алипов рассказывает удивительную историю появления IQ-тестов от Испанской империи до французских школьников. Узнайте, почему именно этот тест стал лучшим предсказателем жизненного успеха.", "tags": "#IQ #интеллект #психология #история #наука", "startTime": "20:53"}, {"start": 4667.0, "dur": 214.1, "title": "Нужно ли запрещать смартфоны в школе?", "desc": "Разбираем популярную идею о запрете мобильных телефонов в школах на примере Франции. Помогают ли такие ограничения улучшить концентрацию внимания и когнитивные способности детей? Оказывается научные исследования говорят об обратном.", "tags": "#смартфоны #образование #школа #наука #интеллект", "startTime": "1:17:47"}, {"start": 8296.0, "dur": 268.8, "title": "Глупеет ли человечество?", "desc": "Существует ли отрицательный отбор по интеллекту в современном обществе? Разбираем теорию дисгеники и феномен снижения рождаемости среди людей с высоким IQ. Потрясающая метафора с ковром объясняет скрытую деградацию когнитивных способностей.", "tags": "#эволюция #интеллект #общество #наука #IQ", "startTime": "2:18:16"}, {"start": 11842.0, "dur": 380.7, "title": "Существует ли свобода воли?", "desc": "Ответ на философский вопрос о детерминизме человеческого поведения и критику Роберта Сапольски. Способны ли мы контролировать свои инстинкты и делает ли это нас по-настоящему свободными? Узнайте, в чем кроется главная ошибка понимания свободы воли.", "tags": "#СвободаВоли #философия #Сапольски #нейробиология #мозг", "startTime": "3:17:22"}];
+const silenceCuts = [{"start": 0.0, "end": 7.9}, {"start": 1607.8, "end": 1613.3}, {"start": 1949.1, "end": 1953.7}, {"start": 2105.3, "end": 2109.1}, {"start": 2153.1, "end": 2158.3}, {"start": 2164.7, "end": 2176.1}, {"start": 2243.4, "end": 2258.0}, {"start": 2272.2, "end": 2276.0}, {"start": 2475.4, "end": 2480.9}, {"start": 2490.8, "end": 2497.2}, {"start": 2752.8, "end": 2758.9}, {"start": 2863.3, "end": 2867.1}, {"start": 2879.6, "end": 2885.2}, {"start": 3050.0, "end": 3078.4}, {"start": 3193.7, "end": 3197.3}, {"start": 3266.2, "end": 3269.5}, {"start": 3578.8, "end": 3582.4}, {"start": 3624.7, "end": 3629.2}, {"start": 4656.1, "end": 4660.2}, {"start": 4664.4, "end": 4667.7}, {"start": 4687.4, "end": 4690.7}, {"start": 4694.6, "end": 4698.4}, {"start": 5078.3, "end": 5084.0}, {"start": 5821.3, "end": 5827.9}, {"start": 6219.2, "end": 6223.8}, {"start": 6443.0, "end": 6449.7}, {"start": 7063.4, "end": 7073.3}, {"start": 7213.1, "end": 7224.0}, {"start": 7531.0, "end": 7534.8}, {"start": 7624.7, "end": 7639.8}, {"start": 7864.7, "end": 7869.8}, {"start": 7958.1, "end": 7961.7}, {"start": 7985.6, "end": 8018.1}, {"start": 8071.9, "end": 8076.2}, {"start": 8161.8, "end": 8165.6}, {"start": 8312.2, "end": 8316.6}, {"start": 8570.2, "end": 8580.3}, {"start": 10038.5, "end": 10041.8}, {"start": 10047.3, "end": 10053.0}, {"start": 10293.2, "end": 10296.8}, {"start": 10419.8, "end": 10422.3}, {"start": 10487.4, "end": 10495.4}, {"start": 10539.1, "end": 10547.4}, {"start": 10778.9, "end": 10782.3}, {"start": 13230.7, "end": 13235.1}];
+const timecodes = [{"time": "00:00", "title": "Введение: эффект Флинна и миф о глупеющих зумерах", "secs": 0}, {"time": "01:41", "title": "Зачем измерять ум? Как интеллект предсказывает успех в жизни", "secs": 101}, {"time": "02:40", "title": "Истинное предназначение тестов IQ: от Испанской империи до Альфреда Бине", "secs": 160}, {"time": "05:26", "title": "Эффект Флинна: почему наши предки провалили бы современный тест IQ", "secs": 326}, {"time": "06:43", "title": "Обратный эффект Флинна: почему поколение Z называют первым «глупеющим» поколением", "secs": 403}, {"time": "10:38", "title": "Цифровой детокс: спасут ли запреты смартфонов в школах наш мозг?", "secs": 638}, {"time": "15:56", "title": "Реальные данные: где IQ падает, а где продолжает расти", "secs": 956}, {"time": "19:34", "title": "Что такое G-фактор и как связаны разные когнитивные способности", "secs": 1174}, {"time": "26:27", "title": "Парадокс интеллекта в США: почему одни навыки падают, а другие растут", "secs": 1587}, {"time": "29:10", "title": "Тренд на интеллект: что происходит с IQ в развивающихся странах и в России", "secs": 1750}, {"time": "34:23", "title": "Почему запрет смартфонов во французских школах не имеет под собой научной базы", "secs": 2063}, {"time": "37:58", "title": "Масштабное исследование из США: как соцсети на самом деле влияют на мозг подростков", "secs": 2278}, {"time": "47:08", "title": "Разрушают ли видеоигры мозг? Неожиданные результаты многолетних тестов", "secs": 2828}, {"time": "50:38", "title": "Истинная причина когнитивных проблем: почему виноват не смартфон, а окружение", "secs": 3038}, {"time": "57:48", "title": "Разбор аргументов о вреде геймификации и клиповом мышлении", "secs": 3468}, {"time": "1:00:40", "title": "Алармизм: от страха перед радио до паники из-за микропластика и 5G", "secs": 3640}, {"time": "1:04:55", "title": "Гены или среда? Как формируется «норма реакции» нашего интеллекта", "secs": 3895}, {"time": "1:11:36", "title": "«Эффект потолка»: почему мы уперлись в предел когнитивного развития", "secs": 4296}, {"time": "1:18:54", "title": "Дисгеника и «Идиократия»: приведет ли отказ умных людей от потомства к деградации общества", "secs": 4734}, {"time": "1:31:12", "title": "Загадка генетики: почему влияние генов на интеллект усиливается с возрастом", "secs": 5472}, {"time": "1:34:58", "title": "Почему генетические мутации не могут объяснить быстрое падение IQ", "secs": 5698}, {"time": "1:37:39", "title": "Ошибка измерений: как гиперспециализация и устаревшие тесты искажают статистику", "secs": 5859}, {"time": "1:50:27", "title": "Почему гениальные математики верят в конспирологию: несостоятельность теории множественного интеллекта", "secs": 6627}, {"time": "1:53:12", "title": "Опасные медицинские мифы: как табачные компании заставляли верить в пользу курения", "secs": 6792}, {"time": "1:54:30", "title": "Психология vs Нейробиология: можно ли увидеть процесс усвоения знаний в мозге", "secs": 6870}];
+
+function fmtDuration(secs) {
+  var total = Math.max(0, Math.round(secs));
+  var h = Math.floor(total / 3600);
+  var m = Math.floor((total % 3600) / 60);
+  var s = total % 60;
+  var mm = String(m).padStart(2, '0');
+  var ss = String(s).padStart(2, '0');
+  if (h > 0) {
+    return h + '\u0447 ' + mm + '\u043c ' + ss + '\u0441';
+  }
+  return mm + '\u043c ' + ss + '\u0441';
+}
+
+function fmtTime(secs) {
+  var h = Math.floor(secs / 3600);
+  var m = Math.floor((secs % 3600) / 60);
+  var s = Math.floor(secs % 60);
+  return (h > 0 ? h + ':' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function pct(secs) {
+  return (secs / TOTAL_DURATION) * 100;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderHighlightTags(tags) {
+  return String(tags)
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(function(tag) {
+      return '<span class="hl-tag">' + escapeHtml(tag) + '</span>';
+    })
+    .join('');
+}
+
+function renderTimeline() {
+  var bar = document.getElementById('timelineBar');
+  var markersDiv = document.getElementById('highlightMarkers');
+  var rulerDiv = document.getElementById('timeRuler');
+  var tooltip = document.getElementById('tooltip');
+
+  segments.forEach(function(seg, i) {
+    var el = document.createElement('div');
+    el.className = 'timeline-segment relevance-' + seg.relevance;
+    el.style.left = pct(seg.start) + '%';
+    el.style.width = Math.max(pct(seg.dur), 0.08) + '%';
+    el.dataset.idx = i;
+    bar.appendChild(el);
+  });
+
+  silenceCuts.forEach(function(s) {
+    var dur = s.end - s.start;
+    if (dur < 5) return;
+    var el = document.createElement('div');
+    el.className = 'timeline-silence';
+    el.style.left = pct(s.start) + '%';
+    el.style.width = Math.max(pct(dur), 0.05) + '%';
+    bar.appendChild(el);
+  });
+
+  highlights.forEach(function(h) {
+    var el = document.createElement('span');
+    el.className = 'highlight-marker';
+    el.innerHTML = '&#9670;';
+    el.style.left = pct(h.start) + '%';
+    el.title = h.title;
+
+    el.addEventListener('mouseenter', function(e) {
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(h.title) + '</div>' +
+        '<div style="font-size:12px;margin-top:4px;">' + escapeHtml(h.desc) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(h.startTime) + ' (' + fmtDuration(h.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+
+    markersDiv.appendChild(el);
+  });
+  for (var t = 1800; t <= TOTAL_DURATION; t += 1800) {
+    var el = document.createElement('div');
+    el.className = 'time-ruler-mark';
+    el.style.left = pct(t) + '%';
+    el.textContent = fmtTime(t);
+    rulerDiv.appendChild(el);
+  }
+
+  bar.addEventListener('mousemove', function(e) {
+    var rect = bar.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var timeSecs = (x / rect.width) * TOTAL_DURATION;
+    var seg = segments.find(function(s) { return timeSecs >= s.start && timeSecs <= s.end; });
+    if (seg) {
+      var relevanceExplained = seg.relevanceExplained || 'No explanation provided';
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(seg.desc) + '</div>' +
+        '<div class="tt-why ' + seg.relevance + '">Why ' + escapeHtml(seg.relevance) + '?</div>' +
+        '<div class="tt-explanation">' + escapeHtml(relevanceExplained) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + ' (' + fmtDuration(seg.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    } else {
+      tooltip.style.display = 'none';
+    }
+  });
+
+  bar.addEventListener('mouseleave', function() {
+    tooltip.style.display = 'none';
+  });
+}
+
+function positionTooltip(e) {
+  var tooltip = document.getElementById('tooltip');
+  var pad = 12;
+  var x = e.clientX + pad;
+  var y = e.clientY + pad;
+  var tw = tooltip.offsetWidth;
+  var th = tooltip.offsetHeight;
+  if (x + tw > window.innerWidth - 20) x = e.clientX - tw - pad;
+  if (y + th > window.innerHeight - 20) y = e.clientY - th - pad;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function renderChapters() {
+  var tbody = document.getElementById('chaptersBody');
+  var empty = document.getElementById('chaptersEmpty');
+  if (timecodes.length === 0) {
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
+  timecodes.forEach(function(tc, i) {
+    var nextSecs = i < timecodes.length - 1 ? timecodes[i + 1].secs : SHORTENED_DURATION;
+    var gap = Math.max(nextSecs - tc.secs, 0);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(tc.time) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(gap) + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(tc.title) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function renderHighlights() {
+  var grid = document.getElementById('highlightsGrid');
+  highlights.forEach(function(h) {
+    var card = document.createElement('div');
+    card.className = 'highlight-card';
+    var tagsHtml = renderHighlightTags(h.tags);
+    card.innerHTML =
+      '<div class="hl-title">' + escapeHtml(h.title) + '</div>' +
+      '<div class="hl-meta">' +
+        '<span class="chapter-duration">' + fmtDuration(h.dur) + '</span>' +
+        '<span class="hl-source">' + escapeHtml(h.startTime) + '</span>' +
+      '</div>' +
+      '<div class="hl-desc">' + escapeHtml(h.desc) + '</div>' +
+      (tagsHtml ? '<div class="hl-tags">' + tagsHtml + '</div>' : '');
+    grid.appendChild(card);
+  });
+}
+
+function renderSegments() {
+  var tbody = document.getElementById('segmentsBody');
+  segments.forEach(function(seg) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(seg.dur) + '</span></td>' +
+      '<td class="col-rel"><span class="relevance-badge ' + seg.relevance + '">' + seg.relevance + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(seg.desc) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderTimeline();
+  renderChapters();
+  renderHighlights();
+  renderSegments();
+});
+</script>
+</body>
+</html>
