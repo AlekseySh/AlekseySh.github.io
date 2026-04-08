@@ -64,6 +64,9 @@ window.__translations['ru'] = {
     "config.back": "назад к описанию",
 
     "howItWorks.heading": "Как это работает?",
+    "examples.cardTitle": "ПРИМЕР",
+    "examples.openPlaylist": "открыть плейлист",
+    "examples.openProject": "открыть проект",
     "examples.1": "Нейробиолог критикует лженауку Савельева",
     "examples.2": "Нейробиолог критикует лженауку Савельева",
     "examples.3": "Нейробиолог критикует лженауку Савельева",

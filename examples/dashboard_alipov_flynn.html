@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Падает ли средний IQ человечества? Обратный эффект Флинна — Cutto Dashboard</title>
+<script src="../assets/site-data.js"></script>
 <style>
 :root {
   --relevance-high-color: #4CAF50;
@@ -627,7 +628,7 @@
 
   <header class="header">
     <div class="header-row">
-      <a class="youtube-button" href="https://www.youtube.com/playlist?list=PLXcjjw8fcCyJFplMSkizgPh78i-ZrHazU" target="_blank" rel="noopener noreferrer">
+      <a class="youtube-button" href="#" target="_blank" rel="noopener noreferrer" data-example-playlist-link hidden>
         <span class="youtube-button-copy">
           <span class="youtube-button-label">Открыть</span>
           <span class="youtube-button-label">на YouTube</span>
@@ -944,7 +945,36 @@ function renderSegments() {
   });
 }
 
+function syncHeaderLinks() {
+  var examplesByLanguage = (window.__siteData && window.__siteData.examples) || {};
+  var currentFile = window.location.pathname.split('/').pop();
+  var entries = [];
+  var lang;
+  var playlistLink = document.querySelector('[data-example-playlist-link]');
+  var example;
+
+  if (!playlistLink) return;
+
+  for (lang in examplesByLanguage) {
+    if (Object.prototype.hasOwnProperty.call(examplesByLanguage, lang) && Array.isArray(examplesByLanguage[lang])) {
+      entries = entries.concat(examplesByLanguage[lang]);
+    }
+  }
+
+  example = entries.find(function(entry) {
+    return typeof entry.href === 'string' && entry.href.split('/').pop() === currentFile;
+  });
+
+  if (!example || !example.playlistHref) {
+    return;
+  }
+
+  playlistLink.href = example.playlistHref;
+  playlistLink.hidden = false;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  syncHeaderLinks();
   renderTimeline();
   renderChapters();
   renderHighlights();

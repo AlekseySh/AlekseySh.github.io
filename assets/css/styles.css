@@ -253,70 +253,115 @@ body {
     width: 100%;
 }
 
-/* Examples Marquee */
-.examples-marquee {
-    --marquee-gap: 1.5rem;
-    overflow: hidden;
-    padding: 1.5rem 0;
+/* Examples Showcase */
+.examples-showcase {
+    max-width: 1400px;
+    width: calc(100% - 4rem);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem 0 0;
     margin-bottom: 1.5rem;
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
 
-.marquee-track {
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.example-card {
     display: flex;
-    gap: var(--marquee-gap);
-    width: max-content;
-    animation: marquee-scroll 30s linear infinite;
-    will-change: transform;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    min-height: 220px;
+    padding: 1.5rem;
+    background:
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 245, 249, 0.96));
+    border: 1px solid rgba(99, 102, 241, 0.22);
+    border-radius: 28px;
+    box-shadow: 0 20px 50px -28px rgba(15, 23, 42, 0.4);
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
 
-.marquee-group {
-    display: flex;
-    gap: var(--marquee-gap);
-    flex-shrink: 0;
-    min-width: max-content;
+.example-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(99, 102, 241, 0.42);
+    box-shadow: 0 28px 60px -28px rgba(99, 102, 241, 0.4);
 }
 
-.marquee-track:hover {
-    animation-play-state: paused;
-}
-
-.marquee-item {
+.example-card-kicker {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 2rem;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.12));
-    border: 1px solid var(--primary-light);
-    border-radius: 100px;
+    width: fit-content;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.example-card-title {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    font-weight: 700;
     color: var(--text);
+    letter-spacing: -0.03em;
+}
+
+.example-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.example-card-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 52px;
+    padding: 0.9rem 1.15rem;
+    border-radius: 16px;
+    color: white;
     text-decoration: none;
-    font-size: 1.25rem;
-    font-weight: 500;
-    white-space: nowrap;
-    box-shadow: var(--shadow);
-    transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
-    scroll-snap-align: start;
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
 }
 
-.marquee-item:hover {
-    border-color: var(--primary);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(139, 92, 246, 0.18));
-    color: var(--primary);
-    box-shadow: var(--shadow-lg);
+.example-card-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
 }
 
-.marquee-item i {
-    width: 24px;
-    height: 24px;
-    color: var(--primary);
+.example-card-button:focus-visible {
+    outline: 3px solid rgba(15, 23, 42, 0.18);
+    outline-offset: 2px;
+}
+
+.example-card-button i {
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
 }
 
-@keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(-1 * var(--marquee-loop-width, 50%))); }
+.example-card-button-label {
+    white-space: nowrap;
+}
+
+.example-card-button--youtube {
+    background: linear-gradient(135deg, #ff2a23, #d80d14);
+    box-shadow: 0 12px 26px rgba(216, 13, 20, 0.22);
+}
+
+.example-card-button--project {
+    background: var(--gradient);
+    box-shadow: 0 12px 26px rgba(99, 102, 241, 0.26);
 }
 
 /* Section */
@@ -1523,35 +1568,41 @@ body {
         text-align: center;
     }
 
-    .examples-marquee {
-        --marquee-gap: 0.75rem;
-        padding: 0.5rem 1rem 1rem;
+    .examples-showcase {
+        width: calc(100% - 2rem);
+        padding: 0.5rem 0 1rem;
         margin-bottom: 1rem;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x proximity;
-        scroll-padding-inline: 1rem;
-        -webkit-mask-image: none;
-        mask-image: none;
-        scrollbar-width: none;
     }
 
-    .examples-marquee::-webkit-scrollbar {
-        display: none;
+    .examples-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .marquee-track {
-        animation: none;
-        padding-right: 1rem;
+    .example-card {
+        min-height: 200px;
+        padding: 1.125rem;
+        border-radius: 22px;
+        gap: 1rem;
     }
 
-    .marquee-item {
-        padding: 0.55rem 0.9rem;
-        font-size: 0.85rem;
+    .example-card-kicker {
+        font-size: 0.78rem;
     }
 
-    .marquee-track .marquee-group[aria-hidden="true"] {
-        display: none;
+    .example-card-title {
+        font-size: 1.08rem;
+    }
+
+    .example-card-actions {
+        flex-direction: column;
+    }
+
+    .example-card-button {
+        width: 100%;
+        min-height: 48px;
+        padding: 0.85rem 1rem;
+        font-size: 0.92rem;
     }
 
     .how-it-works {

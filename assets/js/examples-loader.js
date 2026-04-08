@@ -1,8 +1,6 @@
 (function () {
     'use strict';
 
-    var resizeTimer = null;
-
     function getCurrentLang() {
         return localStorage.getItem('cutto_lang') || document.documentElement.lang || 'ru';
     }
@@ -15,126 +13,96 @@
         return Array.isArray(examples) ? examples : [];
     }
 
-    function createExampleItem(example, isDuplicate) {
-        var item = document.createElement('a');
+    function getTranslations(lang) {
+        return (window.__translations || {})[lang] || {};
+    }
+
+    function getTranslatedCopy(lang) {
+        var translations = getTranslations(lang);
+
+        return {
+            cardTitle: translations['examples.cardTitle'] || 'EXAMPLE',
+            openPlaylist: translations['examples.openPlaylist'] || 'open playlist',
+            openProject: translations['examples.openProject'] || 'open project'
+        };
+    }
+
+    function createActionLink(copy, iconName, className, href) {
+        var action = document.createElement('a');
         var icon = document.createElement('i');
         var label = document.createElement('span');
 
-        item.className = 'marquee-item';
-        item.href = example.href;
-        item.target = '_blank';
-        item.rel = 'noopener';
+        action.className = 'example-card-button ' + className;
+        action.href = href;
+        action.target = '_blank';
+        action.rel = 'noopener';
 
-        if (isDuplicate) {
-            item.setAttribute('aria-hidden', 'true');
-            item.tabIndex = -1;
+        icon.setAttribute('data-lucide', iconName);
+        label.className = 'example-card-button-label';
+        label.textContent = copy;
+
+        action.appendChild(icon);
+        action.appendChild(label);
+
+        return action;
+    }
+
+    function createExampleItem(example, copy) {
+        var item = document.createElement('article');
+        var kicker = document.createElement('div');
+        var title = document.createElement('h3');
+        var actions = document.createElement('div');
+
+        item.className = 'example-card';
+
+        kicker.className = 'example-card-kicker';
+        kicker.textContent = copy.cardTitle;
+
+        title.className = 'example-card-title';
+        title.textContent = example.label || '';
+
+        actions.className = 'example-card-actions';
+
+        if (example.playlistHref) {
+            actions.appendChild(createActionLink(copy.openPlaylist, 'youtube', 'example-card-button--youtube', example.playlistHref));
         }
 
-        icon.setAttribute('data-lucide', example.icon || 'layout-dashboard');
-        label.textContent = example.label || '';
+        if (example.href) {
+            actions.appendChild(createActionLink(copy.openProject, 'file-text', 'example-card-button--project', example.href));
+        }
 
-        item.appendChild(icon);
-        item.appendChild(label);
+        item.appendChild(kicker);
+        item.appendChild(title);
+        item.appendChild(actions);
 
         return item;
     }
 
-    function createGroup(examples, isDuplicate) {
-        var group = document.createElement('div');
+    function renderExamples() {
+        var showcase = document.querySelector('.examples-showcase');
+        var grid = showcase && showcase.querySelector('.examples-grid');
+        var lang = getCurrentLang();
+        var examples = getExamplesForLanguage(lang);
+        var copy = getTranslatedCopy(lang);
         var i;
 
-        group.className = 'marquee-group';
-
-        if (isDuplicate) {
-            group.setAttribute('aria-hidden', 'true');
-        }
-
-        for (i = 0; i < examples.length; i += 1) {
-            group.appendChild(createExampleItem(examples[i], isDuplicate));
-        }
-
-        return group;
-    }
-
-    function getTrackGap(track) {
-        var styles = window.getComputedStyle(track);
-        var gap = parseFloat(styles.columnGap || styles.gap || '0');
-
-        return isNaN(gap) ? 0 : gap;
-    }
-
-    function buildLoopExamples(examples, marquee, track) {
-        var measureGroup = createGroup(examples, false);
-        var cycleWidth;
-        var containerWidth;
-        var repeatCount;
-        var loopExamples = [];
-        var i;
-        var j;
-
-        marquee.hidden = false;
-        track.appendChild(measureGroup);
-
-        cycleWidth = measureGroup.getBoundingClientRect().width;
-        containerWidth = marquee.getBoundingClientRect().width;
-
-        track.textContent = '';
-
-        if (!cycleWidth || !containerWidth || window.matchMedia('(max-width: 600px)').matches) {
-            return examples.slice();
-        }
-
-        repeatCount = Math.max(1, Math.ceil(containerWidth / cycleWidth));
-
-        for (i = 0; i < repeatCount; i += 1) {
-            for (j = 0; j < examples.length; j += 1) {
-                loopExamples.push(examples[j]);
-            }
-        }
-
-        return loopExamples;
-    }
-
-    function renderMarquee() {
-        var marquee = document.querySelector('.examples-marquee');
-        var track = marquee && marquee.querySelector('.marquee-track');
-        var examples = getExamplesForLanguage(getCurrentLang());
-        var loopExamples;
-        var primaryGroup;
-        var duplicateGroup;
-        var loopWidth;
-
-        if (!marquee || !track) return;
-
-        track.textContent = '';
-        track.style.removeProperty('--marquee-loop-width');
+        if (!showcase || !grid) return;
+        grid.textContent = '';
 
         if (!examples.length) {
-            marquee.hidden = true;
+            showcase.hidden = true;
             return;
         }
 
-        loopExamples = buildLoopExamples(examples, marquee, track);
-        primaryGroup = createGroup(loopExamples, false);
-        duplicateGroup = createGroup(loopExamples, true);
+        for (i = 0; i < examples.length; i += 1) {
+            grid.appendChild(createExampleItem(examples[i], copy));
+        }
 
-        track.appendChild(primaryGroup);
-        track.appendChild(duplicateGroup);
-        marquee.hidden = false;
-        loopWidth = primaryGroup.getBoundingClientRect().width + getTrackGap(track);
-        track.style.setProperty('--marquee-loop-width', loopWidth + 'px');
+        showcase.hidden = false;
 
         if (window.lucide && window.lucide.createIcons) {
             window.lucide.createIcons();
         }
-    }
-
-    function scheduleRender() {
-        if (resizeTimer) {
-            window.clearTimeout(resizeTimer);
-        }
-
-        resizeTimer = window.setTimeout(renderMarquee, 120);
     }
 
     function patchI18n() {
@@ -144,7 +112,7 @@
 
         function wrappedSetLanguage(lang) {
             original(lang);
-            renderMarquee();
+            renderExamples();
         }
 
         wrappedSetLanguage.__examplesPatched = true;
@@ -152,14 +120,8 @@
     }
 
     function init() {
-        renderMarquee();
+        renderExamples();
         patchI18n();
-        window.addEventListener('resize', scheduleRender);
-        window.addEventListener('load', renderMarquee);
-
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(renderMarquee);
-        }
     }
 
     if (document.readyState === 'loading') {

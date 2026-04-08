@@ -11,11 +11,13 @@ window.__siteData = {
         ru: [
             {
                 href: "examples/dashboard_alipov_saveliev.html",
+                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyLGceQ58rPXgH5N5rZdI5W3",
                 label: "Нейробиолог разоблачает лженауку Савельева",
                 icon: "layout-dashboard"
             },
             {
                 href: "examples/dashboard_alipov_flynn.html",
+                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyJFplMSkizgPh78i-ZrHazU",
                 label: "Падает ли средний IQ человечества? Обратный эффект Флинна",
                 icon: "layout-dashboard"
             }
