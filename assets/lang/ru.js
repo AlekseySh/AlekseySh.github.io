@@ -64,6 +64,7 @@ window.__translations['ru'] = {
     "config.back": "назад к описанию",
 
     "howItWorks.heading": "Как это работает?",
+    "examples.heading": "Примеры",
     "examples.cardTitle": "ПРИМЕР",
     "examples.openPlaylist": "открыть плейлист",
     "examples.openProject": "открыть проект",

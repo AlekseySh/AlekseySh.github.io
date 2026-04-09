@@ -6,11 +6,13 @@
     }
 
     function getExamplesForLanguage(lang) {
-        var siteData = window.__siteData || {};
-        var examplesByLanguage = siteData.examples || {};
-        var examples = examplesByLanguage[lang];
+        var catalog = window.exampleCatalog;
 
-        return Array.isArray(examples) ? examples : [];
+        if (!catalog || typeof catalog.getExamplesForLanguage !== 'function') {
+            return [];
+        }
+
+        return catalog.getExamplesForLanguage(lang);
     }
 
     function getTranslations(lang) {
@@ -21,7 +23,6 @@
         var translations = getTranslations(lang);
 
         return {
-            cardTitle: translations['examples.cardTitle'] || 'EXAMPLE',
             openPlaylist: translations['examples.openPlaylist'] || 'open playlist',
             openProject: translations['examples.openProject'] || 'open project'
         };
@@ -49,17 +50,13 @@
 
     function createExampleItem(example, copy) {
         var item = document.createElement('article');
-        var kicker = document.createElement('div');
         var title = document.createElement('h3');
         var actions = document.createElement('div');
 
         item.className = 'example-card';
 
-        kicker.className = 'example-card-kicker';
-        kicker.textContent = copy.cardTitle;
-
         title.className = 'example-card-title';
-        title.textContent = example.label || '';
+        title.textContent = example.title || '';
 
         actions.className = 'example-card-actions';
 
@@ -67,11 +64,10 @@
             actions.appendChild(createActionLink(copy.openPlaylist, 'youtube', 'example-card-button--youtube', example.playlistHref));
         }
 
-        if (example.href) {
-            actions.appendChild(createActionLink(copy.openProject, 'file-text', 'example-card-button--project', example.href));
+        if (example.dashboardPath) {
+            actions.appendChild(createActionLink(copy.openProject, 'file-text', 'example-card-button--project', example.dashboardPath));
         }
 
-        item.appendChild(kicker);
         item.appendChild(title);
         item.appendChild(actions);
 

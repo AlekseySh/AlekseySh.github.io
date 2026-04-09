@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эксперименты с физикой порталов: карманные измерения и искусственная гравитация — Cutto Dashboard</title>
+<style>
+:root {
+  --relevance-high-color: #4CAF50;
+  --relevance-high-tooltip-color: #55efc4;
+  --relevance-mid-color: #FF9800;
+  --relevance-mid-tooltip-color: #fdcb6e;
+  --relevance-low-color: #f44336;
+  --relevance-low-tooltip-color: #ff7675;
+  --silence-color: #c8d0d4;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    line-height: 1.6;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 40px 60px;
+  }
+  .header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #dfe6e9;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .header-main {
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    min-height: 76px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ff2a23, #d80d14);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(216,13,20,0.18);
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .youtube-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+  .youtube-button-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .youtube-button-label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    background: linear-gradient(135deg, #6f5cff, #8c71ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(111,92,255,0.18);
+    letter-spacing: 0.1px;
+    text-decoration: none;
+  }
+  .header .badge:hover {
+    filter: brightness(1.05);
+  }
+  .badge-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .badge-label {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon,
+  .collapsible-details summary .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .section-title .icon svg,
+  .collapsible-details summary .icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .timeline-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 36px;
+  }
+  .timeline-header {
+    margin-bottom: 16px;
+  }
+  .timeline-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .timeline-summary-card {
+    background: #f8fafc;
+    border: 1px solid #e7edf2;
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timeline-summary-card-tags {
+    gap: 10px;
+  }
+  .timeline-summary-label {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .timeline-summary-value {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .timeline-summary-keep-group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .timeline-summary-metric {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .timeline-summary-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #4a5560;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .timeline-summary-tag .legend-dot {
+    margin-top: 0;
+  }
+  .timeline-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .timeline-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: #2d3436;
+    max-width: 520px;
+    flex: 1 1 auto;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    flex: 0 0 12px;
+    margin-top: 3px;
+  }
+  .legend-highlight {
+    color: #0984e3;
+    font-size: 15px;
+    line-height: 1;
+    flex: 0 0 12px;
+    margin-top: 1px;
+  }
+  .legend-text {
+    color: #2d3436;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .legend-name {
+    color: #2d3436;
+    font-weight: 700;
+  }
+  .timeline-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  .timeline-pie-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+  .timeline-pie-chart {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+  .timeline-pie-label {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    color: #1f2933;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+    pointer-events: none;
+  }
+  .timeline-pie-label-dark {
+    color: #1f2933;
+  }
+  .timeline-pie-chart::after {
+    content: '';
+    position: absolute;
+    inset: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #edf1f3;
+    z-index: 0;
+  }
+  .highlight-markers {
+    position: relative;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  .highlight-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    color: #0984e3;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.15s;
+    line-height: 1;
+    top: 4px;
+  }
+  .highlight-marker:hover {
+    transform: translateX(-50%) scale(1.4);
+  }
+  .timeline-bar {
+    position: relative;
+    height: 44px;
+    background: #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  .timeline-segment {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: opacity 0.15s;
+  }
+  .timeline-segment:hover {
+    opacity: 0.85;
+  }
+  .timeline-segment.relevance-HIGH { background: var(--relevance-high-color); }
+  .timeline-segment.relevance-MID { background: var(--relevance-mid-color); }
+  .timeline-segment.relevance-LOW { background: var(--relevance-low-color); }
+  .timeline-silence {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--silence-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .timeline-cut {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  .time-ruler {
+    position: relative;
+    height: 16px;
+    margin-top: 4px;
+  }
+  .time-ruler-mark {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #636e72;
+    font-weight: 500;
+  }
+  .timeline-tooltip {
+    display: none;
+    position: fixed;
+    background: #2d3436;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 340px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    line-height: 1.5;
+  }
+  .timeline-tooltip .tt-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .timeline-tooltip .tt-why {
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .timeline-tooltip .tt-why.HIGH { color: var(--relevance-high-tooltip-color); }
+  .timeline-tooltip .tt-why.MID { color: var(--relevance-mid-tooltip-color); }
+  .timeline-tooltip .tt-why.LOW { color: var(--relevance-low-tooltip-color); }
+  .timeline-tooltip .tt-explanation {
+    font-size: 12px;
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .timeline-tooltip .tt-time {
+    color: #b2bec3;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .chapters-section,
+  .highlights-section,
+  .segments-section {
+    margin-bottom: 36px;
+  }
+  .details-body {
+    padding: 0 28px 24px;
+  }
+  .chapters-table-wrap {
+    overflow-x: auto;
+  }
+  .chapter-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0984e3;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    line-height: 1.3;
+  }
+  .chapter-duration {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 9px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+  }
+  .chapter-empty {
+    color: #b2bec3;
+    font-size: 13px;
+    padding: 6px 0;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .highlight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #0984e3;
+    transition: box-shadow 0.2s;
+  }
+  .highlight-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  .highlight-card .hl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3436;
+    line-height: 1.4;
+  }
+  .highlight-card .hl-title + .hl-meta {
+    margin-top: 8px;
+  }
+  .highlight-card .hl-desc {
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight-card .hl-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .highlight-card .hl-source {
+    font-size: 11px;
+    color: #0984e3;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .highlight-card .hl-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .highlight-card .hl-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .collapsible-details {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .collapsible-details summary {
+    padding: 20px 28px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3436;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    list-style: none;
+    transition: background 0.15s;
+  }
+  .collapsible-details summary:hover {
+    background: #f5f6fa;
+  }
+  .collapsible-details summary::-webkit-details-marker { display: none; }
+  .collapsible-details summary .arrow {
+    transition: transform 0.2s;
+    font-size: 12px;
+    color: #b2bec3;
+  }
+  .collapsible-details[open] summary .arrow {
+    transform: rotate(90deg);
+  }
+  .segments-table-wrap {
+    padding: 0 28px 20px;
+    overflow-x: auto;
+  }
+  .segments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .segments-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #636e72;
+    border-bottom: 2px solid #dfe6e9;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .segments-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+  }
+  .segments-table tr:last-child td {
+    border-bottom: none;
+  }
+  .segments-table tr:hover td {
+    background: #f9f9fb;
+  }
+  .relevance-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .relevance-badge.HIGH { background: var(--relevance-high-color); }
+  .relevance-badge.MID { background: var(--relevance-mid-color); }
+  .relevance-badge.LOW { background: var(--relevance-low-color); }
+  .col-time { white-space: nowrap; }
+  .col-time .chapter-time { font-size: 12px; }
+  .col-dur { white-space: nowrap; text-align: right; }
+  .col-dur .chapter-duration { justify-content: center; }
+  .col-rel { white-space: nowrap; text-align: center; }
+  .col-desc { line-height: 1.5; }
+  #timecodesTable th.col-time,
+  #timecodesTable td.col-time,
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    width: 1%;
+    white-space: nowrap;
+  }
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    text-align: center;
+  }
+  #timecodesTable .col-dur .chapter-duration {
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .header-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .youtube-button, .header .badge { justify-content: center; }
+    .header-main { width: 100%; }
+    .timeline-summary-row { grid-template-columns: 1fr; }
+    .timeline-overview { flex-direction: column; align-items: flex-start; }
+    .timeline-legend { max-width: none; }
+    .timeline-pie-wrap { justify-content: flex-start; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="header-row">
+      <a class="youtube-button" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+        <span class="youtube-button-copy">
+          <span class="youtube-button-label">Открыть</span>
+          <span class="youtube-button-label">на YouTube</span>
+        </span>
+      </a>
+      <a class="badge" href="https://usecutto.app/" target="_blank" rel="noopener noreferrer">
+        <span class="badge-copy">
+          <span class="badge-label">Использовать</span>
+          <span class="badge-label">cutto</span>
+        </span>
+      </a>
+      <div class="header-main">
+        <h1>Эксперименты с физикой порталов: карманные измерения и искусственная гравитация</h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="timeline-section">
+    <div class="timeline-header">
+      <div class="section-title" style="margin-bottom:0">
+        <span class="icon icon-scissors" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M8.12 8.12 12 12"></path><path d="M20 4 8.12 15.88"></path><path d="M14.8 14.8 20 20"></path></svg></span>
+        Автомонтаж
+      </div>
+    </div>
+    <div class="timeline-summary-row">
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Итог</div>
+        <div class="timeline-summary-value">2 ч 16 мин → 58 мин</div>
+      </div>
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Сохранено</div>
+        <div class="timeline-summary-content">
+          <span class="timeline-summary-keep-group"><span class="timeline-summary-tag"><span class="legend-dot" style="background:#4CAF50;"></span>high</span><span class="timeline-summary-metric">[43% от оригинала]</span></span>
+        </div>
+      </div>
+      <div class="timeline-summary-card timeline-summary-card-tags">
+        <div class="timeline-summary-label">Удалено</div>
+        <div class="timeline-summary-tags">
+          <span class="timeline-summary-tag"><span class="legend-dot" style="background:#FF9800;"></span>mid</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#f44336;"></span>low</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#c8d0d4;"></span>тишина</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-overview">
+      <div class="timeline-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#4CAF50;"></span><span class="legend-text"><span class="legend-name">high</span> — основная тема — 58 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#FF9800;"></span><span class="legend-text"><span class="legend-name">mid</span> — интересно, но не по основной теме — 24 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-text"><span class="legend-name">low</span> — заминки и низко информативные сегменты — 45 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#c8d0d4;"></span><span class="legend-text"><span class="legend-name">тишина</span> — вырезанные паузы — 10 мин</span></div><div class="legend-item"><span class="legend-highlight">&#9670;</span><span class="legend-text"><span class="legend-name">хайлайт</span> — отдельная интересная мысль, не обязательно по основной теме</span></div>
+      </div>
+      <div class="timeline-pie-wrap">
+        <div class="timeline-pie-chart" style="background: conic-gradient(#4CAF50 0% 43%, #FF9800 43% 60%, #f44336 60% 93%, #c8d0d4 93% 100%);" title="Распределение high / mid / low / тишина">
+          <span class="timeline-pie-label" style="left:136.6px; top:67.3px;">43%</span><span class="timeline-pie-label" style="left:74.5px; top:137.7px;">17%</span><span class="timeline-pie-label" style="left:22.3px; top:74.5px;">33%</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-wrapper">
+      <div class="highlight-markers" id="highlightMarkers"></div>
+      <div class="timeline-bar" id="timelineBar"></div>
+      <div class="time-ruler" id="timeRuler"></div>
+    </div>
+  </div>
+  <div class="timeline-tooltip" id="tooltip"></div>
+
+  <div class="chapters-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-clock" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
+        Таймкоды [19]
+      </summary>
+      <div class="details-body">
+        <div class="chapters-table-wrap">
+          <table class="segments-table" id="timecodesTable">
+            <thead>
+              <tr>
+                <th class="col-time">Время</th>
+                <th class="col-dur">Длительность</th>
+                <th class="col-desc">Описание</th>
+              </tr>
+            </thead>
+            <tbody id="chaptersBody"></tbody>
+          </table>
+          <div class="chapter-empty" id="chaptersEmpty" hidden>Нет таймкодов</div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="highlights-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-star" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20.2l1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg></span>
+        Хайлайты [4]
+      </summary>
+      <div class="details-body">
+        <div class="highlights-grid" id="highlightsGrid"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="segments-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-search" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
+        Все сегменты [132]
+      </summary>
+      <div class="segments-table-wrap">
+        <table class="segments-table" id="segmentsTable">
+          <thead>
+            <tr>
+              <th class="col-time">Время</th>
+              <th class="col-dur">Длительность</th>
+              <th class="col-rel">Релевантность</th>
+              <th class="col-desc">Описание</th>
+            </tr>
+          </thead>
+          <tbody id="segmentsBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_DURATION = 8179.0;
+const SHORTENED_DURATION = 3479.4;
+const segments = [{"start": 0.0, "end": 33.8, "dur": 33.8, "desc": "Первое приветствие стрима - стример запускает трансляцию и приветствует зрителей", "relevance": "HIGH", "relevanceExplained": "Первое приветствие всего стрима всегда HIGH", "startTime": "00:00", "endTime": "00:34"}, {"start": 33.8, "end": 62.2, "dur": 28.5, "desc": "Настройка OBS - подгонка разрешения и расположения элементов", "relevance": "LOW", "relevanceExplained": "Чисто техническая настройка стрима без информационной ценности", "startTime": "00:34", "endTime": "01:02"}, {"start": 62.2, "end": 85.5, "dur": 23.3, "desc": "Проверка звука и реакция на первые сообщения в чате", "relevance": "LOW", "relevanceExplained": "Служебная проверка связи и громкости", "startTime": "01:02", "endTime": "01:26"}, {"start": 85.5, "end": 109.2, "dur": 23.6, "desc": "Жалоба на баг YouTube с автопереводом комментариев на английский", "relevance": "LOW", "relevanceExplained": "Мелкая техническая жалоба без долгосрочной ценности", "startTime": "01:26", "endTime": "01:49"}, {"start": 109.2, "end": 189.6, "dur": 80.5, "desc": "Настройка Donation Alerts - поиск ссылки и добавление её в описание стрима", "relevance": "LOW", "relevanceExplained": "Чисто служебная настройка платёжной системы", "startTime": "01:49", "endTime": "03:10"}, {"start": 189.6, "end": 202.2, "dur": 12.6, "desc": "Повторная демонстрация бага автоперевода YouTube", "relevance": "LOW", "relevanceExplained": "Повтор той же мелкой технической жалобы", "startTime": "03:10", "endTime": "03:22"}, {"start": 202.2, "end": 225.3, "dur": 23.1, "desc": "Приветствие подключающихся зрителей и ответ про запись стрима", "relevance": "LOW", "relevanceExplained": "Повторное приветствие и служебная информация о записи", "startTime": "03:22", "endTime": "03:45"}, {"start": 225.3, "end": 263.5, "dur": 38.1, "desc": "Реакция на первый донат и благодарность", "relevance": "LOW", "relevanceExplained": "Служебная реакция на донат без содержательной информации", "startTime": "03:45", "endTime": "04:23"}, {"start": 263.5, "end": 274.5, "dur": 11.0, "desc": "Ожидание зрителей и тест автоперевода на английском", "relevance": "LOW", "relevanceExplained": "Ожидание начала и мелкий тест", "startTime": "04:23", "endTime": "04:34"}, {"start": 274.5, "end": 297.9, "dur": 23.4, "desc": "Ответ на вопрос из чата про симуляцию волновой функции и аксиому порталов в разных размерностях", "relevance": "MID", "relevanceExplained": "Краткий но содержательный ответ про свойства порталов в разных размерностях - относится к теме движка", "startTime": "04:34", "endTime": "04:58"}, {"start": 297.9, "end": 344.5, "dur": 46.7, "desc": "Объяснение механики вопросов через донаты", "relevance": "LOW", "relevanceExplained": "Служебная информация о формате взаимодействия на стриме", "startTime": "04:58", "endTime": "05:45"}, {"start": 344.5, "end": 409.7, "dur": 65.2, "desc": "Ответ про доступность Portal Lab в браузере и упоминание шейдерной версии", "relevance": "MID", "relevanceExplained": "Информация о доступных версиях продукта - косвенно относится к основной теме", "startTime": "05:45", "endTime": "06:50"}, {"start": 409.7, "end": 414.5, "dur": 4.8, "desc": "Согласие что автоперевод плохой", "relevance": "LOW", "relevanceExplained": "Проходная реплика без ценности", "startTime": "06:50", "endTime": "06:55"}, {"start": 414.5, "end": 485.8, "dur": 71.3, "desc": "Обсуждение лимитов донатов, рекламы в стриме, версий на Android и организационные моменты", "relevance": "LOW", "relevanceExplained": "Служебные организационные вопросы: лимиты донатов, сборка Android-версии, вопросы про рекламу YouTube", "startTime": "06:55", "endTime": "08:06"}, {"start": 485.8, "end": 509.5, "dur": 23.7, "desc": "Начало основного контента - формулировка первого вопроса про искусственную гравитацию через портал около Земли и в космосе", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме стрима - визуализация физических парадоксов с порталами", "startTime": "08:06", "endTime": "08:30"}, {"start": 509.5, "end": 528.4, "dur": 18.9, "desc": "Первичный ответ на вопрос и начало демонстрации", "relevance": "HIGH", "relevanceExplained": "Стример начинает отвечать на вопрос об искусственной гравитации - основная тема", "startTime": "08:30", "endTime": "08:48"}, {"start": 528.4, "end": 587.1, "dur": 58.7, "desc": "Демонстрация нового обновления с превьюшками сцен и настройка интерфейса", "relevance": "MID", "relevanceExplained": "Показ обновления движка интересен но является отступлением от вопроса про гравитацию", "startTime": "08:48", "endTime": "09:47"}, {"start": 587.1, "end": 805.1, "dur": 218.0, "desc": "Настройка сцены для симуляции гравитации - включение планет, стримлайнов, настройка параметров", "relevance": "HIGH", "relevanceExplained": "Процесс построения эксперимента с гравитацией через порталы - основная тема", "startTime": "09:47", "endTime": "13:25"}, {"start": 805.1, "end": 809.0, "dur": 3.8, "desc": "Начало демонстрации результата - стример готовится показать гравитацию в далёком космосе", "relevance": "HIGH", "relevanceExplained": "Кульминация эксперимента - основная тема", "startTime": "13:25", "endTime": "13:29"}, {"start": 809.0, "end": 832.7, "dur": 23.7, "desc": "Донат-алерт про финансирование эксперимента с космическим шаттлом и реакция стримера", "relevance": "LOW", "relevanceExplained": "Автоматический TTS донат-алерт и короткая реакция без содержательной информации", "startTime": "13:29", "endTime": "13:53"}, {"start": 832.7, "end": 1015.8, "dur": 183.1, "desc": "Демонстрация искусственной гравитации через портал на космическом корабле - показ притяжения к центру и проблем с наклонной стеной", "relevance": "HIGH", "relevanceExplained": "Это прямая демонстрация физики порталов и гравитации - основная тема стрима. Стример показывает как работает портальная гравитация и какие проблемы возникают", "startTime": "13:53", "endTime": "16:56"}, {"start": 1015.8, "end": 1043.0, "dur": 27.2, "desc": "Вывод по искусственной гравитации - проблемы с ускоряющимся порталом и благодарность за донат", "relevance": "HIGH", "relevanceExplained": "Завершение темы искусственной гравитации с важным замечанием о сложности ускоряющихся порталов - относится к основной теме", "startTime": "16:56", "endTime": "17:23"}, {"start": 1043.0, "end": 1057.4, "dur": 14.5, "desc": "Переход к чтению комментариев из чата и замечание о YouTube переводе", "relevance": "LOW", "relevanceExplained": "Служебный момент - переход между темами и техническая заметка о переводе YouTube", "startTime": "17:23", "endTime": "17:37"}, {"start": 1057.4, "end": 1064.2, "dur": 6.8, "desc": "Ответ на вопрос из чата про окна о сохранении энергии", "relevance": "LOW", "relevanceExplained": "Очень короткий и неинформативный ответ - стример просто говорит что не знает как это сделать", "startTime": "17:37", "endTime": "17:44"}, {"start": 1064.2, "end": 1089.7, "dur": 25.5, "desc": "Ответ на вопрос про GUI - библиотека eGUI на Rust", "relevance": "MID", "relevanceExplained": "Техническая деталь про инструменты разработки движка - не основная тема но содержательный ответ", "startTime": "17:44", "endTime": "18:10"}, {"start": 1089.7, "end": 1102.9, "dur": 13.2, "desc": "Обсуждение случайного числа из доната и приветствие нового зрителя", "relevance": "LOW", "relevanceExplained": "Мелкие служебные реплики - шутка про случайное число 289 и приветствие. Быстро теряют ценность", "startTime": "18:10", "endTime": "18:23"}, {"start": 1102.9, "end": 1131.0, "dur": 28.2, "desc": "Ответ про open-source статус проекта и объяснение формата стрима новому зрителю", "relevance": "MID", "relevanceExplained": "Содержательная информация о проекте (будет спонсирован) и формате стрима но не основная тема", "startTime": "18:23", "endTime": "18:51"}, {"start": 1131.0, "end": 1175.1, "dur": 44.0, "desc": "Технические проблемы с чатом и ответ на вопрос про огромный портал", "relevance": "LOW", "relevanceExplained": "В основном служебные моменты - слетевший чат. Ответ про огромный портал откладывается на потом", "startTime": "18:51", "endTime": "19:35"}, {"start": 1175.1, "end": 1185.3, "dur": 10.2, "desc": "Реакция на рекламу стрима от Анигири", "relevance": "LOW", "relevanceExplained": "Краткая благодарность за рекламу - быстро теряет актуальность", "startTime": "19:35", "endTime": "19:45"}, {"start": 1185.3, "end": 1222.3, "dur": 37.1, "desc": "Ответы на вопросы из чата про формат симуляции и что можно симулировать", "relevance": "MID", "relevanceExplained": "Стример описывает возможности своего движка - полезно для понимания проекта но не демонстрация", "startTime": "19:45", "endTime": "20:22"}, {"start": 1222.3, "end": 1272.7, "dur": 50.3, "desc": "Ответ на вопрос про Entity Component System и рассказ о втором канале с видео про систему компонентов", "relevance": "MID", "relevanceExplained": "Технические детали архитектуры движка и реклама второго канала - содержательно но побочная тема", "startTime": "20:22", "endTime": "21:13"}, {"start": 1272.7, "end": 1346.5, "dur": 73.9, "desc": "Объяснение почему портал тянет к центру независимо от размера планеты - демонстрация с soft body", "relevance": "HIGH", "relevanceExplained": "Прямая демонстрация физики портальной гравитации с объяснением контринтуитивного эффекта - основная тема", "startTime": "21:13", "endTime": "22:27"}, {"start": 1346.5, "end": 1380.3, "dur": 33.8, "desc": "Ответ на вопрос почему параметры симуляции в боковом окошке и настройка 16 на 9", "relevance": "LOW", "relevanceExplained": "Чисто технический вопрос про интерфейс не имеющий отношения к физике порталов", "startTime": "22:27", "endTime": "23:00"}, {"start": 1380.3, "end": 1408.9, "dur": 28.6, "desc": "Ответ на вопросы про порталы-объекты и голосование на сайте", "relevance": "LOW", "relevanceExplained": "Два коротких ответа - один откладывает реализацию на потом а второй чисто организационный", "startTime": "23:00", "endTime": "23:29"}, {"start": 1408.9, "end": 1425.2, "dur": 16.3, "desc": "Переход к следующей теме - портал-зеркало", "relevance": "LOW", "relevanceExplained": "Служебный переход между темами без содержательной информации", "startTime": "23:29", "endTime": "23:45"}, {"start": 1425.2, "end": 1507.0, "dur": 81.8, "desc": "Попытка создать портал-зеркало - размещение порталов друг в друга и проблемы с методом конечных элементов", "relevance": "HIGH", "relevanceExplained": "Демонстрация ограничений движка при попытке создать зеркальный портал - относится к основной теме и показывает технические границы симуляции", "startTime": "23:45", "endTime": "25:07"}, {"start": 1507.0, "end": 1521.5, "dur": 14.5, "desc": "Переход к показу монопортала - спойлер к следующему видео", "relevance": "HIGH", "relevanceExplained": "Начало демонстрации монопортала - важная новая фича движка относящаяся к основной теме", "startTime": "25:07", "endTime": "25:21"}, {"start": 1521.5, "end": 1572.7, "dur": 51.2, "desc": "Настройка OBS и расположения элементов на экране", "relevance": "LOW", "relevanceExplained": "Служебная настройка отображения - перемещение элементов QR-кода и вопросов", "startTime": "25:21", "endTime": "26:13"}, {"start": 1572.7, "end": 1676.6, "dur": 103.9, "desc": "Демонстрация монопортала с самостолкновением soft body - новая фича движка", "relevance": "HIGH", "relevanceExplained": "Ключевая демонстрация новой функциональности - soft body сталкивается сам с собой через монопортал. Это спойлер к будущему видео и прямо относится к основной теме", "startTime": "26:13", "endTime": "27:57"}, {"start": 1676.6, "end": 1703.5, "dur": 26.9, "desc": "Донат-алерт со спамом и благодарность", "relevance": "LOW", "relevanceExplained": "Спам-донат (звук) и короткая благодарность - не несет информационной ценности", "startTime": "27:57", "endTime": "28:24"}, {"start": 1703.5, "end": 1730.5, "dur": 27.0, "desc": "Объяснение разницы между монопорталом и настоящим зеркалом", "relevance": "HIGH", "relevanceExplained": "Содержательное объяснение физики - в зеркале объект всегда ударяется сам в себя и не может пройти сквозь. Относится к основной теме", "startTime": "28:24", "endTime": "28:51"}, {"start": 1730.5, "end": 1770.8, "dur": 40.3, "desc": "Ответ на вопрос про поворот монопортала на 180 градусов и демонстрация", "relevance": "MID", "relevanceExplained": "Короткий эксперимент по просьбе зрителя - дополнение к демонстрации монопортала", "startTime": "28:51", "endTime": "29:31"}, {"start": 1770.8, "end": 1815.8, "dur": 45.0, "desc": "Чтение чата и ответ про портал-круг - будет в следующем видео", "relevance": "LOW", "relevanceExplained": "Служебное чтение чата с жалобой на перевод YouTube и откладывание вопроса на будущее видео", "startTime": "29:31", "endTime": "30:16"}, {"start": 1815.8, "end": 1880.4, "dur": 64.6, "desc": "Настройка донатов и ответ про гайд на программу", "relevance": "LOW", "relevanceExplained": "Служебная настройка донатов и короткий ответ что гайд уже есть на английском", "startTime": "30:16", "endTime": "31:20"}, {"start": 1880.4, "end": 1907.3, "dur": 26.9, "desc": "Ответ на вопрос где скачать Portal Lab - отправка ссылки", "relevance": "LOW", "relevanceExplained": "Короткий организационный ответ с отправкой ссылки", "startTime": "31:20", "endTime": "31:47"}, {"start": 1907.3, "end": 1967.4, "dur": 60.1, "desc": "Объяснение того что симуляция работает на процессоре в реальном времени с конкретными замерами производительности (FEM - 15 мс и SoftBody - 2 мс и рендеринг)", "relevance": "MID", "relevanceExplained": "Технические детали производительности движка - содержательная информация но скорее побочная относительно основной темы визуализации физических парадоксов", "startTime": "31:47", "endTime": "32:47"}, {"start": 1967.4, "end": 2022.0, "dur": 54.7, "desc": "Демонстрация сцены с поршнем сжимающим объект и анонс будущего видео про физику столкновений", "relevance": "HIGH", "relevanceExplained": "Демонстрация физической симуляции напрямую относится к основной теме стрима - визуализация физики в Portal Lab", "startTime": "32:47", "endTime": "33:42"}, {"start": 2022.0, "end": 2041.7, "dur": 19.7, "desc": "Ответ на вопрос где найти гайд - направление на второй канал Optozorax 2", "relevance": "LOW", "relevanceExplained": "Служебная информация о поиске гайда - быстро теряет актуальность и не несёт содержательной ценности", "startTime": "33:42", "endTime": "34:02"}, {"start": 2041.7, "end": 2105.9, "dur": 64.2, "desc": "Переход к следующим вопросам и спам-донаты «бульточка» и «буль»", "relevance": "LOW", "relevanceExplained": "Спам-донаты без смыслового содержания и служебные реплики о дизлайках в чате", "startTime": "34:02", "endTime": "35:06"}, {"start": 2105.9, "end": 2195.3, "dur": 89.4, "desc": "Ответ на вопрос о роадмапе проекта: ближайшие видео (сферический портал - червоточины - физика) и планы уйти в 4D из-за сложности математики ускоряющихся порталов", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме - автор подробно рассказывает о планах развития движка и объясняет почему ускоряющиеся порталы требуют теории относительности или теории Картана-Ньютона", "startTime": "35:06", "endTime": "36:35"}, {"start": 2195.3, "end": 2342.3, "dur": 147.0, "desc": "Демонстрация и обсуждение физики масштабирующих порталов: проблема телепортации инерциальной массы vs гравитационной и планы по рекурсивному самостолкновению", "relevance": "HIGH", "relevanceExplained": "Напрямую относится к основной теме - исследование физики порталов с конкретной демонстрацией и обсуждением нерешённых проблем (два вида массы)", "startTime": "36:35", "endTime": "39:02"}, {"start": 2342.3, "end": 2415.9, "dur": 73.6, "desc": "Чтение спам-донатов (буль-буль) и ответ на вопрос про формат M4A", "relevance": "LOW", "relevanceExplained": "Чтение спам-сообщений без содержания и краткий ответ про аудиоформат - не относится к теме стрима", "startTime": "39:02", "endTime": "40:16"}, {"start": 2415.9, "end": 2441.4, "dur": 25.5, "desc": "Ответ на вопрос о тестировании порталов в реальной жизни - пока невозможно создать", "relevance": "MID", "relevanceExplained": "Краткий но содержательный ответ касающийся порталов - относится к теме но очень короткий", "startTime": "40:16", "endTime": "40:41"}, {"start": 2441.4, "end": 2802.7, "dur": 361.3, "desc": "Попытка сделать зеркальный портал по просьбе зрителя Виктозоракса: настройка self-collisions для SoftBody - демонстрация монопортала - попытка зеркалирования", "relevance": "HIGH", "relevanceExplained": "Лайв-эксперимент с порталами по запросу зрителя - прямая демонстрация возможностей движка и физики монопортала с самостолкновениями", "startTime": "40:41", "endTime": "46:43"}, {"start": 2802.7, "end": 2906.5, "dur": 103.8, "desc": "Ответ на вопрос о временных порталах - возможно через клеточный автомат с самосогласованным перемещением во времени", "relevance": "HIGH", "relevanceExplained": "Автор делится планами по реализации временных порталов с конкретным подходом через клеточный автомат - контринтуитивная и интересная идея относящаяся к основной теме", "startTime": "46:43", "endTime": "48:27"}, {"start": 2906.5, "end": 2919.1, "dur": 12.6, "desc": "Завершение предыдущего вопроса и переход к донату с вопросом про гравитацию в карманном пространстве", "relevance": "HIGH", "relevanceExplained": "Донат задаёт тему следующего большого эксперимента — гравитация в карманном пространстве с порталами — что напрямую относится к основной теме стрима", "startTime": "48:27", "endTime": "48:39"}, {"start": 2919.1, "end": 2969.2, "dur": 50.1, "desc": "<начало про настройку сцены тороидального карманного пространства> Стример рассматривает присланную картинку и понимает задачу: нужно поставить порталы внутри карманного пространства", "relevance": "HIGH", "relevanceExplained": "Относится к основной теме — визуализация физических парадоксов с порталами. Стример объясняет что будет делать и почему это сложно", "startTime": "48:39", "endTime": "49:29"}, {"start": 2969.2, "end": 3028.7, "dur": 59.5, "desc": "Начало редактирования сцены: создание нового компонента Portal3 и отвлечение на донат про чихуахуа и игрушку Зоро", "relevance": "LOW", "relevanceExplained": "Техническое кликанье в интерфейсе перемежается с нерелевантным разговором про чихуахуа и мягкую игрушку — нет содержательной информации для зрителя", "startTime": "49:29", "endTime": "50:29"}, {"start": 3028.7, "end": 3065.7, "dur": 37.0, "desc": "Добавление портала в коллекцию компонентов и настройка цветов (красный и зелёный)", "relevance": "LOW", "relevanceExplained": "Рутинная техническая настройка параметров в UI без объяснения физики или интересных идей", "startTime": "50:29", "endTime": "51:06"}, {"start": 3065.7, "end": 3104.2, "dur": 38.5, "desc": "Настройка дебага и треугольников — и новый вопрос из чата про ослабление гравитации между двумя метровыми порталами", "relevance": "MID", "relevanceExplained": "Вопрос из чата интересный (количественная оценка гравитации между порталами) но стример лишь принимает его к сведению без развёрнутого ответа", "startTime": "51:06", "endTime": "51:44"}, {"start": 3104.2, "end": 3110.1, "dur": 5.9, "desc": "Стример обещает попробовать ответить на вопрос про ослабление гравитации после текущей задачи", "relevance": "MID", "relevanceExplained": "Краткое обещание без содержательного ответа — продолжение предыдущего блока по смыслу", "startTime": "51:44", "endTime": "51:50"}, {"start": 3110.1, "end": 3184.4, "dur": 74.3, "desc": "<продолжение про настройку сцены тороидального карманного пространства> Настройка FemDebug и обнаружение проблемы: движок не рассчитан на порталы касающиеся не краями", "relevance": "HIGH", "relevanceExplained": "Стример обнаруживает архитектурное ограничение своего движка — это интересно зрителям как демонстрация реальных трудностей разработки физического симулятора", "startTime": "51:50", "endTime": "53:04"}, {"start": 3184.4, "end": 3448.6, "dur": 264.2, "desc": "<продолжение про настройку сцены тороидального карманного пространства> Стример объясняет проблему с индексингом порталов и придумывает обходное решение — добавить ещё две пары порталов для имитации", "relevance": "HIGH", "relevanceExplained": "Ключевой момент: объяснение архитектурного ограничения и креативное решение. Зритель понимает как устроен движок и почему задача нетривиальна", "startTime": "53:04", "endTime": "57:29"}, {"start": 3448.6, "end": 3535.5, "dur": 86.9, "desc": "Стример решается приступить к сложной настройке и добавляет картинку чихуахуа на экран", "relevance": "LOW", "relevanceExplained": "Переходный момент без содержательной информации — поиск картинки и психологическая подготовка к рутинной работе", "startTime": "57:29", "endTime": "58:55"}, {"start": 3535.5, "end": 3655.0, "dur": 119.5, "desc": "Рутинная настройка параметров порталов: создание portal site 1 и 2 добавление в коллекцию исправление ошибок с цветами", "relevance": "LOW", "relevanceExplained": "Длительная техническая рутина — кликанье параметров исправление падений программы добавление цветов для реиндексингов. Нет объяснений физики", "startTime": "58:55", "endTime": "1:00:55"}, {"start": 3655.0, "end": 3840.6, "dur": 185.6, "desc": "Позиционирование порталов по координатам и настройка цветов (цвет Мику и серо-буро-малиновый)", "relevance": "LOW", "relevanceExplained": "Долгая рутинная подгонка числовых координат без пояснений физического смысла", "startTime": "1:00:55", "endTime": "1:04:01"}, {"start": 3840.6, "end": 3872.9, "dur": 32.3, "desc": "Вопрос из чата: если расстояние между порталами минимально а объект достаточно массивен — получится ли вечный двигатель? Стример обещает попробовать", "relevance": "MID", "relevanceExplained": "Интересный вопрос о вечном двигателе с порталами но стример отвечает лишь кратким обещанием попробовать позже", "startTime": "1:04:01", "endTime": "1:04:33"}, {"start": 3872.9, "end": 3994.0, "dur": 121.1, "desc": "Ручная настройка позиций порталов и точек для тороидальной сцены - перемещение координат и подготовка к реиндексингу", "relevance": "LOW", "relevanceExplained": "Техническая рутина: автор двигает числовые параметры в интерфейсе без объяснения физического смысла. Не содержит информации интересной зрителю", "startTime": "1:04:33", "endTime": "1:06:34"}, {"start": 3994.0, "end": 4216.6, "dur": 222.6, "desc": "Автор комментирует реакцию зрителей на его видео - люди начали самостоятельно исследовать тему порталов и гравитации", "relevance": "MID", "relevanceExplained": "Интересное личное наблюдение автора о влиянии его контента но не относится напрямую к физическому эксперименту с порталами", "startTime": "1:06:34", "endTime": "1:10:17"}, {"start": 4216.6, "end": 4282.6, "dur": 65.9, "desc": "Продолжение ручной разметки реиндексинга точек для тороидальной сцены с комментарием что зрители видят процесс создания сцен для видео", "relevance": "LOW", "relevanceExplained": "Техническая рутина разметки точек. Комментарий про процесс создания сцен мимолётный и не раскрывает интересных деталей", "startTime": "1:10:17", "endTime": "1:11:23"}, {"start": 4282.6, "end": 4347.8, "dur": 65.2, "desc": "Разметка углов тороидальной сцены и рассказ о самодельном дебажном интерфейсе с подписями порталов и стрелочками", "relevance": "MID", "relevanceExplained": "Содержит интересное замечание о том как автор «навайпкодил» дебажный интерфейс для удобства работы и что без него пришлось бы перекомпилировать после каждого изменения. Это даёт представление об инструментарии разработки движка", "startTime": "1:11:23", "endTime": "1:12:28"}, {"start": 4347.8, "end": 4427.6, "dur": 79.8, "desc": "Продолжение ручной разметки углов - подбор правильного направления точек и индексов", "relevance": "LOW", "relevanceExplained": "Чисто техническая рутина без содержательных комментариев", "startTime": "1:12:28", "endTime": "1:13:48"}, {"start": 4427.6, "end": 4456.4, "dur": 28.8, "desc": "Объяснение зачем нужна точная разметка - даже одна неправильно размеченная точка может привести к бесконечной утечке гравитации", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение физической модели движка: связь между разметкой точек и корректностью расчёта гравитации. Прямо относится к основной теме визуализации физики порталов", "startTime": "1:13:48", "endTime": "1:14:16"}, {"start": 4456.4, "end": 4564.8, "dur": 108.4, "desc": "Проверка корректности треугольников FEM-сетки - просмотр индексов точек и поиск аномалий гравитации", "relevance": "LOW", "relevanceExplained": "Техническая отладка: автор перебирает номера треугольников и точек без объяснения физического смысла", "startTime": "1:14:16", "endTime": "1:16:05"}, {"start": 4564.8, "end": 4687.5, "dur": 122.7, "desc": "Разметка оставшихся углов тороидальной сцены и сохранение сцены как «Антипортал Торус»", "relevance": "LOW", "relevanceExplained": "Техническая рутина завершения разметки и сохранение файла. Не содержит интересной для зрителя информации", "startTime": "1:16:05", "endTime": "1:18:08"}, {"start": 4687.5, "end": 4712.4, "dur": 24.9, "desc": "Автор объявляет начало экспериментов с тороидальным пространством и шутит что как в его видео - сначала долгое объяснение а потом эксперименты", "relevance": "HIGH", "relevanceExplained": "Переломный момент: после длительной настройки автор наконец переходит к экспериментам с тороидальным карманным пространством что является основной целью всей подготовки", "startTime": "1:18:08", "endTime": "1:18:32"}, {"start": 4712.4, "end": 4730.3, "dur": 17.9, "desc": "Обнаружение проблемы с отображением порталов в сцене", "relevance": "LOW", "relevanceExplained": "Техническая отладка без содержательной информации - автор замечает баг и пока не понимает в чём дело", "startTime": "1:18:32", "endTime": "1:18:50"}, {"start": 4730.3, "end": 4872.2, "dur": 141.9, "desc": "Отладка бага с пересчётом FEM при движении планеты - поиск ошибок в кэше и коде", "relevance": "LOW", "relevanceExplained": "Длительный процесс технической отладки: чтение ошибок, поиск в коде, случайное смещение объекта. Не несёт содержательной информации для зрителя", "startTime": "1:18:50", "endTime": "1:21:12"}, {"start": 4872.2, "end": 4998.6, "dur": 126.4, "desc": "Демонстрация результатов расчёта самосилы в тороидальном карманном пространстве", "relevance": "HIGH", "relevanceExplained": "Это ключевой эксперимент с визуализацией гравитации в тороидальном пространстве - прямо относится к основной теме стрима", "startTime": "1:21:12", "endTime": "1:23:19"}, {"start": 4998.6, "end": 5009.3, "dur": 10.7, "desc": "Идея запустить физическую симуляцию с объектом в тороидальном пространстве", "relevance": "HIGH", "relevanceExplained": "Продолжение ключевого эксперимента - переход от визуализации поля к симуляции движения объекта", "startTime": "1:23:19", "endTime": "1:23:29"}, {"start": 5009.3, "end": 5038.1, "dur": 28.8, "desc": "Извинение за долгую подготовку и объяснение формата стримов", "relevance": "MID", "relevanceExplained": "Мета-комментарий о формате стримов - не относится к основной теме но показывает отношение автора к процессу", "startTime": "1:23:29", "endTime": "1:23:58"}, {"start": 5038.1, "end": 5080.9, "dur": 42.8, "desc": "Описание визуализации самосилы для тороидального карманного пространства и отправка картинки в чат", "relevance": "HIGH", "relevanceExplained": "Автор объясняет что показывает визуализация - вход через портал сверху и выход снизу. Прямо относится к основной теме", "startTime": "1:23:58", "endTime": "1:24:41"}, {"start": 5080.9, "end": 5150.5, "dur": 69.6, "desc": "Запуск симуляции движения объекта в тороидальном пространстве с самосилой", "relevance": "HIGH", "relevanceExplained": "Ключевой эксперимент: автор объясняет что объект должен застрять в центре из-за симметрии сил, запускает симуляцию и наблюдает результат", "startTime": "1:24:41", "endTime": "1:25:51"}, {"start": 5150.5, "end": 5195.1, "dur": 44.6, "desc": "Комментарий о востребованности тороидальной сцены в сообществе и отправка сцены подписчикам на Boosty", "relevance": "MID", "relevanceExplained": "Контекст о сообществе и шаринг сцены - не эксперимент сам по себе, но интересная информация о том что сцену просили", "startTime": "1:25:51", "endTime": "1:26:35"}, {"start": 5195.1, "end": 5280.7, "dur": 85.6, "desc": "<начало про измерение гравитации в точке> Чтение доната с вопросом о двух метровых порталах и решение написать новый компонент", "relevance": "HIGH", "relevanceExplained": "Вопрос зрителя приводит к идее создания нового компонента для измерения гравитации - это запускает сегмент лайв-кодинга, важный для основной темы", "startTime": "1:26:35", "endTime": "1:28:01"}, {"start": 5280.7, "end": 5393.4, "dur": 112.7, "desc": "Написание промпта для Codex и запуск вайб-кодинга нового компонента", "relevance": "HIGH", "relevanceExplained": "Автор в реальном времени пишет промпт для AI-кодера чтобы создать компонент измерения гравитации - демонстрация процесса разработки движка", "startTime": "1:28:01", "endTime": "1:29:53"}, {"start": 5393.4, "end": 5431.2, "dur": 37.9, "desc": "Проверка фоновых вычислений и ответ на вопрос из чата про ожидания от комьюнити", "relevance": "MID", "relevanceExplained": "Переходный момент: автор проверяет статус симуляции и кратко отвечает на вопрос о неожиданности создания сообщества", "startTime": "1:29:53", "endTime": "1:30:31"}, {"start": 5431.2, "end": 5543.8, "dur": 112.5, "desc": "Ответ на донат про невозможность вечного двигателя с порталами - объяснение через уравнение Пуассона и консервативные поля", "relevance": "HIGH", "relevanceExplained": "Важное объяснение физики: почему уравнение Пуассона всегда создаёт поле сохраняющее энергию и вечный двигатель невозможен. Прямо относится к основной теме", "startTime": "1:30:31", "endTime": "1:32:24"}, {"start": 5543.8, "end": 5604.3, "dur": 60.5, "desc": "Практическая демонстрация: объект между близко расположенными порталами с большой планетой - гравитация не проникает", "relevance": "HIGH", "relevanceExplained": "Визуальное подтверждение теоретического ответа: при малом расстоянии между порталами гравитация внутрь практически не залетает и объект в невесомости", "startTime": "1:32:24", "endTime": "1:33:24"}, {"start": 5604.3, "end": 5650.7, "dur": 46.4, "desc": "Демонстрация работы ИИ-агента Codex: как он читает документацию и код и самостоятельно создаёт новый компонент", "relevance": "MID", "relevanceExplained": "Это побочная тема про ИИ-кодинг, не относящаяся напрямую к физике порталов и гравитации, но содержательная и интересная как демонстрация инструмента", "startTime": "1:33:24", "endTime": "1:34:11"}, {"start": 5650.7, "end": 5703.3, "dur": 52.6, "desc": "Чтение комментариев и ответ про запись и где скачать Portal Lab", "relevance": "LOW", "relevanceExplained": "Служебные реплики: обещание записи и информация о скачивании без содержательного обсуждения", "startTime": "1:34:11", "endTime": "1:35:03"}, {"start": 5703.3, "end": 5800.8, "dur": 97.5, "desc": "Объяснение преимуществ Codex: автоматический запуск тестов, проверка компиляции, экономия лимитов по сравнению с Claude Code", "relevance": "MID", "relevanceExplained": "Побочная тема про инструменты ИИ-кодинга, но содержательная - автор объясняет конкретные преимущества агента и сравнивает с альтернативой", "startTime": "1:35:03", "endTime": "1:36:41"}, {"start": 5800.8, "end": 5837.2, "dur": 36.4, "desc": "Запуск новой скомпилированной версии Portal Lab и ожидание компиляции", "relevance": "LOW", "relevanceExplained": "Технические действия по запуску программы без содержательного обсуждения", "startTime": "1:36:41", "endTime": "1:37:17"}, {"start": 5837.2, "end": 5931.8, "dur": 94.6, "desc": "Ревью кода написанного Codex и подтверждение корректности результата для тороидального карманного пространства", "relevance": "MID", "relevanceExplained": "Автор проверяет код и подтверждает что объект остаётся в центре тороидального пространства - это связано с основной темой но сам процесс ревью носит технический характер", "startTime": "1:37:17", "endTime": "1:38:52"}, {"start": 5931.8, "end": 6003.2, "dur": 71.5, "desc": "Тестирование нового компонента Fem Point Gravity: измерение гравитации в разных точках вблизи порталов и обнаружение что у границ порталов гравитация достигает 2-2.6G", "relevance": "HIGH", "relevanceExplained": "Это прямое исследование гравитации вблизи порталов - ключевая тема стрима. Автор обнаруживает контринтуитивный результат (2G и выше у границ) и сам удивляется", "startTime": "1:38:52", "endTime": "1:40:03"}, {"start": 6003.2, "end": 6294.7, "dur": 291.4, "desc": "Продолжение измерений гравитации: исследование зоны влияния порталов - для двухметровых порталов гравитация меняется на 1% на расстоянии 4-6 метров", "relevance": "HIGH", "relevanceExplained": "Прямое исследование зоны влияния порталов на гравитацию с конкретными числами - основная тема стрима", "startTime": "1:40:03", "endTime": "1:44:55"}, {"start": 6294.7, "end": 6349.2, "dur": 54.6, "desc": "Обсуждение влияния порталов на гравитацию: сужение потенциалов сверху и уменьшение сбоку, а также вопрос о бесконечной силе у границ", "relevance": "HIGH", "relevanceExplained": "Содержательное обсуждение физики гравитации вблизи порталов - относится к основной теме", "startTime": "1:44:55", "endTime": "1:45:49"}, {"start": 6349.2, "end": 6374.2, "dur": 24.9, "desc": "Чтение вопроса из чата: что будет если вращать портал рядом с массивным телом с огромной скоростью", "relevance": "HIGH", "relevanceExplained": "Вопрос напрямую задаёт эксперимент по основной теме стрима", "startTime": "1:45:49", "endTime": "1:46:14"}, {"start": 6374.2, "end": 6555.1, "dur": 181.0, "desc": "Эксперимент с вращением портала на огромной скорости рядом с планетой: объект притягивается и уничтожается, куски разлетаются с огромной скоростью", "relevance": "HIGH", "relevanceExplained": "Это визуализация физического эксперимента с порталами и гравитацией - прямо по теме стрима, с наглядным и впечатляющим результатом", "startTime": "1:46:14", "endTime": "1:49:15"}, {"start": 6555.1, "end": 6610.9, "dur": 55.7, "desc": "Модификация эксперимента: вращение портала на стороне планеты - гравитация меняется туда-сюда но ничего особенного не происходит", "relevance": "HIGH", "relevanceExplained": "Продолжение эксперимента с вращением портала - относится к основной теме и показывает что при другой конфигурации результат обыденный", "startTime": "1:49:15", "endTime": "1:50:11"}, {"start": 6610.9, "end": 6624.7, "dur": 13.8, "desc": "Пауза и переход к чтению чата", "relevance": "LOW", "relevanceExplained": "Служебный момент без информационной ценности - стример просто переключается на чтение чата", "startTime": "1:50:11", "endTime": "1:50:25"}, {"start": 6624.7, "end": 6711.8, "dur": 87.1, "desc": "Добавление надписи \"Борис\" на картинку чихуахуа-вебкамеры", "relevance": "LOW", "relevanceExplained": "Чисто развлекательный и технический момент с настройкой OBS-оверлея - не относится к основной теме физических симуляций и быстро теряет ценность", "startTime": "1:50:25", "endTime": "1:51:52"}, {"start": 6711.8, "end": 6744.6, "dur": 32.8, "desc": "Краткий ответ на вопрос из чата про гравитационные волны", "relevance": "MID", "relevanceExplained": "Стример упоминает интересное ограничение движка (невозможность посчитать гравитационные волны), но ответ очень короткий и не развёрнутый", "startTime": "1:51:52", "endTime": "1:52:25"}, {"start": 6744.6, "end": 6783.0, "dur": 38.5, "desc": "Проверка камеры и перемещение окна", "relevance": "LOW", "relevanceExplained": "Служебный момент - стример проверяет работу камеры и перемещает что-то на экране. Нет содержательной информации", "startTime": "1:52:25", "endTime": "1:53:03"}, {"start": 6783.0, "end": 6805.5, "dur": 22.4, "desc": "Вопрос из чата: что если поместить обратный портал в обратный портал", "relevance": "HIGH", "relevanceExplained": "Вопрос напрямую относится к основной теме - визуализация парадоксов порталов. Стример реагирует на сложность задачи", "startTime": "1:53:03", "endTime": "1:53:25"}, {"start": 6805.5, "end": 6919.3, "dur": 113.8, "desc": "Настройка сцены с вложенными карманными пространствами - создание и конфигурация порталов 3 и 4", "relevance": "MID", "relevanceExplained": "Технический процесс ручной настройки сцены (дублирование порталов, матрицы, параметры). Относится к основной теме, но сам процесс настройки не несёт содержательной ценности для зрителя записи", "startTime": "1:53:25", "endTime": "1:55:19"}, {"start": 6919.3, "end": 6999.3, "dur": 80.1, "desc": "Отключение камеры из-за перегрева телефона (DroidCam)", "relevance": "LOW", "relevanceExplained": "Техническая неполадка - стример уносит перегревшийся телефон на балкон. Не относится к теме", "startTime": "1:55:19", "endTime": "1:56:39"}, {"start": 6999.3, "end": 7029.0, "dur": 29.7, "desc": "Упоминание прошлого опыта с камерой и необходимость повернуть порталы", "relevance": "LOW", "relevanceExplained": "Обрывочные фразы: начало мысли про камеру не завершается, затем техническая реплика о повороте порталов", "startTime": "1:56:39", "endTime": "1:57:09"}, {"start": 7029.0, "end": 7080.7, "dur": 51.7, "desc": "Добавление матриц в Screen Points и демонстрация результата вложенных карманных пространств", "relevance": "HIGH", "relevanceExplained": "Это кульминация эксперимента с вложенными карманными пространствами - стример показывает как объект затягивается внутрь вложенного портала. Прямо относится к основной теме", "startTime": "1:57:09", "endTime": "1:58:01"}, {"start": 7080.7, "end": 7133.1, "dur": 52.4, "desc": "Сохранение сцены и упоминание буста", "relevance": "LOW", "relevanceExplained": "Технический момент - стример сохраняет сцену и упоминает доступ через буст. Не несёт содержательной информации", "startTime": "1:58:01", "endTime": "1:58:53"}, {"start": 7133.1, "end": 7140.2, "dur": 7.1, "desc": "Упоминание идеи стрима с лайв-кодингом", "relevance": "LOW", "relevanceExplained": "Мимолётная мысль о будущем стриме - быстро теряет ценность", "startTime": "1:58:53", "endTime": "1:59:00"}, {"start": 7140.2, "end": 7186.1, "dur": 45.8, "desc": "Чтение комментариев: отказ от рум-тура и информация о релизе симулятора", "relevance": "LOW", "relevanceExplained": "Два коротких ответа на комментарии - рум-тура не будет и симулятор будет доступен через 3 видео. Информация быстро устаревает", "startTime": "1:59:00", "endTime": "1:59:46"}, {"start": 7186.1, "end": 7211.0, "dur": 25.0, "desc": "Проверка количества зрителей на YouTube", "relevance": "LOW", "relevanceExplained": "Служебная проверка статистики стрима - 61 зритель. Не имеет содержательной ценности", "startTime": "1:59:46", "endTime": "2:00:11"}, {"start": 7211.0, "end": 7214.6, "dur": 3.6, "desc": "Переход к следующему вопросу", "relevance": "LOW", "relevanceExplained": "Переходная фраза без содержания", "startTime": "2:00:11", "endTime": "2:00:15"}, {"start": 7214.6, "end": 7376.0, "dur": 161.4, "desc": "Объяснение почему масштабирующий портал не рвёт объект на атомы - показ кода частиц и формулы масштабирования гравитации", "relevance": "HIGH", "relevanceExplained": "Ключевой содержательный блок: стример показывает код частиц, объясняет систему масштабирования (scale, radius, gravity sensitivity), формулу умножения на квадрат масштаба. Прямо относится к основной теме и содержит уникальную техническую информацию о работе движка", "startTime": "2:00:15", "endTime": "2:02:56"}, {"start": 7376.0, "end": 7440.7, "dur": 64.7, "desc": "<продолжение про масштабирующий портал> Обсуждение поведения поля при переходе через масштабирующий портал и объяснение почему нужен квадрат масштаба", "relevance": "HIGH", "relevanceExplained": "Продолжение объяснения масштабирующих порталов: стример показывает как поле меняется (красное -> жёлтое) при переходе и объясняет необходимость изменения восприятия гравитации. Содержательная часть основной темы", "startTime": "2:02:56", "endTime": "2:04:01"}, {"start": 7440.7, "end": 7496.0, "dur": 55.3, "desc": "Возврат камеры с балкона и подключение зарядки", "relevance": "LOW", "relevanceExplained": "Служебный момент - стример приносит охлаждённый телефон обратно", "startTime": "2:04:01", "endTime": "2:04:56"}, {"start": 7496.0, "end": 7514.1, "dur": 18.1, "desc": "Обнаружение и отключение рекламы на стриме", "relevance": "LOW", "relevanceExplained": "Служебный момент - стример удивлён наличию рекламы на стримах и отключает её", "startTime": "2:04:56", "endTime": "2:05:14"}, {"start": 7514.1, "end": 7536.0, "dur": 21.9, "desc": "Ответы на комментарии из чата: про реальных физиков и планы по завершению стрима", "relevance": "LOW", "relevanceExplained": "Обрывочные реплики и ответ что стрим продлится ещё 20 минут - информация быстро устаревает", "startTime": "2:05:14", "endTime": "2:05:36"}, {"start": 7536.0, "end": 7568.3, "dur": 32.3, "desc": "<продолжение про масштабирующий портал> Демонстрация что масштабирующий портал не влияет на объект при правильной настройке - аксиома неважности поверхности", "relevance": "HIGH", "relevanceExplained": "Важное заключение по теме масштабирующих порталов: стример формулирует принцип (аксиома неважности поверхности) и показывает демонстрацию. Ценность HIGH как продолжение блока про масштабирующие порталы", "startTime": "2:05:36", "endTime": "2:06:08"}, {"start": 7568.3, "end": 7586.8, "dur": 18.5, "desc": "Переход к новым вопросам и призыв ставить лайки", "relevance": "LOW", "relevanceExplained": "Переходные фразы и self-promotion минимального уровня (просто \"лайкайте\")", "startTime": "2:06:08", "endTime": "2:06:27"}, {"start": 7586.8, "end": 7608.1, "dur": 21.2, "desc": "Вопрос из чата про карманное измерение с планетой и реакция стримера на сложность вопроса", "relevance": "MID", "relevanceExplained": "Это вопрос зрителя который задаёт направление дальнейшей демонстрации но сам по себе не содержит демонстрации", "startTime": "2:06:27", "endTime": "2:06:48"}, {"start": 7608.1, "end": 7663.0, "dur": 55.0, "desc": "Демонстрация закрытого цилиндрического пространства и объяснение отсутствия гравитации в однородном бесконечном пространстве", "relevance": "HIGH", "relevanceExplained": "Стример показывает важный физический результат: в однородном бесконечном пространстве нет выделенного центра притяжения а наблюдаемое притяжение к центру - артефакт конечной симуляции. Это напрямую относится к теме визуализации физических парадоксов", "startTime": "2:06:48", "endTime": "2:07:43"}, {"start": 7663.0, "end": 7693.9, "dur": 30.8, "desc": "Расширение цилиндрического пространства и демонстрация телепортации света с повторяющимся пространством", "relevance": "HIGH", "relevanceExplained": "Продолжение демонстрации карманного пространства - показано что при увеличении размера и включении телепортации света ничего не меняется. Относится к основной теме", "startTime": "2:07:43", "endTime": "2:08:14"}, {"start": 7693.9, "end": 7736.8, "dur": 43.0, "desc": "Вопрос из чата про многослойный бутерброд из 20 порталов и объяснение ограничений движка", "relevance": "MID", "relevanceExplained": "Интересный вопрос но стример не может его реализовать из-за ограничений движка - каждый портал надо накликивать вручную", "startTime": "2:08:14", "endTime": "2:08:57"}, {"start": 7736.8, "end": 7825.6, "dur": 88.8, "desc": "Идея отправить задачу создания сцены с 20 порталами в ИИ-кодер Codex", "relevance": "MID", "relevanceExplained": "Побочная тема про использование ИИ для генерации сцен. Интересно но не является демонстрацией физики", "startTime": "2:08:57", "endTime": "2:10:26"}, {"start": 7825.6, "end": 7854.5, "dur": 28.8, "desc": "Ответ на вопрос про круглые порталы - анонс следующего видео", "relevance": "HIGH", "relevanceExplained": "Стример рассказывает что уже написал код для гравитации с круглыми порталами и покажет это в следующем видео. Это анонс контента и важная информация о развитии проекта", "startTime": "2:10:26", "endTime": "2:10:54"}, {"start": 7854.5, "end": 7971.9, "dur": 117.4, "desc": "Эксперимент с двумя порталами напротив друг друга и планетой между ними - демонстрация орбит", "relevance": "HIGH", "relevanceExplained": "Стример настраивает и показывает интересную физическую симуляцию: тело летает по эллипсоидной вытянутой орбите между двумя порталами потому что планета гасит саму себя. Напрямую относится к основной теме", "startTime": "2:10:54", "endTime": "2:12:52"}, {"start": 7971.9, "end": 7988.7, "dur": 16.8, "desc": "Замечание про Codex который пишет на русском и предпочтение стримера общаться с ним на английском", "relevance": "LOW", "relevanceExplained": "Техническое отступление про настройки ИИ-инструмента не относящееся к физике или порталам", "startTime": "2:12:52", "endTime": "2:13:09"}, {"start": 7988.7, "end": 8091.0, "dur": 102.3, "desc": "Продолжение экспериментов с порталами развёрнутыми на 90 и 270 градусов - полукруговые орбиты", "relevance": "HIGH", "relevanceExplained": "Стример показывает как изменение ориентации порталов меняет траекторию тела: от эллипсоидной орбиты до полукруговой. Интересная визуализация относящаяся к основной теме", "startTime": "2:13:09", "endTime": "2:14:51"}, {"start": 8091.0, "end": 8150.4, "dur": 59.4, "desc": "Вопрос про гравитацию при портальных линзах и начало настройки сцены", "relevance": "HIGH", "relevanceExplained": "Стример начинает проверять интересную гипотезу: искажается ли гравитация так же как объекты при прохождении через портальные линзы. Напрямую относится к основной теме", "startTime": "2:14:51", "endTime": "2:15:50"}, {"start": 8150.4, "end": 8179.0, "dur": 28.6, "desc": "Обрыв интернета и экстренное прощание со зрителями - завершение стрима", "relevance": "HIGH", "relevanceExplained": "Последнее прощание стрима - стример благодарит зрителей и донатеров", "startTime": "2:15:50", "endTime": "2:16:19"}];
+const highlights = [{"start": 5091.8, "dur": 76.1, "durLabel": "~2 мин", "title": "Что произойдет с телом внутри карманного тороидального измерения?", "desc": "Симуляция показывает поведение объекта, попавшего в тороидальное карманное пространство между порталами. Гравитация заставляет предмет бесконечно метаться туда-сюда, пока он окончательно не застрянет в центре.", "tags": "#физика #гравитация #симуляция #порталы", "startTime": "1:24:52"}, {"start": 5458.7, "dur": 145.6, "durLabel": "~3 мин", "title": "Можно ли создать вечный двигатель из двух порталов?", "desc": "Автор отвечает на популярный вопрос о создании бесконечного источника энергии с помощью порталов. Он объясняет свойства консервативных полей и уравнений Пуассона. Симуляция доказывает, что между близко расположенными порталами возникает зона невесомости, блокирующая вечное падение.#вечныйдвигатель", "tags": "#физика #энергия #гравитация #наука", "startTime": "1:30:59"}, {"start": 5960.2, "dur": 55.7, "durLabel": "~1 мин", "title": "Почему стоять на краю портала смертельно опасно?", "desc": "Оказывается, на самом краю порталов гравитация достигает критических значений больше нескольких G.", "tags": "#гравитация #порталы #симуляция", "startTime": "1:39:20"}, {"start": 6458.9, "dur": 96.3, "durLabel": "~2 мин", "title": "Что будет, если раскрутить портал до сумасшедшей скорости?", "desc": "Эксперимент по экстремальному вращению портала. Физическое тело, попавшее в такую зону, мгновенно уничтожается хаотичными векторами гравитации. Кусочки объекта разлетаются за пределы симулируемой вселенной.", "tags": "#порталы #физика #симуляция", "startTime": "1:47:39"}];
+const silenceCuts = [{"start": 1.3, "end": 18.4}, {"start": 21.6, "end": 30.6}, {"start": 639.7, "end": 643.1}, {"start": 1290.2, "end": 1293.2}, {"start": 1330.8, "end": 1346.5}, {"start": 1457.7, "end": 1466.8}, {"start": 1610.2, "end": 1617.4}, {"start": 1724.8, "end": 1730.5}, {"start": 1967.4, "end": 1991.5}, {"start": 2265.3, "end": 2268.9}, {"start": 2441.4, "end": 2448.4}, {"start": 2451.6, "end": 2471.5}, {"start": 2524.6, "end": 2527.9}, {"start": 2557.9, "end": 2568.1}, {"start": 2586.4, "end": 2590.2}, {"start": 2629.8, "end": 2632.9}, {"start": 2662.8, "end": 2666.1}, {"start": 2669.2, "end": 2682.1}, {"start": 2699.9, "end": 2705.3}, {"start": 2710.5, "end": 2717.4}, {"start": 2745.3, "end": 2749.3}, {"start": 2755.4, "end": 2759.0}, {"start": 2802.7, "end": 2814.5}, {"start": 2833.6, "end": 2848.3}, {"start": 2855.0, "end": 2858.6}, {"start": 2886.4, "end": 2906.5}, {"start": 3132.3, "end": 3135.6}, {"start": 3169.1, "end": 3172.7}, {"start": 3224.1, "end": 3228.9}, {"start": 3242.7, "end": 3263.3}, {"start": 3272.3, "end": 3296.1}, {"start": 3321.2, "end": 3326.0}, {"start": 3345.9, "end": 3349.4}, {"start": 3352.6, "end": 3375.8}, {"start": 3385.2, "end": 3407.0}, {"start": 3415.6, "end": 3419.0}, {"start": 4708.9, "end": 4712.4}, {"start": 4937.3, "end": 4998.6}, {"start": 5005.4, "end": 5009.3}, {"start": 5038.1, "end": 5042.8}, {"start": 5077.8, "end": 5080.9}, {"start": 5147.6, "end": 5150.5}, {"start": 5236.1, "end": 5240.1}, {"start": 5297.6, "end": 5300.9}, {"start": 5317.2, "end": 5321.3}, {"start": 5375.4, "end": 5378.7}, {"start": 6015.9, "end": 6021.0}, {"start": 6104.9, "end": 6119.4}, {"start": 6123.5, "end": 6130.7}, {"start": 6163.3, "end": 6170.4}, {"start": 6173.0, "end": 6176.1}, {"start": 6178.2, "end": 6201.7}, {"start": 6294.7, "end": 6298.8}, {"start": 6306.5, "end": 6312.2}, {"start": 6499.6, "end": 6504.7}, {"start": 6597.7, "end": 6600.9}, {"start": 6607.4, "end": 6610.9}, {"start": 7285.5, "end": 7288.5}, {"start": 7300.8, "end": 7304.3}, {"start": 7334.3, "end": 7338.6}, {"start": 7376.0, "end": 7381.7}, {"start": 7564.9, "end": 7568.3}, {"start": 7624.1, "end": 7627.8}, {"start": 7932.0, "end": 7941.4}, {"start": 7968.1, "end": 7971.9}, {"start": 8001.0, "end": 8007.7}, {"start": 8016.6, "end": 8021.6}, {"start": 8041.5, "end": 8046.3}, {"start": 8066.5, "end": 8070.3}, {"start": 8076.7, "end": 8080.6}, {"start": 8121.6, "end": 8124.6}, {"start": 8167.6, "end": 8179.0}];
+const timecodes = [{"time": "00:11", "title": "Искусственная гравитация на корабле: порталы около Земли и далеко в космосе", "secs": 11}, {"time": "07:58", "title": "Почему портал искривляет пространство и притягивает объекты к центру", "secs": 478}, {"time": "10:06", "title": "Спойлеры будущих видео: монопортал и столкновение объекта с самим собой", "secs": 606}, {"time": "12:19", "title": "Симуляция физического сжатия объекта портальным поршнем", "secs": 739}, {"time": "12:49", "title": "Планы на будущее: червоточины, 4D-пространство и сложная математика ускоряющихся порталов", "secs": 769}, {"time": "16:45", "title": "Попытка создать зеркальный портал (и случайное зависание симуляции)", "secs": 1005}, {"time": "17:51", "title": "Настройка монопортала: рекурсивное падение и самопересечение тела", "secs": 1071}, {"time": "21:20", "title": "Возможны ли порталы во времени: вычисления с помощью клеточных автоматов", "secs": 1280}, {"time": "22:18", "title": "Гравитация в карманном измерении: топология тора и расчёт самосилы", "secs": 1338}, {"time": "29:42", "title": "Поведение физического объекта внутри замкнутого пространства", "secs": 1782}, {"time": "30:46", "title": "Создание нового компонента симуляции с помощью нейросети в прямом эфире", "secs": 1846}, {"time": "33:49", "title": "Почему из порталов не получится собрать вечный двигатель", "secs": 2029}, {"time": "36:42", "title": "Результаты замеров: почему на краях портала гравитационная перегрузка достигает 2.6G", "secs": 2202}, {"time": "42:32", "title": "Что произойдет с объектом, если вращать портал на огромной скорости", "secs": 2552}, {"time": "46:41", "title": "Гравитационный хаос: карманное измерение внутри карманного измерения", "secs": 2801}, {"time": "47:54", "title": "Разбор механики: почему масштабирующий портал не разрывает материю на атомы", "secs": 2874}, {"time": "51:52", "title": "Симуляция гравитации в замкнутом цилиндрическом пространстве", "secs": 3112}, {"time": "53:48", "title": "Необычная эллипсоидная орбита: полет объекта между двумя порталами", "secs": 3228}, {"time": "56:47", "title": "Искажение гравитации в портальных линзах и внезапное отключение интернета", "secs": 3407}];
+
+function fmtDuration(secs) {
+  var total = Math.max(0, Math.round(secs));
+  var h = Math.floor(total / 3600);
+  var m = Math.floor((total % 3600) / 60);
+  var s = total % 60;
+  var mm = String(m).padStart(2, '0');
+  var ss = String(s).padStart(2, '0');
+  if (h > 0) {
+    return h + '\u0447 ' + mm + '\u043c ' + ss + '\u0441';
+  }
+  return mm + '\u043c ' + ss + '\u0441';
+}
+
+function fmtTime(secs) {
+  var h = Math.floor(secs / 3600);
+  var m = Math.floor((secs % 3600) / 60);
+  var s = Math.floor(secs % 60);
+  return (h > 0 ? h + ':' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function pct(secs) {
+  return (secs / TOTAL_DURATION) * 100;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderHighlightTags(tags) {
+  return String(tags)
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(function(tag) {
+      return '<span class="hl-tag">' + escapeHtml(tag) + '</span>';
+    })
+    .join('');
+}
+
+function renderTimeline() {
+  var bar = document.getElementById('timelineBar');
+  var markersDiv = document.getElementById('highlightMarkers');
+  var rulerDiv = document.getElementById('timeRuler');
+  var tooltip = document.getElementById('tooltip');
+
+  segments.forEach(function(seg, i) {
+    var el = document.createElement('div');
+    el.className = 'timeline-segment relevance-' + seg.relevance;
+    el.style.left = pct(seg.start) + '%';
+    el.style.width = Math.max(pct(seg.dur), 0.08) + '%';
+    el.dataset.idx = i;
+    bar.appendChild(el);
+  });
+
+  silenceCuts.forEach(function(s) {
+    var dur = s.end - s.start;
+    if (dur < 5) return;
+    var el = document.createElement('div');
+    el.className = 'timeline-silence';
+    el.style.left = pct(s.start) + '%';
+    el.style.width = Math.max(pct(dur), 0.05) + '%';
+    bar.appendChild(el);
+  });
+
+  highlights.forEach(function(h) {
+    var el = document.createElement('span');
+    el.className = 'highlight-marker';
+    el.innerHTML = '&#9670;';
+    el.style.left = pct(h.start) + '%';
+    el.title = h.title;
+
+    el.addEventListener('mouseenter', function(e) {
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(h.title) + '</div>' +
+        '<div style="font-size:12px;margin-top:4px;">' + escapeHtml(h.desc) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(h.startTime) + ' (' + escapeHtml(h.durLabel) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+
+    markersDiv.appendChild(el);
+  });
+  for (var t = 1800; t <= TOTAL_DURATION; t += 1800) {
+    var el = document.createElement('div');
+    el.className = 'time-ruler-mark';
+    el.style.left = pct(t) + '%';
+    el.textContent = fmtTime(t);
+    rulerDiv.appendChild(el);
+  }
+
+  bar.addEventListener('mousemove', function(e) {
+    var rect = bar.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var timeSecs = (x / rect.width) * TOTAL_DURATION;
+    var seg = segments.find(function(s) { return timeSecs >= s.start && timeSecs <= s.end; });
+    if (seg) {
+      var relevanceExplained = seg.relevanceExplained || 'No explanation provided';
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(seg.desc) + '</div>' +
+        '<div class="tt-why ' + seg.relevance + '">Why ' + escapeHtml(seg.relevance) + '?</div>' +
+        '<div class="tt-explanation">' + escapeHtml(relevanceExplained) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + ' (' + fmtDuration(seg.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    } else {
+      tooltip.style.display = 'none';
+    }
+  });
+
+  bar.addEventListener('mouseleave', function() {
+    tooltip.style.display = 'none';
+  });
+}
+
+function positionTooltip(e) {
+  var tooltip = document.getElementById('tooltip');
+  var pad = 12;
+  var x = e.clientX + pad;
+  var y = e.clientY + pad;
+  var tw = tooltip.offsetWidth;
+  var th = tooltip.offsetHeight;
+  if (x + tw > window.innerWidth - 20) x = e.clientX - tw - pad;
+  if (y + th > window.innerHeight - 20) y = e.clientY - th - pad;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function renderChapters() {
+  var tbody = document.getElementById('chaptersBody');
+  var empty = document.getElementById('chaptersEmpty');
+  if (timecodes.length === 0) {
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
+  timecodes.forEach(function(tc, i) {
+    var nextSecs = i < timecodes.length - 1 ? timecodes[i + 1].secs : SHORTENED_DURATION;
+    var gap = Math.max(nextSecs - tc.secs, 0);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(tc.time) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(gap) + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(tc.title) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function renderHighlights() {
+  var grid = document.getElementById('highlightsGrid');
+  highlights.forEach(function(h) {
+    var card = document.createElement('div');
+    card.className = 'highlight-card';
+    var tagsHtml = renderHighlightTags(h.tags);
+    card.innerHTML =
+      '<div class="hl-title">' + escapeHtml(h.title) + '</div>' +
+      '<div class="hl-meta">' +
+        '<span class="chapter-duration">' + escapeHtml(h.durLabel) + '</span>' +
+        '<span class="hl-source">' + escapeHtml(h.startTime) + '</span>' +
+      '</div>' +
+      '<div class="hl-desc">' + escapeHtml(h.desc) + '</div>' +
+      (tagsHtml ? '<div class="hl-tags">' + tagsHtml + '</div>' : '');
+    grid.appendChild(card);
+  });
+}
+
+function renderSegments() {
+  var tbody = document.getElementById('segmentsBody');
+  segments.forEach(function(seg) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(seg.dur) + '</span></td>' +
+      '<td class="col-rel"><span class="relevance-badge ' + seg.relevance + '">' + seg.relevance + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(seg.desc) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderTimeline();
+  renderChapters();
+  renderHighlights();
+  renderSegments();
+});
+</script>
+</body>
+</html>

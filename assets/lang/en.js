@@ -64,6 +64,7 @@ window.__translations['en'] = {
     "config.back": "back to how it works",
 
     "howItWorks.heading": "How It Works?",
+    "examples.heading": "Examples",
     "examples.cardTitle": "EXAMPLE",
     "examples.openPlaylist": "open playlist",
     "examples.openProject": "open project",

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кельтская Британия до прихода римлян: богатство, оппидумы и роковой раскол — Cutto Dashboard</title>
+<style>
+:root {
+  --relevance-high-color: #4CAF50;
+  --relevance-high-tooltip-color: #55efc4;
+  --relevance-mid-color: #FF9800;
+  --relevance-mid-tooltip-color: #fdcb6e;
+  --relevance-low-color: #f44336;
+  --relevance-low-tooltip-color: #ff7675;
+  --silence-color: #c8d0d4;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    line-height: 1.6;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 40px 60px;
+  }
+  .header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #dfe6e9;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .header-main {
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    min-height: 76px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ff2a23, #d80d14);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(216,13,20,0.18);
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .youtube-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+  .youtube-button-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .youtube-button-label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    background: linear-gradient(135deg, #6f5cff, #8c71ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(111,92,255,0.18);
+    letter-spacing: 0.1px;
+    text-decoration: none;
+  }
+  .header .badge:hover {
+    filter: brightness(1.05);
+  }
+  .badge-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .badge-label {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon,
+  .collapsible-details summary .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .section-title .icon svg,
+  .collapsible-details summary .icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .timeline-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 36px;
+  }
+  .timeline-header {
+    margin-bottom: 16px;
+  }
+  .timeline-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .timeline-summary-card {
+    background: #f8fafc;
+    border: 1px solid #e7edf2;
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timeline-summary-card-tags {
+    gap: 10px;
+  }
+  .timeline-summary-label {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .timeline-summary-value {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .timeline-summary-keep-group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .timeline-summary-metric {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .timeline-summary-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #4a5560;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .timeline-summary-tag .legend-dot {
+    margin-top: 0;
+  }
+  .timeline-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .timeline-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: #2d3436;
+    max-width: 520px;
+    flex: 1 1 auto;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    flex: 0 0 12px;
+    margin-top: 3px;
+  }
+  .legend-highlight {
+    color: #0984e3;
+    font-size: 15px;
+    line-height: 1;
+    flex: 0 0 12px;
+    margin-top: 1px;
+  }
+  .legend-text {
+    color: #2d3436;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .legend-name {
+    color: #2d3436;
+    font-weight: 700;
+  }
+  .timeline-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  .timeline-pie-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+  .timeline-pie-chart {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+  .timeline-pie-label {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    color: #1f2933;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+    pointer-events: none;
+  }
+  .timeline-pie-label-dark {
+    color: #1f2933;
+  }
+  .timeline-pie-chart::after {
+    content: '';
+    position: absolute;
+    inset: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #edf1f3;
+    z-index: 0;
+  }
+  .highlight-markers {
+    position: relative;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  .highlight-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    color: #0984e3;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.15s;
+    line-height: 1;
+    top: 4px;
+  }
+  .highlight-marker:hover {
+    transform: translateX(-50%) scale(1.4);
+  }
+  .timeline-bar {
+    position: relative;
+    height: 44px;
+    background: #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  .timeline-segment {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: opacity 0.15s;
+  }
+  .timeline-segment:hover {
+    opacity: 0.85;
+  }
+  .timeline-segment.relevance-HIGH { background: var(--relevance-high-color); }
+  .timeline-segment.relevance-MID { background: var(--relevance-mid-color); }
+  .timeline-segment.relevance-LOW { background: var(--relevance-low-color); }
+  .timeline-silence {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--silence-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .timeline-cut {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  .time-ruler {
+    position: relative;
+    height: 16px;
+    margin-top: 4px;
+  }
+  .time-ruler-mark {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #636e72;
+    font-weight: 500;
+  }
+  .timeline-tooltip {
+    display: none;
+    position: fixed;
+    background: #2d3436;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 340px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    line-height: 1.5;
+  }
+  .timeline-tooltip .tt-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .timeline-tooltip .tt-why {
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .timeline-tooltip .tt-why.HIGH { color: var(--relevance-high-tooltip-color); }
+  .timeline-tooltip .tt-why.MID { color: var(--relevance-mid-tooltip-color); }
+  .timeline-tooltip .tt-why.LOW { color: var(--relevance-low-tooltip-color); }
+  .timeline-tooltip .tt-explanation {
+    font-size: 12px;
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .timeline-tooltip .tt-time {
+    color: #b2bec3;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .chapters-section,
+  .highlights-section,
+  .segments-section {
+    margin-bottom: 36px;
+  }
+  .details-body {
+    padding: 0 28px 24px;
+  }
+  .chapters-table-wrap {
+    overflow-x: auto;
+  }
+  .chapter-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0984e3;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    line-height: 1.3;
+  }
+  .chapter-duration {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 9px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+  }
+  .chapter-empty {
+    color: #b2bec3;
+    font-size: 13px;
+    padding: 6px 0;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .highlight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #0984e3;
+    transition: box-shadow 0.2s;
+  }
+  .highlight-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  .highlight-card .hl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3436;
+    line-height: 1.4;
+  }
+  .highlight-card .hl-title + .hl-meta {
+    margin-top: 8px;
+  }
+  .highlight-card .hl-desc {
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight-card .hl-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .highlight-card .hl-source {
+    font-size: 11px;
+    color: #0984e3;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .highlight-card .hl-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .highlight-card .hl-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .collapsible-details {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .collapsible-details summary {
+    padding: 20px 28px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3436;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    list-style: none;
+    transition: background 0.15s;
+  }
+  .collapsible-details summary:hover {
+    background: #f5f6fa;
+  }
+  .collapsible-details summary::-webkit-details-marker { display: none; }
+  .collapsible-details summary .arrow {
+    transition: transform 0.2s;
+    font-size: 12px;
+    color: #b2bec3;
+  }
+  .collapsible-details[open] summary .arrow {
+    transform: rotate(90deg);
+  }
+  .segments-table-wrap {
+    padding: 0 28px 20px;
+    overflow-x: auto;
+  }
+  .segments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .segments-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #636e72;
+    border-bottom: 2px solid #dfe6e9;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .segments-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+  }
+  .segments-table tr:last-child td {
+    border-bottom: none;
+  }
+  .segments-table tr:hover td {
+    background: #f9f9fb;
+  }
+  .relevance-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .relevance-badge.HIGH { background: var(--relevance-high-color); }
+  .relevance-badge.MID { background: var(--relevance-mid-color); }
+  .relevance-badge.LOW { background: var(--relevance-low-color); }
+  .col-time { white-space: nowrap; }
+  .col-time .chapter-time { font-size: 12px; }
+  .col-dur { white-space: nowrap; text-align: right; }
+  .col-dur .chapter-duration { justify-content: center; }
+  .col-rel { white-space: nowrap; text-align: center; }
+  .col-desc { line-height: 1.5; }
+  #timecodesTable th.col-time,
+  #timecodesTable td.col-time,
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    width: 1%;
+    white-space: nowrap;
+  }
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    text-align: center;
+  }
+  #timecodesTable .col-dur .chapter-duration {
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .header-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .youtube-button, .header .badge { justify-content: center; }
+    .header-main { width: 100%; }
+    .timeline-summary-row { grid-template-columns: 1fr; }
+    .timeline-overview { flex-direction: column; align-items: flex-start; }
+    .timeline-legend { max-width: none; }
+    .timeline-pie-wrap { justify-content: flex-start; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <div class="header-row">
+      <a class="youtube-button" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+        <span class="youtube-button-copy">
+          <span class="youtube-button-label">Открыть</span>
+          <span class="youtube-button-label">на YouTube</span>
+        </span>
+      </a>
+      <a class="badge" href="https://usecutto.app/" target="_blank" rel="noopener noreferrer">
+        <span class="badge-copy">
+          <span class="badge-label">Использовать</span>
+          <span class="badge-label">cutto</span>
+        </span>
+      </a>
+      <div class="header-main">
+        <h1>Кельтская Британия до прихода римлян: богатство, оппидумы и роковой раскол</h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="timeline-section">
+    <div class="timeline-header">
+      <div class="section-title" style="margin-bottom:0">
+        <span class="icon icon-scissors" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M8.12 8.12 12 12"></path><path d="M20 4 8.12 15.88"></path><path d="M14.8 14.8 20 20"></path></svg></span>
+        Автомонтаж
+      </div>
+    </div>
+    <div class="timeline-summary-row">
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Итог</div>
+        <div class="timeline-summary-value">3 ч 32 мин → 2 ч 17 мин</div>
+      </div>
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Сохранено</div>
+        <div class="timeline-summary-content">
+          <span class="timeline-summary-keep-group"><span class="timeline-summary-tag"><span class="legend-dot" style="background:#4CAF50;"></span>high</span><span class="timeline-summary-metric">[65% от оригинала]</span></span>
+        </div>
+      </div>
+      <div class="timeline-summary-card timeline-summary-card-tags">
+        <div class="timeline-summary-label">Удалено</div>
+        <div class="timeline-summary-tags">
+          <span class="timeline-summary-tag"><span class="legend-dot" style="background:#FF9800;"></span>mid</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#f44336;"></span>low</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#c8d0d4;"></span>тишина</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-overview">
+      <div class="timeline-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#4CAF50;"></span><span class="legend-text"><span class="legend-name">high</span> — основная тема — 2 ч 17 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#FF9800;"></span><span class="legend-text"><span class="legend-name">mid</span> — интересно, но не по основной теме — 56 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-text"><span class="legend-name">low</span> — заминки и низко информативные сегменты — 16 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#c8d0d4;"></span><span class="legend-text"><span class="legend-name">тишина</span> — вырезанные паузы — 3 мин</span></div><div class="legend-item"><span class="legend-highlight">&#9670;</span><span class="legend-text"><span class="legend-name">хайлайт</span> — отдельная интересная мысль, не обязательно по основной теме</span></div>
+      </div>
+      <div class="timeline-pie-wrap">
+        <div class="timeline-pie-chart" style="background: conic-gradient(#4CAF50 0% 65%, #FF9800 65% 91%, #f44336 91% 99%, #c8d0d4 99% 100%);" title="Распределение high / mid / low / тишина">
+          <span class="timeline-pie-label" style="left:131.7px; top:106.3px;">65%</span><span class="timeline-pie-label" style="left:23.0px; top:69.1px;">26%</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-wrapper">
+      <div class="highlight-markers" id="highlightMarkers"></div>
+      <div class="timeline-bar" id="timelineBar"></div>
+      <div class="time-ruler" id="timeRuler"></div>
+    </div>
+  </div>
+  <div class="timeline-tooltip" id="tooltip"></div>
+
+  <div class="chapters-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-clock" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
+        Таймкоды [22]
+      </summary>
+      <div class="details-body">
+        <div class="chapters-table-wrap">
+          <table class="segments-table" id="timecodesTable">
+            <thead>
+              <tr>
+                <th class="col-time">Время</th>
+                <th class="col-dur">Длительность</th>
+                <th class="col-desc">Описание</th>
+              </tr>
+            </thead>
+            <tbody id="chaptersBody"></tbody>
+          </table>
+          <div class="chapter-empty" id="chaptersEmpty" hidden>Нет таймкодов</div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="highlights-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-star" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20.2l1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg></span>
+        Хайлайты [10]
+      </summary>
+      <div class="details-body">
+        <div class="highlights-grid" id="highlightsGrid"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="segments-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-search" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
+        Все сегменты [133]
+      </summary>
+      <div class="segments-table-wrap">
+        <table class="segments-table" id="segmentsTable">
+          <thead>
+            <tr>
+              <th class="col-time">Время</th>
+              <th class="col-dur">Длительность</th>
+              <th class="col-rel">Релевантность</th>
+              <th class="col-desc">Описание</th>
+            </tr>
+          </thead>
+          <tbody id="segmentsBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_DURATION = 12726.4;
+const SHORTENED_DURATION = 8232.7;
+const segments = [{"start": 0.0, "end": 94.1, "dur": 94.1, "desc": "Заставка стрима с музыкой и титрами", "relevance": "LOW", "relevanceExplained": "Техническая заставка без содержательной информации", "startTime": "00:00", "endTime": "01:34"}, {"start": 94.1, "end": 120.8, "dur": 26.7, "desc": "Приветствие и проверка звука/видео", "relevance": "LOW", "relevanceExplained": "Служебный блок - проверка связи и настройка микрофона", "startTime": "01:34", "endTime": "02:01"}, {"start": 120.8, "end": 135.9, "dur": 15.1, "desc": "Приветствие зрителей на ежемесячном стриме и упоминание что стрим последний в этом году", "relevance": "HIGH", "relevanceExplained": "Первое приветствие всего стрима - всегда HIGH", "startTime": "02:01", "endTime": "02:16"}, {"start": 135.9, "end": 188.5, "dur": 52.6, "desc": "Введение в тему: кельты Британии X-I вв. до н.э. и их путь до римского завоевания при Клавдии", "relevance": "HIGH", "relevanceExplained": "Это анонс основной темы стрима - прямое введение в лекцию о кельтской Британии", "startTime": "02:16", "endTime": "03:09"}, {"start": 188.5, "end": 235.5, "dur": 47.0, "desc": "Обоснование выбора темы: сравнение с уже рассмотренными германцами и важность кельтской цивилизации", "relevance": "HIGH", "relevanceExplained": "Блок объясняет место кельтов в контексте предыдущих стримов и подчёркивает значимость темы", "startTime": "03:09", "endTime": "03:56"}, {"start": 235.5, "end": 269.7, "dur": 34.2, "desc": "Влияние кельтов на Рим, Испанию, Карфаген и греков - и переход к географии Британии", "relevance": "HIGH", "relevanceExplained": "Важная контекстуальная информация о масштабе кельтской цивилизации и переход к основному изложению", "startTime": "03:56", "endTime": "04:30"}, {"start": 269.7, "end": 293.7, "dur": 24.0, "desc": "Техническая пауза - поиск карт в нужном разрешении", "relevance": "LOW", "relevanceExplained": "Служебный момент - стример ищет файлы для демонстрации", "startTime": "04:30", "endTime": "04:54"}, {"start": 293.7, "end": 348.5, "dur": 54.8, "desc": "Две теории появления кельтов в Британии: кельты как центральноевропейский феномен и их следы в Испании (кельтиберы)", "relevance": "HIGH", "relevanceExplained": "Ключевая информация об исходном регионе кельтов и направлениях их расселения - основная тема лекции", "startTime": "04:54", "endTime": "05:49"}, {"start": 348.5, "end": 444.5, "dur": 95.9, "desc": "Первая гипотеза: появление кельтов в Британии на рубеже XV-XIV вв. до н.э. на основании археологических находок и её спорность", "relevance": "HIGH", "relevanceExplained": "Подробный разбор первой научной гипотезы о датировке кельтского присутствия в Британии - ядро лекции", "startTime": "05:49", "endTime": "07:24"}, {"start": 444.5, "end": 529.3, "dur": 84.8, "desc": "Критика первой гипотезы: зыбкость доказательной базы и проблема отсутствия письменности у кельтов", "relevance": "HIGH", "relevanceExplained": "Продолжение научной аргументации и важная информация об отсутствии письменности у античных кельтов", "startTime": "07:24", "endTime": "08:49"}, {"start": 529.3, "end": 622.6, "dur": 93.3, "desc": "Протописьменные системы кельтов (штампы, символы, изобразительная традиция) и зависимость от античных письменных источников", "relevance": "HIGH", "relevanceExplained": "Важная информация о системе знаний о кельтах и источниковедческая база", "startTime": "08:49", "endTime": "10:23"}, {"start": 622.6, "end": 638.5, "dur": 15.9, "desc": "Итог по первой гипотезе: изменения были, но были ли это кельты - большой вопрос", "relevance": "HIGH", "relevanceExplained": "Краткое резюме дискуссии о первой гипотезе", "startTime": "10:23", "endTime": "10:38"}, {"start": 638.5, "end": 771.8, "dur": 133.3, "desc": "Вторая (основная) гипотеза: X век до н.э. как доказанное начало кельтского заселения Британии через долину Рейна", "relevance": "HIGH", "relevanceExplained": "Ключевой блок лекции - установление хронологической точки отсчёта и маршрута миграции", "startTime": "10:38", "endTime": "12:52"}, {"start": 771.8, "end": 854.4, "dur": 82.6, "desc": "Вопрос о докельтском населении Британии и ассимиляция его кельтами к VIII-V вв. до н.э.", "relevance": "HIGH", "relevanceExplained": "Важная информация о предшественниках кельтов и процессе ассимиляции", "startTime": "12:52", "endTime": "14:14"}, {"start": 854.4, "end": 902.0, "dur": 47.6, "desc": "Характер кельтского заселения: волновая миграция и мирная ассимиляция по аналогии с англосаксонским вторжением", "relevance": "HIGH", "relevanceExplained": "Важная историческая параллель и научная гипотеза о характере процесса колонизации", "startTime": "14:14", "endTime": "15:02"}, {"start": 902.0, "end": 1029.0, "dur": 127.0, "desc": "Гипотеза об иберийском происхождении автохтонного населения Британии: аргументы и ограничения", "relevance": "HIGH", "relevanceExplained": "Подробный разбор теории об иберийцах как докельтском населении включая параллели со Стоунхенджем и другими мегалитами", "startTime": "15:02", "endTime": "17:09"}, {"start": 1029.0, "end": 1108.8, "dur": 79.8, "desc": "Направления кельтского расселения по Британии (юг-восток-Уэльс-север) и вытеснение автохтонов в Каледонию - пикты", "relevance": "HIGH", "relevanceExplained": "Ключевая информация о географии расселения и идентификации пиктов как потомков докельтского населения", "startTime": "17:09", "endTime": "18:29"}, {"start": 1108.8, "end": 1189.6, "dur": 80.7, "desc": "Многовековая вражда пиктов и скоттов с кельтами Британии вплоть до призвания англосаксов в V в. н.э.", "relevance": "HIGH", "relevanceExplained": "Важная историческая перспектива - конфликт автохтонов и кельтов как долгосрочный фактор британской истории", "startTime": "18:29", "endTime": "19:50"}, {"start": 1189.6, "end": 1376.9, "dur": 187.3, "desc": "Принципы расселения кельтов: доступ к воде, плодородные земли, полукочевой характер и появление ирригации", "relevance": "HIGH", "relevanceExplained": "Подробная информация о хозяйственном укладе кельтов Британии и сравнение с германцами", "startTime": "19:50", "endTime": "22:57"}, {"start": 1376.9, "end": 1482.7, "dur": 105.8, "desc": "Формирование устойчивой локальной культуры: уникальность племён по керамике и ремёслам, концентрация населения в центральной Британии", "relevance": "HIGH", "relevanceExplained": "Важная информация об идентификации племён через материальную культуру и демографической географии", "startTime": "22:57", "endTime": "24:43"}, {"start": 1482.7, "end": 1519.0, "dur": 36.4, "desc": "Связь между концентрацией населения в центральной Британии и формированием сильных кельтских королевств - тезис о принципиально разной Британии при Цезаре и при Клавдии", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме - развитие кельтской цивилизации в Британии и подводка к ключевым событиям римского вторжения", "startTime": "24:43", "endTime": "25:19"}, {"start": 1519.0, "end": 1543.1, "dur": 24.1, "desc": "Кельты Британии расселялись в устьях рек по тем же принципам что и материковые кельты - являлись продолжателями общекельтской традиции", "relevance": "HIGH", "relevanceExplained": "Относится к основной теме - характеристика кельтского расселения в Британии", "startTime": "25:19", "endTime": "25:43"}, {"start": 1543.1, "end": 1668.9, "dur": 125.8, "desc": "Основные центры кельтской Британии X-IV вв. до н.э. - царство Катувеллаунов и отступление о терминологии (почему правителей кельтов называют царями)", "relevance": "HIGH", "relevanceExplained": "Описание одного из ключевых кельтских политических образований Британии и пояснение историографической традиции наименования правителей - напрямую по теме", "startTime": "25:43", "endTime": "27:49"}, {"start": 1668.9, "end": 1777.5, "dur": 108.5, "desc": "Переход к сравнению кельтов и германцев: кельты были материально богаче германцев несмотря на меньшую близость к Средиземноморью чем галльские кельты", "relevance": "HIGH", "relevanceExplained": "Сравнение кельтской и германской цивилизаций - важный контекст для понимания уровня развития кельтской Британии", "startTime": "27:49", "endTime": "29:37"}, {"start": 1777.5, "end": 1860.4, "dur": 82.9, "desc": "Конкретные отличия германских и кельтских поселений: германцы жили в маленьких деревнях без городов без каменного зодчества и с минимальной фортификацией", "relevance": "HIGH", "relevanceExplained": "Детальное сравнение уровня развития поселений - ключевой аргумент в характеристике кельтской цивилизации", "startTime": "29:37", "endTime": "31:00"}, {"start": 1860.4, "end": 1928.6, "dur": 68.2, "desc": "Введение понятия оппидум - укреплённые кельтские поселения на холмах с каменными стенами и серьёзной фортификацией", "relevance": "HIGH", "relevanceExplained": "Оппидумы - центральное понятие для понимания кельтской цивилизации и городской культуры напрямую по теме", "startTime": "31:00", "endTime": "32:09"}, {"start": 1928.6, "end": 2163.4, "dur": 234.8, "desc": "Функция оппидумов: хранение зерна как центральная задача - сбор зерна в качестве налога и его раздача населению в периоды голода", "relevance": "HIGH", "relevanceExplained": "Раскрывает экономическую и административную роль оппидумов что критически важно для понимания кельтской государственности", "startTime": "32:09", "endTime": "36:03"}, {"start": 2163.4, "end": 2350.6, "dur": 187.2, "desc": "Пример из Галльской войны Цезаря: переселение гельветов как формальный повод для начала войны - продовольственный кризис как движущая сила миграции", "relevance": "HIGH", "relevanceExplained": "Конкретный исторический пример иллюстрирующий важность продовольственного вопроса для кельтов и контекст римско-кельтских столкновений", "startTime": "36:03", "endTime": "39:11"}, {"start": 2350.6, "end": 2399.1, "dur": 48.5, "desc": "Даже после победы Цезаря над гельветами оставались проблемы с голодающими - подтверждение важности оппидумов как центров кельтских племён", "relevance": "HIGH", "relevanceExplained": "Завершение мысли о продовольственной роли оппидумов с привязкой к конкретному историческому примеру", "startTime": "39:11", "endTime": "39:59"}, {"start": 2399.1, "end": 2550.3, "dur": 151.2, "desc": "Поиск иллюстраций оппидумов и показ примера типичного оппидума", "relevance": "MID", "relevanceExplained": "Содержит частично служебные действия (поиск картинок) но также включает визуальную демонстрацию которая дополняет основную тему", "startTime": "39:59", "endTime": "42:30"}, {"start": 2550.3, "end": 2582.9, "dur": 32.6, "desc": "Архитектура оппидумов: расположение на высоких холмах с несколькими цитаделями для замедления продвижения противника", "relevance": "HIGH", "relevanceExplained": "Конкретное описание оборонительной архитектуры оппидумов - напрямую по теме", "startTime": "42:30", "endTime": "43:03"}, {"start": 2582.9, "end": 2726.4, "dur": 143.4, "desc": "Битва при Герговии - пример неудачного штурма кельтского оппидума римлянами с потерями в 700 убитых и около 1000 раненых", "relevance": "HIGH", "relevanceExplained": "Яркий конкретный исторический пример демонстрирующий эффективность кельтской фортификации", "startTime": "43:03", "endTime": "45:26"}, {"start": 2726.4, "end": 2839.9, "dur": 113.5, "desc": "Вывод: если даже римляне испытывали трудности при штурме оппидумов то для других кельтов и германцев это было ещё сложнее - кельты умели вести осады благодаря серьёзной материальной базе", "relevance": "HIGH", "relevanceExplained": "Обобщение значимости оппидумов и осадного опыта кельтов - важный тезис о военном превосходстве кельтов", "startTime": "45:26", "endTime": "47:20"}, {"start": 2839.9, "end": 2918.3, "dur": 78.5, "desc": "Переход к новой теме: новая крупная миграция затронувшая Британию и роль Катувеллаунов - кельтские сепаратисты призвали римлян что дало повод для вторжения Клавдия в 43 г. н.э.", "relevance": "HIGH", "relevanceExplained": "Ключевая информация о политических причинах римского вторжения в Британию - центральная тема эфира", "startTime": "47:20", "endTime": "48:38"}, {"start": 2918.3, "end": 2970.4, "dur": 52.1, "desc": "Полемика внутри Римского сената о войне и мире - не всегда сторонники войны побеждали даже в случае Пунических войн", "relevance": "HIGH", "relevanceExplained": "Объясняет важный политический контекст необходимости обоснования войны с Британией что напрямую относится к теме вторжения Клавдия", "startTime": "48:38", "endTime": "49:30"}, {"start": 2970.4, "end": 3100.6, "dur": 130.2, "desc": "Мобилизация ресурсов и передел должностей как причина сопротивления аристократии новым войнам", "relevance": "HIGH", "relevanceExplained": "Раскрывает механизм внутриполитического сопротивления войнам в Риме что важно для понимания контекста вторжения в Британию", "startTime": "49:30", "endTime": "51:41"}, {"start": 3100.6, "end": 3225.2, "dur": 124.6, "desc": "Бунт легионов при объявлении похода на Британию и загадочное прекращение бунта из-за шутки", "relevance": "HIGH", "relevanceExplained": "Яркий конкретный эпизод напрямую связанный с темой вторжения Клавдия в Британию. Автор делится собственной интерпретацией", "startTime": "51:41", "endTime": "53:45"}, {"start": 3225.2, "end": 3267.1, "dur": 41.9, "desc": "Царство Катувеллаунов и внутренний раскол среди кельтов - призвание римлян сепаратистами", "relevance": "HIGH", "relevanceExplained": "Прямое отношение к основной теме - политическая ситуация в кельтской Британии накануне римского вторжения", "startTime": "53:45", "endTime": "54:27"}, {"start": 3267.1, "end": 3363.4, "dur": 96.3, "desc": "Миграция белгов (V-III вв. до н.э.) на территорию Британии - смешанное германо-кельтское происхождение и формирование кельтской Британии", "relevance": "HIGH", "relevanceExplained": "Ключевая информация о формировании этнического состава Британии перед римским вторжением - основная тема лекции", "startTime": "54:27", "endTime": "56:03"}, {"start": 3363.4, "end": 3417.7, "dur": 54.3, "desc": "Перечисление крупнейших кельтских племён Британии по римским источникам: Кантии Регны Атрибаты Белги Тринаванты Катувеллауны Эцены", "relevance": "HIGH", "relevanceExplained": "Конкретная фактическая информация о племенном составе кельтской Британии - основная тема", "startTime": "56:03", "endTime": "56:58"}, {"start": 3417.7, "end": 3484.3, "dur": 66.6, "desc": "Введение в тему кельтских монет - показ примера монеты и сравнение кельтской копии с эллинским оригиналом", "relevance": "HIGH", "relevanceExplained": "Начало важного раздела о денежном обращении кельтов что является значимым маркером уровня развития цивилизации - основная тема", "startTime": "56:58", "endTime": "58:04"}, {"start": 3484.3, "end": 3507.3, "dur": 23.0, "desc": "Идентификация конкретных монет - эллинская монета и монета племён Аулерков и Буронов с севера Галлии", "relevance": "HIGH", "relevanceExplained": "Конкретная атрибуция археологических находок в контексте кельтского денежного обращения", "startTime": "58:04", "endTime": "58:27"}, {"start": 3507.3, "end": 3605.4, "dur": 98.0, "desc": "Вопрос к чату - какое событие IV века до н.э. привело к появлению монет у кельтов. Ожидание ответов", "relevance": "MID", "relevanceExplained": "Интерактивная пауза с чатом - не несёт самостоятельной информационной ценности но служит переходом к важному объяснению", "startTime": "58:27", "endTime": "1:00:05"}, {"start": 3605.4, "end": 3678.2, "dur": 72.9, "desc": "Разбор ответов чата - галаты македонцы вторжение галлов в Грецию и возвышение Македонии как совокупная причина появления кельтских монет", "relevance": "HIGH", "relevanceExplained": "Важное обобщение причин появления денежного обращения у кельтов - ключевой исторический процесс", "startTime": "1:00:05", "endTime": "1:01:18"}, {"start": 3678.2, "end": 3807.0, "dur": 128.8, "desc": "Роль Филиппа II Македонского и галатов как катализаторов денежного обращения кельтов - наёмничество привлечение золота и серебра торговля", "relevance": "HIGH", "relevanceExplained": "Детальное объяснение механизма проникновения денежного обращения в кельтский мир через галатов-наёмников - основная тема", "startTime": "1:01:18", "endTime": "1:03:27"}, {"start": 3807.0, "end": 3880.1, "dur": 73.1, "desc": "Функция монет как инструмента легитимации царской власти у кельтов - чеканка от имени царя и распространение влияния", "relevance": "HIGH", "relevanceExplained": "Важный вывод о политическом значении монетного дела у кельтов выходящий за рамки простой экономики", "startTime": "1:03:27", "endTime": "1:04:40"}, {"start": 3880.1, "end": 3887.8, "dur": 7.7, "desc": "Кельты хорошо умели работать с золотом но не без дефектов в чеканке", "relevance": "HIGH", "relevanceExplained": "Краткая но важная характеристика кельтского ремесла", "startTime": "1:04:40", "endTime": "1:04:48"}, {"start": 3887.8, "end": 3956.7, "dur": 68.9, "desc": "Глобальное влияние македонского расцвета на товарный и денежный оборот западного Средиземноморья и кельтского мира", "relevance": "HIGH", "relevanceExplained": "Масштабное историческое обобщение о влиянии эллинизма на кельтскую экономику - важный контекст основной темы", "startTime": "1:04:48", "endTime": "1:05:57"}, {"start": 3956.7, "end": 4157.7, "dur": 200.9, "desc": "Эволюция изображений на кельтских монетах - от подражания Филиппу к собственным образам: лица царей священные животные солярные символы ритуальные знаки", "relevance": "HIGH", "relevanceExplained": "Детальный анализ иконографии кельтских монет показывающий культурную эволюцию и связь с религиозными представлениями", "startTime": "1:05:57", "endTime": "1:09:18"}, {"start": 4157.7, "end": 4244.3, "dur": 86.7, "desc": "Ограниченность источников по кельтской религии - отсутствие письменных источников от самих кельтов и осторожность в использовании раннесредневековых саг", "relevance": "HIGH", "relevanceExplained": "Важное методологическое замечание о работе с источниками по кельтской истории - показывает научный подход автора", "startTime": "1:09:18", "endTime": "1:10:44"}, {"start": 4244.3, "end": 4299.0, "dur": 54.7, "desc": "Принципиальное отличие кельтов от германцев в денежном обращении - кельты создали собственную систему чеканки что свидетельствует о более развитой царской власти и иерархии", "relevance": "HIGH", "relevanceExplained": "Ключевое сравнение кельтской и германской цивилизаций через призму денежного обращения - важный тезис для основной темы", "startTime": "1:10:44", "endTime": "1:11:39"}, {"start": 4299.0, "end": 4376.0, "dur": 77.0, "desc": "Кельтские царские дворы и советы - ближайшее окружение царя из знатных семей формировало управленческую систему", "relevance": "HIGH", "relevanceExplained": "Описание политической структуры кельтского общества - важная часть основной темы", "startTime": "1:11:39", "endTime": "1:12:56"}, {"start": 4376.0, "end": 4435.0, "dur": 59.0, "desc": "Кельтская цивилизация принципиально отличалась от германской - богатство Цезаря после завоевания Галлии как свидетельство масштабного денежного оборота кельтов", "relevance": "HIGH", "relevanceExplained": "Важное обобщение о развитости кельтской цивилизации подкреплённое конкретным примером обогащения Цезаря", "startTime": "1:12:56", "endTime": "1:13:55"}, {"start": 4435.0, "end": 4479.9, "dur": 44.9, "desc": "Прекращение самостоятельной кельтской чеканки после римского завоевания - право чеканки принадлежало только проконсулам и императорам", "relevance": "HIGH", "relevanceExplained": "Важная деталь о последствиях римского завоевания для кельтской экономики", "startTime": "1:13:55", "endTime": "1:14:40"}, {"start": 4479.9, "end": 4560.9, "dur": 81.0, "desc": "Римляне заимствовали у кельтов вооружение - имперские гальские шлемы и кольчуга (лорика хамата) как свидетельство развитости кельтского кузнечного дела", "relevance": "HIGH", "relevanceExplained": "Яркие конкретные примеры культурного влияния кельтов на римлян - малоизвестный факт для широкой аудитории", "startTime": "1:14:40", "endTime": "1:16:01"}, {"start": 4560.9, "end": 4598.0, "dur": 37.1, "desc": "Кельты принесли в Британию культуру железа в X веке до н.э. - начало Железного века С", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме - развитие кельтской цивилизации в Британии и периодизация Железного века", "startTime": "1:16:01", "endTime": "1:16:38"}, {"start": 4598.0, "end": 4709.9, "dur": 111.9, "desc": "Объяснение постепенности распространения железа и причин деления на периоды Железного века (С Б А)", "relevance": "HIGH", "relevanceExplained": "Детальное объяснение процесса перехода от бронзы к железу напрямую относится к теме материальной культуры кельтской Британии", "startTime": "1:16:38", "endTime": "1:18:30"}, {"start": 4709.9, "end": 4749.2, "dur": 39.3, "desc": "Хронология волн Железного века: вторая волна (V-III вв. до н.э.) приносит денежное обращение и Железный век Б", "relevance": "HIGH", "relevanceExplained": "Конкретная хронологическая привязка периодов Железного века к волнам миграции - ключевая информация по теме", "startTime": "1:18:30", "endTime": "1:19:09"}, {"start": 4749.2, "end": 4772.3, "dur": 23.0, "desc": "Переход к теме значения бронзы для кельтов и упоминание вторжения Цезаря в 53 г. до н.э.", "relevance": "HIGH", "relevanceExplained": "Связующий блок между темой Железного века и объяснением причин неудачи Цезаря в Британии - важная часть основной темы", "startTime": "1:19:09", "endTime": "1:19:32"}, {"start": 4772.3, "end": 4835.9, "dur": 63.6, "desc": "Третья волна переселения (II-I вв. до н.э.) и наступление полноценного Железного века А в Британии", "relevance": "HIGH", "relevanceExplained": "Завершение периодизации Железного века Британии - прямо относится к основной теме", "startTime": "1:19:32", "endTime": "1:20:36"}, {"start": 4835.9, "end": 5010.3, "dur": 174.4, "desc": "Британия ко времени Цезаря: богатство железом и деньгами но сохранение значимости бронзы - бронзовые монеты кольца медальоны и оружие", "relevance": "HIGH", "relevanceExplained": "Ключевой контекст для понимания экономической ситуации в Британии перед вторжением Цезаря - центральная тема лекции", "startTime": "1:20:36", "endTime": "1:23:30"}, {"start": 5010.3, "end": 5169.0, "dur": 158.8, "desc": "Проблема несовпадения представлений о богатстве: кельты ценили бронзу а Цезарю нужны были золото и серебро для оплаты легионов", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение причины потери интереса Цезаря к Британии - одна из важнейших тем лекции согласно глобальному пониманию", "startTime": "1:23:30", "endTime": "1:26:09"}, {"start": 5169.0, "end": 5358.4, "dur": 189.4, "desc": "Итог: бронза была бесполезна для Цезаря как жалование легионерам что привело к потере интереса Рима к Британии на долгое время", "relevance": "HIGH", "relevanceExplained": "Завершение важнейшего объяснения причин столетнего разрыва между экспедицией Цезаря и вторжением Клавдия", "startTime": "1:26:09", "endTime": "1:29:18"}, {"start": 5358.4, "end": 5635.0, "dur": 276.5, "desc": "Изменения в Британии за I век: снижение роли бронзы и возвышение царства Катувеллаунов при царе Кунабелине", "relevance": "HIGH", "relevanceExplained": "Начало ключевого раздела о политических процессах приведших к вторжению Клавдия - центральная тема лекции", "startTime": "1:29:18", "endTime": "1:33:55"}, {"start": 5635.0, "end": 5877.9, "dur": 242.9, "desc": "Проблема наследования варварских царств: два пути раздела власти между сыновьями и выбор Кунабелина", "relevance": "HIGH", "relevanceExplained": "Объяснение механизма распада кельтского царства напрямую ведёт к причинам римского вторжения", "startTime": "1:33:55", "endTime": "1:37:58"}, {"start": 5877.9, "end": 5927.7, "dur": 49.8, "desc": "Мотивация младшего брата Канубилина: обида из-за неполучения наследства в контексте родоплеменного общества", "relevance": "HIGH", "relevanceExplained": "Прямое продолжение темы о внутренней политике Кату-Вилаунов и предпосылках римского вторжения", "startTime": "1:37:58", "endTime": "1:38:48"}, {"start": 5927.7, "end": 5957.4, "dur": 29.7, "desc": "Тагодумн - младший сын Канубилина - начал проримскую политику из обиды на отца", "relevance": "HIGH", "relevanceExplained": "Раскрытие конкретных исторических деятелей и их роли в расколе кельтского царства", "startTime": "1:38:48", "endTime": "1:39:17"}, {"start": 5957.4, "end": 5983.5, "dur": 26.1, "desc": "Попытки заключения союза с императором Клавдием до 43 года", "relevance": "HIGH", "relevanceExplained": "Продолжение темы о предпосылках римского вторжения в Британию", "startTime": "1:39:17", "endTime": "1:39:43"}, {"start": 5983.5, "end": 6018.7, "dur": 35.3, "desc": "Исправление ошибки: Аминий был проримским а Тагодумн - антиримским", "relevance": "HIGH", "relevanceExplained": "Важное уточнение фактов о расстановке сил - кто из братьев занимал какую позицию", "startTime": "1:39:43", "endTime": "1:40:19"}, {"start": 6018.7, "end": 6038.8, "dur": 20.0, "desc": "Бегство Аминия в Римскую империю и угроза расправы со стороны Тагодумна", "relevance": "HIGH", "relevanceExplained": "Ключевой эпизод внутридинастического конфликта ведущего к римскому вторжению", "startTime": "1:40:19", "endTime": "1:40:39"}, {"start": 6038.8, "end": 6126.5, "dur": 87.7, "desc": "Берек - последний представитель династии атрибатов - бежал к Каллигуле и Клавдию с просьбой о вторжении", "relevance": "HIGH", "relevanceExplained": "Важный дополнительный фактор раскола среди кельтов Британии и ещё одна причина римского вторжения", "startTime": "1:40:39", "endTime": "1:42:06"}, {"start": 6126.5, "end": 6176.1, "dur": 49.6, "desc": "Британцы первыми начали провоцировать Рим согласно римским источникам", "relevance": "HIGH", "relevanceExplained": "Непосредственная причина начала военных действий в контексте основной темы", "startTime": "1:42:06", "endTime": "1:42:56"}, {"start": 6176.1, "end": 6257.5, "dur": 81.4, "desc": "Тагодумн требует выдачи перебежчиков а после отказа бриты начинают рейды на юг Галлии", "relevance": "HIGH", "relevanceExplained": "Ключевой casus belli для римского вторжения 43 года", "startTime": "1:42:56", "endTime": "1:44:18"}, {"start": 6257.5, "end": 6485.4, "dur": 227.9, "desc": "Комплексный анализ причин вторжения: внутренние распри кельтов - имперская политика - экономическое значение Британии", "relevance": "HIGH", "relevanceExplained": "Обобщающий аналитический блок связывающий все факторы вторжения Клавдия - центральный для основной темы", "startTime": "1:44:18", "endTime": "1:48:05"}, {"start": 6485.4, "end": 6742.6, "dur": 257.2, "desc": "Личные амбиции Клавдия и кризис императорской власти как дополнительный фактор вторжения", "relevance": "HIGH", "relevanceExplained": "Важный контекст внутриримской политики объясняющий почему именно Клавдий решился на вторжение", "startTime": "1:48:05", "endTime": "1:52:23"}, {"start": 6742.6, "end": 6933.9, "dur": 191.3, "desc": "Бунт рейнских легионов перед походом в Британию и предположение автора о его показушном характере", "relevance": "HIGH", "relevanceExplained": "Интересная авторская интерпретация исторического эпизода с бунтом легионов - напрямую связана с темой вторжения", "startTime": "1:52:23", "endTime": "1:55:34"}, {"start": 6933.9, "end": 7068.4, "dur": 134.4, "desc": "Клавдий понял намёк военной аристократии и закрывал глаза на коррупцию ради титула Британский", "relevance": "HIGH", "relevanceExplained": "Завершение анализа политического контекста вторжения и характеристика правления Клавдия", "startTime": "1:55:34", "endTime": "1:57:48"}, {"start": 7068.4, "end": 7196.9, "dur": 128.6, "desc": "Подведение итогов лекции: конец доримского периода Кельтской Британии и начало романизации", "relevance": "HIGH", "relevanceExplained": "Финальное обобщение основной темы стрима - завершение лекционной части", "startTime": "1:57:48", "endTime": "1:59:57"}, {"start": 7196.9, "end": 7208.7, "dur": 11.8, "desc": "Переход к вопросам зрителей", "relevance": "LOW", "relevanceExplained": "Служебный переходный момент без информационной ценности", "startTime": "1:59:57", "endTime": "2:00:09"}, {"start": 7208.7, "end": 7339.9, "dur": 131.2, "desc": "Анонс длительного перерыва на канале из-за учёбы - практика, диплом, экзамены в аспирантуру, планы оставить только стримы", "relevance": "LOW", "relevanceExplained": "Информация о расписании канала быстро теряет актуальность и не относится к основной исторической теме", "startTime": "2:00:09", "endTime": "2:02:20"}, {"start": 7339.9, "end": 7372.3, "dur": 32.4, "desc": "Завершение лекционной части стрима - упоминание что это был обещанный декабрьский стрим", "relevance": "LOW", "relevanceExplained": "Служебная информация о расписании стрима, быстро теряет актуальность", "startTime": "2:02:20", "endTime": "2:02:52"}, {"start": 7372.3, "end": 7544.6, "dur": 172.3, "desc": "Благодарности зрителей и стримера, поиск донатов и вопросов в чате", "relevance": "LOW", "relevanceExplained": "Служебный блок - просмотр донатов, поиск вопросов, техническая пауза без информационной ценности", "startTime": "2:02:52", "endTime": "2:05:45"}, {"start": 7544.6, "end": 7858.8, "dur": 314.2, "desc": "Ответ на вопрос о кельтском флоте: данные о венетах из Цезаря, характер ополченческого флота, сравнение с германцами, отсутствие постоянного военного флота и археологических находок кельтских кораблей", "relevance": "HIGH", "relevanceExplained": "Содержательный развёрнутый ответ с анализом источников и сравнительным подходом. Хотя это побочная тема, автор приводит малоизвестные факты и делает важное различение между ополченческим и постоянным военным флотом", "startTime": "2:05:45", "endTime": "2:10:59"}, {"start": 7858.8, "end": 8113.0, "dur": 254.2, "desc": "Ответ на вопрос о том, видит ли автор себя популяризатором науки: самоидентификация, круг научных интересов (поздняя Римская империя, раннее Средневековье, Византия, военная история, законодательство), планы на аспирантуру и развитие канала", "relevance": "MID", "relevanceExplained": "Содержательный ответ с описанием научных интересов автора, но не относится к основной теме эфира (кельтская Британия). Интересен для понимания позиции автора", "startTime": "2:10:59", "endTime": "2:15:13"}, {"start": 8113.0, "end": 8441.9, "dur": 328.9, "desc": "Рекомендации литературы по культуре и религии кельтов: Широкова \"Римская Британия\" и Барри Кунлиф \"Древние кельты\" как основные источники, проблема нехватки письменных источников", "relevance": "MID", "relevanceExplained": "Содержательные рекомендации научной литературы, косвенно связаны с основной темой (кельты), но это скорее методический блок а не лекционный материал", "startTime": "2:15:13", "endTime": "2:20:42"}, {"start": 8441.9, "end": 8448.0, "dur": 6.1, "desc": "Краткий ответ на вопрос о специальности - медиевист", "relevance": "LOW", "relevanceExplained": "Повторение уже сказанной информации, очень краткий ответ без содержательной ценности", "startTime": "2:20:42", "endTime": "2:20:48"}, {"start": 8448.0, "end": 8494.4, "dur": 46.4, "desc": "Ответ на вопрос о возможном стриме про доримскую Испанию: сложность темы из-за многослойности - иберы, кельтиберы, финикийская и греческая колонизация, длительное покорение Римом", "relevance": "MID", "relevanceExplained": "Содержательный ответ с обзором проблематики доримской Испании, но это лишь краткое перечисление тем без глубокого разбора", "startTime": "2:20:48", "endTime": "2:21:34"}, {"start": 8494.4, "end": 8529.6, "dur": 35.2, "desc": "Уточнение по теме флота германских племён и анонс стрима на канале Россова про Римскую Британию", "relevance": "LOW", "relevanceExplained": "Краткое повторение уже сказанного про флот и анонс конкретного стрима - информация быстро теряет актуальность", "startTime": "2:21:34", "endTime": "2:22:10"}, {"start": 8529.6, "end": 8544.3, "dur": 14.8, "desc": "Уточнение про поступление в аспирантуру по всеобщей истории", "relevance": "LOW", "relevanceExplained": "Краткая служебная информация, повторение уже сказанного", "startTime": "2:22:10", "endTime": "2:22:24"}, {"start": 8544.3, "end": 8617.7, "dur": 73.4, "desc": "Почему автор не стримит Total War и как скрытие роликов по Total War повлияло на рост канала", "relevance": "MID", "relevanceExplained": "Интересная практическая информация о развитии канала но не относится к основной теме эфира - истории кельтской Британии", "startTime": "2:22:24", "endTime": "2:23:38"}, {"start": 8617.7, "end": 8676.6, "dur": 58.9, "desc": "Анонс завтрашнего стрима на канале Гроза и упоминание телеграм-канала", "relevance": "LOW", "relevanceExplained": "Служебная информация о расписании стримов которая быстро теряет актуальность", "startTime": "2:23:38", "endTime": "2:24:37"}, {"start": 8676.6, "end": 8804.4, "dur": 127.8, "desc": "Взаимодействие кельтов со скифами и сарматами - контакты ограничивались Центральной Европой и Балканами", "relevance": "MID", "relevanceExplained": "Тема контактов кельтов со скифами/сарматами косвенно связана с основной темой кельтской цивилизации но касается не Британии а континентальных кельтов. Содержательный развёрнутый ответ", "startTime": "2:24:37", "endTime": "2:26:44"}, {"start": 8804.4, "end": 8812.4, "dur": 8.0, "desc": "Краткое повторение времени стрима", "relevance": "LOW", "relevanceExplained": "Служебная информация о расписании которая быстро теряет актуальность", "startTime": "2:26:44", "endTime": "2:26:52"}, {"start": 8812.4, "end": 8979.5, "dur": 167.1, "desc": "Разбор понятия «цивилизация» - два основных значения термина: культурный феномен и политическое устройство", "relevance": "HIGH", "relevanceExplained": "Непосредственно относится к основной теме эфира - автор объясняет в каком смысле можно называть кельтское общество цивилизацией. Это важное методологическое уточнение для понимания лекции", "startTime": "2:26:52", "endTime": "2:29:40"}, {"start": 8979.5, "end": 8991.6, "dur": 12.1, "desc": "Пауза и нечленораздельная реплика", "relevance": "LOW", "relevanceExplained": "Тишина и односложная реплика без информационного содержания", "startTime": "2:29:40", "endTime": "2:29:52"}, {"start": 8991.6, "end": 9206.3, "dur": 214.7, "desc": "Рекомендация книги «Страница британской истории» Кауфманов для ребёнка 12 лет - обзор содержания и личные воспоминания автора", "relevance": "MID", "relevanceExplained": "Рекомендация литературы по британской истории связана с темой эфира но сама книга не о доримской Британии а обзорная. Содержательный ответ с личными деталями", "startTime": "2:29:52", "endTime": "2:33:26"}, {"start": 9206.3, "end": 9242.6, "dur": 36.4, "desc": "Ответ на вопрос о теме дипломной работы - стратегические аспекты коллапса обороны Римской Сирии во время арабского завоевания 630-640-х годов", "relevance": "MID", "relevanceExplained": "Информация о научной специализации автора интересна для аудитории но не относится напрямую к основной теме эфира", "startTime": "2:33:26", "endTime": "2:34:03"}, {"start": 9242.6, "end": 9414.6, "dur": 171.9, "desc": "Религиозная политика Рима по отношению к покорённым народам - лояльность к язычеству сложности с иудаизмом и постепенное распространение христианства", "relevance": "MID", "relevanceExplained": "Развёрнутый содержательный ответ о религиозной толерантности Рима. Косвенно связан с основной темой через римско-кельтские отношения но фокус на Ближнем Востоке и общей имперской политике", "startTime": "2:34:03", "endTime": "2:36:55"}, {"start": 9414.6, "end": 9663.5, "dur": 248.9, "desc": "Разбор вопроса об орле как символе ранней Руси - объяснение религиозной символики на античных монетах на примере Юпитера и римских императоров", "relevance": "MID", "relevanceExplained": "Интересный развёрнутый ответ о семантике изображений на монетах но тема ранней Руси и римских монет лишь косвенно связана с кельтской Британией", "startTime": "2:36:55", "endTime": "2:41:04"}, {"start": 9663.5, "end": 9686.4, "dur": 22.9, "desc": "Благодарность за подписчиков и упоминание блогеров Бушвакер и Фредрум", "relevance": "LOW", "relevanceExplained": "Служебная реплика о подписчиках и упоминание других блогеров без содержательной информации", "startTime": "2:41:04", "endTime": "2:41:26"}, {"start": 9686.4, "end": 9923.9, "dur": 237.6, "desc": "Причины поражения кельтской цивилизации перед Римом - нехватка централизации при сопоставимой военной мощи и роль случайностей в победах Цезаря", "relevance": "HIGH", "relevanceExplained": "Напрямую относится к основной теме эфира - анализ причин поражения кельтов с примерами из Галльской войны и взятия Рима кельтами в IV в. до н.э. Контринтуитивный тезис о том что кельты не сильно уступали римлянам", "startTime": "2:41:26", "endTime": "2:45:24"}, {"start": 9923.9, "end": 10141.6, "dur": 217.6, "desc": "Причины поражения кельтов: отсутствие централизации и гражданского общества в сравнении с Римской республикой на стадии экспансии и поздней империей на стадии обороны", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - объяснение исторических причин поражения кельтской цивилизации перед Римом с анализом общественного устройства", "startTime": "2:45:24", "endTime": "2:49:02"}, {"start": 10141.6, "end": 10204.5, "dur": 63.0, "desc": "Отношение к Климу Жукову как популяризатору науки: разделение политической позиции и исторической базы", "relevance": "MID", "relevanceExplained": "Это побочная тема - личное мнение автора о другом блогере. Содержательно но не относится к основной теме о кельтской Британии", "startTime": "2:49:02", "endTime": "2:50:05"}, {"start": 10204.5, "end": 10224.0, "dur": 19.5, "desc": "Ироничная реплика про споры в чате о терминах (городища)", "relevance": "LOW", "relevanceExplained": "Мимолётная реакция на чат без содержательного наполнения. Быстро теряет актуальность", "startTime": "2:50:05", "endTime": "2:50:24"}, {"start": 10224.0, "end": 10359.5, "dur": 135.5, "desc": "Ответ зрителю «злой историк»: у кельтов были должностные лица и система налогообложения и критика европоцентристского подхода к оценке кельтской цивилизации", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - обсуждение государственности и цивилизационного уровня кельтов. Автор аргументированно опровергает тезис об отсталости кельтов", "startTime": "2:50:24", "endTime": "2:52:39"}, {"start": 10359.5, "end": 10410.3, "dur": 50.9, "desc": "Анонс будущего контента про фракийцев", "relevance": "MID", "relevanceExplained": "Содержательное обещание будущей темы с кратким обоснованием интереса но не относится к основной теме о кельтской Британии", "startTime": "2:52:39", "endTime": "2:53:30"}, {"start": 10410.3, "end": 10442.3, "dur": 31.9, "desc": "Ответ на вопрос про высокопоставленного римлянина-зороастрийца: в классической Римской империи это было невозможно", "relevance": "MID", "relevanceExplained": "Краткий но содержательный ответ на исторический вопрос. Не относится к основной теме о кельтской Британии", "startTime": "2:53:30", "endTime": "2:54:02"}, {"start": 10442.3, "end": 10531.1, "dur": 88.9, "desc": "Цезарь набирал романизированных кельтов в легионы и даже в Сенат что вызывало ненависть сенаторов", "relevance": "HIGH", "relevanceExplained": "Блок относится к основной теме - взаимодействие Рима и кельтов. Конкретные исторические факты о романизации кельтского населения Нарбонской и Цизальпинской Галлии", "startTime": "2:54:02", "endTime": "2:55:31"}, {"start": 10531.1, "end": 10912.7, "dur": 381.6, "desc": "Роль друидов в кельтском обществе: крайне мало достоверных данных и критика домыслов о друидах как доминантной политической силе. Анализ римской охоты на друидов в Британии", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - устройство кельтского общества в Британии. Автор подробно разбирает источниковедческие проблемы и предостерегает от необоснованных гипотез", "startTime": "2:55:31", "endTime": "3:01:53"}, {"start": 10912.7, "end": 10930.5, "dur": 17.8, "desc": "Завершающий тезис о необходимости осторожности в выводах при отсутствии конкретных данных", "relevance": "HIGH", "relevanceExplained": "Это завершение предыдущего рассуждения о друидах и методологии. Ценность должна совпадать с предыдущим блоком но выделен отдельно так как является самостоятельным итоговым тезисом", "startTime": "3:01:53", "endTime": "3:02:11"}, {"start": 10930.5, "end": 10951.9, "dur": 21.3, "desc": "Зачитывание вопроса из чата про латифундии и феодализм плюс мимолётные реплики", "relevance": "MID", "relevanceExplained": "Это вводная часть к развёрнутому ответу про латифундии и феодализм - побочная тема относительно кельтской Британии но содержательная", "startTime": "3:02:11", "endTime": "3:02:32"}, {"start": 10951.9, "end": 11026.8, "dur": 74.9, "desc": "Объяснение что такое латифундия и почему это частные отношения а не феодализм", "relevance": "MID", "relevanceExplained": "Содержательное объяснение разницы между латифундией и феодализмом - интересная побочная тема не относящаяся к кельтской Британии", "startTime": "3:02:32", "endTime": "3:03:47"}, {"start": 11026.8, "end": 11106.1, "dur": 79.3, "desc": "Определение феодализма через вассально-ленные отношения и контраст с латифундией", "relevance": "MID", "relevanceExplained": "Продолжение содержательного разбора отличий феодализма от латифундий - побочная но интересная тема", "startTime": "3:03:47", "endTime": "3:05:06"}, {"start": 11106.1, "end": 11262.5, "dur": 156.4, "desc": "Критика европоцентристского подхода: феодализм - исключительно германское явление выросшее из родоплеменных отношений", "relevance": "MID", "relevanceExplained": "Развёрнутое и аргументированное объяснение германских корней феодализма - побочная но содержательная тема", "startTime": "3:05:06", "endTime": "3:07:42"}, {"start": 11262.5, "end": 11355.5, "dur": 93.0, "desc": "Конфискация земли в античном Риме: судебная процедура и невозможность произвольного отчуждения", "relevance": "MID", "relevanceExplained": "Содержательное пояснение о римском праве собственности на землю - побочная тема но с интересными деталями", "startTime": "3:07:42", "endTime": "3:09:16"}, {"start": 11355.5, "end": 11562.1, "dur": 206.6, "desc": "Фемное устройство Византии не является феодализмом: подробное объяснение системы фем", "relevance": "MID", "relevanceExplained": "Развёрнутый и содержательный разбор фемной системы с критикой советской историографии - побочная но интересная тема", "startTime": "3:09:16", "endTime": "3:12:42"}, {"start": 11562.1, "end": 11650.4, "dur": 88.3, "desc": "Обобщающий вывод: Византия и Западная Европа - принципиально разные цивилизации и нельзя транслировать западноевропейские категории на другие", "relevance": "MID", "relevanceExplained": "Завершающий тезис длинного рассуждения о неприменимости понятия феодализма к Византии", "startTime": "3:12:42", "endTime": "3:14:10"}, {"start": 11650.4, "end": 11656.0, "dur": 5.6, "desc": "Автор ищет интересные вопросы в чате", "relevance": "LOW", "relevanceExplained": "Техническая пауза без информационной ценности", "startTime": "3:14:10", "endTime": "3:14:16"}, {"start": 11656.0, "end": 11825.5, "dur": 169.5, "desc": "Ответ на вопрос про обращение Рима с покорёнными племенами: рабство соции и федераты", "relevance": "MID", "relevanceExplained": "Содержательный ответ про римскую систему обращения с покорёнными народами включая интересную ремарку что федераты существовали уже в раннереспубликанский период", "startTime": "3:14:16", "endTime": "3:17:06"}, {"start": 11825.5, "end": 11982.4, "dur": 156.9, "desc": "Великое переселение народов как главная причина падения Западной Римской империи - сравнение с Восточной", "relevance": "MID", "relevanceExplained": "Содержательный и аргументированный ответ с контрпримером Восточной Римской империи - побочная тема но с чёткой логикой", "startTime": "3:17:06", "endTime": "3:19:42"}, {"start": 11982.4, "end": 12002.1, "dur": 19.7, "desc": "Вопрос про экономическую основу катафрактской конницы - автор не понял вопрос", "relevance": "LOW", "relevanceExplained": "Автор не дал содержательного ответа и выразил непонимание вопроса", "startTime": "3:19:42", "endTime": "3:20:02"}, {"start": 12002.1, "end": 12017.2, "dur": 15.1, "desc": "Упоминание нумерации легионов и римской границы по Евфрату - автор откладывает тему", "relevance": "LOW", "relevanceExplained": "Автор лишь упоминает темы но не раскрывает их, говоря что это слишком большая тема", "startTime": "3:20:02", "endTime": "3:20:17"}, {"start": 12017.2, "end": 12074.7, "dur": 57.5, "desc": "О рунах у кельтов: письменности у кельтов не было а руны - не полноценное письмо", "relevance": "MID", "relevanceExplained": "Краткий но содержательный ответ с пояснением что руны не являются полноценной письменностью", "startTime": "3:20:17", "endTime": "3:21:15"}, {"start": 12074.7, "end": 12115.6, "dur": 40.9, "desc": "Напоминание что лекция закончилась и анонс что стрим будет залит отдельно без болтологической части", "relevance": "LOW", "relevanceExplained": "Служебная информация о формате публикации которая быстро теряет актуальность", "startTime": "3:21:15", "endTime": "3:21:56"}, {"start": 12115.6, "end": 12178.9, "dur": 63.3, "desc": "Шуточный ответ про рокеров с точки зрения родоплеменных устройств с отсылкой к готам и вандалам", "relevance": "LOW", "relevanceExplained": "Шуточный и несодержательный ответ на непонятный вопрос из чата", "startTime": "3:21:56", "endTime": "3:22:59"}, {"start": 12178.9, "end": 12224.4, "dur": 45.5, "desc": "Вопрос про княжество Феодоро в Крыму - автор говорит что Крым не его тема", "relevance": "LOW", "relevanceExplained": "Автор не раскрывает тему и прямо говорит что не интересовался историей Крыма в поздний период", "startTime": "3:22:59", "endTime": "3:23:44"}, {"start": 12224.4, "end": 12312.7, "dur": 88.3, "desc": "Ответ на вопрос: почему варвары Рима создали государства, существующие до сих пор, а варвары Китая были ассимилированы - сравнение кочевых соседей Китая и оседлых соседей Рима", "relevance": "MID", "relevanceExplained": "Содержательное сравнение двух цивилизаций, но это побочная тема относительно основной (кельтская Британия)", "startTime": "3:23:44", "endTime": "3:25:13"}, {"start": 12312.7, "end": 12506.3, "dur": 193.6, "desc": "Ответ на вопрос: почему промежуточные монеты не помогли экономике Рима - объяснение циклического характера римской инфляции и сравнение с современной инфляцией в России", "relevance": "MID", "relevanceExplained": "Развёрнутый и интересный ответ про римскую монетарную систему, но это побочная тема относительно основной (кельтская Британия)", "startTime": "3:25:13", "endTime": "3:28:26"}, {"start": 12506.3, "end": 12544.3, "dur": 38.0, "desc": "Краткие отказы отвечать на вопросы про феминизм и локальные цивилизации", "relevance": "LOW", "relevanceExplained": "Автор явно не заинтересован в этих вопросах и отвечает очень сухо - «явно не моя тема» и «я только об этом утвержу»", "startTime": "3:28:26", "endTime": "3:29:04"}, {"start": 12544.3, "end": 12575.8, "dur": 31.5, "desc": "Ответ на вопрос: много ли было серебра и золота у Рима - рассуждение о субъективности понятия «много»", "relevance": "LOW", "relevanceExplained": "Автор не даёт содержательного ответа, а лишь рассуждает о том, что вопрос некорректен без конкретных примеров", "startTime": "3:29:04", "endTime": "3:29:36"}, {"start": 12575.8, "end": 12605.5, "dur": 29.7, "desc": "Объявление о завершении стрима - лекция закончилась полтора часа назад", "relevance": "LOW", "relevanceExplained": "Техническое объявление о завершении, не содержит информационной ценности", "startTime": "3:29:36", "endTime": "3:30:05"}, {"start": 12605.5, "end": 12682.2, "dur": 76.7, "desc": "Последние ответы перед завершением: про феодализм в Византии и про номиналы монет", "relevance": "MID", "relevanceExplained": "Краткие но содержательные реплики - утверждение об отсутствии феодализма в Византии и уточнение про монетные номиналы", "startTime": "3:30:05", "endTime": "3:31:22"}, {"start": 12682.2, "end": 12726.4, "dur": 44.2, "desc": "Финальное прощание стрима - благодарности, анонс перерыва до мая из-за учёбы", "relevance": "HIGH", "relevanceExplained": "Последнее прощание всего стрима - всегда HIGH по правилам. Содержит важную информацию о долгом перерыве до мая", "startTime": "3:31:22", "endTime": "3:32:06"}];
+const highlights = [{"start": 293.7, "dur": 267.0, "durLabel": "~5 мин", "title": "Откуда кельты в Британии и почему у них нет летописей?", "desc": "Разбор двух теорий появления кельтов на Британских островах. Вы узнаете почему ученые спорят о датировках и почему кельтская цивилизация не оставила после себя никаких письменных источников.#кельты", "tags": "#британия #история #археология #наука", "startTime": "04:54"}, {"start": 771.8, "dur": 257.2, "durLabel": "~5 мин", "title": "Кто построил Стоунхендж и жил в Британии до кельтов?", "desc": "Ученые предполагают кем было коренное население Британии до прихода кельтов. Раскрывается связь между создателями Стоунхенджа, древними иберийцами и похожими мегалитическими сооружениями в Испании и Галлии.#стоунхендж", "tags": "#британия #кельты #иберийцы #история", "startTime": "12:52"}, {"start": 1671.4, "dur": 494.2, "durLabel": "~9 мин", "title": "Чем кельтские города превосходили поселения германских племен?", "desc": "Сравнение уровня развития кельтов и германцев в античности. Почему кельты строили укрепленные каменные оппидумы с развитой экономикой и запасами, тогда как германцы жили в примитивных деревнях.#кельты", "tags": "#германцы #оппидум #античность #история", "startTime": "27:51"}, {"start": 3417.7, "dur": 399.0, "durLabel": "~7 мин", "title": "Как Филипп II повлиял на кельтскую экономику", "desc": "Неожиданная связь между македонской экспансией и кельтской экономикой. Как наемники-галаты на службе у Филиппа II принесли греческие деньги в Европу и запустили процесс создания собственных кельтских монет.#македонский", "tags": "#кельты #монеты #экономика #античность", "startTime": "56:58"}, {"start": 5012.3, "dur": 342.8, "durLabel": "~6 мин", "title": "Почему Юлий Цезарь разочаровался в Британии и бросил её?", "desc": "Забавная историческая нестыковка в восприятии богатства. Для кельтов признаком роскоши была бронза, а римские легионеры требовали серебро и золото, из-за чего Цезарь счел остров нищим и бесполезным.#цезарь", "tags": "#рим #британия #кельты #история", "startTime": "1:23:32"}, {"start": 6487.6, "dur": 590.3, "durLabel": "~10 мин", "title": "Почему Клавдию было необходимо завоевание Британии", "desc": "Разбор внутренней римской политики и кризиса власти после безумного Калигулы. Почему слабому императору Клавдию была жизненно необходима далекая победоносная война для утверждения своего политического авторитета перед Сенатом.#клавдий", "tags": "#рим #империя #британия #история", "startTime": "1:48:08"}, {"start": 8676.6, "dur": 123.2, "durLabel": "~3 мин", "title": "Кого римляне и греки на самом деле называли скифами?", "desc": "Разбор античной терминологии в отношении степных кочевников. Почему под словом скифы античные авторы часто подразумевали сарматов, готов, гуннов и вообще любые племена из восточных пределов.#скифы", "tags": "#рим #античность #кочевники #история", "startTime": "2:24:37"}, {"start": 9686.4, "dur": 309.3, "durLabel": "~6 мин", "title": "Почему могущественные кельты в итоге проиграли Римской Империи?", "desc": "Анализ причин падения кельтской цивилизации перед лицом Рима. Главным фактором стало не военное превосходство легионов, а отсутствие у кельтов централизованной государственной власти и концепции гражданского общества.#рим", "tags": "#кельты #империя #война #история", "startTime": "2:41:26"}, {"start": 10930.5, "dur": 710.3, "durLabel": "~12 мин", "title": "Почему в Риме и Византии никогда не было феодализма?", "desc": "Разоблачение популярного исторического мифа о римских латифундиях и византийских фемах. Объяснение кардинальной разницы между античным правом частной собственности и германскими вассальными отношениями Средневековья.#феодализм", "tags": "#византия #рим #история #мифы", "startTime": "3:02:11"}, {"start": 11825.5, "dur": 161.9, "durLabel": "~3 мин", "title": "Настоящая причина краха Западной Римской Империи", "desc": "Главный фактор падения великого античного государства. Почему внутренние кризисы были вторичны, а ключевую роль сыграло именно Великое переселение народов, которое Восточная Римская Империя смогла пережить.#рим", "tags": "#империя #варвары #история #античность", "startTime": "3:17:06"}];
+const silenceCuts = [{"start": 188.5, "end": 193.0}, {"start": 348.5, "end": 352.0}, {"start": 1084.5, "end": 1087.8}, {"start": 1193.6, "end": 1197.0}, {"start": 1213.3, "end": 1216.5}, {"start": 1217.9, "end": 1221.3}, {"start": 2836.6, "end": 2839.9}, {"start": 2894.1, "end": 2897.6}, {"start": 3314.4, "end": 3317.4}, {"start": 3444.8, "end": 3448.6}, {"start": 3621.7, "end": 3628.1}, {"start": 3816.7, "end": 3820.9}, {"start": 4805.9, "end": 4809.2}, {"start": 5355.1, "end": 5358.4}, {"start": 5390.5, "end": 5394.6}, {"start": 5482.8, "end": 5485.9}, {"start": 5920.4, "end": 5927.7}, {"start": 5961.3, "end": 5965.0}, {"start": 6130.1, "end": 6134.9}, {"start": 6325.6, "end": 6329.7}, {"start": 6354.1, "end": 6357.6}, {"start": 6689.3, "end": 6693.2}, {"start": 6767.5, "end": 6770.9}, {"start": 7119.3, "end": 7136.2}, {"start": 7138.1, "end": 7141.4}, {"start": 7189.5, "end": 7196.9}, {"start": 7547.8, "end": 7551.3}, {"start": 7790.3, "end": 7798.7}, {"start": 9995.6, "end": 10000.8}, {"start": 10224.0, "end": 10232.2}, {"start": 10442.3, "end": 10455.1}, {"start": 10522.8, "end": 10528.0}, {"start": 10540.9, "end": 10544.1}, {"start": 10927.0, "end": 10930.5}, {"start": 12719.2, "end": 12726.4}];
+const timecodes = [{"time": "00:15", "title": "Введение: Кельтская цивилизация Британии и её место в античном мире", "secs": 15}, {"time": "02:24", "title": "Загадка происхождения: как первые кельты оказались на Британских островах?", "secs": 144}, {"time": "08:05", "title": "Великое переселение X века до н.э.: путь по Рейну и ассимиляция аборигенов", "secs": 485}, {"time": "12:29", "title": "Докельтская Британия: кто построил Стоунхендж и кем были местные жители?", "secs": 749}, {"time": "14:36", "title": "Происхождение пиктов: предки шотландцев и их многовековая вражда с кельтами", "secs": 876}, {"time": "17:13", "title": "Полукочевой образ жизни древних кельтов: миграции, земледелие и поиск новых земель", "secs": 1033}, {"time": "22:59", "title": "Рождение кельтских городов: оппидумы, продовольственная безопасность и каменное зодчество", "secs": 1379}, {"time": "33:19", "title": "Голод как двигатель войны: истинные причины кельтских миграций и походов Цезаря", "secs": 1999}, {"time": "41:59", "title": "Вторжение белгов: формирование племенной карты Британии накануне римского завоевания", "secs": 2519}, {"time": "51:30", "title": "Кельтская экономика: как македонское золото научило варваров чеканить монеты", "secs": 3090}, {"time": "1:03:26", "title": "Деньги как инструмент власти и превосходство кельтов в кузнечном деле", "secs": 3806}, {"time": "1:08:43", "title": "Три волны Железного века: от примитивных орудий до массового производства оружия", "secs": 4123}, {"time": "1:13:41", "title": "Бронзовый парадокс: почему Цезарь счёл Британию бедной и отказался от завоевания?", "secs": 4421}, {"time": "1:21:52", "title": "Золотой век кельтской Британии: верховный царь Кунобелин и объединение племен", "secs": 4912}, {"time": "1:26:23", "title": "Династический кризис: раздел царства, предательства и бегство элит к римлянам", "secs": 5183}, {"time": "1:35:07", "title": "Дерзость бриттов и комплексы Клавдия: скрытые мотивы римского вторжения 43 года н.э.", "secs": 5707}, {"time": "1:44:16", "title": "Странный бунт легионов на Рейне перед отплытием в Британию", "secs": 6256}, {"time": "1:51:25", "title": "Ответы на вопросы: был ли у кельтов собственный военный флот?", "secs": 6685}, {"time": "1:56:27", "title": "Ответы на вопросы: что историки вкладывают в понятие «цивилизация»?", "secs": 6987}, {"time": "1:59:14", "title": "Ответы на вопросы: почему развитая кельтская культура проиграла римлянам?", "secs": 7154}, {"time": "2:06:44", "title": "Ответы на вопросы: существовали ли у варваров государственные должности и налоги?", "secs": 7604}, {"time": "2:10:03", "title": "Ответы на вопросы: друиды и политика — кто на самом деле управлял кельтами?", "secs": 7803}];
+
+function fmtDuration(secs) {
+  var total = Math.max(0, Math.round(secs));
+  var h = Math.floor(total / 3600);
+  var m = Math.floor((total % 3600) / 60);
+  var s = total % 60;
+  var mm = String(m).padStart(2, '0');
+  var ss = String(s).padStart(2, '0');
+  if (h > 0) {
+    return h + '\u0447 ' + mm + '\u043c ' + ss + '\u0441';
+  }
+  return mm + '\u043c ' + ss + '\u0441';
+}
+
+function fmtTime(secs) {
+  var h = Math.floor(secs / 3600);
+  var m = Math.floor((secs % 3600) / 60);
+  var s = Math.floor(secs % 60);
+  return (h > 0 ? h + ':' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function pct(secs) {
+  return (secs / TOTAL_DURATION) * 100;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderHighlightTags(tags) {
+  return String(tags)
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(function(tag) {
+      return '<span class="hl-tag">' + escapeHtml(tag) + '</span>';
+    })
+    .join('');
+}
+
+function renderTimeline() {
+  var bar = document.getElementById('timelineBar');
+  var markersDiv = document.getElementById('highlightMarkers');
+  var rulerDiv = document.getElementById('timeRuler');
+  var tooltip = document.getElementById('tooltip');
+
+  segments.forEach(function(seg, i) {
+    var el = document.createElement('div');
+    el.className = 'timeline-segment relevance-' + seg.relevance;
+    el.style.left = pct(seg.start) + '%';
+    el.style.width = Math.max(pct(seg.dur), 0.08) + '%';
+    el.dataset.idx = i;
+    bar.appendChild(el);
+  });
+
+  silenceCuts.forEach(function(s) {
+    var dur = s.end - s.start;
+    if (dur < 5) return;
+    var el = document.createElement('div');
+    el.className = 'timeline-silence';
+    el.style.left = pct(s.start) + '%';
+    el.style.width = Math.max(pct(dur), 0.05) + '%';
+    bar.appendChild(el);
+  });
+
+  highlights.forEach(function(h) {
+    var el = document.createElement('span');
+    el.className = 'highlight-marker';
+    el.innerHTML = '&#9670;';
+    el.style.left = pct(h.start) + '%';
+    el.title = h.title;
+
+    el.addEventListener('mouseenter', function(e) {
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(h.title) + '</div>' +
+        '<div style="font-size:12px;margin-top:4px;">' + escapeHtml(h.desc) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(h.startTime) + ' (' + escapeHtml(h.durLabel) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+
+    markersDiv.appendChild(el);
+  });
+  for (var t = 1800; t <= TOTAL_DURATION; t += 1800) {
+    var el = document.createElement('div');
+    el.className = 'time-ruler-mark';
+    el.style.left = pct(t) + '%';
+    el.textContent = fmtTime(t);
+    rulerDiv.appendChild(el);
+  }
+
+  bar.addEventListener('mousemove', function(e) {
+    var rect = bar.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var timeSecs = (x / rect.width) * TOTAL_DURATION;
+    var seg = segments.find(function(s) { return timeSecs >= s.start && timeSecs <= s.end; });
+    if (seg) {
+      var relevanceExplained = seg.relevanceExplained || 'No explanation provided';
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(seg.desc) + '</div>' +
+        '<div class="tt-why ' + seg.relevance + '">Why ' + escapeHtml(seg.relevance) + '?</div>' +
+        '<div class="tt-explanation">' + escapeHtml(relevanceExplained) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + ' (' + fmtDuration(seg.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    } else {
+      tooltip.style.display = 'none';
+    }
+  });
+
+  bar.addEventListener('mouseleave', function() {
+    tooltip.style.display = 'none';
+  });
+}
+
+function positionTooltip(e) {
+  var tooltip = document.getElementById('tooltip');
+  var pad = 12;
+  var x = e.clientX + pad;
+  var y = e.clientY + pad;
+  var tw = tooltip.offsetWidth;
+  var th = tooltip.offsetHeight;
+  if (x + tw > window.innerWidth - 20) x = e.clientX - tw - pad;
+  if (y + th > window.innerHeight - 20) y = e.clientY - th - pad;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function renderChapters() {
+  var tbody = document.getElementById('chaptersBody');
+  var empty = document.getElementById('chaptersEmpty');
+  if (timecodes.length === 0) {
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
+  timecodes.forEach(function(tc, i) {
+    var nextSecs = i < timecodes.length - 1 ? timecodes[i + 1].secs : SHORTENED_DURATION;
+    var gap = Math.max(nextSecs - tc.secs, 0);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(tc.time) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(gap) + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(tc.title) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function renderHighlights() {
+  var grid = document.getElementById('highlightsGrid');
+  highlights.forEach(function(h) {
+    var card = document.createElement('div');
+    card.className = 'highlight-card';
+    var tagsHtml = renderHighlightTags(h.tags);
+    card.innerHTML =
+      '<div class="hl-title">' + escapeHtml(h.title) + '</div>' +
+      '<div class="hl-meta">' +
+        '<span class="chapter-duration">' + escapeHtml(h.durLabel) + '</span>' +
+        '<span class="hl-source">' + escapeHtml(h.startTime) + '</span>' +
+      '</div>' +
+      '<div class="hl-desc">' + escapeHtml(h.desc) + '</div>' +
+      (tagsHtml ? '<div class="hl-tags">' + tagsHtml + '</div>' : '');
+    grid.appendChild(card);
+  });
+}
+
+function renderSegments() {
+  var tbody = document.getElementById('segmentsBody');
+  segments.forEach(function(seg) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(seg.dur) + '</span></td>' +
+      '<td class="col-rel"><span class="relevance-badge ' + seg.relevance + '">' + seg.relevance + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(seg.desc) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderTimeline();
+  renderChapters();
+  renderHighlights();
+  renderSegments();
+});
+</script>
+</body>
+</html>

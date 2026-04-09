@@ -6,24 +6,43 @@ window.__siteData = {
         whatsapp: "https://wa.me/66946160072"
     },
 
-    // Example showcase entries by language (landing page marquee)
+    // Shared playlists landing page for clickable cover images
+    playlistsLink: "https://www.youtube.com/@cutto-app/playlists",
+
+    // Example showcase catalog shared by the landing page and dashboards
     examples: {
-        ru: [
-            {
-                href: "examples/dashboard_alipov_saveliev.html",
-                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyLGceQ58rPXgH5N5rZdI5W3",
-                label: "Нейробиолог разоблачает лженауку Савельева",
-                icon: "layout-dashboard"
-            },
-            {
-                href: "examples/dashboard_alipov_flynn.html",
-                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyJFplMSkizgPh78i-ZrHazU",
-                label: "Падает ли средний IQ человечества? Обратный эффект Флинна",
-                icon: "layout-dashboard"
-            }
+        order: [
+            "alipov_saveliev",
+            "alipov_flynn",
+            "varus_celts",
+            "optozorax_simulations"
         ],
-        en: [],
-        es: []
+        items: {
+            alipov_saveliev: {
+                dashboardPath: "examples/dashboard_alipov_saveliev.html",
+                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyLGceQ58rPXgH5N5rZdI5W3",
+                lang: "ru",
+                title: "Нейробиолог разоблачает лженауку Савельева"
+            },
+            alipov_flynn: {
+                dashboardPath: "examples/dashboard_alipov_flynn.html",
+                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyJFplMSkizgPh78i-ZrHazU",
+                lang: "ru",
+                title: "Падает ли средний IQ человечества?"
+            },
+            varus_celts: {
+                dashboardPath: "examples/dashboard_varus_celts.html",
+                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyInNVVi9BwUDs9Rczr8rRg5",
+                lang: "ru",
+                title: "Кельтская Британия до прихода римлян"
+            },
+            optozorax_simulations: {
+                dashboardPath: "examples/dashboard_optozorax_simulations.html",
+                playlistHref: "https://www.youtube.com/playlist?list=PLXcjjw8fcCyJsCLAcvKdDHViGvwFItbpa",
+                lang: "ru",
+                title: "Симулируем сцены с порталами по идеям зрителей"
+            },
+        }
     },
 
     // "Process my video" button URL (app page)
