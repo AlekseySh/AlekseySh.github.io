@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Кельтская Британия до прихода римлян: богатство, оппидумы и роковой раскол — Cutto Dashboard</title>
+<script src="../assets/site-data.js"></script>
+<script src="../assets/js/example-catalog.js"></script>
 <style>
 :root {
   --relevance-high-color: #4CAF50;
@@ -667,12 +669,12 @@
   }
 </style>
 </head>
-<body>
+<body data-example-id="varus_celts">
 <div class="container">
 
   <header class="header">
     <div class="header-row">
-      <a class="youtube-button" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+      <a class="youtube-button" href="#" target="_blank" rel="noopener noreferrer" data-example-playlist-link hidden>
         <span class="youtube-button-copy">
           <span class="youtube-button-label">Открыть</span>
           <span class="youtube-button-label">на YouTube</span>
@@ -994,6 +996,9 @@ function renderSegments() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  if (window.exampleCatalog && typeof window.exampleCatalog.syncCurrentExamplePage === 'function') {
+    window.exampleCatalog.syncCurrentExamplePage(document);
+  }
   renderTimeline();
   renderChapters();
   renderHighlights();
