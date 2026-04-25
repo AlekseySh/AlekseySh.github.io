@@ -45,6 +45,7 @@
             example = items[exampleId];
 
             if (!example) continue;
+            if (example.showOnHome === false) continue;
 
             title = getExampleTitle(example);
 

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Бушвакер] Империя Сун: Золотой век Китая, порох и вторжение монголов — Cutto Dashboard</title>
+<script src="../assets/site-data.js"></script>
+<script src="../assets/js/example-catalog.js"></script>
+<style>
+:root {
+  --relevance-high-color: #4CAF50;
+  --relevance-high-tooltip-color: #55efc4;
+  --relevance-mid-color: #FF9800;
+  --relevance-mid-tooltip-color: #fdcb6e;
+  --relevance-low-color: #f44336;
+  --relevance-low-tooltip-color: #ff7675;
+  --silence-color: #c8d0d4;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f6fa;
+    color: #2d3436;
+    line-height: 1.6;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 40px 60px;
+  }
+  .header {
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #dfe6e9;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .header-main {
+    min-width: 0;
+    flex: 0 1 auto;
+    max-width: 1100px;
+    display: flex;
+    align-items: center;
+    min-height: 76px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 0;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+  }
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ff2a23, #d80d14);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(216,13,20,0.18);
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .youtube-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+  }
+  .youtube-button-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .youtube-button-label {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+  }
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 64px;
+    background: linear-gradient(135deg, #6f5cff, #8c71ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 12px 20px;
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(111,92,255,0.18);
+    letter-spacing: 0.1px;
+    text-decoration: none;
+  }
+  .header .badge:hover {
+    filter: brightness(1.05);
+  }
+  .badge-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .badge-label {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.1px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon,
+  .collapsible-details summary .icon {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 700;
+  }
+  .section-title .icon svg,
+  .collapsible-details summary .icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .timeline-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 36px;
+  }
+  .timeline-header {
+    margin-bottom: 16px;
+  }
+  .timeline-hover-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid #cfe2ff;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #eff6ff 0%, #f8fbff 100%);
+    color: #275275;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    box-shadow: 0 8px 20px rgba(9,132,227,0.08);
+  }
+  .timeline-hover-hint .hint-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #0984e3;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    animation: hint-pulse 1.8s ease-in-out infinite;
+  }
+  .timeline-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .timeline-summary-card {
+    background: #f8fafc;
+    border: 1px solid #e7edf2;
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timeline-summary-card-tags {
+    gap: 10px;
+  }
+  .timeline-summary-label {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .timeline-summary-value {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .timeline-summary-keep-group {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  .timeline-summary-metric {
+    color: #2d3436;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .timeline-summary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .timeline-summary-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #4a5560;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .timeline-summary-tag .legend-dot {
+    margin-top: 0;
+  }
+  .timeline-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .timeline-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13px;
+    color: #2d3436;
+    max-width: 520px;
+    flex: 1 1 auto;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    flex: 0 0 12px;
+    margin-top: 3px;
+  }
+  .legend-highlight {
+    color: #0984e3;
+    font-size: 15px;
+    line-height: 1;
+    flex: 0 0 12px;
+    margin-top: 1px;
+  }
+  .legend-text {
+    color: #2d3436;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .legend-name {
+    color: #2d3436;
+    font-weight: 700;
+  }
+  .timeline-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+  .timeline-pie-wrap {
+    display: flex;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+  .timeline-pie-chart {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+  .timeline-pie-label {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    color: #1f2933;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+    pointer-events: none;
+  }
+  .timeline-pie-label-dark {
+    color: #1f2933;
+  }
+  .timeline-pie-chart::after {
+    content: '';
+    position: absolute;
+    inset: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #edf1f3;
+    z-index: 0;
+  }
+  .highlight-markers {
+    position: relative;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  .highlight-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    color: #0984e3;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+    transition: transform 0.15s;
+    line-height: 1;
+    top: 4px;
+  }
+  .highlight-marker:hover {
+    transform: translateX(-50%) scale(1.4);
+  }
+  .timeline-bar {
+    position: relative;
+    height: 44px;
+    background: #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  .timeline-segment {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: opacity 0.15s;
+  }
+  .timeline-segment:hover {
+    opacity: 0.85;
+  }
+  .timeline-segment.relevance-HIGH { background: var(--relevance-high-color); }
+  .timeline-segment.relevance-MID { background: var(--relevance-mid-color); }
+  .timeline-segment.relevance-LOW { background: var(--relevance-low-color); }
+  .timeline-silence {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--silence-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+  .timeline-cut {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  .time-ruler {
+    position: relative;
+    height: 16px;
+    margin-top: 4px;
+  }
+  .time-ruler-mark {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #636e72;
+    font-weight: 500;
+  }
+  .timeline-tooltip {
+    display: none;
+    position: fixed;
+    background: #2d3436;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 340px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    line-height: 1.5;
+  }
+  .timeline-tooltip .tt-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .timeline-tooltip .tt-why {
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .timeline-tooltip .tt-why.HIGH { color: var(--relevance-high-tooltip-color); }
+  .timeline-tooltip .tt-why.MID { color: var(--relevance-mid-tooltip-color); }
+  .timeline-tooltip .tt-why.LOW { color: var(--relevance-low-tooltip-color); }
+  .timeline-tooltip .tt-explanation {
+    font-size: 12px;
+    margin-top: 2px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  .timeline-tooltip .tt-time {
+    color: #b2bec3;
+    font-size: 11px;
+    margin-top: 4px;
+  }
+  .chapters-section,
+  .highlights-section,
+  .segments-section {
+    margin-bottom: 36px;
+  }
+  .details-body {
+    padding: 0 28px 24px;
+  }
+  .chapters-table-wrap {
+    overflow-x: auto;
+  }
+  .chapter-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0984e3;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    line-height: 1.3;
+  }
+  .chapter-duration {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 9px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Consolas', monospace;
+    letter-spacing: 0.1px;
+  }
+  .chapter-empty {
+    color: #b2bec3;
+    font-size: 13px;
+    padding: 6px 0;
+  }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .highlight-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid #0984e3;
+    transition: box-shadow 0.2s;
+  }
+  .highlight-card.VIRAL {
+    border-left-color: #e63946;
+  }
+  .highlight-card.INTERESTING {
+    border-left-color: #f59f00;
+  }
+  .highlight-card.REGULAR {
+    border-left-color: #0984e3;
+  }
+  .highlight-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  .highlight-card .hl-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3436;
+    line-height: 1.4;
+  }
+  .highlight-card .hl-title + .hl-meta {
+    margin-top: 8px;
+  }
+  .highlight-card .hl-desc {
+    font-size: 12px;
+    color: #636e72;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight-card .hl-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .highlight-card .hl-quality {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    line-height: 1.2;
+  }
+  .highlight-card .hl-quality.VIRAL {
+    background: #ffe6e8;
+    color: #b42318;
+  }
+  .highlight-card .hl-quality.INTERESTING {
+    background: #fff4db;
+    color: #a15c00;
+  }
+  .highlight-card .hl-quality.REGULAR {
+    background: #eef6ff;
+    color: #0864aa;
+  }
+  .highlight-card .hl-source {
+    font-size: 11px;
+    color: #0984e3;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Consolas', monospace;
+  }
+  .highlight-card .hl-quality-explained {
+    font-size: 12px;
+    color: #4f5b62;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight-card .hl-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .highlight-card .hl-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    background: #eef6ff;
+    border: 1px solid #d5e7ff;
+    color: #0864aa;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .collapsible-details {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .collapsible-details summary {
+    padding: 20px 28px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3436;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    list-style: none;
+    transition: background 0.15s;
+  }
+  .collapsible-details summary:hover {
+    background: #f5f6fa;
+  }
+  .collapsible-details summary::-webkit-details-marker { display: none; }
+  .collapsible-details summary .arrow {
+    transition: transform 0.2s;
+    font-size: 12px;
+    color: #b2bec3;
+  }
+  .collapsible-details[open] summary .arrow {
+    transform: rotate(90deg);
+  }
+  .segments-table-wrap {
+    padding: 0 28px 20px;
+    overflow-x: auto;
+  }
+  .segments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .segments-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #636e72;
+    border-bottom: 2px solid #dfe6e9;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .segments-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+  }
+  .segments-table tr:last-child td {
+    border-bottom: none;
+  }
+  .segments-table tr:hover td {
+    background: #f9f9fb;
+  }
+  .relevance-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .relevance-badge.HIGH { background: var(--relevance-high-color); }
+  .relevance-badge.MID { background: var(--relevance-mid-color); }
+  .relevance-badge.LOW { background: var(--relevance-low-color); }
+  .col-time { white-space: nowrap; }
+  .col-time .chapter-time { font-size: 12px; }
+  .col-dur { white-space: nowrap; text-align: right; }
+  .col-dur .chapter-duration { justify-content: center; }
+  .col-rel { white-space: nowrap; text-align: center; }
+  .col-desc { line-height: 1.5; }
+  #timecodesTable th.col-time,
+  #timecodesTable td.col-time,
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    width: 1%;
+    white-space: nowrap;
+  }
+  #timecodesTable th.col-dur,
+  #timecodesTable td.col-dur {
+    text-align: center;
+  }
+  #timecodesTable .col-dur .chapter-duration {
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .header-row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .youtube-button, .header .badge { justify-content: center; }
+    .header-main { width: 100%; }
+    .timeline-hover-hint { display: flex; width: 100%; border-radius: 16px; align-items: flex-start; }
+    .timeline-summary-row { grid-template-columns: 1fr; }
+    .timeline-overview { flex-direction: column; align-items: flex-start; }
+    .timeline-legend { max-width: none; }
+    .timeline-pie-wrap { justify-content: flex-start; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body data-example-id="bushwacker_china">
+<div class="container">
+
+  <header class="header">
+    <div class="header-row">
+      <a class="youtube-button" href="#" target="_blank" rel="noopener noreferrer" data-example-playlist-link hidden>
+        <span class="youtube-button-copy">
+          <span class="youtube-button-label">Открыть</span>
+          <span class="youtube-button-label">на YouTube</span>
+        </span>
+      </a>
+      <a class="badge" href="https://usecutto.app/" target="_blank" rel="noopener noreferrer">
+        <span class="badge-copy">
+          <span class="badge-label">Использовать</span>
+          <span class="badge-label">cutto</span>
+        </span>
+      </a>
+      <div class="header-main">
+        <h1>[Бушвакер] Империя Сун: Золотой век Китая, порох и вторжение монголов</h1>
+      </div>
+    </div>
+  </header>
+
+  <div class="timeline-section">
+    <div class="timeline-header">
+      <div class="section-title" style="margin-bottom:0">
+        <span class="icon icon-scissors" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M8.12 8.12 12 12"></path><path d="M20 4 8.12 15.88"></path><path d="M14.8 14.8 20 20"></path></svg></span>
+        Автомонтаж
+      </div>
+    </div>
+    <div class="timeline-summary-row">
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Итог</div>
+        <div class="timeline-summary-value">4 ч 46 мин → 3 ч 44 мин</div>
+      </div>
+      <div class="timeline-summary-card">
+        <div class="timeline-summary-label">Сохранено</div>
+        <div class="timeline-summary-content">
+          <span class="timeline-summary-keep-group"><span class="timeline-summary-tag"><span class="legend-dot" style="background:#4CAF50;"></span>high</span><span class="timeline-summary-metric">[78% от оригинала]</span></span>
+        </div>
+      </div>
+      <div class="timeline-summary-card timeline-summary-card-tags">
+        <div class="timeline-summary-label">Удалено</div>
+        <div class="timeline-summary-tags">
+          <span class="timeline-summary-tag"><span class="legend-dot" style="background:#FF9800;"></span>mid</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#f44336;"></span>low</span><span class="timeline-summary-tag"><span class="legend-dot" style="background:#c8d0d4;"></span>тишина</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-overview">
+      <div class="timeline-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#4CAF50;"></span><span class="legend-text"><span class="legend-name">high</span> — основная тема — 3 ч 44 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#FF9800;"></span><span class="legend-text"><span class="legend-name">mid</span> — интересно, но не по основной теме — 14 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#f44336;"></span><span class="legend-text"><span class="legend-name">low</span> — заминки и низко информативные сегменты — 37 мин</span></div><div class="legend-item"><span class="legend-dot" style="background:#c8d0d4;"></span><span class="legend-text"><span class="legend-name">тишина</span> — вырезанные паузы — 11 мин</span></div><div class="legend-item"><span class="legend-highlight">&#9670;</span><span class="legend-text"><span class="legend-name">хайлайт</span> — отдельная интересная мысль, не обязательно по основной теме</span></div>
+      </div>
+      <div class="timeline-pie-wrap">
+        <div class="timeline-pie-chart" style="background: conic-gradient(#4CAF50 0% 78%, #FF9800 78% 83%, #f44336 83% 96%, #c8d0d4 96% 100%);" title="Распределение high / mid / low / тишина">
+          <span class="timeline-pie-label" style="left:117.0px; top:124.7px;">78%</span><span class="timeline-pie-label" style="left:44.5px; top:34.2px;">13%</span>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-hover-hint">
+      <span class="hint-icon">i</span>
+      <span>Наведите курсор на цветной сегмент</span>
+    </div>
+    <div class="timeline-wrapper">
+      <div class="highlight-markers" id="highlightMarkers"></div>
+      <div class="timeline-bar" id="timelineBar"></div>
+      <div class="time-ruler" id="timeRuler"></div>
+    </div>
+  </div>
+  <div class="timeline-tooltip" id="tooltip"></div>
+
+  <div class="chapters-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-clock" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
+        Таймкоды [33]
+      </summary>
+      <div class="details-body">
+        <div class="chapters-table-wrap">
+          <table class="segments-table" id="timecodesTable">
+            <thead>
+              <tr>
+                <th class="col-time">Время</th>
+                <th class="col-dur">Длительность</th>
+                <th class="col-desc">Описание</th>
+              </tr>
+            </thead>
+            <tbody id="chaptersBody"></tbody>
+          </table>
+          <div class="chapter-empty" id="chaptersEmpty" hidden>Нет таймкодов</div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="highlights-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-star" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20.2l1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg></span>
+        Хайлайты [10]
+      </summary>
+      <div class="details-body">
+        <div class="highlights-grid" id="highlightsGrid"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="segments-section">
+    <details class="collapsible-details">
+      <summary>
+        <span class="arrow">&#9654;</span>
+        <span class="icon icon-search" style="background:#0984e3;"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></span>
+        Все сегменты [302]
+      </summary>
+      <div class="segments-table-wrap">
+        <table class="segments-table" id="segmentsTable">
+          <thead>
+            <tr>
+              <th class="col-time">Время</th>
+              <th class="col-dur">Длительность</th>
+              <th class="col-rel">Релевантность</th>
+              <th class="col-desc">Описание</th>
+            </tr>
+          </thead>
+          <tbody id="segmentsBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_DURATION = 17151.2;
+const SHORTENED_DURATION = 13454.1;
+const segments = [{"start": 0.1, "end": 245.1, "dur": 245.0, "desc": "Заставка стрима с музыкой на китайском языке", "relevance": "LOW", "relevanceExplained": "Техническая заставка без информационного содержания", "startTime": "00:00", "endTime": "04:05"}, {"start": 245.1, "end": 261.5, "dur": 16.4, "desc": "Приветствие стрима и благодарности подписчикам. Упоминание что предыдущий стрим по Древнему Китаю был в начале ковида", "relevance": "HIGH", "relevanceExplained": "Первое приветствие всего стрима - всегда HIGH. Также содержит контекст о том что это продолжение цикла по Китаю", "startTime": "04:05", "endTime": "04:22"}, {"start": 261.5, "end": 332.6, "dur": 71.0, "desc": "Благодарность за донат", "relevance": "LOW", "relevanceExplained": "Служебный момент - благодарность за донат без содержательного наполнения", "startTime": "04:22", "endTime": "05:33"}, {"start": 332.6, "end": 377.1, "dur": 44.5, "desc": "Приветствие стрима и благодарности подписчикам. Упоминание что предыдущий стрим по Древнему Китаю был в начале ковида", "relevance": "HIGH", "relevanceExplained": "Первое приветствие всего стрима - всегда HIGH. Также содержит контекст о том что это продолжение цикла по Китаю", "startTime": "05:33", "endTime": "06:17"}, {"start": 377.1, "end": 414.9, "dur": 37.9, "desc": "Объявление темы стрима: Империя Сун, Средневековый Китай 960-1279, Высокое Средневековье", "relevance": "HIGH", "relevanceExplained": "Прямое объявление основной темы стрима", "startTime": "06:17", "endTime": "06:55"}, {"start": 414.9, "end": 427.2, "dur": 12.3, "desc": "Благодарность подписчику Майти Иракли", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "06:55", "endTime": "07:07"}, {"start": 427.2, "end": 443.0, "dur": 15.8, "desc": "Благодарность за донат", "relevance": "LOW", "relevanceExplained": "Служебный момент - благодарность за донат без содержательного наполнения", "startTime": "07:07", "endTime": "07:23"}, {"start": 443.0, "end": 517.9, "dur": 74.9, "desc": "Ключевое отличие китайской истории от европейской: Рим пал и не восстановился, а китайцы смогли пересобрать свою империю после распада Хань", "relevance": "HIGH", "relevanceExplained": "Важная концептуальная рамка для понимания всей дальнейшей лекции о Сун - почему Китай мог наслаивать достижения", "startTime": "07:23", "endTime": "08:38"}, {"start": 517.9, "end": 530.4, "dur": 12.5, "desc": "Уточнение про династию Цинь: она слишком коротка, важнее то что заложило основы представлений об империи", "relevance": "HIGH", "relevanceExplained": "Дополнение к предыдущему блоку, относится к основной теме - фундамент китайской государственности", "startTime": "08:38", "endTime": "08:50"}, {"start": 530.4, "end": 532.6, "dur": 2.2, "desc": "Благодарность Даниле Скворцову", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержания", "startTime": "08:50", "endTime": "08:53"}, {"start": 532.6, "end": 589.9, "dur": 57.3, "desc": "Империя Тан как пример успешной пересборки: могущественнейшая империя раннего Средневековья на фоне расширения ислама и Византии", "relevance": "HIGH", "relevanceExplained": "Контекст эпохи Тан напрямую важен для понимания того, что унаследовала Сун", "startTime": "08:53", "endTime": "09:50"}, {"start": 589.9, "end": 656.2, "dur": 66.3, "desc": "Конкретные достижения Тан: максимальное расширение на запад (Самарканд), столкновения с Аббасидами, торговля до Константинополя, развитое уголовное право и министерства", "relevance": "HIGH", "relevanceExplained": "Конкретные достижения Тан - важный контекст для понимания того, что потеряла и что унаследовала Сун", "startTime": "09:50", "endTime": "10:56"}, {"start": 656.2, "end": 668.0, "dur": 11.9, "desc": "Пауза и благодарность (арт-скильп)", "relevance": "LOW", "relevanceExplained": "Пауза с благодарностью, прерывающая повествование", "startTime": "10:56", "endTime": "11:08"}, {"start": 668.0, "end": 707.5, "dur": 39.5, "desc": "Золотой век буддизма при Тан: чань-буддизм, дзен, монументальное строительство. Столица Чанъань - крупнейший город мира", "relevance": "HIGH", "relevanceExplained": "Важный контекст - положение буддизма при Тан, что контрастирует с последующими гонениями и сменой идеологии при Сун", "startTime": "11:08", "endTime": "11:47"}, {"start": 707.5, "end": 746.5, "dur": 39.0, "desc": "Благодарности подписчикам (Костиш, Паззи, тикейк) и краткое упоминание городского планирования Чанъаня", "relevance": "MID", "relevanceExplained": "Преимущественно благодарности, но содержит небольшое дополнение про город. Не чисто служебный блок, но и не ключевой", "startTime": "11:47", "endTime": "12:27"}, {"start": 746.5, "end": 775.4, "dur": 28.9, "desc": "Великий канал: соединял Хуанхэ, Хуайхэ и Янцзы для транспортировки металлов и риса", "relevance": "HIGH", "relevanceExplained": "Великий канал - важная инфраструктура, которая будет влиять на экономику Сун", "startTime": "12:27", "endTime": "12:55"}, {"start": 775.4, "end": 824.5, "dur": 49.1, "desc": "Восстание Ань Лушаня (752) как перелом: после него достижения Тан закончились, империя официально пала в 907", "relevance": "HIGH", "relevanceExplained": "Ключевой поворотный момент - начало упадка Тан, без которого непонятен переход к периоду раздробленности и затем к Сун", "startTime": "12:55", "endTime": "13:44"}, {"start": 824.5, "end": 831.8, "dur": 7.3, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "13:44", "endTime": "13:52"}, {"start": 831.8, "end": 876.5, "dur": 44.7, "desc": "Разоблачение мифа о 39 миллионах погибших в восстании Ань Лушаня: это данные переписей, а не реальные потери, государство просто не могло собирать налоги", "relevance": "HIGH", "relevanceExplained": "Развенчание распространённого заблуждения - контринтуитивный и малоизвестный факт", "startTime": "13:52", "endTime": "14:36"}, {"start": 876.5, "end": 999.5, "dur": 123.0, "desc": "Отношения Тан с кочевниками: успешное управление через браки, но после восстания пришлось отдавать провинции уйгурам и шато-тюркам в обмен на военную помощь. Появление должности военного губернатора (цзедуши)", "relevance": "HIGH", "relevanceExplained": "Механизм распада Тан через передачу провинций кочевникам - ключевой контекст для понимания раздробленности", "startTime": "14:36", "endTime": "16:40"}, {"start": 999.5, "end": 1056.1, "dur": 56.6, "desc": "Система евнухов вышла из-под контроля: евнухи крутили императорами в столице, а в провинциях правили военные губернаторы", "relevance": "HIGH", "relevanceExplained": "Завершение картины распада Тан - двойной кризис управления", "startTime": "16:40", "endTime": "17:36"}, {"start": 1056.1, "end": 1115.7, "dur": 59.6, "desc": "Благодарности подписчикам (Босятка, Санбек, Hidden Danger) и упоминание плана на цикл стримов (Сун, Юань, Мин)", "relevance": "MID", "relevanceExplained": "Содержит план будущих стримов что полезно для контекста но в основном благодарности", "startTime": "17:36", "endTime": "18:36"}, {"start": 1115.7, "end": 1195.0, "dur": 79.3, "desc": "Период Пяти династий и десяти царств (907+): формальный конец единого Китая. Название придумано историками Сун для обоснования легитимности - якобы мандат неба сохранялся через 5 законных династий", "relevance": "HIGH", "relevanceExplained": "Период раздробленности - прямой предшественник Сун, а тема легитимности мандата неба важна для понимания идеологии Сун", "startTime": "18:36", "endTime": "19:55"}, {"start": 1195.0, "end": 1225.4, "dur": 30.4, "desc": "53 года жёстких войн. Гонения на буддистов начались ещё в поздний Тан из-за нехватки денег: из 30 тысяч храмов осталось около 2 тысяч. Громили также зороастрийцев и христиан", "relevance": "HIGH", "relevanceExplained": "Разгром буддизма - ключевой контекст для понимания идеологического вакуума, который заполнит неоконфуцианство при Сун", "startTime": "19:55", "endTime": "20:25"}, {"start": 1225.4, "end": 1228.0, "dur": 2.6, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "20:25", "endTime": "20:28"}, {"start": 1228.0, "end": 1283.8, "dur": 55.8, "desc": "53 года жёстких войн. Гонения на буддистов начались ещё в поздний Тан из-за нехватки денег: из 30 тысяч храмов осталось около 2 тысяч. Громили также зороастрийцев и христиан", "relevance": "HIGH", "relevanceExplained": "Разгром буддизма - ключевой контекст для понимания идеологического вакуума, который заполнит неоконфуцианство при Сун", "startTime": "20:28", "endTime": "21:24"}, {"start": 1283.8, "end": 1313.4, "dur": 29.6, "desc": "Изменение отношения к буддизму в эпоху пяти династий: образованные люди называли мощи Будды «гнилым трупом варвара»", "relevance": "HIGH", "relevanceExplained": "Относится к историческому контексту становления Сун - антибуддийские настроения и восприятие буддизма как иностранной религии", "startTime": "21:24", "endTime": "21:53"}, {"start": 1313.4, "end": 1318.3, "dur": 4.9, "desc": "Благодарность Виктору С. за подписки и реакция на количество", "relevance": "LOW", "relevanceExplained": "Служебная благодарность без информационной ценности", "startTime": "21:53", "endTime": "21:58"}, {"start": 1318.3, "end": 1348.5, "dur": 30.2, "desc": "Продолжение про антибуддийские настроения: критика буддизма как варварской религии и его подавление в период поздней Тан и пяти династий", "relevance": "HIGH", "relevanceExplained": "Продолжение важного исторического контекста о судьбе буддизма перед эпохой Сун", "startTime": "21:58", "endTime": "22:28"}, {"start": 1348.5, "end": 1385.1, "dur": 36.6, "desc": "Период гражданских войн: борьба военных губернаторов за Чанань и многократное разграбление столицы разными народами (тангуты кидани тибетцы)", "relevance": "HIGH", "relevanceExplained": "Важный исторический контекст о разрушении старого порядка перед основанием Сун", "startTime": "22:28", "endTime": "23:05"}, {"start": 1385.1, "end": 1399.6, "dur": 14.5, "desc": "Благодарности подписчикам (Рекс Круаторум и другие)", "relevance": "LOW", "relevanceExplained": "Служебные благодарности без содержательной информации", "startTime": "23:05", "endTime": "23:20"}, {"start": 1399.6, "end": 1419.9, "dur": 20.3, "desc": "Продолжение про период хаоса: полвека войн уничтожение евнухов и аристократических семей", "relevance": "HIGH", "relevanceExplained": "Ключевой контекст - объяснение почему старые элиты были уничтожены что создало условия для новой системы при Сун", "startTime": "23:20", "endTime": "23:40"}, {"start": 1419.9, "end": 1424.5, "dur": 4.6, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "23:40", "endTime": "23:45"}, {"start": 1424.5, "end": 1439.0, "dur": 14.5, "desc": "Продолжение про период хаоса: полвека войн уничтожение евнухов и аристократических семей", "relevance": "HIGH", "relevanceExplained": "Ключевой контекст - объяснение почему старые элиты были уничтожены что создало условия для новой системы при Сун", "startTime": "23:45", "endTime": "23:59"}, {"start": 1439.0, "end": 1485.5, "dur": 46.4, "desc": "Приход к власти Джао Куньина и концепция мандата неба как основа легитимности", "relevance": "HIGH", "relevanceExplained": "Рассказ об основании династии Сун и объяснение китайской системы легитимации власти через мандат неба", "startTime": "23:59", "endTime": "24:45"}, {"start": 1485.5, "end": 1487.4, "dur": 1.9, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "24:45", "endTime": "24:47"}, {"start": 1487.4, "end": 1503.1, "dur": 15.7, "desc": "Приход к власти Джао Куньина и концепция мандата неба как основа легитимности", "relevance": "HIGH", "relevanceExplained": "Рассказ об основании династии Сун и объяснение китайской системы легитимации власти через мандат неба", "startTime": "24:47", "endTime": "25:03"}, {"start": 1503.1, "end": 1537.5, "dur": 34.4, "desc": "Провозглашение империи Сун: название династии выбор красного цвета и происхождение названия от географии", "relevance": "HIGH", "relevanceExplained": "Конкретные факты об основании династии Сун", "startTime": "25:03", "endTime": "25:38"}, {"start": 1537.5, "end": 1608.1, "dur": 70.6, "desc": "Правящая семья Джао: два брата-основателя и загадочная смерть первого императора с передачей власти второму брату", "relevance": "HIGH", "relevanceExplained": "Интересный и яркий рассказ о первых правителях Сун с деталями дворцовой интриги", "startTime": "25:38", "endTime": "26:48"}, {"start": 1608.1, "end": 1640.8, "dur": 32.7, "desc": "Преемственность законов и институтов: новая династия берёт танские законы и министерства", "relevance": "HIGH", "relevanceExplained": "Объяснение принципа преемственности институтов в китайской истории", "startTime": "26:48", "endTime": "27:21"}, {"start": 1640.8, "end": 1671.1, "dur": 30.3, "desc": "Переходная фраза к основной теме стрима и случайное отступление про кунг-фу", "relevance": "MID", "relevanceExplained": "Переходный момент с незначительным отступлением - не несёт самостоятельной ценности но связывает блоки", "startTime": "27:21", "endTime": "27:51"}, {"start": 1671.1, "end": 1753.9, "dur": 82.8, "desc": "Главный вопрос: система государственных экзаменов - формально существовала при Тан но не работала из-за кумовства и давления военных губернаторов", "relevance": "HIGH", "relevanceExplained": "Центральная тема стрима - введение системы экзаменов как ключевой институт империи Сун", "startTime": "27:51", "endTime": "29:14"}, {"start": 1753.9, "end": 1765.8, "dur": 12.0, "desc": "Благодарность подписчику (Маленький апельсин)", "relevance": "LOW", "relevanceExplained": "Служебная благодарность", "startTime": "29:14", "endTime": "29:26"}, {"start": 1765.8, "end": 1779.8, "dur": 13.9, "desc": "Уничтожение старых элит создало условия для реальной работы системы экзаменов и перенос центра силы из Чанани", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение почему система экзаменов заработала именно при Сун - старые элиты были уничтожены", "startTime": "29:26", "endTime": "29:40"}, {"start": 1779.8, "end": 1781.9, "dur": 2.1, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "29:40", "endTime": "29:42"}, {"start": 1781.9, "end": 1786.5, "dur": 4.6, "desc": "Уничтожение старых элит создало условия для реальной работы системы экзаменов и перенос центра силы из Чанани", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение почему система экзаменов заработала именно при Сун - старые элиты были уничтожены", "startTime": "29:42", "endTime": "29:47"}, {"start": 1786.5, "end": 1792.4, "dur": 5.8, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "29:47", "endTime": "29:52"}, {"start": 1792.4, "end": 1800.3, "dur": 8.0, "desc": "Уничтожение старых элит создало условия для реальной работы системы экзаменов и перенос центра силы из Чанани", "relevance": "HIGH", "relevanceExplained": "Ключевое объяснение почему система экзаменов заработала именно при Сун - старые элиты были уничтожены", "startTime": "29:52", "endTime": "30:00"}, {"start": 1800.3, "end": 1825.3, "dur": 25.0, "desc": "Описание Кайфэна (Бинлянь) как новой столицы - торговый город на Великом канале", "relevance": "HIGH", "relevanceExplained": "Важная информация о новой столице Сун и причинах её выбора", "startTime": "30:00", "endTime": "30:25"}, {"start": 1825.3, "end": 1827.4, "dur": 2.1, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "30:25", "endTime": "30:27"}, {"start": 1827.4, "end": 1838.3, "dur": 10.9, "desc": "Описание Кайфэна (Бинлянь) как новой столицы - торговый город на Великом канале", "relevance": "HIGH", "relevanceExplained": "Важная информация о новой столице Сун и причинах её выбора", "startTime": "30:27", "endTime": "30:38"}, {"start": 1838.3, "end": 1842.4, "dur": 4.1, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "30:38", "endTime": "30:42"}, {"start": 1842.4, "end": 1880.5, "dur": 38.1, "desc": "<начало про систему экзаменов при Сун> Династия Сун предложила формировать элиты на основе экзаменов без кумовства но позже система частично откатилась", "relevance": "HIGH", "relevanceExplained": "Центральная тема - реальное внедрение системы экзаменов при Сун", "startTime": "30:42", "endTime": "31:20"}, {"start": 1880.5, "end": 1883.2, "dur": 2.7, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "31:20", "endTime": "31:23"}, {"start": 1883.2, "end": 1899.8, "dur": 16.6, "desc": "<начало про систему экзаменов при Сун> Династия Сун предложила формировать элиты на основе экзаменов без кумовства но позже система частично откатилась", "relevance": "HIGH", "relevanceExplained": "Центральная тема - реальное внедрение системы экзаменов при Сун", "startTime": "31:23", "endTime": "31:40"}, {"start": 1899.8, "end": 1939.0, "dur": 39.3, "desc": "<продолжение про систему экзаменов при Сун> Механизмы теневых привилегий: автоматическое чиновничество для детей и система рекомендаций но высшие должности сохранялись за экзаменами", "relevance": "HIGH", "relevanceExplained": "Детализация системы экзаменов - конкретные механизмы и ограничения", "startTime": "31:40", "endTime": "32:19"}, {"start": 1939.0, "end": 1959.5, "dur": 20.5, "desc": "Приветствие подписчика Хантинбис и потеря мысли", "relevance": "LOW", "relevanceExplained": "Служебное приветствие и заминка не несущие информационной ценности", "startTime": "32:19", "endTime": "32:40"}, {"start": 1959.5, "end": 1976.2, "dur": 16.6, "desc": "Ответ на вопрос из чата о связи системы экзаменов с легизмом", "relevance": "MID", "relevanceExplained": "Вопрос из чата по смежной теме - автор отвечает кратко и не углубляется", "startTime": "32:40", "endTime": "32:56"}, {"start": 1976.2, "end": 2057.9, "dur": 81.7, "desc": "<продолжение про систему экзаменов при Сун> Класс ШИ - письменные чиновники. Высшие должности формировались только по экзаменам. Система будет существовать до 1911 года", "relevance": "HIGH", "relevanceExplained": "Продолжение центральной темы - описание класса чиновников и долговечности системы", "startTime": "32:56", "endTime": "34:18"}, {"start": 2057.9, "end": 2085.7, "dur": 27.8, "desc": "Благодарности подписчикам и упоминание расписания (четверг)", "relevance": "LOW", "relevanceExplained": "Служебные благодарности и информация о расписании быстро теряющая актуальность", "startTime": "34:18", "endTime": "34:46"}, {"start": 2085.7, "end": 2205.9, "dur": 120.2, "desc": "Передача армии гражданским чиновникам: «роспуск военных губернаторов за чашей вина» и конфуцианское отношение к военным - «из хорошего железа не делают гвоздей»", "relevance": "HIGH", "relevanceExplained": "Важная особенность империи Сун - подчинение армии гражданской бюрократии и культурное обоснование этого", "startTime": "34:46", "endTime": "36:46"}, {"start": 2205.9, "end": 2294.5, "dur": 88.6, "desc": "Кто не мог стать чиновником: женщины и торговцы. Конфуцианское презрение к торговле и постепенное смягчение этих ограничений при Сун", "relevance": "HIGH", "relevanceExplained": "Важные детали о социальных ограничениях системы экзаменов и их эволюции", "startTime": "36:46", "endTime": "38:15"}, {"start": 2294.5, "end": 2306.9, "dur": 12.4, "desc": "Переход к теме содержания экзаменов и благодарность Шапито", "relevance": "LOW", "relevanceExplained": "Незавершённая переходная фраза с благодарностью", "startTime": "38:15", "endTime": "38:27"}, {"start": 2306.9, "end": 2349.6, "dur": 42.6, "desc": "Частная собственность в Сунском Китае: формально вся земля принадлежала государству, но система равных полей распалась ещё в эпоху Тан", "relevance": "HIGH", "relevanceExplained": "Тема напрямую связана с социально-экономическим устройством империи Сун", "startTime": "38:27", "endTime": "39:10"}, {"start": 2349.6, "end": 2373.4, "dur": 23.9, "desc": "Поиск иллюстрации с конфуцианской системой сословий", "relevance": "LOW", "relevanceExplained": "Автор ищет материал и отвлекается от изложения", "startTime": "39:10", "endTime": "39:33"}, {"start": 2373.4, "end": 2475.4, "dur": 102.0, "desc": "Конфуцианская иерархия сословий: ши (чиновники) наверху, затем крестьяне, ремесленники и торговцы - военных в идеальной системе нет", "relevance": "HIGH", "relevanceExplained": "Подробный разбор социальной иерархии эпохи Сун - ключевой элемент устройства общества", "startTime": "39:33", "endTime": "41:15"}, {"start": 2475.4, "end": 2491.1, "dur": 15.6, "desc": "Благодарность подписчику Рудольфу", "relevance": "LOW", "relevanceExplained": "Служебная благодарность без информационной ценности", "startTime": "41:15", "endTime": "41:31"}, {"start": 2491.1, "end": 2509.2, "dur": 18.2, "desc": "Ответ на вопрос из чата о том, почему ремесленники не выше крестьян в иерархии", "relevance": "MID", "relevanceExplained": "Уточнение по теме иерархии сословий, но краткое и не добавляет существенной информации", "startTime": "41:31", "endTime": "41:49"}, {"start": 2509.2, "end": 2537.1, "dur": 27.8, "desc": "Ответ на вопрос из чата: где духовенство в конфуцианской системе - духовенства как сословия нет, культ предков заменяет его", "relevance": "HIGH", "relevanceExplained": "Важное пояснение об отсутствии духовенства в конфуцианской социальной модели - значимый аспект китайской цивилизации", "startTime": "41:49", "endTime": "42:17"}, {"start": 2537.1, "end": 2563.9, "dur": 26.9, "desc": "Кто не допускался к экзаменам: женщины, торговцы, актёры, гробовщики и другие «нечистые» профессии", "relevance": "HIGH", "relevanceExplained": "Конкретные ограничения экзаменационной системы - важная деталь основной темы", "startTime": "42:17", "endTime": "42:44"}, {"start": 2563.9, "end": 2870.1, "dur": 306.1, "desc": "Формальная открытость экзаменационной системы vs реальная доступность: крестьянам нужно учиться, но нет времени и ресурсов - большинство чиновников из земельных элит", "relevance": "HIGH", "relevanceExplained": "Ключевой анализ разрыва между идеалом и практикой экзаменационной системы Сун", "startTime": "42:44", "endTime": "47:50"}, {"start": 2870.1, "end": 3016.5, "dur": 146.4, "desc": "Трёхуровневая структура экзаменов: провинциальный - столичный - собеседование с императором. Из 300 тысяч сдающих проходили около 300 человек", "relevance": "HIGH", "relevanceExplained": "Конкретные цифры и механизм работы экзаменационной системы - центральная тема блока", "startTime": "47:50", "endTime": "50:16"}, {"start": 3016.5, "end": 3101.2, "dur": 84.7, "desc": "Ответ на вопрос из чата: откуда у императора время на собеседования - первые сунские императоры были маньяками микроменеджмента", "relevance": "HIGH", "relevanceExplained": "Важная характеристика роли императора в экзаменационной системе с историческими примерами", "startTime": "50:16", "endTime": "51:41"}, {"start": 3101.2, "end": 3161.1, "dur": 59.9, "desc": "Судьба не прошедших экзамены: они становились учителями, советниками, счетоводами - взрыв частных академий и школ", "relevance": "HIGH", "relevanceExplained": "Важный аспект системы - куда девались 90% отсеянных и как это создало образованный класс", "startTime": "51:41", "endTime": "52:41"}, {"start": 3161.1, "end": 3164.3, "dur": 3.2, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "52:41", "endTime": "52:44"}, {"start": 3164.3, "end": 3180.5, "dur": 16.2, "desc": "Судьба не прошедших экзамены: они становились учителями, советниками, счетоводами - взрыв частных академий и школ", "relevance": "HIGH", "relevanceExplained": "Важный аспект системы - куда девались 90% отсеянных и как это создало образованный класс", "startTime": "52:44", "endTime": "53:00"}, {"start": 3180.5, "end": 3224.1, "dur": 43.6, "desc": "Ответ на вопрос из чата: преподавание в школах было уважаемым занятием, причастность к ши ценилась даже без сдачи экзаменов", "relevance": "HIGH", "relevanceExplained": "Развитие темы о статусе образованных людей - важное дополнение к основной теме", "startTime": "53:00", "endTime": "53:44"}, {"start": 3224.1, "end": 3227.0, "dur": 2.9, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "53:44", "endTime": "53:47"}, {"start": 3227.0, "end": 3374.6, "dur": 147.6, "desc": "Брачные договоры: торговые семьи спонсировали обучение перспективных ши в обмен на брак с дочерью - средневековый матчмейкинг", "relevance": "HIGH", "relevanceExplained": "Яркий пример взаимодействия торгового и чиновничьего сословий - важная социальная деталь эпохи Сун", "startTime": "53:47", "endTime": "56:15"}, {"start": 3374.6, "end": 3402.8, "dur": 28.2, "desc": "Доля класса ши (чиновников) составляла около 5% населения - это много учитывая отсечение женщин и торговцев", "relevance": "HIGH", "relevanceExplained": "Прямое продолжение темы о системе экзаменов и классе чиновников в империи Сун", "startTime": "56:15", "endTime": "56:43"}, {"start": 3402.8, "end": 3422.0, "dur": 19.2, "desc": "Объяснение почему 5% - это много: женщины отсечены и торговцы отсечены а всё равно набирается столько чиновников. Приветствие зрителя", "relevance": "HIGH", "relevanceExplained": "Продолжение рассуждения о численности класса ши - основная тема", "startTime": "56:43", "endTime": "57:02"}, {"start": 3422.0, "end": 3431.4, "dur": 9.4, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "57:02", "endTime": "57:11"}, {"start": 3431.4, "end": 3448.8, "dur": 17.4, "desc": "Уточнение из чата: 5% - это именно высший чиновничий класс и связь этого явления со взрывом в печатном деле", "relevance": "HIGH", "relevanceExplained": "Ключевой тезис - без книгопечатания система экзаменов не смогла бы охватить столько людей", "startTime": "57:11", "endTime": "57:29"}, {"start": 3448.8, "end": 3452.8, "dur": 4.0, "desc": "Приветствие зрителя (Мастеров мастере)", "relevance": "LOW", "relevanceExplained": "Служебное приветствие без содержательной информации", "startTime": "57:29", "endTime": "57:33"}, {"start": 3452.8, "end": 3524.2, "dur": 71.4, "desc": "Ответ на вопрос о том получали ли женщины образование: образование давалось только до замужества как элемент приданого для повышения привлекательности невесты", "relevance": "HIGH", "relevanceExplained": "Хотя это ответ на вопрос из чата он подробно раскрывает социальную структуру Сунского Китая - гендерные роли и систему брачных договорённостей. Согласно глобальному пониманию это побочная тема (idx 737) но ответ развёрнутый и информативно ценный", "startTime": "57:33", "endTime": "58:44"}, {"start": 3524.2, "end": 3580.7, "dur": 56.5, "desc": "Исключение из правил: императрицы могли играть важную роль благодаря конфуцианскому принципу старшинства который перекрывал гендерные роли", "relevance": "HIGH", "relevanceExplained": "Важное дополнение о социальной иерархии - принцип старшинства важнее пола в конфуцианской системе", "startTime": "58:44", "endTime": "59:41"}, {"start": 3580.7, "end": 3612.6, "dur": 31.9, "desc": "Ответ на вопрос из чата: дошли ли сведения о том что образованные женщины страдали от своей судьбы - да дошла поэзия с жалобами на затворничество", "relevance": "HIGH", "relevanceExplained": "Интересный культурный факт подтверждённый историческими источниками (поэзия образованных женщин) - дополняет картину жизни в Сунском Китае", "startTime": "59:41", "endTime": "1:00:13"}, {"start": 3612.6, "end": 3643.6, "dur": 31.0, "desc": "Вдовствующие императрицы продолжали играть политическую роль даже при новом императоре", "relevance": "HIGH", "relevanceExplained": "Дополнение к теме о роли женщин на высшем уровне власти в Сунском Китае", "startTime": "1:00:13", "endTime": "1:00:44"}, {"start": 3643.6, "end": 3653.0, "dur": 9.4, "desc": "Приветствие зрителя (Протовладислав) и обещание рассказать про питание позже", "relevance": "LOW", "relevanceExplained": "Служебная реплика - приветствие и откладывание вопроса на потом", "startTime": "1:00:44", "endTime": "1:00:53"}, {"start": 3653.0, "end": 3689.7, "dur": 36.7, "desc": "Разъяснение о мандате Неба: почему император выше всех включая свою мать - его выбрало Небо как абсолют", "relevance": "HIGH", "relevanceExplained": "Важное объяснение концепции мандата Неба - ключевой элемент китайской политической философии", "startTime": "1:00:53", "endTime": "1:01:30"}, {"start": 3689.7, "end": 3704.1, "dur": 14.3, "desc": "Вопрос из чата о сроке службы чиновников - пожизненный или пока не отстранят. Ответ: запросто (пожизненный)", "relevance": "MID", "relevanceExplained": "Краткий ответ на вопрос о чиновниках - относится к теме но очень лаконичный", "startTime": "1:01:30", "endTime": "1:01:44"}, {"start": 3704.1, "end": 3747.1, "dur": 43.0, "desc": "Начало рассказа о развитии книгопечатания: ксилография и её истоки у буддистов ещё в IX веке при династии Тан", "relevance": "HIGH", "relevanceExplained": "Начало ключевого раздела о технологии печати - одна из важнейших тем эпохи Сун", "startTime": "1:01:44", "endTime": "1:02:27"}, {"start": 3747.1, "end": 3760.7, "dur": 13.6, "desc": "Буддисты были технологически передовыми: первые изображения огнестрельного оружия тоже у них", "relevance": "HIGH", "relevanceExplained": "Интересный факт о роли буддистов в технологическом развитии", "startTime": "1:02:27", "endTime": "1:02:41"}, {"start": 3760.7, "end": 3789.7, "dur": 29.0, "desc": "Братья Чжао (первые императоры Сун) поставили печать на государственную службу и начали создание компиляций лэйшу (антологий)", "relevance": "HIGH", "relevanceExplained": "Ключевой момент - государственное использование печатной технологии для создания антологий", "startTime": "1:02:41", "endTime": "1:03:10"}, {"start": 3789.7, "end": 3887.3, "dur": 97.6, "desc": "Подробное объяснение что такое лэйшу на примере сборника поэзии Тайпин Юйлань: 4.7 млн иероглифов и 2500 документов - пословицы мудрости стихи", "relevance": "HIGH", "relevanceExplained": "Детальное раскрытие важнейшего культурного проекта Сунской эпохи", "startTime": "1:03:10", "endTime": "1:04:47"}, {"start": 3887.3, "end": 4037.3, "dur": 150.1, "desc": "Другие государственные компиляции: проза литература законы прецедентное право. История с собранием мифов о духах которое не стали издавать из-за отсутствия практической пользы - издали только при Мин", "relevance": "HIGH", "relevanceExplained": "Интересный пример прагматичного подхода государства к печати - мифы собрали но не издали", "startTime": "1:04:47", "endTime": "1:07:17"}, {"start": 4037.3, "end": 4050.5, "dur": 13.2, "desc": "Вопрос из чата о технологии печати подробнее - автор отвечает что уже сказал про ксилографию но добавит ещё", "relevance": "HIGH", "relevanceExplained": "Переходный момент к развитию темы о влиянии печати на доступ к литературе", "startTime": "1:07:17", "endTime": "1:07:31"}, {"start": 4050.5, "end": 4133.8, "dur": 83.2, "desc": "Влияние печати на доступность образования: появление частных библиотек и академий в уездах. Чиновник мог отпечатать книги в столице и открыть школу в селе. Без печати система экзаменов не распространилась бы на всю страну", "relevance": "HIGH", "relevanceExplained": "Ключевой тезис о связи печати и распространения экзаменационной системы - центральная тема лекции", "startTime": "1:07:31", "endTime": "1:08:54"}, {"start": 4133.8, "end": 4152.1, "dur": 18.3, "desc": "Замечание что газет не было и приветствие зрителя (Кинокритик)", "relevance": "LOW", "relevanceExplained": "Краткое замечание и служебное приветствие", "startTime": "1:08:54", "endTime": "1:09:12"}, {"start": 4152.1, "end": 4306.0, "dur": 153.9, "desc": "Изобретение наборного шрифта (movable type) инженером Би Шэном в начале XI века. Но из-за тысяч иероглифов это не так удобно как для алфавитных языков - годилось для денег и указов а основная печать оставалась ксилографической", "relevance": "HIGH", "relevanceExplained": "Важное сравнение китайского и европейского книгопечатания - объяснение почему наборной шрифт не произвёл такой же революции как у Гутенберга", "startTime": "1:09:12", "endTime": "1:11:46"}, {"start": 4306.0, "end": 4320.2, "dur": 14.2, "desc": "Объявление короткого перерыва с анонсом продолжения о последствиях массовой печати", "relevance": "LOW", "relevanceExplained": "Служебный момент - объявление перерыва", "startTime": "1:11:46", "endTime": "1:12:00"}, {"start": 4320.2, "end": 4599.3, "dur": 279.1, "desc": "Перерыв: тишина и музыкальная вставка (песня на китайском)", "relevance": "LOW", "relevanceExplained": "Техническая пауза без содержательной информации", "startTime": "1:12:00", "endTime": "1:16:39"}, {"start": 4599.3, "end": 4623.7, "dur": 24.4, "desc": "Возвращение после перерыва: приветствие зрителя (Шаман Аула)", "relevance": "LOW", "relevanceExplained": "Служебный момент - возвращение и приветствие", "startTime": "1:16:39", "endTime": "1:17:04"}, {"start": 4623.7, "end": 4649.4, "dur": 25.7, "desc": "Ответ на вопрос из чата о коррупции в средневековом Китае", "relevance": "MID", "relevanceExplained": "Вопрос о коррупции косвенно связан с основной темой (система чиновничества Сун), но ответ очень краткий и неразвёрнутый", "startTime": "1:17:04", "endTime": "1:17:29"}, {"start": 4649.4, "end": 4695.4, "dur": 46.0, "desc": "Итог о смене принципа формирования элиты и переход к теме неоконфуцианства", "relevance": "HIGH", "relevanceExplained": "Это ключевое обобщение по теме формирования класса ши и анонс новой важной темы - неоконфуцианства, центральной для эпохи Сун", "startTime": "1:17:29", "endTime": "1:18:15"}, {"start": 4695.4, "end": 4718.6, "dur": 23.2, "desc": "Определение неоконфуцианства и его китайское название (Сун Мин Ли Сюэ)", "relevance": "HIGH", "relevanceExplained": "Прямое введение в ключевую тему - неоконфуцианство как идеология эпохи Сун", "startTime": "1:18:15", "endTime": "1:18:39"}, {"start": 4718.6, "end": 4805.3, "dur": 86.7, "desc": "Предпосылки неоконфуцианства: рост грамотности, интеллектуальные дискуссии и конкуренция с буддизмом и даосизмом", "relevance": "HIGH", "relevanceExplained": "Раскрывается важный контекст - почему конфуцианство нуждалось в обновлении и как интеллектуальная среда эпохи Сун создала условия для этого", "startTime": "1:18:39", "endTime": "1:20:05"}, {"start": 4805.3, "end": 4819.9, "dur": 14.6, "desc": "Результат: конфуцианство становится квазирелигиозным движением и доминирующей идеологией", "relevance": "HIGH", "relevanceExplained": "Логическое завершение предыдущего блока - итог интеллектуальной конкуренции", "startTime": "1:20:05", "endTime": "1:20:20"}, {"start": 4819.9, "end": 4887.7, "dur": 67.8, "desc": "Обоснование важности темы: «конфуцианские общества» Восточной Азии на самом деле неоконфуцианские", "relevance": "HIGH", "relevanceExplained": "Автор объясняет зрителям практическую значимость неоконфуцианства для понимания современной Восточной Азии - это важный контекст основной темы", "startTime": "1:20:20", "endTime": "1:21:28"}, {"start": 4887.7, "end": 4930.2, "dur": 42.5, "desc": "Отказ неоконфуцианцев от имперских интерпретаций и критика буддизма/даосизма как человеческих выдумок", "relevance": "HIGH", "relevanceExplained": "Раскрывается ключевой методологический поворот неоконфуцианства - возврат к «древним» и отвержение позднейших наслоений", "startTime": "1:21:28", "endTime": "1:22:10"}, {"start": 4930.2, "end": 5007.2, "dur": 77.0, "desc": "Позитивная программа: древние мудрецы не выдумывали а наблюдали принципы устройства мира", "relevance": "HIGH", "relevanceExplained": "Ключевая эпистемологическая идея неоконфуцианства - знание через наблюдение закономерностей природы", "startTime": "1:22:10", "endTime": "1:23:27"}, {"start": 5007.2, "end": 5084.1, "dur": 76.9, "desc": "Учение о принципе (ли) и его связь с энергией ци", "relevance": "HIGH", "relevanceExplained": "Центральная философская концепция неоконфуцианства - соотношение ли (принцип/паттерн) и ци (материальная энергия)", "startTime": "1:23:27", "endTime": "1:24:44"}, {"start": 5084.1, "end": 5122.7, "dur": 38.6, "desc": "Развитие концепции ли и ци: принцип первичен а ци - его материальное воплощение. Полемика с буддизмом о реальности мира", "relevance": "HIGH", "relevanceExplained": "Продолжение объяснения центральной философской системы и её антибуддийская направленность", "startTime": "1:24:44", "endTime": "1:25:23"}, {"start": 5122.7, "end": 5164.4, "dur": 41.7, "desc": "Реакция на вопрос из чата про ДНК, благодарность донатерам и обещание интересных выводов", "relevance": "MID", "relevanceExplained": "Краткое взаимодействие с чатом и донатерами прерывает основное изложение. Содержательно бедный фрагмент но содержит обещание автора что дальше будет интереснее", "startTime": "1:25:23", "endTime": "1:26:04"}, {"start": 5164.4, "end": 5277.1, "dur": 112.7, "desc": "Применение концепции ли и ци к человеку: чистая и грязная ци определяет соответствие человека его идеальному принципу. Путь очищения через следование учению древних", "relevance": "HIGH", "relevanceExplained": "Ключевая антропологическая часть неоконфуцианства - объяснение природы человека и морального несовершенства через метафору прозрачной/мутной ци", "startTime": "1:26:04", "endTime": "1:27:57"}, {"start": 5277.1, "end": 5283.9, "dur": 6.8, "desc": "Благодарность донатеру", "relevance": "LOW", "relevanceExplained": "Служебная благодарность без содержательной информации", "startTime": "1:27:57", "endTime": "1:28:04"}, {"start": 5283.9, "end": 5358.9, "dur": 74.9, "desc": "Чжу Си (XII век) как систематизатор неоконфуцианства - «второй после Конфуция» (или даже первый) философ Китая", "relevance": "HIGH", "relevanceExplained": "Введение ключевой исторической фигуры Чжу Си и его роли в оформлении неоконфуцианства как целостной системы", "startTime": "1:28:04", "endTime": "1:29:19"}, {"start": 5358.9, "end": 5458.3, "dur": 99.5, "desc": "Учение Чжу Си: цепочка «упорядочить мир → упорядочить государство → упорядочить семью → упорядочить себя»", "relevance": "HIGH", "relevanceExplained": "Излагается центральная практическая доктрина неоконфуцианства о иерархии самосовершенствования", "startTime": "1:29:19", "endTime": "1:30:58"}, {"start": 5458.3, "end": 5497.1, "dur": 38.7, "desc": "Логическая цепочка самоорганизации: от упорядочивания мыслей к расширению знаний как единственному способу правильно думать", "relevance": "HIGH", "relevanceExplained": "Прямое продолжение объяснения неоконфуцианской концепции самокультивации - ключевая тема блока про идеологию Сун", "startTime": "1:30:58", "endTime": "1:31:37"}, {"start": 5497.1, "end": 5606.3, "dur": 109.3, "desc": "Практика «гву» — расширение знаний через всматривание в вещи и отличие от даосской медитации", "relevance": "HIGH", "relevanceExplained": "Центральная концепция неоконфуцианства - постижение мира через наблюдение и «тихое сидение» (чинцо) с практической целью в отличие от даосов", "startTime": "1:31:37", "endTime": "1:33:26"}, {"start": 5606.3, "end": 5674.2, "dur": 67.8, "desc": "Обратная развёртка системы: от знаний к упорядоченным мыслям и далее к управлению семьёй и государством", "relevance": "HIGH", "relevanceExplained": "Завершение объяснения неоконфуцианской модели самокультивации - показывает как система работает в обе стороны", "startTime": "1:33:26", "endTime": "1:34:34"}, {"start": 5674.2, "end": 5693.6, "dur": 19.4, "desc": "Понятие «дао» (путь) как базовое слово неоконфуцианства заимствованное у даосов", "relevance": "HIGH", "relevanceExplained": "Ключевое терминологическое объяснение - связь неоконфуцианства с даосскими и буддийскими понятиями", "startTime": "1:34:34", "endTime": "1:34:54"}, {"start": 5693.6, "end": 5711.0, "dur": 17.4, "desc": "Автор ищет картинку для иллюстрации", "relevance": "LOW", "relevanceExplained": "Техническая пауза без информационного содержания", "startTime": "1:34:54", "endTime": "1:35:11"}, {"start": 5711.0, "end": 5742.0, "dur": 31.0, "desc": "Продолжение о постижении смысла вещей и очищении ци через следование пути", "relevance": "HIGH", "relevanceExplained": "Продолжение объяснения неоконфуцианской практики самокультивации и космологии", "startTime": "1:35:11", "endTime": "1:35:42"}, {"start": 5742.0, "end": 5743.9, "dur": 1.9, "desc": "Благодарность донатеру (Кламси)", "relevance": "LOW", "relevanceExplained": "Благодарность за донат без содержательной информации", "startTime": "1:35:42", "endTime": "1:35:44"}, {"start": 5743.9, "end": 5792.9, "dur": 49.0, "desc": "Продолжение о самокультивации: смысл быть правильным в космическом смысле", "relevance": "HIGH", "relevanceExplained": "Завершающее обобщение концепции самокультивации - следование пути как единственный способ приблизиться к устройству космоса", "startTime": "1:35:44", "endTime": "1:36:33"}, {"start": 5792.9, "end": 5810.9, "dur": 18.1, "desc": "Ценности неоконфуцианства: гуманность, честность и фундаментальное понятие искренности", "relevance": "HIGH", "relevanceExplained": "Переход к конкретным ценностям неоконфуцианства - новый аспект той же темы", "startTime": "1:36:33", "endTime": "1:36:51"}, {"start": 5810.9, "end": 5873.0, "dur": 62.0, "desc": "Искренность как ключ к самокультивации: не врать себе и не прокрастинировать", "relevance": "HIGH", "relevanceExplained": "Развёрнутое объяснение одного из фундаментальных понятий неоконфуцианства с яркими современными примерами (листание шортсов)", "startTime": "1:36:51", "endTime": "1:37:53"}, {"start": 5873.0, "end": 5965.4, "dur": 92.4, "desc": "Внутренняя выпрямленность (дзин) и собранность: пример с козой в короткой юбке", "relevance": "HIGH", "relevanceExplained": "Объяснение ещё одного ключевого понятия неоконфуцианства с комичным но запоминающимся примером", "startTime": "1:37:53", "endTime": "1:39:25"}, {"start": 5965.4, "end": 6073.4, "dur": 108.1, "desc": "Ритуал как фундамент: правильное поведение и иерархия как путь к постижению космоса", "relevance": "HIGH", "relevanceExplained": "Объяснение роли ритуала в неоконфуцианстве - форма не менее важна чем содержание", "startTime": "1:39:25", "endTime": "1:41:13"}, {"start": 6073.4, "end": 6093.6, "dur": 20.1, "desc": "Итоговое обобщение неоконфуцианства: иерархия отношений и самодисциплина как база", "relevance": "HIGH", "relevanceExplained": "Краткое резюме всего блока о неоконфуцианстве", "startTime": "1:41:13", "endTime": "1:41:34"}, {"start": 6093.6, "end": 6151.1, "dur": 57.6, "desc": "Значение неоконфуцианства для всей Восточной Азии: распространение во Вьетнам Корею и Японию", "relevance": "HIGH", "relevanceExplained": "Важный исторический контекст - влияние неоконфуцианства Джуси на всю Восточную Азию", "startTime": "1:41:34", "endTime": "1:42:31"}, {"start": 6151.1, "end": 6198.3, "dur": 47.2, "desc": "Переходный момент: благодарности донатерам и замечание автора о возможности вырезать нудные части", "relevance": "LOW", "relevanceExplained": "Служебная часть стрима - благодарности и обсуждение формата. Быстро теряет актуальность", "startTime": "1:42:31", "endTime": "1:43:18"}, {"start": 6198.3, "end": 6273.1, "dur": 74.8, "desc": "Отличие неоконфуцианства от буддизма: эмоции - часть замысла и их нужно контролировать а не подавлять", "relevance": "HIGH", "relevanceExplained": "Важное сравнение неоконфуцианского и буддийского подходов к эмоциям - ключевое различие двух философий", "startTime": "1:43:18", "endTime": "1:44:33"}, {"start": 6273.1, "end": 6283.0, "dur": 10.0, "desc": "Связующая фраза и пауза после предыдущего блока о самокультивации", "relevance": "LOW", "relevanceExplained": "Нет самостоятельного смыслового содержания - просто междометие и тишина", "startTime": "1:44:33", "endTime": "1:44:43"}, {"start": 6283.0, "end": 6469.3, "dur": 186.2, "desc": "Объяснение космологии неоконфуцианства: великий предел (тайцзи) как базовый принцип ли и его проявление через энергию ци (инь и ян) и пять элементов", "relevance": "HIGH", "relevanceExplained": "Это ключевая часть лекции о неоконфуцианстве — одной из центральных тем эфира об империи Сун. Подробно раскрывается философская система", "startTime": "1:44:43", "endTime": "1:47:49"}, {"start": 6469.3, "end": 6508.7, "dur": 39.5, "desc": "Примеры применения системы инь-ян: смена сезонов и китайский зодиакальный календарь (огненные драконы и металлические тигры)", "relevance": "HIGH", "relevanceExplained": "Продолжение объяснения космологии неоконфуцианства на конкретных примерах — относится к основной теме", "startTime": "1:47:49", "endTime": "1:48:29"}, {"start": 6508.7, "end": 6537.1, "dur": 28.4, "desc": "Обобщение: неоконфуцианская космология как религиозная система и связь морали с космическим порядком", "relevance": "HIGH", "relevanceExplained": "Ключевое обобщение — автор связывает ранее объяснённую космологию с моральной философией неоконфуцианства. Прямо относится к основной теме", "startTime": "1:48:29", "endTime": "1:48:57"}, {"start": 6537.1, "end": 6550.5, "dur": 13.3, "desc": "Благодарность зрителю (Паше) за донат/подписку", "relevance": "LOW", "relevanceExplained": "Техническое прерывание лекции для благодарности — не несёт информационной ценности", "startTime": "1:48:57", "endTime": "1:49:10"}, {"start": 6550.5, "end": 6628.2, "dur": 77.8, "desc": "Ключевая идея неоконфуцианства: мораль как объективная неотносительная часть космического порядка — в отличие от греческой традиции", "relevance": "HIGH", "relevanceExplained": "Центральная философская идея лекции — мораль встроена в фундамент космоса. Это важнейшее отличие неоконфуцианства и ключевая мысль основной темы", "startTime": "1:49:10", "endTime": "1:50:28"}, {"start": 6628.2, "end": 6686.7, "dur": 58.4, "desc": "Историческое пояснение: почему неоконфуцианство называется «сумско-минским» и критика этой космологии при Цин", "relevance": "HIGH", "relevanceExplained": "Важный исторический контекст — хронология неоконфуцианства через эпохи Сун-Мин-Цин и эволюция отношения к этой философии", "startTime": "1:50:28", "endTime": "1:51:27"}, {"start": 6686.7, "end": 6727.8, "dur": 41.2, "desc": "Роль Чжу Си (XII век) в систематизации неоконфуцианства и практика «тихого сидения»", "relevance": "HIGH", "relevanceExplained": "Упоминание ключевой исторической фигуры Чжу Си и практических аспектов неоконфуцианства — относится к основной теме", "startTime": "1:51:27", "endTime": "1:52:08"}, {"start": 6727.8, "end": 6833.0, "dur": 105.2, "desc": "Гипотеза о связи неоконфуцианской идеологии (культ учёбы) с технологическим бумом эпохи Сун", "relevance": "HIGH", "relevanceExplained": "Важная связка между философией и технологическим прогрессом — объединяет две ключевые темы эфира (неоконфуцианство и технологии Сун)", "startTime": "1:52:08", "endTime": "1:53:53"}, {"start": 6833.0, "end": 6886.1, "dur": 53.1, "desc": "Ответ на вопрос из чата о традиционной китайской медицине при коммунистах", "relevance": "MID", "relevanceExplained": "Побочная тема — вопрос из чата не относится напрямую к истории Сун, но содержит законченную и содержательную мысль", "startTime": "1:53:53", "endTime": "1:54:46"}, {"start": 6886.1, "end": 6902.3, "dur": 16.1, "desc": "Автор осознаёт что проскочил тему государственного устройства и думает как перестроиться", "relevance": "LOW", "relevanceExplained": "Служебный момент — автор вслух размышляет о структуре лекции без информационного содержания", "startTime": "1:54:46", "endTime": "1:55:02"}, {"start": 6902.3, "end": 7033.9, "dur": 131.6, "desc": "Место торговцев в неоконфуцианской социальной иерархии: они по-прежнему четвёртые но уже не бесполезные благодаря концепции гуманности и расцвету коммерции", "relevance": "HIGH", "relevanceExplained": "Важная тема о трансформации социальной структуры при Сун — напрямую связана с основной темой о чиновничестве и обществе Сун", "startTime": "1:55:02", "endTime": "1:57:14"}, {"start": 7033.9, "end": 7047.5, "dur": 13.6, "desc": "Шутка из чата «купил дороже продал дешевле» и реакция автора", "relevance": "LOW", "relevanceExplained": "Мимолётная шутка без информационной ценности", "startTime": "1:57:14", "endTime": "1:57:27"}, {"start": 7047.5, "end": 7059.9, "dur": 12.4, "desc": "Художники — это класс ши (чиновники-учёные) у которых были все материалы для творчества", "relevance": "HIGH", "relevanceExplained": "Важная связка между классом ши и искусством Сун — подготавливает тему искусства которая будет раскрыта позже", "startTime": "1:57:27", "endTime": "1:57:40"}, {"start": 7059.9, "end": 7090.1, "dur": 30.3, "desc": "Ответ на вопрос из чата о присутствии ислама в Китае эпохи Сун", "relevance": "MID", "relevanceExplained": "Побочная тема — интересный факт о религиозном разнообразии но не относится к основной линии повествования", "startTime": "1:57:40", "endTime": "1:58:10"}, {"start": 7090.1, "end": 7333.3, "dur": 243.2, "desc": "Обсуждение перерыва и сам перерыв (шутка про «прочистить ци»)", "relevance": "LOW", "relevanceExplained": "Служебный блок — обсуждение и проведение перерыва не несёт информационной ценности", "startTime": "1:58:10", "endTime": "2:02:13"}, {"start": 7333.3, "end": 7346.9, "dur": 13.6, "desc": "Начало новой темы: военно-политическая характеристика эпохи Сун", "relevance": "HIGH", "relevanceExplained": "Начало важного раздела о военной политике Сун — одна из ключевых тем эфира согласно глобальному пониманию", "startTime": "2:02:13", "endTime": "2:02:27"}, {"start": 7346.9, "end": 7356.1, "dur": 9.2, "desc": "Благодарность зрителю (Андрохе) за подписки", "relevance": "LOW", "relevanceExplained": "Техническое прерывание для благодарности — не несёт информационной ценности", "startTime": "2:02:27", "endTime": "2:02:36"}, {"start": 7356.1, "end": 7427.0, "dur": 70.9, "desc": "Объяснение деления на Северную и Южную Сун: формально две эпохи но фактически одно государство с династией Чжао", "relevance": "HIGH", "relevanceExplained": "Важный структурный контекст для понимания всей дальнейшей лекции — разъяснение периодизации Сун", "startTime": "2:02:36", "endTime": "2:03:47"}, {"start": 7427.0, "end": 7428.5, "dur": 1.4, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "2:03:47", "endTime": "2:03:48"}, {"start": 7428.5, "end": 7438.5, "dur": 10.0, "desc": "Объяснение деления на Северную и Южную Сун: формально две эпохи но фактически одно государство с династией Чжао", "relevance": "HIGH", "relevanceExplained": "Важный структурный контекст для понимания всей дальнейшей лекции — разъяснение периодизации Сун", "startTime": "2:03:48", "endTime": "2:03:58"}, {"start": 7438.5, "end": 7473.5, "dur": 35.0, "desc": "Территориальный размер империи Сун в сравнении с другими великими китайскими империями - Сун была самой маленькой", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме - характеристика империи Сун и её особенности", "startTime": "2:03:58", "endTime": "2:04:33"}, {"start": 7473.5, "end": 7536.6, "dur": 63.1, "desc": "Причины малого размера Сун: неудачные попытки завоевания Вьетнама и Дали, неполный контроль Сычуани и наличие на севере государств Си-Ся (тангуты) и Ляо (кидани)", "relevance": "HIGH", "relevanceExplained": "Важная информация о геополитическом окружении империи Сун - ключевая тема лекции", "startTime": "2:04:33", "endTime": "2:05:37"}, {"start": 7536.6, "end": 7592.5, "dur": 55.9, "desc": "Военные поражения Сун от тангутов и киданей. Этимология слова «Китай» от названия народа кидань", "relevance": "HIGH", "relevanceExplained": "Интересный малоизвестный факт об этимологии слова «Китай» плюс важный военный контекст Сун", "startTime": "2:05:37", "endTime": "2:06:33"}, {"start": 7592.5, "end": 7686.3, "dur": 93.8, "desc": "Опровержение мифа о «пацифистской» империи Сун: армия выросла от 220 тысяч до почти миллиона человек", "relevance": "HIGH", "relevanceExplained": "Развенчивание распространённого заблуждения о Сун как пацифистском государстве - контринтуитивный факт с конкретными цифрами", "startTime": "2:06:33", "endTime": "2:08:06"}, {"start": 7686.3, "end": 7697.3, "dur": 11.0, "desc": "Благодарность зрителю (Паша) за активность в чате", "relevance": "LOW", "relevanceExplained": "Служебное взаимодействие с чатом без информационной ценности", "startTime": "2:08:06", "endTime": "2:08:17"}, {"start": 7697.3, "end": 7727.0, "dur": 29.7, "desc": "Огромные военные расходы Сун: от четверти до трёх четвертей бюджета при отсутствии идеологии военного сословия", "relevance": "HIGH", "relevanceExplained": "Важная характеристика военной политики Сун - парадокс огромных расходов на армию при гражданском управлении", "startTime": "2:08:17", "endTime": "2:08:47"}, {"start": 7727.0, "end": 7807.0, "dur": 80.0, "desc": "Система гражданского управления армией в Сун: чиновники командовали войсками из-за страха повторения сценария краха империи Тан через военных губернаторов", "relevance": "HIGH", "relevanceExplained": "Ключевая особенность государственного устройства Сун - подчинение армии гражданской бюрократии. Прямо относится к основной теме", "startTime": "2:08:47", "endTime": "2:10:07"}, {"start": 7807.0, "end": 7849.1, "dur": 42.1, "desc": "Ответ на вопрос о Си-Ся: население Си-Ся (3 млн) и Ляо (9 млн) в сравнении с Северной Сун (75 млн)", "relevance": "HIGH", "relevanceExplained": "Конкретные демографические данные дополняют картину соотношения сил и относятся к основной теме", "startTime": "2:10:07", "endTime": "2:10:49"}, {"start": 7849.1, "end": 7895.4, "dur": 46.3, "desc": "Упоминание возможных будущих стримов про Си-Ся и Ляо и замечание о китайцентричности истории Китая", "relevance": "MID", "relevanceExplained": "Рассуждение о перспективах будущих стримов и метакомментарий об историографии - содержательно, но не относится напрямую к теме Сун", "startTime": "2:10:49", "endTime": "2:11:35"}, {"start": 7895.4, "end": 7958.4, "dur": 63.0, "desc": "Дипломатические унижения Сун: вынужденное признание правителей Ляо и Си-Ся равными, в отличие от прежней ханьской позиции превосходства", "relevance": "HIGH", "relevanceExplained": "Важный аспект внешней политики Сун - утрата традиционного китайского превосходства в дипломатии", "startTime": "2:11:35", "endTime": "2:12:38"}, {"start": 7958.4, "end": 7994.4, "dur": 36.0, "desc": "Цитата Ван Аньши о необходимости распустить профессиональную армию и заменить её крестьянским ополчением", "relevance": "HIGH", "relevanceExplained": "Яркая цитата реформатора, иллюстрирующая дебаты о военной реформе - центральная тема этого раздела лекции", "startTime": "2:12:38", "endTime": "2:13:14"}, {"start": 7994.4, "end": 8088.8, "dur": 94.4, "desc": "Служебные реплики: поиск пропущенного доната, благодарность Виктории, обсуждение верификации в чате и подписок", "relevance": "LOW", "relevanceExplained": "Чисто техническое и служебное обсуждение функций чата и подписок - быстро теряет актуальность", "startTime": "2:13:14", "endTime": "2:14:49"}, {"start": 8088.8, "end": 8140.1, "dur": 51.4, "desc": "Система Баоцзя - крестьянская народная милиция как инструмент слежки населения друг за другом", "relevance": "HIGH", "relevanceExplained": "Важная информация о системе социального контроля в империи Сун - относится к основной теме", "startTime": "2:14:49", "endTime": "2:15:40"}, {"start": 8140.1, "end": 8152.4, "dur": 12.2, "desc": "Провал реформ и интеллектуальный спор между реформаторами и консерваторами (Сыма Гуан)", "relevance": "HIGH", "relevanceExplained": "Краткое но важное обобщение исхода реформаторских споров - ключевой момент политической истории Сун", "startTime": "2:15:40", "endTime": "2:15:52"}, {"start": 8152.4, "end": 8162.3, "dur": 9.9, "desc": "Благодарность Виктории за подписку", "relevance": "LOW", "relevanceExplained": "Служебное взаимодействие с чатом без содержательной ценности", "startTime": "2:15:52", "endTime": "2:16:02"}, {"start": 8162.3, "end": 8224.2, "dur": 61.9, "desc": "<продолжение про военные неудачи Сун> Баоцзя не подходила для крупных кампаний. Навязчивая идея вернуть 16 округов и регулярные поражения от Ляо", "relevance": "HIGH", "relevanceExplained": "Продолжение темы военной политики Сун с конкретным примером 16 округов", "startTime": "2:16:02", "endTime": "2:17:04"}, {"start": 8224.2, "end": 8323.1, "dur": 98.8, "desc": "Войны XI века. Потеря доступа к кавалерии. Торговля «чай в обмен на лошадей» с тибетцами", "relevance": "HIGH", "relevanceExplained": "Важная информация о стратегической проблеме Сун - отсутствии кавалерии - и оригинальном решении через торговлю чаем", "startTime": "2:17:04", "endTime": "2:18:43"}, {"start": 8323.1, "end": 8346.5, "dur": 23.4, "desc": "Переходные фразы - автор вспоминает, что отвлёкся на донат", "relevance": "LOW", "relevanceExplained": "Служебные фразы без информационного содержания", "startTime": "2:18:43", "endTime": "2:19:06"}, {"start": 8346.5, "end": 8463.1, "dur": 116.6, "desc": "Споры о модели государственного управления: победа линии Сыма Гуана (управление через чиновников). Трудовой налог и привилегии чиновников (освобождение от физического труда и телесных наказаний)", "relevance": "HIGH", "relevanceExplained": "Ключевая информация о политической философии Сун и привилегиях класса чиновников - центральная тема лекции", "startTime": "2:19:06", "endTime": "2:21:03"}, {"start": 8463.1, "end": 8491.0, "dur": 27.9, "desc": "Чиновники улучшили организацию Сун: развитие гидротехники. Обещание поговорить о технических достижениях позже", "relevance": "HIGH", "relevanceExplained": "Краткое но важное указание на вклад чиновничества в инфраструктурное развитие", "startTime": "2:21:03", "endTime": "2:21:31"}, {"start": 8491.0, "end": 8564.7, "dur": 73.7, "desc": "Начало рассказа о разделении Сун: восстание чжурчжэней (тунгусо-маньчжурское племя) под руководством Агуды, свержение киданей и создание государства Цзинь. Союз Сун с чжурчжэнями против Ляо", "relevance": "HIGH", "relevanceExplained": "Ключевой поворотный момент истории Сун - начало событий, ведущих к потере Севера", "startTime": "2:21:31", "endTime": "2:22:45"}, {"start": 8564.7, "end": 8599.9, "dur": 35.2, "desc": "Вторжение чжурчжэней на территорию Сун. Кайфен - крупнейший город мира с населением более миллиона человек", "relevance": "HIGH", "relevanceExplained": "Важнейший момент - начало падения Северной Сун и характеристика столицы Кайфен", "startTime": "2:22:45", "endTime": "2:23:20"}, {"start": 8599.9, "end": 8606.3, "dur": 6.4, "desc": "Благодарность зрителю Ване", "relevance": "LOW", "relevanceExplained": "Служебное взаимодействие с чатом", "startTime": "2:23:20", "endTime": "2:23:26"}, {"start": 8606.3, "end": 8617.7, "dur": 11.4, "desc": "Датировка первых вторжений джурчжэней (1125 год)", "relevance": "HIGH", "relevanceExplained": "Прямое продолжение темы военной истории Сун и вторжения джурчжэней", "startTime": "2:23:26", "endTime": "2:23:38"}, {"start": 8617.7, "end": 8668.0, "dur": 50.3, "desc": "Вторжение джурчжэней в 1125 году и отречение императора-художника Хуэй Цзуна", "relevance": "HIGH", "relevanceExplained": "Ключевой эпизод военной истории Сун - столкновение миролюбивого императора с реальной угрозой", "startTime": "2:23:38", "endTime": "2:24:28"}, {"start": 8668.0, "end": 8741.9, "dur": 73.9, "desc": "Демонстрация картин императора Хуэй Цзуна - журавли, другие работы и сцена прослушивания гуцинь", "relevance": "HIGH", "relevanceExplained": "Иллюстрации к предыдущему тезису о характере императора-художника, это часть рассказа о военной слабости Сун", "startTime": "2:24:28", "endTime": "2:25:42"}, {"start": 8741.9, "end": 8873.0, "dur": 131.1, "desc": "Разрушение дамб Хуанхэ для остановки джурчжэней и катастрофические последствия наводнений", "relevance": "HIGH", "relevanceExplained": "Ключевой эпизод военной истории - стратегическое решение с разрушительными последствиями, изменение русла Хуанхэ и связь с романом «Речные заводи»", "startTime": "2:25:42", "endTime": "2:27:53"}, {"start": 8873.0, "end": 8879.7, "dur": 6.7, "desc": "Благодарность зрителю Венишу", "relevance": "LOW", "relevanceExplained": "Короткая благодарность за донат без содержательной информации", "startTime": "2:27:53", "endTime": "2:28:00"}, {"start": 8879.7, "end": 8974.8, "dur": 95.1, "desc": "Разграбление Кайфэна и пленение императорской семьи джурчжэнями - унижение двора", "relevance": "HIGH", "relevanceExplained": "Ключевой драматичный эпизод истории Сун - «Похищение императорского двора», 15 тысяч человек уведены в Маньчжурию", "startTime": "2:28:00", "endTime": "2:29:35"}, {"start": 8974.8, "end": 9048.6, "dur": 73.8, "desc": "Стихотворение императора Хуэй Цзуна из плена и его рефлексия", "relevance": "HIGH", "relevanceExplained": "Яркий литературный и эмоциональный эпизод, иллюстрирующий масштаб катастрофы через личное переживание", "startTime": "2:29:35", "endTime": "2:30:49"}, {"start": 9048.6, "end": 9092.7, "dur": 44.1, "desc": "Бегство на юг и основание Южной Сун со столицей в Ханчжоу", "relevance": "HIGH", "relevanceExplained": "Ключевой поворот - образование Южной Сун и установление границы по реке Хуайхэ", "startTime": "2:30:49", "endTime": "2:31:33"}, {"start": 9092.7, "end": 9216.9, "dur": 124.2, "desc": "История генерала Юэ Фэя - успешные военные действия и его убийство по приказу императора", "relevance": "HIGH", "relevanceExplained": "Ключевой эпизод, иллюстрирующий системную проблему Сун - страх перед самостоятельными военачальниками", "startTime": "2:31:33", "endTime": "2:33:37"}, {"start": 9216.9, "end": 9540.0, "dur": 323.1, "desc": "Мирный договор с джурчжэнями - унизительные формулировки и последующее улучшение отношений", "relevance": "HIGH", "relevanceExplained": "Важный дипломатический эпизод, показывающий глубину унижения Сун (формулировка «твой слуга Гао») и последующую реабилитацию", "startTime": "2:33:37", "endTime": "2:39:00"}, {"start": 9540.0, "end": 9570.6, "dur": 30.6, "desc": "Потеря исторической родины - северокитайская цивилизация лишилась своего хартленда", "relevance": "HIGH", "relevanceExplained": "Важное концептуальное обобщение о значении потери северных земель для китайской идентичности", "startTime": "2:39:00", "endTime": "2:39:31"}, {"start": 9570.6, "end": 9592.7, "dur": 22.1, "desc": "Парадоксальный тезис: несмотря на катастрофу, Южная Сун процветает - введение в Танско-Сунский переход", "relevance": "HIGH", "relevanceExplained": "Ключевой переходный тезис, задающий рамку для разбора экономики Южной Сун", "startTime": "2:39:31", "endTime": "2:39:53"}, {"start": 9592.7, "end": 9635.3, "dur": 42.6, "desc": "Демографический сдвиг населения Китая с севера на юг - от 80% на севере в начале эры до 35% к концу Северной Сун", "relevance": "HIGH", "relevanceExplained": "Ключевые статистические данные о демографическом переходе, фундамент для понимания экономики Южной Сун", "startTime": "2:39:53", "endTime": "2:40:35"}, {"start": 9635.3, "end": 9639.7, "dur": 4.4, "desc": "Благодарность анонимному зрителю за донат", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "2:40:35", "endTime": "2:40:40"}, {"start": 9639.7, "end": 9742.0, "dur": 102.3, "desc": "Причины миграции на юг: войны, кочевники, свободная земля, малярия, масштабы китайских войн", "relevance": "HIGH", "relevanceExplained": "Развёрнутое объяснение причин демографического сдвига с яркими сравнениями европейских и китайских масштабов", "startTime": "2:40:40", "endTime": "2:42:22"}, {"start": 9742.0, "end": 9845.6, "dur": 103.6, "desc": "Аграрная революция на юге: рис чампа, террасное земледелие, освоение гористого юга и роль чиновников", "relevance": "HIGH", "relevanceExplained": "Ключевой материал об аграрной революции - новый рис, террасы, особенности южного ландшафта", "startTime": "2:42:22", "endTime": "2:44:06"}, {"start": 9845.6, "end": 9929.4, "dur": 83.8, "desc": "Танско-Сунский переход: обезлесение севера, освоение юга, ирригация Янцзы и рост производства еды", "relevance": "HIGH", "relevanceExplained": "Продолжение темы экономического развития юга - ирригация, сведение лесов, рисовые поля", "startTime": "2:44:06", "endTime": "2:45:29"}, {"start": 9929.4, "end": 10050.5, "dur": 121.0, "desc": "Комбинирование рисового земледелия с рыбоводством и переход к выращиванию технических культур (хлопок, рами, конопля) на продажу благодаря избытку продовольствия", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - экономика Южной Сун и аграрная революция", "startTime": "2:45:29", "endTime": "2:47:30"}, {"start": 10050.5, "end": 10084.4, "dur": 34.0, "desc": "Развитие сельского хозяйства: водяное колесо и промышленная молотилка освобождают людей для другой деятельности", "relevance": "HIGH", "relevanceExplained": "Блок относится к основной теме - технологический прогресс эпохи Сун", "startTime": "2:47:30", "endTime": "2:48:04"}, {"start": 10084.4, "end": 10238.1, "dur": 153.7, "desc": "Развитие производства шёлка: от элитного государственного товара к массовому рыночному производству со специализацией уездов и клановой организацией бизнеса", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к теме экономики Сун - демократизация шёлкового производства и появление кооперации", "startTime": "2:48:04", "endTime": "2:50:38"}, {"start": 10238.1, "end": 10259.7, "dur": 21.6, "desc": "Уточнение про Юньнань: там государство Дали а не Сун и чай в Фуцзяне", "relevance": "MID", "relevanceExplained": "Это короткое географическое уточнение, вероятно ответ на вопрос из чата, не развивает основную тему", "startTime": "2:50:38", "endTime": "2:51:00"}, {"start": 10259.7, "end": 10288.7, "dur": 29.0, "desc": "<начало про производство шёлка> и ответ на вопрос из чата про индустрию сбора отходов/удобрений", "relevance": "MID", "relevanceExplained": "Строка 2173 завершает тему шёлка одной фразой, а 2174-2177 - ответ на вопрос из чата про отходы. Вопрос побочный но содержательный", "startTime": "2:51:00", "endTime": "2:51:29"}, {"start": 10288.7, "end": 10377.9, "dur": 89.2, "desc": "Высокотемпературные «драконьи печи» и изобретение настоящего фарфора: пять великих печей, глазурь селадон, международная торговля керамикой по южным морям вплоть до Восточной Африки", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - технологический бум эпохи Сун и международная торговля", "startTime": "2:51:29", "endTime": "2:52:58"}, {"start": 10377.9, "end": 10390.2, "dur": 12.3, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "2:52:58", "endTime": "2:53:10"}, {"start": 10390.2, "end": 10605.9, "dur": 215.8, "desc": "Высокотемпературные «драконьи печи» и изобретение настоящего фарфора: пять великих печей, глазурь селадон, международная торговля керамикой по южным морям вплоть до Восточной Африки", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - технологический бум эпохи Сун и международная торговля", "startTime": "2:53:10", "endTime": "2:56:46"}, {"start": 10605.9, "end": 10610.8, "dur": 4.9, "desc": "Оговорка про сохранность фарфора vs шёлка, благодарности анонимным донатерам и уточнение что фото - изделия эпохи Сун", "relevance": "LOW", "relevanceExplained": "Благодарности донатерам - служебный блок, оговорка про сохранность и уточнение про фото малоинформативны", "startTime": "2:56:46", "endTime": "2:56:51"}, {"start": 10610.8, "end": 10861.8, "dur": 251.0, "desc": "Изобретение чугуна и стали, массовый расход леса (бумага, книгопечатание, шёлк, обжиг), переход на каменный уголь и первые призывы к высаживанию лесов", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме - технологический прогресс Сун: металлургия, энергетический кризис и его решение", "startTime": "2:56:51", "endTime": "3:01:02"}, {"start": 10861.8, "end": 10932.0, "dur": 70.1, "desc": "Примеры чугунного литья (пагода из Лянцяо) и промышленное производство металлических изделий с водяным молотом", "relevance": "HIGH", "relevanceExplained": "Продолжение темы металлургии и промышленного производства эпохи Сун", "startTime": "3:01:02", "endTime": "3:02:12"}, {"start": 10932.0, "end": 10945.5, "dur": 13.5, "desc": "Благодарность за подписку (Солопый Чарывык)", "relevance": "LOW", "relevanceExplained": "Служебный блок - зачитывание подписки, не несёт содержательной информации", "startTime": "3:02:12", "endTime": "3:02:26"}, {"start": 10945.5, "end": 10981.1, "dur": 35.6, "desc": "Ответ на вопрос из чата: отношение китайцев к землетрясениям и профессия геомантов", "relevance": "MID", "relevanceExplained": "Содержательный ответ на побочный вопрос из чата, не относится напрямую к основной теме экономики Сун", "startTime": "3:02:26", "endTime": "3:03:01"}, {"start": 10981.1, "end": 11040.9, "dur": 59.8, "desc": "Монетная система Сунского Китая: медные бронзовые и железные монеты на нитях по тысяче штук с обсчётами и разными сплавами", "relevance": "HIGH", "relevanceExplained": "Прямо относится к основной теме - экономика Сунского Китая и денежная система", "startTime": "3:03:01", "endTime": "3:04:01"}, {"start": 11040.9, "end": 11050.0, "dur": 9.0, "desc": "Региональные различия в монетах - в Сычуане таскали нити из тысячи железных монет", "relevance": "HIGH", "relevanceExplained": "Деталь про тяжёлые железные монеты служит переходом к теме появления бумажных денег что является ключевой частью экономической темы", "startTime": "3:04:01", "endTime": "3:04:10"}, {"start": 11050.0, "end": 11112.2, "dur": 62.2, "desc": "Появление ваучеров-расписок в XI веке и переход к первой в мире бумажной валюте в XII веке как следствие неудобства металлических монет", "relevance": "HIGH", "relevanceExplained": "Ключевой факт истории Сун - изобретение бумажных денег напрямую относится к теме экономического бума", "startTime": "3:04:10", "endTime": "3:05:12"}, {"start": 11112.2, "end": 11135.7, "dur": 23.5, "desc": "Изменение конфуцианского отношения к торговцам: торговля перестаёт быть позорным занятием", "relevance": "HIGH", "relevanceExplained": "Относится к основной теме - трансформация общества и идеологии в эпоху Сун", "startTime": "3:05:12", "endTime": "3:05:36"}, {"start": 11135.7, "end": 11235.3, "dur": 99.6, "desc": "Почему в Китае не появилась буржуазия как в Европе: более открытые элиты и доступность экзаменов для детей торговцев. Развитие образовательного бизнеса", "relevance": "HIGH", "relevanceExplained": "Важное сравнение с Европой и объяснение социальной мобильности в Сунском Китае - ключевая тема лекции", "startTime": "3:05:36", "endTime": "3:07:15"}, {"start": 11235.3, "end": 11341.4, "dur": 106.1, "desc": "Проблемы бумажных денег: подделка инфляция деноминация и попытки привязки к серебру", "relevance": "HIGH", "relevanceExplained": "Продолжение ключевой темы экономики Сун - проблемы первой бумажной валюты", "startTime": "3:07:15", "endTime": "3:09:01"}, {"start": 11341.4, "end": 11431.4, "dur": 90.0, "desc": "Развитие международной морской торговли Сун и этимология слова «сатин» от китайского порта Цюанчжоу через арабское «зайтун»", "relevance": "HIGH", "relevanceExplained": "Ключевой факт о международной торговле и интересная этимология напрямую относящиеся к теме экономики Сун", "startTime": "3:09:01", "endTime": "3:10:31"}, {"start": 11431.4, "end": 11475.2, "dur": 43.8, "desc": "Доминирование китайских торговцев в Юго-Восточной Азии и торговля с Кореей и Японией", "relevance": "HIGH", "relevanceExplained": "Продолжение темы международной торговли Сун", "startTime": "3:10:31", "endTime": "3:11:15"}, {"start": 11475.2, "end": 11502.6, "dur": 27.4, "desc": "История развития пороха: от ранних описаний через гранаты XI века до огнестрельного оружия XIII века", "relevance": "HIGH", "relevanceExplained": "Технологический бум Сун включая порох - одна из ключевых тем лекции", "startTime": "3:11:15", "endTime": "3:11:43"}, {"start": 11502.6, "end": 11505.7, "dur": 3.1, "desc": "Благодарность подписчику", "relevance": "LOW", "relevanceExplained": "Короткая благодарность без содержательной информации", "startTime": "3:11:43", "endTime": "3:11:46"}, {"start": 11505.7, "end": 11597.0, "dur": 91.3, "desc": "История развития пороха: от ранних описаний через гранаты XI века до огнестрельного оружия XIII века", "relevance": "HIGH", "relevanceExplained": "Технологический бум Сун включая порох - одна из ключевых тем лекции", "startTime": "3:11:46", "endTime": "3:13:17"}, {"start": 11597.0, "end": 11606.0, "dur": 9.0, "desc": "Благодарность за подарки (донат)", "relevance": "LOW", "relevanceExplained": "Служебная благодарность не несущая информационной ценности", "startTime": "3:13:17", "endTime": "3:13:26"}, {"start": 11606.0, "end": 11661.5, "dur": 55.5, "desc": "Продолжение темы торговли: спрос на японскую серу и корейские товары. Развитие флота и торговые джонки до 25 метров", "relevance": "HIGH", "relevanceExplained": "Продолжение темы международной торговли и флота Сун", "startTime": "3:13:26", "endTime": "3:14:22"}, {"start": 11661.5, "end": 11694.9, "dur": 33.4, "desc": "Ответ на вопрос из чата: почему Китай не стал пороховой цивилизацией раньше - на самом деле империя Цин относится к пороховым державам", "relevance": "MID", "relevanceExplained": "Вопрос из чата является побочным отступлением хотя и содержательным. Автор кратко отвечает и обещает вернуться к теме", "startTime": "3:14:22", "endTime": "3:14:55"}, {"start": 11694.9, "end": 11711.2, "dur": 16.4, "desc": "Уточнение датировки изображения кораблей - XIII век эпохи Сун и ответ на реплику из чата", "relevance": "MID", "relevanceExplained": "Краткое техническое уточнение по иллюстрации не несущее большой самостоятельной ценности", "startTime": "3:14:55", "endTime": "3:15:11"}, {"start": 11711.2, "end": 11767.7, "dur": 56.4, "desc": "Революционное изменение в идеологии: торговля из «необходимого зла» при Тан превращается в повсеместное явление при Сун. Государство перестаёт контролировать морскую торговлю", "relevance": "HIGH", "relevanceExplained": "Ключевое сравнение идеологий Тан и Сун в отношении торговли - важнейшая часть темы экономической трансформации", "startTime": "3:15:11", "endTime": "3:16:08"}, {"start": 11767.7, "end": 11834.0, "dur": 66.3, "desc": "Государство смиряется с невозможностью контролировать торговлю. Чиновники-ши обосновывают переход от аграрных налогов к торговым и производственным. Создание министерства лицензий", "relevance": "HIGH", "relevanceExplained": "Продолжение темы экономической трансформации: переход налогообложения с аграрки на торговлю - ключевой факт", "startTime": "3:16:08", "endTime": "3:17:14"}, {"start": 11834.0, "end": 11842.4, "dur": 8.4, "desc": "Ответ на реплику из чата: японские пираты ещё не появились и китайцы доминируют на морях", "relevance": "MID", "relevanceExplained": "Краткий ответ на вопрос из чата косвенно связанный с темой но не добавляющий существенной информации", "startTime": "3:17:14", "endTime": "3:17:22"}, {"start": 11842.4, "end": 11909.0, "dur": 66.6, "desc": "Развитие картографии в эпоху Сун: каменные и бумажные карты с координатной сеткой для навигации", "relevance": "HIGH", "relevanceExplained": "Технологический прогресс Сун в картографии - часть основной темы", "startTime": "3:17:22", "endTime": "3:18:29"}, {"start": 11909.0, "end": 11916.2, "dur": 7.3, "desc": "Благодарность Лекси Бендер за донат", "relevance": "LOW", "relevanceExplained": "Служебная благодарность не несущая информационной ценности", "startTime": "3:18:29", "endTime": "3:18:36"}, {"start": 11916.2, "end": 11926.6, "dur": 10.4, "desc": "Замечание о Великой стене на карте - её строили чжурчжэни от монголов в XIII веке", "relevance": "HIGH", "relevanceExplained": "Интересный малоизвестный факт о том что стену строили чжурчжэни от монголов встроенный в обсуждение карты", "startTime": "3:18:36", "endTime": "3:18:47"}, {"start": 11926.6, "end": 12039.2, "dur": 112.6, "desc": "Развитие компаса в Китае эпохи Сун: от магнитной рыбки до полноценной навигации с таблицами магнитного склонения", "relevance": "HIGH", "relevanceExplained": "Напрямую относится к теме технологического бума эпохи Сун - подробный рассказ о развитии компаса и навигации", "startTime": "3:18:47", "endTime": "3:20:39"}, {"start": 12039.2, "end": 12115.4, "dur": 76.2, "desc": "Математик Шэнь Ко и развитие математики в эпоху Сун: уравнения с нулём, матрицы, экзамены по математике вместо поэзии", "relevance": "HIGH", "relevanceExplained": "Относится к теме технологического и научного бума Сун - математика, инженерия, реформа экзаменов", "startTime": "3:20:39", "endTime": "3:21:55"}, {"start": 12115.4, "end": 12178.3, "dur": 62.9, "desc": "Астрономия эпохи Сун: армиллярные сферы и наблюдение взрыва сверхновой 1054 года (крабовидная туманность)", "relevance": "HIGH", "relevanceExplained": "Относится к теме научных достижений Сун - астрономия и наблюдения за небом", "startTime": "3:21:55", "endTime": "3:22:58"}, {"start": 12178.3, "end": 12191.3, "dur": 13.1, "desc": "Ответ на вопрос из чата: у китайцев были свои цифры, но ноль использовался так же", "relevance": "HIGH", "relevanceExplained": "Хотя это ответ на вопрос из чата, он непосредственно дополняет тему математики Сун и короток - органично вписывается в рассказ", "startTime": "3:22:58", "endTime": "3:23:11"}, {"start": 12191.3, "end": 12238.8, "dur": 47.5, "desc": "Астрологическая интерпретация сверхновой 1054 года: «гостевая звезда» и сочетание науки с гаданиями", "relevance": "HIGH", "relevanceExplained": "Интересное наблюдение о сочетании научного и мистического подходов в китайской культуре - относится к теме интеллектуальной жизни Сун", "startTime": "3:23:11", "endTime": "3:23:59"}, {"start": 12238.8, "end": 12271.1, "dur": 32.3, "desc": "Первая записанная формула пороха - 1044 год, династия Сун", "relevance": "HIGH", "relevanceExplained": "Напрямую относится к технологическим достижениям Сун - одно из ключевых изобретений", "startTime": "3:23:59", "endTime": "3:24:31"}, {"start": 12271.1, "end": 12370.5, "dur": 99.4, "desc": "Военные трактаты Сун: копирование древних тактик и вера чиновников в книжное знание о войне", "relevance": "HIGH", "relevanceExplained": "Относится к теме военной политики Сун и отношения класса ши к армии - яркая иллюстрация конфликта книжной культуры и реальной войны", "startTime": "3:24:31", "endTime": "3:26:10"}, {"start": 12370.5, "end": 12474.2, "dur": 103.7, "desc": "Анонс перехода к теме искусства после перерыва", "relevance": "LOW", "relevanceExplained": "Служебный переходный блок - автор объявляет перерыв и анонсирует следующую тему, не содержит содержательной информации", "startTime": "3:26:10", "endTime": "3:27:54"}, {"start": 12474.2, "end": 12638.3, "dur": 164.1, "desc": "Перерыв стрима - тишина и бессмысленные звуки", "relevance": "LOW", "relevanceExplained": "Техническая пауза без содержательной информации", "startTime": "3:27:54", "endTime": "3:30:38"}, {"start": 12638.3, "end": 12652.2, "dur": 13.9, "desc": "Возвращение после перерыва и благодарность за донат (Тикейк)", "relevance": "LOW", "relevanceExplained": "Служебный блок - возвращение после паузы и благодарность за донат без содержательной информации", "startTime": "3:30:38", "endTime": "3:30:52"}, {"start": 12652.2, "end": 12676.8, "dur": 24.5, "desc": "Обсуждение компьютерных игр: рекомендация RTS Fertile Crescent и игры Lugal", "relevance": "MID", "relevanceExplained": "Оффтоп - обсуждение компьютерных игр не относится к основной теме истории Сун, но это законченная мысль с конкретной рекомендацией", "startTime": "3:30:52", "endTime": "3:31:17"}, {"start": 12676.8, "end": 12690.7, "dur": 13.9, "desc": "Благодарность за донат (тажике)", "relevance": "LOW", "relevanceExplained": "Короткая благодарность за донат без содержательной информации", "startTime": "3:31:17", "endTime": "3:31:31"}, {"start": 12690.7, "end": 12768.5, "dur": 77.9, "desc": "Личное отношение автора к эпохе Сун: почему она особенная и отличается от других династий", "relevance": "MID", "relevanceExplained": "Интересное авторское рассуждение о том, чем Сун отличается от других династий, но это скорее субъективная оценка, а не фактическая информация", "startTime": "3:31:31", "endTime": "3:32:49"}, {"start": 12768.5, "end": 12828.6, "dur": 60.1, "desc": "<начало про искусство эпохи Сун> Переход от литературной культуры к живописи: сочетание декоративного и идеологического искусства", "relevance": "HIGH", "relevanceExplained": "Относится к основной теме - введение в раздел об искусстве Сун, важный тезис о смещении от поэзии к живописи", "startTime": "3:32:49", "endTime": "3:33:49"}, {"start": 12828.6, "end": 12914.6, "dur": 86.0, "desc": "Художественная академия при императоре Хуэй-цзуне и классические произведения: картина «Пять бычков»", "relevance": "HIGH", "relevanceExplained": "Относится к теме искусства Сун - конкретные факты о государственной художественной академии и разбор классической картины", "startTime": "3:33:49", "endTime": "3:35:15"}, {"start": 12914.6, "end": 13008.7, "dur": 94.1, "desc": "Жанр «Птички и цветы» и популярные декоративные сюжеты эпохи Сун", "relevance": "HIGH", "relevanceExplained": "Относится к теме искусства Сун - обзор популярных жанров живописи", "startTime": "3:35:15", "endTime": "3:36:49"}, {"start": 13008.7, "end": 13085.5, "dur": 76.8, "desc": "Связь живописи эпохи Сун с каллиграфией: использование туши и влияние письменной культуры ши", "relevance": "HIGH", "relevanceExplained": "Блок напрямую относится к основной теме — искусство эпохи Сун и его связь с культурой чиновничества", "startTime": "3:36:49", "endTime": "3:38:06"}, {"start": 13085.5, "end": 13113.8, "dur": 28.3, "desc": "Описание картины «Одинокий храм среди сияющих вершин» — огромные многометровые полотна тушью", "relevance": "HIGH", "relevanceExplained": "Конкретный пример сунской живописи тушью, иллюстрирует основную тему об искусстве эпохи Сун", "startTime": "3:38:06", "endTime": "3:38:34"}, {"start": 13113.8, "end": 13116.7, "dur": 2.8, "desc": "Благодарность донатеру (Саня)", "relevance": "LOW", "relevanceExplained": "Служебная реплика без информационной ценности", "startTime": "3:38:34", "endTime": "3:38:37"}, {"start": 13116.7, "end": 13243.0, "dur": 126.3, "desc": "Совмещение даосизма и неоконфуцианства у художников. Буддийские практики самоповреждения и культ почитания родителей в Сунском Китае", "relevance": "HIGH", "relevanceExplained": "Блок раскрывает идеологический контекст эпохи Сун — сосуществование религий и экстремальные проявления буддийской преданности, что напрямую относится к теме неоконфуцианства и идеологии", "startTime": "3:38:37", "endTime": "3:40:43"}, {"start": 13243.0, "end": 13270.4, "dur": 27.4, "desc": "Ответ на вопрос из чата «А что насчёт меня родили против моей воли?» — в сунском Китае такое немыслимо, рождение — космический порядок (ли)", "relevance": "HIGH", "relevanceExplained": "Ответ напрямую связан с основной темой неоконфуцианства и концепцией ли, показывает мировоззрение эпохи", "startTime": "3:40:43", "endTime": "3:41:10"}, {"start": 13270.4, "end": 13303.2, "dur": 32.8, "desc": "Философский смысл сунской пейзажной живописи: монументальная природа и ничтожность человека. Художники Южной Сун рисовали реальные пейзажи вокруг себя", "relevance": "HIGH", "relevanceExplained": "Блок раскрывает философское содержание живописи Сун и её связь с географией Южного Китая — основная тема", "startTime": "3:41:10", "endTime": "3:41:43"}, {"start": 13303.2, "end": 13341.4, "dur": 38.2, "desc": "Переход к картине «Путешественники среди ручьёв» — автор ищет записи и поправляет материалы", "relevance": "LOW", "relevanceExplained": "Технические паузы и поиск информации, автор мямлит и перебирает записки — нет содержательной мысли", "startTime": "3:41:43", "endTime": "3:42:21"}, {"start": 13341.4, "end": 13362.8, "dur": 21.4, "desc": "Ответ на вопрос из чата о реинкарнации в буддизме — можно разорвать колесо сансары", "relevance": "MID", "relevanceExplained": "Краткий ответ на побочный вопрос о буддизме, не относится напрямую к основной теме живописи или истории Сун", "startTime": "3:42:21", "endTime": "3:42:43"}, {"start": 13362.8, "end": 13432.2, "dur": 69.4, "desc": "Почему сунская живопись монохромна: практическое объяснение (связь с каллиграфией) и идеологическое (тушь передаёт суть-ли, а краски отвлекают на ци). Аналогия с импрессионизмом", "relevance": "HIGH", "relevanceExplained": "Ключевой блок, объясняющий философские и практические причины монохромности сунской живописи через концепции ли и ци — прямо по основной теме", "startTime": "3:42:43", "endTime": "3:43:52"}, {"start": 13432.2, "end": 13504.8, "dur": 72.6, "desc": "Детальный разбор картины «Путешественники среди ручьёв и гор»: крошечные фигурки людей на фоне огромных гор как выражение идеи ничтожности человека перед космосом", "relevance": "HIGH", "relevanceExplained": "Блок раскрывает философский смысл конкретного шедевра сунской живописи через неоконфуцианскую идею великого предела — основная тема", "startTime": "3:43:52", "endTime": "3:45:05"}, {"start": 13504.8, "end": 13552.7, "dur": 47.9, "desc": "Детали на сунских картинах (дети под водопадом, ловля рыбы). Ответ на вопрос — картины изначально рисовались тушью, а не выцвели", "relevance": "HIGH", "relevanceExplained": "Продолжение темы сунской живописи с конкретными примерами и уточнением техники", "startTime": "3:45:05", "endTime": "3:45:53"}, {"start": 13552.7, "end": 13684.8, "dur": 132.0, "desc": "Эксперименты с цветом: картина Ван Симэна «Тысяча ли гор и рек» с добавлением малахита и азурита. Различие камерных и монументальных полотен", "relevance": "HIGH", "relevanceExplained": "Конкретный пример исключения из монохромной традиции — знаменитая цветная картина эпохи Сун, важный факт по основной теме", "startTime": "3:45:53", "endTime": "3:48:05"}, {"start": 13684.8, "end": 13703.2, "dur": 18.4, "desc": "Ответ на вопрос из чата — сунские картины рисовали почти всегда на шёлке, иногда на бамбуке или бумаге", "relevance": "HIGH", "relevanceExplained": "Конкретная фактическая информация о материалах сунской живописи, дополняет основную тему", "startTime": "3:48:05", "endTime": "3:48:23"}, {"start": 13703.2, "end": 13833.1, "dur": 129.9, "desc": "Введение к картине «Вдоль по реке в день поминовения усопших» (свиток Чжан Цзэдуаня). Живопись как продукт элитной культуры ши — творчество чиновников для чиновников", "relevance": "HIGH", "relevanceExplained": "Введение в разбор главного произведения раздела и ключевая мысль о том что сунское искусство — элитная идеология ши", "startTime": "3:48:23", "endTime": "3:50:33"}, {"start": 13833.1, "end": 13888.2, "dur": 55.1, "desc": "Праздник Цинмин — конец марта/начало апреля, поминовение предков и празднование весны", "relevance": "HIGH", "relevanceExplained": "Исторический и культурный контекст праздника, изображённого на свитке — часть основной темы", "startTime": "3:50:33", "endTime": "3:51:28"}, {"start": 13888.2, "end": 13920.6, "dur": 32.4, "desc": "Описание начала свитка: раннее утро, торговцы с осликами идут к городу, деревья ранней весны", "relevance": "HIGH", "relevanceExplained": "Детальный разбор свитка «По реке в день Цинмин» — одна из ключевых тем эфира об искусстве эпохи Сун", "startTime": "3:51:28", "endTime": "3:52:01"}, {"start": 13920.6, "end": 13972.3, "dur": 51.7, "desc": "Описание утренних сцен на свитке: паланкин, женщины, первые жители выходят, торговец ставит палатку, гадатель", "relevance": "HIGH", "relevanceExplained": "Продолжение детального разбора свитка — конкретные жизненные сцены XII века", "startTime": "3:52:01", "endTime": "3:52:52"}, {"start": 13972.3, "end": 14019.2, "dur": 46.9, "desc": "Описание кораблей на свитке и упоминание автора Чжан Цзэдуаня как мастера архитектурных рисунков, а также сунского изобретения руля", "relevance": "HIGH", "relevanceExplained": "Информация об авторе свитка и технологическом достижении Сун (руль) — важная деталь, связывающая искусство и технологии", "startTime": "3:52:52", "endTime": "3:53:39"}, {"start": 14019.2, "end": 14073.7, "dur": 54.5, "desc": "Нарастание активности на реке: много кораблей, бурлаки, трафик. Связь дотошности рисунка с неоконфуцианской ценностью вглядывания в суть вещей", "relevance": "HIGH", "relevanceExplained": "Ключевое соединение описания свитка с философией неоконфуцианства — центральной темой эфира", "startTime": "3:53:39", "endTime": "3:54:34"}, {"start": 14073.7, "end": 14102.6, "dur": 28.9, "desc": "Женщина, живущая на лодке: стирка, быт. Контраст с богатыми апартаментами на больших кораблях", "relevance": "HIGH", "relevanceExplained": "Социальный контраст на свитке — иллюстрация расслоения общества в эпоху Сун", "startTime": "3:54:34", "endTime": "3:55:03"}, {"start": 14102.6, "end": 14150.7, "dur": 48.1, "desc": "Корабль не вписывается в поворот, толпа на мосту смотрит. Описание бурной коммерческой жизни — рост торговли в эпоху Сун", "relevance": "HIGH", "relevanceExplained": "Иллюстрация экономического бума эпохи Сун через сцены на свитке", "startTime": "3:55:03", "endTime": "3:55:51"}, {"start": 14150.7, "end": 14178.1, "dur": 27.4, "desc": "Конфликт на мосту: паланкин и всадник в чиновничьей одежде не могут разъехаться из-за киосков — «пробка»", "relevance": "HIGH", "relevanceExplained": "Яркая бытовая сцена, демонстрирующая городскую жизнь и социальную иерархию в Сунском Китае", "startTime": "3:55:51", "endTime": "3:56:18"}, {"start": 14178.1, "end": 14204.5, "dur": 26.4, "desc": "Мама с сыном у уличного торговца игрушками — покупка подарка на праздник", "relevance": "HIGH", "relevanceExplained": "Трогательная бытовая сцена, показывающая праздничную атмосферу Цинмин", "startTime": "3:56:18", "endTime": "3:56:44"}, {"start": 14204.5, "end": 14227.7, "dur": 23.2, "desc": "Магазин с надписью — искусствоведы спорят, вероятно алкомаркет", "relevance": "HIGH", "relevanceExplained": "Интересная деталь разбора свитка с упоминанием искусствоведческих споров", "startTime": "3:56:44", "endTime": "3:57:08"}, {"start": 14227.7, "end": 14266.6, "dur": 38.9, "desc": "Недостроенные здания и ресторанчик, где люди отдыхают", "relevance": "HIGH", "relevanceExplained": "Продолжение детального разбора свитка — бытовые сцены города", "startTime": "3:57:08", "endTime": "3:57:47"}, {"start": 14266.6, "end": 14310.1, "dur": 43.5, "desc": "Городские ворота — вся коммерческая деятельность выплёскивается далеко за стены. Верблюд из Самарканда — свидетельство дальней торговли", "relevance": "HIGH", "relevanceExplained": "Важное наблюдение о выходе торговли за пределы городских стен и международных торговых связях Сун", "startTime": "3:57:47", "endTime": "3:58:30"}, {"start": 14310.1, "end": 14352.8, "dur": 42.8, "desc": "Внутри города: барбершоп, торговцы с тюками, таможенники-чиновники проводят опись и проверяют лицензии", "relevance": "HIGH", "relevanceExplained": "Иллюстрация бюрократической системы Сун — чиновники как инспекторы, что связано с темой экзаменационной системы", "startTime": "3:58:30", "endTime": "3:59:13"}, {"start": 14352.8, "end": 14429.5, "dur": 76.7, "desc": "Продажа луков, хостел для путешественников (параллель с Европой), бородатый рассказчик собрал толпу слушателей", "relevance": "HIGH", "relevanceExplained": "Описание развития инфраструктуры (постоялые дворы) и культурной жизни. Параллель с европейским развитием торговли", "startTime": "3:59:13", "endTime": "4:00:30"}, {"start": 14429.5, "end": 14480.7, "dur": 51.2, "desc": "Буддийский монах беседует со знакомым. Колодец. Врач и женщины с медицинскими советами", "relevance": "HIGH", "relevanceExplained": "Бытовые сцены, показывающие религиозное и медицинское разнообразие жизни в Сунском городе", "startTime": "4:00:30", "endTime": "4:01:21"}, {"start": 14480.7, "end": 14527.3, "dur": 46.6, "desc": "Обсуждение предположения искусствоведов о том, что один из персонажей — автопортрет Чжан Цзэдуаня. Стример скептически относится к этой гипотезе", "relevance": "HIGH", "relevanceExplained": "Интересная искусствоведческая дискуссия об авторе свитка", "startTime": "4:01:21", "endTime": "4:02:07"}, {"start": 14527.3, "end": 14632.9, "dur": 105.6, "desc": "Завершение разбора свитка: печати владельцев, история дорисовывания картины — от 5 метров до 11-12 метров к XVIII веку, от 800 до 4000 персонажей", "relevance": "HIGH", "relevanceExplained": "Важная информация о судьбе свитка в последующие столетия и его культурном значении", "startTime": "4:02:07", "endTime": "4:03:53"}, {"start": 14632.9, "end": 14685.5, "dur": 52.6, "desc": "Философское обобщение: свиток — воплощение неоконфуцианского тихого сидения и вглядывания в будничную жизнь", "relevance": "HIGH", "relevanceExplained": "Ключевое обобщение, связывающее искусство свитка с философией неоконфуцианства — центральной темой эфира", "startTime": "4:03:53", "endTime": "4:04:46"}, {"start": 14685.5, "end": 14690.4, "dur": 4.9, "desc": "Благодарность зрителю Рудуку за частые донаты", "relevance": "LOW", "relevanceExplained": "Благодарность за донат — быстро теряет актуальность для будущих зрителей", "startTime": "4:04:46", "endTime": "4:04:50"}, {"start": 14690.4, "end": 14729.7, "dur": 39.3, "desc": "Личная рефлексия: ощущение погружения в XII век, «как будто прилетели», люди на картине кажутся живыми. Вывод о развитии живописи в эпоху Сун", "relevance": "HIGH", "relevanceExplained": "Эмоциональное и содержательное завершение темы свитка, подводящее итог всему разделу об искусстве Сун", "startTime": "4:04:50", "endTime": "4:05:30"}, {"start": 14729.7, "end": 14735.9, "dur": 6.2, "desc": "Комментарий из чата: «просидел с ровной спиной за рассказ»", "relevance": "LOW", "relevanceExplained": "Реакция зрителя из чата без содержательной ценности", "startTime": "4:05:30", "endTime": "4:05:36"}, {"start": 14735.9, "end": 14811.2, "dur": 75.3, "desc": "Демографические данные империи Сун: 5 агломераций-миллионников в Южной Сун и 40% мирового населения в двух государствах (Сун и Цзинь)", "relevance": "HIGH", "relevanceExplained": "Конкретные демографические факты напрямую относятся к теме расцвета империи Сун и дополняют обсуждение экономического и аграрного развития", "startTime": "4:05:36", "endTime": "4:06:51"}, {"start": 14811.2, "end": 14958.3, "dur": 147.1, "desc": "Объявление короткого перерыва и тревожная музыка", "relevance": "LOW", "relevanceExplained": "Служебный момент стрима - перерыв и музыкальная пауза не несут информационной ценности для будущего зрителя", "startTime": "4:06:51", "endTime": "4:09:18"}, {"start": 14958.3, "end": 14983.7, "dur": 25.4, "desc": "Интригующее вступление к теме падения Сун с показом инфографики", "relevance": "HIGH", "relevanceExplained": "Это вводная часть к важнейшему разделу лекции о монгольском завоевании - одной из ключевых тем эфира", "startTime": "4:09:18", "endTime": "4:09:44"}, {"start": 14983.7, "end": 15100.8, "dur": 117.1, "desc": "Начало монгольской угрозы: объединение Тимуджином монгольских племён и уничтожение Си-Ся и рейды на государство Цзинь при Угедее", "relevance": "HIGH", "relevanceExplained": "Ключевой исторический нарратив о начале монгольских завоеваний и реакции Сун - прямо относится к основной теме", "startTime": "4:09:44", "endTime": "4:11:41"}, {"start": 15100.8, "end": 15197.1, "dur": 96.3, "desc": "Союз империи Сун с монголами против Цзинь: мотивация Сун отомстить за прошлые поражения и совместная осада городов", "relevance": "HIGH", "relevanceExplained": "Центральная тема - стратегическая ошибка Сун при заключении союза с монголами. Прямо относится к рассказу о падении империи", "startTime": "4:11:41", "endTime": "4:13:17"}, {"start": 15197.1, "end": 15245.6, "dur": 48.5, "desc": "Монгольская тактика ведения войны: ультиматум - полная капитуляция или тотальное уничтожение", "relevance": "HIGH", "relevanceExplained": "Важный контекст для понимания монгольских завоеваний и их эффективности. Относится к основной теме", "startTime": "4:13:17", "endTime": "4:14:06"}, {"start": 15245.6, "end": 15386.7, "dur": 141.1, "desc": "Разгром Цзинь и попытка Сун вернуть Кайфэн и Лоян: столкновение с монголами и экономический кризис из-за массовой печати бумажных денег", "relevance": "HIGH", "relevanceExplained": "Ключевой поворотный момент - Сун теряет инициативу и начинается экономический коллапс. Прямо относится к теме падения империи", "startTime": "4:14:06", "endTime": "4:16:27"}, {"start": 15386.7, "end": 15437.0, "dur": 50.3, "desc": "Почему Сун не осознавали монгольскую угрозу: для них монголы были лишь очередными степняками-союзниками", "relevance": "HIGH", "relevanceExplained": "Важное объяснение стратегической слепоты Сун - ключевой элемент нарратива о падении империи", "startTime": "4:16:27", "endTime": "4:17:17"}, {"start": 15437.0, "end": 15501.2, "dur": 64.2, "desc": "Курултай Угедея 1235 года: решение о войне против Сун", "relevance": "HIGH", "relevanceExplained": "Прямое продолжение нарратива о монгольском вторжении - формальное начало 40-летней войны", "startTime": "4:17:17", "endTime": "4:18:21"}, {"start": 15501.2, "end": 15636.8, "dur": 135.6, "desc": "Ход 40-летней войны: сложности лобовых атак и обходной маневр через Сычуань и верховья Янцзы. Гибель хана Мунке при осаде Хэчжоу", "relevance": "HIGH", "relevanceExplained": "Детальное описание военной кампании и стратегии монголов - центральная часть рассказа о падении Сун", "startTime": "4:18:21", "endTime": "4:20:37"}, {"start": 15636.8, "end": 15738.0, "dur": 101.2, "desc": "Трудности монголов в Южном Китае: климат и необходимость пехоты. Использование инженеров разных народов (персы с трибюше) и огнестрельного оружия", "relevance": "HIGH", "relevanceExplained": "Важные детали о технологическом аспекте войны и адаптации монголов - относится к основной теме", "startTime": "4:20:37", "endTime": "4:22:18"}, {"start": 15738.0, "end": 15889.0, "dur": 151.0, "desc": "Хубилай формирует две китайские армии: из северных китайцев и перебежчиков из Сун. Роль теории небесного мандата в легитимации монгольской власти", "relevance": "HIGH", "relevanceExplained": "Ключевой блок о механизме разрушения империи изнутри через перебежчиков и идеологическую легитимацию монголов", "startTime": "4:22:18", "endTime": "4:24:49"}, {"start": 15889.0, "end": 16011.5, "dur": 122.5, "desc": "Хубилай основывает династию Юань в 1271 году. Ханбалык (будущий Пекин) как новая столица. Попытки вторжения в Японию и крах экономики Сун", "relevance": "HIGH", "relevanceExplained": "Кульминация темы - формальное основание новой династии и завершение империи Сун", "startTime": "4:24:49", "endTime": "4:26:52"}, {"start": 16011.5, "end": 16076.2, "dur": 64.7, "desc": "Территориальные завоевания монголов: Юньнань, Вьетнам и формальное признание вассалитета", "relevance": "HIGH", "relevanceExplained": "Прямое продолжение темы монгольского завоевания и сравнение с возможностями Сун - основная тема эфира", "startTime": "4:26:52", "endTime": "4:27:56"}, {"start": 16076.2, "end": 16228.9, "dur": 152.7, "desc": "История Вэнь Тяньсяна - последнего лоялиста Сун, его сопротивление и казнь", "relevance": "HIGH", "relevanceExplained": "Яркий исторический эпизод, иллюстрирующий культуру служения сунских чиновников - центральная тема лекции", "startTime": "4:27:56", "endTime": "4:30:29"}, {"start": 16228.9, "end": 16330.1, "dur": 101.2, "desc": "Обобщение: наследие сунской системы - формирование нового типа служилого человека и принцип гражданского управления", "relevance": "HIGH", "relevanceExplained": "Ключевой вывод лекции о том, как эпоха Сун сформировала новый тип элиты и принцип верховенства гражданских над военными", "startTime": "4:30:29", "endTime": "4:32:10"}, {"start": 16330.1, "end": 16614.6, "dur": 284.5, "desc": "Итоговая оценка эпохи Сун: её значимость, дискуссия о «модерне» и уникальность без навязывания европейских терминов", "relevance": "HIGH", "relevanceExplained": "Авторская оценка всей рассмотренной эпохи, критика попыток навязать европейские рамки - важное заключение лекции", "startTime": "4:32:10", "endTime": "4:36:55"}, {"start": 16614.6, "end": 16641.1, "dur": 26.5, "desc": "Ответ на вопрос из чата: зачем монголам был нужен Южный Китай", "relevance": "MID", "relevanceExplained": "Краткий ответ на вопрос зрителя, не добавляющий существенно новой информации к уже сказанному в лекции", "startTime": "4:36:55", "endTime": "4:37:21"}, {"start": 16641.1, "end": 16661.0, "dur": 19.9, "desc": "Завершение стрима: радость от возобновления серии стримов по Китаю после шестилетнего перерыва", "relevance": "HIGH", "relevanceExplained": "Последнее прощание стрима и важная метаинформация о продолжении плейлиста", "startTime": "4:37:21", "endTime": "4:37:41"}, {"start": 16661.0, "end": 16810.4, "dur": 149.5, "desc": "Ответ на вопрос из чата: как монголы захватили Тибет и ассимиляция монголов в покорённых народах", "relevance": "MID", "relevanceExplained": "Побочная тема - ответ на вопрос зрителя. Содержательный, но уходит от основной темы Сун к общим закономерностям кочевых завоеваний", "startTime": "4:37:41", "endTime": "4:40:10"}, {"start": 16810.4, "end": 16875.0, "dur": 64.6, "desc": "Финальное обращение к зрителям: надежда что эпоха Сун запомнилась и благодарность аудитории", "relevance": "HIGH", "relevanceExplained": "Последнее прощание стрима - автор подводит итог и благодарит зрителей", "startTime": "4:40:10", "endTime": "4:41:15"}, {"start": 16875.0, "end": 17151.2, "dur": 276.2, "desc": "Неформальное общение с чатом: обсуждение котиков, рисунки китайских котов и прощание", "relevance": "LOW", "relevanceExplained": "Служебная часть стрима - неформальное общение, показ картинок котов, не несущее информационной ценности для будущих зрителей", "startTime": "4:41:15", "endTime": "4:45:51"}];
+const highlights = [{"start": 831.8, "dur": 44.7, "durLabel": "~1 мин", "title": "Миф о 39 миллионах погибших в Древнем Китае", "desc": "В интернете часто пишут, что во время восстания Ань Лушаня погибла чуть ли не четверть населения Земли. Историк объясняет, почему эта огромная цифра — лишь результат бюрократической ошибки и потери налоговых списков.", "tags": "#мифы #история #китай #наука #факты", "quality": "VIRAL", "qualityExplained": "Разоблачение популярного исторического мифа с неожиданным и очень логичным объяснением. Идеально для короткого образовательного формата, вызывает сильное удивление.", "startTime": "13:52"}, {"start": 2221.5, "dur": 41.1, "durLabel": "~1 мин", "title": "Почему Конфуций ненавидел бизнесменов?", "desc": "Почему в древнекитайском обществе торговцы считались низшим слоем населения и настоящими паразитами? Узнайте, в чем заключалась логика Конфуция по отношению к перекупщикам и любому бизнесу.", "tags": "#конфуций #бизнес #экономика #история #китай", "quality": "VIRAL", "qualityExplained": "Смешная и провокационная в современных реалиях мысль о том, что торговцы — паразиты, потому что не улучшают товар. Отлично цепляет внимание и легко понимается вне контекста.", "startTime": "37:01"}, {"start": 2373.4, "dur": 102.0, "durLabel": "~2 мин", "title": "Почему в Древнем Китае военные не пользовались уважением?", "desc": "Удивительный факт о социальной иерархии древнего Китая. Почему крестьяне считались лучшими людьми после чиновников, а военным даже не нашлось места в идеальном обществе Конфуция.", "tags": "#история #китай #общество #факты #конфуцианство", "quality": "VIRAL", "qualityExplained": "Идея абсолютно контринтуитивна для европейского восприятия истории, где рыцари и военные — это элита. Законченная, парадоксальная и очень цепляющая мысль.", "startTime": "39:33"}, {"start": 3236.9, "dur": 108.4, "durLabel": "~2 мин", "title": "Средневековый Тиндер: как торговцы покупали зятьев?", "desc": "Историк рассказывает о брачных контрактах в эпоху Сун. Как богатые торговцы инвестировали в бедных ученых, становясь их спонсорами ради удачного замужества своих дочерей.", "tags": "#отношения #брак #историякитая #интересныефакты #тиндер", "quality": "VIRAL", "qualityExplained": "Автор проводит смешную аналогию со средневековым тиндером и рассказывает о предельно прагматичных брачных контрактах. Это живо, смешно и очень хорошо держит внимание на протяжении всего фрагмента.", "startTime": "53:57"}, {"start": 5805.5, "dur": 159.8, "durLabel": "~3 мин", "title": "Почему ты прокрастинируешь? Ответ древних китайцев", "desc": "Древнекитайская философия блестяще объясняет современные проблемы. Узнайте, как залипание в шортсы и ложь самому себе загрязняют внутреннюю энергию Ци, лишают концентрации и приводят к жизненному краху.", "tags": "#прокрастинация #конфуцианство #самодисциплина #философия #мотивация", "quality": "VIRAL", "qualityExplained": "Гениальное переложение древней философской концепции искренности на современные реалии думскроллинга и прокрастинации. Фрагмент очень смешной, максимально жизненный, бьет в боль зрителя и идеально подходит для коротких видео.", "startTime": "1:36:46"}, {"start": 6564.6, "dur": 63.6, "durLabel": "~2 мин", "title": "Почему мораль — это закон физики в Китае?", "desc": "Неожиданный взгляд на этику через призму неоконфуцианства. Вы узнаете, почему правильное поведение — это не выдумка людей, а такой же объективный закон космоса, как гравитация или смена сезонов.", "tags": "#философия #мораль #китай #этика #история", "quality": "VIRAL", "qualityExplained": "Идея о том, что этика встроена в фундамент Вселенной наравне с орбитами планет — контринтуитивная мысль, которая сильно цепляет зрителя и заставляет задуматься о разнице западного и восточного мышления.", "startTime": "1:49:25"}, {"start": 6836.3, "dur": 36.7, "durLabel": "~1 мин", "title": "Зачем коммунисты продвигали традиционную медицину?", "desc": "Циничный, но крайне прагматичный ответ на вопрос об отношении китайского государства к энергетическим практикам. Главное — не вера в чакры, а то, что люди делают утреннюю зарядку.", "tags": "#медицина #китай #коммунисты #история #здоровье", "quality": "VIRAL", "qualityExplained": "Короткий, хлесткий и очень провокационный фрагмент. Раскрывает прагматику китайской власти, разрушая мифы о традиционной медицине. Идеальный самодостаточный кусок для коротких видео (Shorts).", "startTime": "1:53:56"}, {"start": 8617.7, "dur": 124.2, "durLabel": "~3 мин", "title": "Китайский император, который бросил страну ради рисования", "desc": "Поразительная история китайского правителя Хуэйцзуна. Как император, обожавший рисовать журавлей и слушать музыку, отреагировал на начало разрушительной войны и полномасштабное вторжение врагов.", "tags": "#история #китай #император #искусство #война", "quality": "VIRAL", "qualityExplained": "Фрагмент строится на мощном комичном контрасте: великий монарх, столкнувшись с вторжением, по сути заявляет «я на это не подписывался» и уходит. Отличный сторителлинг, вызывающий сильные эмоции.", "startTime": "2:23:38"}, {"start": 9123.6, "dur": 93.3, "durLabel": "~2 мин", "title": "Почему император убил своего лучшего полководца?", "desc": "Парадоксальная история генерала Юэ Фэя, который успешно громил врагов Китая, но был казнен собственным правителем. Почему гражданская элита династии Сун боялась сильной армии больше, чем иноземных захватчиков?", "tags": "#история #китай #армия #политика #предательство", "quality": "VIRAL", "qualityExplained": "Момент описывает крайне контринтуитивную и драматичную ситуацию. Предательство успешного генерала собственным правительством из страха перед военным переворотом вызывает сильные эмоции и недоумение, что идеально подходит для вирального шортса.", "startTime": "2:32:04"}, {"start": 10631.1, "dur": 230.7, "durLabel": "~4 мин", "title": "Как Китай первым в мире переходил на каменный уголь?", "desc": "В эпоху Сун китайская промышленность достигла таких масштабов, что в стране закончились леса. Автор рассказывает, как это привело к первой в мире добыче угля, бурению скважин для нефти и появлению первых инициатив по высадке деревьев.", "tags": "#история #китай #экология #промышленность #наука", "quality": "VIRAL", "qualityExplained": "Законченная мысль, ломающая стереотипы о древнем мире. Отлично показана контринтуитивная причинно-следственная связь между ростом древнего производства, экологическим кризисом и переходом на новые виды топлива.", "startTime": "2:57:11"}];
+const silenceCuts = [{"start": 487.6, "end": 494.0}, {"start": 590.8, "end": 596.0}, {"start": 675.7, "end": 678.2}, {"start": 705.0, "end": 707.5}, {"start": 999.5, "end": 1006.0}, {"start": 1195.0, "end": 1202.5}, {"start": 1503.1, "end": 1508.3}, {"start": 1611.7, "end": 1614.2}, {"start": 1702.2, "end": 1706.4}, {"start": 1800.3, "end": 1803.5}, {"start": 2205.9, "end": 2208.6}, {"start": 2832.2, "end": 2835.2}, {"start": 3097.6, "end": 3101.2}, {"start": 3374.6, "end": 3377.7}, {"start": 3399.8, "end": 3402.8}, {"start": 3524.2, "end": 3526.9}, {"start": 3580.7, "end": 3588.3}, {"start": 3612.6, "end": 3621.2}, {"start": 3963.5, "end": 3968.4}, {"start": 4992.7, "end": 4995.3}, {"start": 5084.1, "end": 5088.0}, {"start": 5758.8, "end": 5763.1}, {"start": 6229.2, "end": 6232.8}, {"start": 6321.4, "end": 6324.1}, {"start": 6329.5, "end": 6332.6}, {"start": 6349.2, "end": 6352.6}, {"start": 6378.3, "end": 6381.8}, {"start": 6686.7, "end": 6694.3}, {"start": 6724.7, "end": 6727.8}, {"start": 7380.6, "end": 7385.9}, {"start": 7438.5, "end": 7441.4}, {"start": 7593.9, "end": 7597.0}, {"start": 7807.0, "end": 7809.6}, {"start": 7989.8, "end": 7994.4}, {"start": 8370.4, "end": 8372.9}, {"start": 8485.3, "end": 8491.0}, {"start": 8523.4, "end": 8526.1}, {"start": 8554.2, "end": 8556.8}, {"start": 8595.0, "end": 8599.9}, {"start": 8668.0, "end": 8672.1}, {"start": 8701.6, "end": 8705.5}, {"start": 8719.7, "end": 8722.2}, {"start": 8741.9, "end": 8744.4}, {"start": 8776.1, "end": 8780.0}, {"start": 8885.0, "end": 8887.7}, {"start": 9033.0, "end": 9035.6}, {"start": 9109.9, "end": 9114.1}, {"start": 9244.7, "end": 9247.8}, {"start": 9358.8, "end": 9540.0}, {"start": 9632.3, "end": 9635.3}, {"start": 9929.4, "end": 9932.3}, {"start": 10050.5, "end": 10054.8}, {"start": 10074.8, "end": 10077.6}, {"start": 10886.3, "end": 10889.8}, {"start": 10998.6, "end": 11001.1}, {"start": 11382.7, "end": 11386.4}, {"start": 11611.3, "end": 11613.9}, {"start": 11872.1, "end": 11875.1}, {"start": 11954.4, "end": 11957.6}, {"start": 12136.8, "end": 12142.1}, {"start": 12178.3, "end": 12181.4}, {"start": 12768.5, "end": 12771.3}, {"start": 12774.5, "end": 12777.0}, {"start": 12787.5, "end": 12790.3}, {"start": 12803.1, "end": 12805.8}, {"start": 12965.0, "end": 12968.1}, {"start": 13098.4, "end": 13101.4}, {"start": 13375.6, "end": 13378.8}, {"start": 13432.2, "end": 13435.6}, {"start": 13552.7, "end": 13556.1}, {"start": 13595.9, "end": 13598.9}, {"start": 13609.4, "end": 13613.5}, {"start": 13628.8, "end": 13633.8}, {"start": 13648.3, "end": 13654.2}, {"start": 13667.2, "end": 13671.1}, {"start": 13684.8, "end": 13689.9}, {"start": 13698.4, "end": 13703.2}, {"start": 13833.1, "end": 13835.7}, {"start": 13847.9, "end": 13854.8}, {"start": 13864.8, "end": 13867.6}, {"start": 13892.6, "end": 13896.2}, {"start": 14019.2, "end": 14023.9}, {"start": 14204.5, "end": 14207.2}, {"start": 14227.7, "end": 14230.4}, {"start": 14247.2, "end": 14266.6}, {"start": 14269.8, "end": 14273.9}, {"start": 14328.1, "end": 14331.0}, {"start": 14377.1, "end": 14379.7}, {"start": 14429.5, "end": 14437.6}, {"start": 14457.0, "end": 14459.7}, {"start": 14464.7, "end": 14467.2}, {"start": 14522.3, "end": 14527.3}, {"start": 14566.3, "end": 14569.6}, {"start": 14632.9, "end": 14638.8}, {"start": 14648.3, "end": 14653.4}, {"start": 14690.4, "end": 14693.3}, {"start": 14720.3, "end": 14722.8}, {"start": 14785.8, "end": 14788.3}, {"start": 14802.3, "end": 14811.2}, {"start": 15413.3, "end": 15418.6}, {"start": 15433.2, "end": 15437.0}, {"start": 15636.8, "end": 15640.5}, {"start": 15963.0, "end": 15968.5}, {"start": 16068.7, "end": 16076.2}, {"start": 16107.3, "end": 16110.7}, {"start": 16281.7, "end": 16285.1}, {"start": 16398.1, "end": 16402.7}, {"start": 16490.4, "end": 16494.9}, {"start": 16810.4, "end": 16815.8}, {"start": 16820.1, "end": 16825.1}, {"start": 16826.1, "end": 16832.7}];
+const timecodes = [{"time": "01:01", "title": "Возвращение к китайскому циклу: Империя Сун и Высокое Средневековье", "secs": 61}, {"time": "02:15", "title": "Почему Китай смог пересобрать свою империю, а Римская империя — нет?", "secs": 135}, {"time": "06:01", "title": "Крах империи Тан: восстания, власть кочевников и эпоха пяти династий", "secs": 361}, {"time": "11:56", "title": "Гонения на буддистов: почему богатые монастыри стали мишенью государства", "secs": 716}, {"time": "15:17", "title": "Железная логика мандата Неба: как генерал Чжао Куанъинь стал императором Сун", "secs": 917}, {"time": "19:01", "title": "Экзамены вместо кумовства: как династия Сун создала новую элиту чиновников", "secs": 1141}, {"time": "24:02", "title": "Роспуск генералов за чашей вина: почему военными стали управлять гражданские", "secs": 1442}, {"time": "30:28", "title": "Как проходили государственные экзамены: от конфуцианских эссе до указов императора", "secs": 1828}, {"time": "35:38", "title": "Экзаменационная мясорубка: сколько человек на самом деле доходили до финала?", "secs": 2138}, {"time": "39:31", "title": "Жизнь после провала: частные школы и брачные контракты с богатыми купцами", "secs": 2371}, {"time": "46:00", "title": "Женщины в сунском Китае: почему статус старшинства перекрывал гендерные роли", "secs": 2760}, {"time": "48:13", "title": "Печатная революция в Китае: государственные энциклопедии и массовое производство книг", "secs": 2893}, {"time": "53:58", "title": "Частные библиотеки и изобретение наборного шрифта: почему деревянные доски всё равно победили", "secs": 3238}, {"time": "58:21", "title": "Зарождение неоконфуцианства: как образованная элита бросила вызов даосам и буддистам", "secs": 3501}, {"time": "1:07:32", "title": "Философия Чжу Си: постижение сути вещей и тихая медитация как путь к познанию Вселенной", "secs": 4052}, {"time": "1:15:50", "title": "Космическое значение осанки: почему искренность и ритуал важнее личных эмоций", "secs": 4550}, {"time": "1:22:46", "title": "Великий предел и Инь-Ян: как неоконфуцианство объединило этику и устройство мироздания", "secs": 4966}, {"time": "1:33:46", "title": "Военный парадокс Сун: почему гигантская армия постоянно проигрывала северным кочевникам", "secs": 5626}, {"time": "1:41:44", "title": "Унизительные мирные договоры и чай в обмен на лошадей: дипломатия слабой империи", "secs": 6104}, {"time": "1:49:25", "title": "Катастрофа Северной Сун: вторжение чжурчжэней, разрушение дамб Хуанхэ и пленение императора", "secs": 6565}, {"time": "1:58:35", "title": "Трагедия генерала Юэ Фэя: почему двор Сун боялся своих полководцев больше, чем врагов", "secs": 7115}, {"time": "2:03:28", "title": "Демографический взрыв и освоение Юга: как новый сорт риса спас китайскую экономику", "secs": 7408}, {"time": "2:11:41", "title": "Коммерциализация общества: от производства шёлка до изобретения настоящего фарфора", "secs": 7901}, {"time": "2:19:40", "title": "Промышленный рывок: масштабная металлургия, вырубка лесов и переход на каменный уголь", "secs": 8380}, {"time": "2:24:37", "title": "Эволюция денег: от связок тяжелых железных монет к первой в мире бумажной валюте", "secs": 8677}, {"time": "2:30:37", "title": "Морская держава Сун: международная торговля, навигационный компас и доминирование на торговых путях", "secs": 9037}, {"time": "2:40:43", "title": "Научный ренессанс: передовая математика, астрономия и первые формулы взрывного пороха", "secs": 9643}, {"time": "2:46:09", "title": "Сунская живопись: эстетика монохромной туши и ничтожность человека перед великой природой", "secs": 9969}, {"time": "2:59:41", "title": "Путешествие внутрь картины: как шедевр «По реке в день поминовения усопших» отразил жизнь эпохи", "secs": 10781}, {"time": "3:16:12", "title": "Роковая ошибка дипломатии: союз с Чингисханом и начало конца династии Сун", "secs": 11772}, {"time": "3:24:54", "title": "Сорокалетняя война с монголами: осады, массовые предательства и рождение династии Юань", "secs": 12294}, {"time": "3:34:29", "title": "Последние лоялисты Сун: казнь Вэнь Тяньсяна и триумф принципов гражданского долга", "secs": 12869}, {"time": "3:39:34", "title": "Наследие империи Сун: как философские идеи чиновников определили развитие Восточной Азии до XX века", "secs": 13174}];
+const uiStrings = {"no_explanation": "No explanation provided", "why_relevance": "Why {relevance}?", "duration_hour_unit": "ч", "duration_minute_unit": "м", "duration_second_unit": "с"};
+
+function fmtDuration(secs) {
+  var total = Math.max(0, Math.round(secs));
+  var h = Math.floor(total / 3600);
+  var m = Math.floor((total % 3600) / 60);
+  var s = total % 60;
+  var mm = String(m).padStart(2, '0');
+  var ss = String(s).padStart(2, '0');
+  if (h > 0) {
+    return h + ' ' + uiStrings.duration_hour_unit + ' ' + mm + uiStrings.duration_minute_unit + ' ' + ss + uiStrings.duration_second_unit;
+  }
+  return mm + uiStrings.duration_minute_unit + ' ' + ss + uiStrings.duration_second_unit;
+}
+
+function fmtTime(secs) {
+  var h = Math.floor(secs / 3600);
+  var m = Math.floor((secs % 3600) / 60);
+  var s = Math.floor(secs % 60);
+  return (h > 0 ? h + ':' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function pct(secs) {
+  return (secs / TOTAL_DURATION) * 100;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function renderHighlightTags(tags) {
+  return String(tags)
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(function(tag) {
+      return '<span class="hl-tag">' + escapeHtml(tag) + '</span>';
+    })
+    .join('');
+}
+
+function renderTimeline() {
+  var bar = document.getElementById('timelineBar');
+  var markersDiv = document.getElementById('highlightMarkers');
+  var rulerDiv = document.getElementById('timeRuler');
+  var tooltip = document.getElementById('tooltip');
+
+  segments.forEach(function(seg, i) {
+    var el = document.createElement('div');
+    el.className = 'timeline-segment relevance-' + seg.relevance;
+    el.style.left = pct(seg.start) + '%';
+    el.style.width = Math.max(pct(seg.dur), 0.08) + '%';
+    el.dataset.idx = i;
+    bar.appendChild(el);
+  });
+
+  silenceCuts.forEach(function(s) {
+    var dur = s.end - s.start;
+    if (dur < 5) return;
+    var el = document.createElement('div');
+    el.className = 'timeline-silence';
+    el.style.left = pct(s.start) + '%';
+    el.style.width = Math.max(pct(dur), 0.05) + '%';
+    bar.appendChild(el);
+  });
+
+  highlights.forEach(function(h) {
+    var el = document.createElement('span');
+    el.className = 'highlight-marker';
+    el.innerHTML = '&#9670;';
+    el.style.left = pct(h.start) + '%';
+    el.title = h.title;
+
+    el.addEventListener('mouseenter', function(e) {
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(h.title) + '</div>' +
+        '<div style="font-size:12px;margin-top:4px;">' + escapeHtml(h.desc) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(h.startTime) + ' (' + escapeHtml(h.durLabel) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    });
+    el.addEventListener('mousemove', positionTooltip);
+    el.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+
+    markersDiv.appendChild(el);
+  });
+  for (var t = 1800; t <= TOTAL_DURATION; t += 1800) {
+    var el = document.createElement('div');
+    el.className = 'time-ruler-mark';
+    el.style.left = pct(t) + '%';
+    el.textContent = fmtTime(t);
+    rulerDiv.appendChild(el);
+  }
+
+  bar.addEventListener('mousemove', function(e) {
+    var rect = bar.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var timeSecs = (x / rect.width) * TOTAL_DURATION;
+    var seg = segments.find(function(s) { return timeSecs >= s.start && timeSecs <= s.end; });
+    if (seg) {
+      var relevanceExplained = seg.relevanceExplained || uiStrings.no_explanation;
+      tooltip.innerHTML =
+        '<div class="tt-title">' + escapeHtml(seg.desc) + '</div>' +
+        '<div class="tt-why ' + seg.relevance + '">' + uiStrings.why_relevance.replace('{relevance}', escapeHtml(seg.relevance)) + '</div>' +
+        '<div class="tt-explanation">' + escapeHtml(relevanceExplained) + '</div>' +
+        '<div class="tt-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + ' (' + fmtDuration(seg.dur) + ')</div>';
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+    } else {
+      tooltip.style.display = 'none';
+    }
+  });
+
+  bar.addEventListener('mouseleave', function() {
+    tooltip.style.display = 'none';
+  });
+}
+
+function positionTooltip(e) {
+  var tooltip = document.getElementById('tooltip');
+  var pad = 12;
+  var x = e.clientX + pad;
+  var y = e.clientY + pad;
+  var tw = tooltip.offsetWidth;
+  var th = tooltip.offsetHeight;
+  if (x + tw > window.innerWidth - 20) x = e.clientX - tw - pad;
+  if (y + th > window.innerHeight - 20) y = e.clientY - th - pad;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+
+function renderChapters() {
+  var tbody = document.getElementById('chaptersBody');
+  var empty = document.getElementById('chaptersEmpty');
+  if (timecodes.length === 0) {
+    empty.hidden = false;
+    return;
+  }
+
+  empty.hidden = true;
+  timecodes.forEach(function(tc, i) {
+    var nextSecs = i < timecodes.length - 1 ? timecodes[i + 1].secs : SHORTENED_DURATION;
+    var gap = Math.max(nextSecs - tc.secs, 0);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(tc.time) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(gap) + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(tc.title) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function renderHighlights() {
+  var grid = document.getElementById('highlightsGrid');
+  highlights.forEach(function(h) {
+    var card = document.createElement('div');
+    card.className = 'highlight-card ' + h.quality;
+    var tagsHtml = renderHighlightTags(h.tags);
+    var qualityExplained = h.qualityExplained || '';
+    card.innerHTML =
+      '<div class="hl-title">' + escapeHtml(h.title) + '</div>' +
+      '<div class="hl-meta">' +
+        '<span class="hl-quality ' + escapeHtml(h.quality) + '">' + escapeHtml(h.quality) + '</span>' +
+        '<span class="chapter-duration">' + escapeHtml(h.durLabel) + '</span>' +
+        '<span class="hl-source">' + escapeHtml(h.startTime) + '</span>' +
+      '</div>' +
+      '<div class="hl-desc">' + escapeHtml(h.desc) + '</div>' +
+      '<div class="hl-quality-explained">' + escapeHtml(qualityExplained) + '</div>' +
+      (tagsHtml ? '<div class="hl-tags">' + tagsHtml + '</div>' : '');
+    grid.appendChild(card);
+  });
+}
+
+function renderSegments() {
+  var tbody = document.getElementById('segmentsBody');
+  segments.forEach(function(seg) {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="col-time"><span class="chapter-time">' + escapeHtml(seg.startTime) + ' — ' + escapeHtml(seg.endTime) + '</span></td>' +
+      '<td class="col-dur"><span class="chapter-duration">' + fmtDuration(seg.dur) + '</span></td>' +
+      '<td class="col-rel"><span class="relevance-badge ' + seg.relevance + '">' + seg.relevance + '</span></td>' +
+      '<td class="col-desc">' + escapeHtml(seg.desc) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.exampleCatalog && typeof window.exampleCatalog.syncCurrentExamplePage === 'function') {
+    window.exampleCatalog.syncCurrentExamplePage(document);
+  }
+  renderTimeline();
+  renderChapters();
+  renderHighlights();
+  renderSegments();
+});
+</script>
+</body>
+</html>
