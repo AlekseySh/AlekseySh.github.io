@@ -6,6 +6,10 @@ window.__siteData = {
         whatsapp: "https://wa.me/66946160072"
     },
 
+    requests: {
+        timecodesEndpoint: "https://script.google.com/macros/s/AKfycbz78CIKx6PlActq7nvs-6vvdU5qWO5UH3qq081mdYfCHxj9ZnAfhE9NpeFgyUDlyZpy/exec"
+    },
+
     // Shared playlists landing page for clickable cover images
     playlistsLink: "https://www.youtube.com/@cutto-app/playlists",
 

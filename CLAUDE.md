@@ -11,7 +11,7 @@ Static HTML/CSS multi-page site for Cutto — a video processing tool that cuts 
 Static site with no build tools, no package manager, no framework. Supports EN/RU via a lightweight JS-based i18n system.
 
 - `index.html` — landing page (How It Works)
-- `app.html` — config/setup page (CTA target)
+- `application/index.html` — application request page (CTA target)
 - `assets/css/styles.css` — all shared CSS
 - `assets/js/lucide.min.js` — Lucide Icons v0.563.0
 - `assets/js/i18n.js` — translation engine (reads `[data-i18n]` attributes)
@@ -53,4 +53,4 @@ Lucide Icons via `<i data-lucide="icon-name"></i>` syntax, initialized with `luc
 2. **Cloud Processing** — timeline visualization with keep/cut segments, task list
 3. **Get Your Content** — output video, highlight clips, timecodes, tags, download
 
-**app.html** — Configuration page (skeleton), linked from CTA buttons
+**application/index.html** — Application request page, linked from CTA buttons

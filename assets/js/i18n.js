@@ -6,8 +6,11 @@
     var SUPPORTED = ['en', 'ru', 'es'];
 
     function detectLanguage() {
-        var stored = localStorage.getItem(STORAGE_KEY);
+        var pageDefault = document.documentElement.getAttribute('data-default-lang');
+        var ignoreStored = document.documentElement.getAttribute('data-ignore-stored-lang') === 'true';
+        var stored = ignoreStored ? null : localStorage.getItem(STORAGE_KEY);
         if (stored && SUPPORTED.indexOf(stored) !== -1) return stored;
+        if (pageDefault && SUPPORTED.indexOf(pageDefault) !== -1) return pageDefault;
 
         return DEFAULT_LANG;
     }
@@ -26,7 +29,13 @@
         }
 
         // Update page title
-        if (translations['page.title']) {
+        var pageTitleKey = document.documentElement.getAttribute('data-page-title-i18n');
+        if (!pageTitleKey && document.body) {
+            pageTitleKey = document.body.getAttribute('data-page-title-i18n');
+        }
+        if (pageTitleKey && translations[pageTitleKey]) {
+            document.title = translations[pageTitleKey];
+        } else if (translations['page.title']) {
             document.title = translations['page.title'];
         }
         // Config page title override

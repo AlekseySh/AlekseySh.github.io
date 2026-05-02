@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru" data-page-title-i18n="application.title" data-default-lang="ru" data-ignore-stored-lang="true">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cutto — Timecodes for YouTube</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/lucide.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/lang/en.js"></script>
+    <script src="../assets/lang/ru.js"></script>
+    <script src="../assets/lang/es.js"></script>
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/site-data.js"></script>
+    <script src="../assets/js/site-data-loader.js"></script>
+</head>
+<body class="application-body">
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="ru" onclick="i18n.setLanguage('ru')"><span class="lang-flag">🇷🇺</span>RU</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn" data-lang="en" onclick="i18n.setLanguage('en')"><span class="lang-flag">🇺🇸</span>EN</button>
+    </div>
+
+    <main class="application-page">
+        <a href="../index.html" class="application-back">
+            <i data-lucide="arrow-left"></i>
+            <span data-i18n="application.back">назад</span>
+        </a>
+
+        <section class="application-hero">
+            <h1 data-i18n="application.heading">Таймкоды для YouTube</h1>
+        </section>
+
+        <section class="request-builder" aria-label="Timecode request builder">
+            <form class="request-form" id="timecode-request-form" novalidate>
+                <div class="request-field">
+                    <label for="video-path">
+                        <i data-lucide="link-2"></i>
+                        <span data-i18n="application.video.label">Ссылка на YouTube видео</span>
+                    </label>
+                    <div class="request-input-shell">
+                        <input id="video-path" type="url" inputmode="url" autocomplete="url" placeholder="https://www.youtube.com/watch?v=..." required>
+                    </div>
+                </div>
+
+                <div class="request-field">
+                    <label for="response-email">
+                        <i data-lucide="mail"></i>
+                        <span data-i18n="application.email.label">Email для получения результатов</span>
+                    </label>
+                    <div class="request-input-shell">
+                        <input id="response-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div class="request-field">
+                    <label for="request-comment">
+                        <i data-lucide="message-square-text"></i>
+                        <span data-i18n="application.comment.label">Комментарий, если нужно</span>
+                    </label>
+                    <div class="request-input-shell">
+                        <input id="request-comment" type="text" placeholder="">
+                    </div>
+                </div>
+
+                <fieldset class="request-field">
+                    <legend>
+                        <i data-lucide="globe-2"></i>
+                        <span data-i18n="application.language.label">Язык видео</span>
+                    </legend>
+                    <div class="request-choice-group">
+                        <label class="request-choice">
+                            <input type="radio" name="language-code" value="ru" checked>
+                            <span data-i18n="application.language.ru">Русский</span>
+                        </label>
+                        <label class="request-choice">
+                            <input type="radio" name="language-code" value="en">
+                            <span data-i18n="application.language.en">English</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="request-field">
+                    <legend>
+                        <i data-lucide="users"></i>
+                        <span data-i18n="application.speakers.label">Спикеры</span>
+                    </legend>
+                    <div class="request-choice-group">
+                        <label class="request-choice">
+                            <input type="radio" name="detect-speakers" value="FALSE" checked>
+                            <span data-i18n="application.speakers.single">Один</span>
+                        </label>
+                        <label class="request-choice">
+                            <input type="radio" name="detect-speakers" value="TRUE">
+                            <span data-i18n="application.speakers.multiple">Несколько</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <button class="request-send-button" type="submit">
+                    <span data-i18n="application.send">Создать</span>
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer application-footer">
+        <div class="footer-content">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4 data-i18n="footer.contact">Контакты</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-config="contacts.email"><i data-lucide="mail"></i> cuttoapp@gmail.com</a></li>
+                        <li><a href="#" data-config="contacts.telegram"><i data-lucide="send"></i> Telegram</a></li>
+                        <li><a href="#" data-config="contacts.whatsapp"><i data-lucide="message-circle"></i> WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            'use strict';
+
+            var form = document.getElementById('timecode-request-form');
+            var videoInput = document.getElementById('video-path');
+            var emailInput = document.getElementById('response-email');
+            var commentInput = document.getElementById('request-comment');
+            var submitButton = form.querySelector('.request-send-button');
+            var submitText = submitButton.querySelector('[data-i18n]');
+            var timecodesEndpoint = window.__siteData && window.__siteData.requests && window.__siteData.requests.timecodesEndpoint;
+
+            function getCheckedValue(name, fallback) {
+                var checked = document.querySelector('input[name="' + name + '"]:checked');
+                return checked ? checked.value : fallback;
+            }
+
+            function getSpeakerValue() {
+                return getCheckedValue('detect-speakers', 'FALSE');
+            }
+
+            function getTranslation(key, fallback) {
+                var lang = document.documentElement.lang;
+                var translations = (window.__translations && window.__translations[lang]) || {};
+                return translations[key] || fallback;
+            }
+
+            function buildPayload() {
+                return {
+                    email: emailInput.value.trim(),
+                    requested_at: new Date().toISOString(),
+                    pipeline: 'timecodes',
+                    inputs_json: JSON.stringify({
+                        video_path: videoInput.value.trim(),
+                        language_code: getCheckedValue('language-code', 'ru'),
+                        detect_speakers: getSpeakerValue()
+                    }),
+                    comment: commentInput.value.trim()
+                };
+            }
+
+            function validateRequired(input, fieldName) {
+                input.setCustomValidity('');
+                if (!input.value.trim()) {
+                    input.setCustomValidity('The field ' + fieldName + ' cannot be empty');
+                    input.reportValidity();
+                    return false;
+                }
+                return true;
+            }
+
+            function clearCustomError(input) {
+                input.setCustomValidity('');
+            }
+
+            function resetSubmitState() {
+                submitButton.classList.remove('request-send-button--sent');
+                submitButton.disabled = false;
+                submitText.setAttribute('data-i18n', 'application.send');
+                submitText.textContent = getTranslation('application.send', 'Create');
+            }
+
+            function markRequestSending() {
+                submitButton.classList.remove('request-send-button--sent');
+                submitButton.disabled = true;
+                submitText.setAttribute('data-i18n', 'application.sending');
+                submitText.textContent = getTranslation('application.sending', 'Sending...');
+            }
+
+            function markRequestSent() {
+                submitButton.classList.add('request-send-button--sent');
+                submitButton.disabled = true;
+                submitText.setAttribute('data-i18n', 'application.sent');
+                submitText.textContent = getTranslation('application.sent', 'Your request has been sent');
+            }
+
+            function showRegisterError(error) {
+                var message = getTranslation('application.error.register', 'Failed to register request. Please try again.');
+                if (error && error.message) message += '\n' + error.message;
+                alert(message);
+            }
+
+            async function sendRequest(payload) {
+                if (!timecodesEndpoint) {
+                    throw new Error('Timecodes endpoint is not configured');
+                }
+
+                var response = await fetch(timecodesEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+
+                var result = await response.json();
+                if (!result || result.ok !== true) {
+                    throw new Error((result && (result.error || result.error_code)) || 'Unexpected server response');
+                }
+
+                return result;
+            }
+
+            videoInput.addEventListener('input', function () {
+                clearCustomError(videoInput);
+                resetSubmitState();
+            });
+            emailInput.addEventListener('input', function () {
+                clearCustomError(emailInput);
+                resetSubmitState();
+            });
+            commentInput.addEventListener('input', function () {
+                resetSubmitState();
+            });
+            document.querySelectorAll('input[name="language-code"], input[name="detect-speakers"]').forEach(function (input) {
+                input.addEventListener('change', resetSubmitState);
+            });
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                if (!validateRequired(videoInput, 'YouTube link')) return;
+                if (!validateRequired(emailInput, 'Email')) return;
+                if (!form.reportValidity()) return;
+
+                var payload = buildPayload();
+                markRequestSending();
+
+                try {
+                    await sendRequest(payload);
+                    markRequestSent();
+                } catch (error) {
+                    console.error(error);
+                    resetSubmitState();
+                    showRegisterError(error);
+                }
+            });
+
+            if (window.lucide && window.lucide.createIcons) {
+                window.lucide.createIcons();
+            }
+        })();
+    </script>
+</body>
+</html>
