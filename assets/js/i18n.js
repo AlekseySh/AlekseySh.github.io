@@ -3,7 +3,7 @@
 
     var STORAGE_KEY = 'cutto_lang';
     var DEFAULT_LANG = 'ru';
-    var SUPPORTED = ['en', 'ru', 'es'];
+    var SUPPORTED = ['en', 'ru'];
 
     function detectLanguage() {
         var pageDefault = document.documentElement.getAttribute('data-default-lang');

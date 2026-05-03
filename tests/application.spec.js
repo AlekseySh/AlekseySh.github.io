@@ -18,7 +18,23 @@ function readTimecodesEndpoint() {
   return context.window.__siteData.requests.timecodesEndpoint;
 }
 
+function readTranslations(lang) {
+  const langPath = path.join(repoRoot, 'assets', 'lang', `${lang}.js`);
+  const context = { window: { __translations: {} } };
+
+  vm.runInNewContext(fs.readFileSync(langPath, 'utf8'), context, {
+    filename: langPath
+  });
+
+  return context.window.__translations[lang];
+}
+
 const timecodesEndpoint = readTimecodesEndpoint();
+const translations = {
+  en: readTranslations('en'),
+  ru: readTranslations('ru')
+};
+const outputArgKeys = ['original_video_timecodes', 'highlights', 'auto_edit'];
 
 async function openApplicationPage(page) {
   await page.goto(applicationUrl);
@@ -40,6 +56,14 @@ async function chooseRadio(page, name, value) {
 
   await page.locator('label.request-choice').filter({ has: input }).click();
   await expect(input).toBeChecked();
+}
+
+async function chooseOutput(page, output) {
+  await page.locator(`.output-card[data-output-card="${output}"] .output-card-main`).click();
+}
+
+async function tryDisabledOutput(page, output) {
+  await page.locator(`.output-card[data-output-card="${output}"] .output-card-main`).click({ force: true });
 }
 
 async function mockTimecodesEndpoint(page, handler) {
@@ -68,7 +92,35 @@ function parseJsonPost(request) {
   return JSON.parse(request.postData());
 }
 
+function getInputsFromRequest(request) {
+  return JSON.parse(parseJsonPost(request).inputs_json);
+}
+
+function expectOnlyOutputArgs(inputs, expectedKeys) {
+  for (const key of outputArgKeys) {
+    if (expectedKeys.includes(key)) {
+      expect(inputs).toHaveProperty(key);
+    } else {
+      expect(inputs).not.toHaveProperty(key);
+    }
+  }
+}
+
 test.describe('application page request form', () => {
+  test('keeps application translations in parity across supported languages', async () => {
+    const ruApplicationKeys = Object.keys(translations.ru)
+      .filter((key) => key.startsWith('application.'))
+      .sort();
+
+    for (const lang of ['en']) {
+      const applicationKeys = Object.keys(translations[lang])
+        .filter((key) => key.startsWith('application.'))
+        .sort();
+
+      expect(applicationKeys).toEqual(ruApplicationKeys);
+    }
+  });
+
   test('exposes and uses the configured timecodes endpoint', async ({ page }) => {
     const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
 
@@ -79,23 +131,164 @@ test.describe('application page request form', () => {
     )).toBe(timecodesEndpoint);
 
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     expect(requests).toHaveLength(1);
     expect(requests[0].url()).toBe(timecodesEndpoint);
   });
 
-  test('starts with default radio options selected', async ({ page }) => {
+  test('starts with default radio options selected and no output selected', async ({ page }) => {
     await openApplicationPage(page);
 
+    await expect(page).toHaveTitle('Обработать моё видео с CUTTO');
+    await expect(page.locator('.application-hero h1')).toHaveText('Обработать моё видео с CUTTO');
+    await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube или Twitch видео');
+    await expect(page.locator('.output-picker legend span')).toHaveText('Что создать?');
+    await expect(page.locator('.output-card[data-output-card="timecodes"] .output-title')).toHaveText('Таймкоды для исходного видео');
+    await expect(page.locator('.output-card[data-output-card="timecodes"] .output-description')).toHaveText('Получите список глав в формате YouTube');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-title')).toHaveText('Хайлайты');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-description')).toHaveText('Получите короткие клипы из самых интересных моментов');
+    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-title')).toHaveText('Автомонтаж');
+    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-description')).toHaveText('Получите укороченное видео');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-unavailable')).toHaveText('В разработке');
+    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveText('В разработке');
+
+    const formOrder = await page.evaluate(() => {
+      const outputPicker = document.querySelector('.output-picker');
+      const emailField = document.getElementById('response-email').closest('.request-field');
+      const commentField = document.getElementById('request-comment').closest('.request-field');
+      const sendButton = document.querySelector('.request-send-button');
+
+      return Boolean(outputPicker.compareDocumentPosition(emailField) & Node.DOCUMENT_POSITION_FOLLOWING)
+        && Boolean(emailField.compareDocumentPosition(commentField) & Node.DOCUMENT_POSITION_FOLLOWING)
+        && Boolean(commentField.compareDocumentPosition(sendButton) & Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+    const disclaimerStyle = await page.locator('.request-disclaimer').evaluate((element) => {
+      const style = window.getComputedStyle(element);
+
+      return {
+        backgroundColor: style.backgroundColor,
+        borderTopColor: style.borderTopColor,
+        borderRadius: style.borderTopLeftRadius
+      };
+    });
+
+    expect(formOrder).toBe(true);
+    await expect(page.locator('.request-disclaimer')).toContainText('Если вы ВПЕРВЫЕ используете сервис');
+    await expect(page.locator('.request-disclaimer svg')).toBeVisible();
+    expect(disclaimerStyle.backgroundColor).toBe('rgb(255, 247, 237)');
+    expect(disclaimerStyle.borderTopColor).toBe('rgb(254, 215, 170)');
+    expect(parseFloat(disclaimerStyle.borderRadius)).toBeGreaterThanOrEqual(8);
     await expect(page.locator('input[name="language-code"][value="ru"]')).toBeChecked();
     await expect(page.locator('input[name="detect-speakers"][value="FALSE"]')).toBeChecked();
+    await expect(page.locator('#output-timecodes')).not.toBeChecked();
+    await expect(page.locator('#output-highlights')).not.toBeChecked();
+    await expect(page.locator('#output-auto-edit')).not.toBeChecked();
+    await expect(page.locator('#output-highlights')).toBeDisabled();
+    await expect(page.locator('#output-auto-edit')).toBeDisabled();
+    await expect(page.locator('.output-card[data-output-card="highlights"]')).toHaveAttribute('aria-disabled', 'true');
+    await expect(page.locator('.output-card[data-output-card="auto-edit"]')).toHaveAttribute('aria-disabled', 'true');
+    await expect(page.locator('.request-send-button')).toBeDisabled();
+    await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
+    await expect(page.locator('[data-output-panel="timecodes"]')).toHaveCount(0);
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
+    await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
+  });
+
+  test('translates redesigned application copy to English', async ({ page }) => {
+    await openApplicationPage(page);
+
+    await page.locator('.lang-btn[data-lang="en"]').click();
+
+    await expect(page).toHaveTitle('Process my video with CUTTO');
+    await expect(page.locator('.application-hero h1')).toHaveText('Process my video with CUTTO');
+    await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube or Twitch video link');
+    await expect(page.locator('.request-disclaimer')).toContainText('If this is your FIRST TIME using the service');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-unavailable')).toHaveText('Under development');
+    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveText('Under development');
+
+    const englishDescriptions = await page.locator('.output-card .output-description').allTextContents();
+    expect(englishDescriptions).toEqual([
+      'Get a chapter list in YouTube format',
+      'Get short clips of the most interesting parts',
+      'Get a shortened video'
+    ]);
+    for (const description of englishDescriptions) {
+      expect(description.startsWith('Get ')).toBe(true);
+      expect(description).not.toMatch(/you get/i);
+    }
+  });
+
+  test('only allows timecodes to be selected for now', async ({ page }) => {
+    await openApplicationPage(page);
+
+    await tryDisabledOutput(page, 'highlights');
+    await tryDisabledOutput(page, 'auto-edit');
+
+    await expect(page.locator('#output-highlights')).not.toBeChecked();
+    await expect(page.locator('#output-auto-edit')).not.toBeChecked();
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
+    await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
+    await expect(page.locator('.request-send-button')).toBeDisabled();
+    await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
+
+    await chooseOutput(page, 'timecodes');
+
+    await expect(page.locator('#output-timecodes')).toBeChecked();
+    await expect(page.locator('.request-send-button')).toBeEnabled();
+    await expect(page.locator('[data-output-panel="timecodes"]')).toHaveCount(0);
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
+    await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
+
+    await chooseOutput(page, 'timecodes');
+
+    await expect(page.locator('#output-timecodes')).not.toBeChecked();
+    await expect(page.locator('.request-send-button')).toBeDisabled();
+    await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
+  });
+
+  test('does not submit when valid contact fields are filled but no output is selected', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await page.locator('#video-path').fill('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+    await page.locator('#response-email').fill('user@example.com');
+    await page.locator('#response-email').press('Enter');
+    await page.locator('#timecode-request-form').dispatchEvent('submit');
+    await page.waitForTimeout(100);
+
+    expect(requests).toHaveLength(0);
+    await expect(page.locator('.request-send-button')).toBeDisabled();
+    await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
+  });
+
+  test('does not submit unavailable output cards', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await fillValidRequest(page);
+    await tryDisabledOutput(page, 'highlights');
+    await tryDisabledOutput(page, 'auto-edit');
+    await expect(page.locator('#output-highlights')).not.toBeChecked();
+    await expect(page.locator('#output-auto-edit')).not.toBeChecked();
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
+    await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
+    await page.locator('#timecode-request-form').dispatchEvent('submit');
+    await page.waitForTimeout(100);
+
+    expect(requests).toHaveLength(0);
+    await expect(page.locator('.request-send-button')).toBeDisabled();
   });
 
   test('required and native validation prevent requests', async ({ page }) => {
     const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
 
     await openApplicationPage(page);
+
+    await expect(page.locator('.request-send-button')).toBeDisabled();
+
+    await chooseOutput(page, 'timecodes');
 
     await clickSubmit(page);
     expect(requests).toHaveLength(0);
@@ -115,6 +308,7 @@ test.describe('application page request form', () => {
     await openApplicationPage(page);
     await page.locator('#video-path').fill('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
     await page.locator('#response-email').fill('user@example.com');
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
@@ -123,11 +317,16 @@ test.describe('application page request form', () => {
 
     const payload = parseJsonPost(requests[0]);
     expect(payload.comment).toBe('');
-    expect(JSON.parse(payload.inputs_json)).toEqual({
-      video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      language_code: 'ru',
-      detect_speakers: 'FALSE'
+    const inputs = getInputsFromRequest(requests[0]);
+    expect(inputs).toEqual({
+      user_inputs: {
+        video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        language_code: 'ru',
+        detect_speakers: 'FALSE'
+      },
+      original_video_timecodes: {}
     });
+    expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
   });
 
   test('submits trimmed payload and marks the request as sent', async ({ page }) => {
@@ -144,6 +343,7 @@ test.describe('application page request form', () => {
     await fillValidRequest(page);
     await chooseRadio(page, 'language-code', 'en');
     await chooseRadio(page, 'detect-speakers', 'TRUE');
+    await chooseOutput(page, 'timecodes');
 
     const submitPromise = clickSubmit(page);
 
@@ -162,17 +362,22 @@ test.describe('application page request form', () => {
     const payload = parseJsonPost(requests[0]);
     expect(payload).toMatchObject({
       email: 'user@example.com',
-      pipeline: 'timecodes',
       comment: 'Please keep technical terms'
     });
+    expect(payload).not.toHaveProperty('pipeline');
     expect(payload.requested_at).toEqual(expect.any(String));
     expect(Number.isNaN(Date.parse(payload.requested_at))).toBe(false);
     expect(new Date(payload.requested_at).toISOString()).toBe(payload.requested_at);
-    expect(JSON.parse(payload.inputs_json)).toEqual({
-      video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      language_code: 'en',
-      detect_speakers: 'TRUE'
+    const inputs = getInputsFromRequest(requests[0]);
+    expect(inputs).toEqual({
+      user_inputs: {
+        video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        language_code: 'en',
+        detect_speakers: 'TRUE'
+      },
+      original_video_timecodes: {}
     });
+    expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
   });
 
   test('does not submit twice while a request is pending', async ({ page }) => {
@@ -187,6 +392,7 @@ test.describe('application page request form', () => {
 
     await openApplicationPage(page);
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
 
     const submitPromise = clickSubmit(page);
 
@@ -211,6 +417,7 @@ test.describe('application page request form', () => {
 
     await openApplicationPage(page);
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toBeDisabled();
@@ -228,6 +435,15 @@ test.describe('application page request form', () => {
 
     await expect(page.locator('.request-send-button')).toBeEnabled();
     await expect(page.locator('.request-send-button')).toContainText('Создать');
+
+    await clickSubmit(page);
+    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
+
+    await tryDisabledOutput(page, 'highlights');
+
+    await expect(page.locator('#output-highlights')).not.toBeChecked();
+    await expect(page.locator('.request-send-button')).toBeDisabled();
+    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
   });
 
   test('resets the form and alerts when the server returns HTTP error', async ({ page }) => {
@@ -240,6 +456,7 @@ test.describe('application page request form', () => {
 
     await openApplicationPage(page);
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toBeEnabled();
@@ -262,6 +479,7 @@ test.describe('application page request form', () => {
 
     await openApplicationPage(page);
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toBeEnabled();
@@ -291,6 +509,7 @@ test.describe('application page request form', () => {
 
     await openApplicationPage(page);
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toBeEnabled();
@@ -313,8 +532,10 @@ test.describe('application page request form', () => {
     await openApplicationPage(page);
     await page.locator('.lang-btn[data-lang="en"]').click();
     await expect(page.locator('.request-send-button')).toContainText('Create');
+    await expect(page.locator('.request-disclaimer')).toContainText('If this is your FIRST TIME using the service');
 
     await fillValidRequest(page);
+    await chooseOutput(page, 'timecodes');
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toBeEnabled();

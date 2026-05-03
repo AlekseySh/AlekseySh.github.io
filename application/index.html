@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cutto — Timecodes for YouTube</title>
+    <title>Обработать моё видео с CUTTO</title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16x16.png">
@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <script src="../assets/lang/en.js"></script>
     <script src="../assets/lang/ru.js"></script>
-    <script src="../assets/lang/es.js"></script>
     <script src="../assets/js/i18n.js"></script>
     <script src="../assets/site-data.js"></script>
     <script src="../assets/js/site-data-loader.js"></script>
@@ -34,7 +33,7 @@
         </a>
 
         <section class="application-hero">
-            <h1 data-i18n="application.heading">Таймкоды для YouTube</h1>
+            <h1 data-i18n="application.heading">Обработать моё видео с CUTTO</h1>
         </section>
 
         <section class="request-builder" aria-label="Timecode request builder">
@@ -42,30 +41,10 @@
                 <div class="request-field">
                     <label for="video-path">
                         <i data-lucide="link-2"></i>
-                        <span data-i18n="application.video.label">Ссылка на YouTube видео</span>
+                        <span data-i18n="application.video.label">YouTube или Twitch видео</span>
                     </label>
                     <div class="request-input-shell">
                         <input id="video-path" type="url" inputmode="url" autocomplete="url" placeholder="https://www.youtube.com/watch?v=..." required>
-                    </div>
-                </div>
-
-                <div class="request-field">
-                    <label for="response-email">
-                        <i data-lucide="mail"></i>
-                        <span data-i18n="application.email.label">Email для получения результатов</span>
-                    </label>
-                    <div class="request-input-shell">
-                        <input id="response-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" required>
-                    </div>
-                </div>
-
-                <div class="request-field">
-                    <label for="request-comment">
-                        <i data-lucide="message-square-text"></i>
-                        <span data-i18n="application.comment.label">Комментарий, если нужно</span>
-                    </label>
-                    <div class="request-input-shell">
-                        <input id="request-comment" type="text" placeholder="">
                     </div>
                 </div>
 
@@ -103,7 +82,128 @@
                     </div>
                 </fieldset>
 
-                <button class="request-send-button" type="submit">
+                <fieldset class="request-field output-picker">
+                    <legend>
+                        <i data-lucide="package-check"></i>
+                        <span data-i18n="application.outputs.label">Что создать?</span>
+                    </legend>
+
+                    <div class="output-card-list">
+                        <div class="output-card" data-output-card="timecodes" aria-expanded="false">
+                            <label class="output-card-main" for="output-timecodes">
+                                <span class="output-checkbox-cell">
+                                    <input id="output-timecodes" class="output-checkbox" type="checkbox" name="requested-output" value="timecodes">
+                                    <span class="output-checkbox-visual" aria-hidden="true"></span>
+                                </span>
+                                <span class="output-icon">
+                                    <i data-lucide="list"></i>
+                                </span>
+                                <span class="output-copy">
+                                    <span class="output-title" data-i18n="application.outputs.timecodes.title">Таймкоды для исходного видео</span>
+                                    <span class="output-description" data-i18n="application.outputs.timecodes.description">Получите список глав в формате YouTube</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="output-card output-card--disabled" data-output-card="highlights" aria-expanded="false" aria-disabled="true">
+                            <label class="output-card-main" for="output-highlights">
+                                <span class="output-checkbox-cell">
+                                    <input id="output-highlights" class="output-checkbox" type="checkbox" name="requested-output" value="highlights" disabled>
+                                    <span class="output-checkbox-visual" aria-hidden="true"></span>
+                                </span>
+                                <span class="output-icon">
+                                    <i data-lucide="clapperboard"></i>
+                                </span>
+                                <span class="output-copy">
+                                    <span class="output-title" data-i18n="application.outputs.highlights.title">Хайлайты</span>
+                                    <span class="output-description" data-i18n="application.outputs.highlights.description">Получите короткие клипы из самых интересных моментов</span>
+                                    <span class="output-unavailable" data-i18n="application.outputs.underDevelopment">В разработке</span>
+                                </span>
+                            </label>
+                            <div class="output-card-panel" data-output-panel="highlights" hidden>
+                                <div class="output-param-grid">
+                                    <label class="output-param-field" for="highlights-count">
+                                        <input id="highlights-count" class="output-param-input" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="15" step="1" value="5" data-output-option>
+                                        <span class="output-param-label" data-i18n="application.outputs.highlights.count">Количество хайлайтов</span>
+                                    </label>
+
+                                    <label class="output-toggle" for="highlight-thumbnails">
+                                        <input id="highlight-thumbnails" type="checkbox" data-output-option>
+                                        <span class="output-toggle-track" aria-hidden="true"></span>
+                                        <span class="output-param-label" data-i18n="application.outputs.highlights.thumbnails">Создавать обложки</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="output-card output-card--disabled" data-output-card="auto-edit" aria-expanded="false" aria-disabled="true">
+                            <label class="output-card-main" for="output-auto-edit">
+                                <span class="output-checkbox-cell">
+                                    <input id="output-auto-edit" class="output-checkbox" type="checkbox" name="requested-output" value="auto-edit" disabled>
+                                    <span class="output-checkbox-visual" aria-hidden="true"></span>
+                                </span>
+                                <span class="output-icon">
+                                    <i data-lucide="scissors"></i>
+                                </span>
+                                <span class="output-copy">
+                                    <span class="output-title" data-i18n="application.outputs.autoEdit.title">Автомонтаж</span>
+                                    <span class="output-description" data-i18n="application.outputs.autoEdit.description">Получите укороченное видео</span>
+                                    <span class="output-unavailable" data-i18n="application.outputs.underDevelopment">В разработке</span>
+                                </span>
+                            </label>
+                            <div class="output-card-panel" data-output-panel="auto-edit" hidden>
+                                <div class="output-param-grid">
+                                    <label class="output-toggle" for="auto-edit-thumbnail">
+                                        <input id="auto-edit-thumbnail" type="checkbox" data-output-option>
+                                        <span class="output-toggle-track" aria-hidden="true"></span>
+                                        <span class="output-param-label" data-i18n="application.outputs.autoEdit.thumbnail">Создать обложку</span>
+                                    </label>
+
+                                    <label class="output-toggle" for="auto-edit-timecodes">
+                                        <input id="auto-edit-timecodes" type="checkbox" data-output-option>
+                                        <span class="output-toggle-track" aria-hidden="true"></span>
+                                        <span class="output-param-label" data-i18n="application.outputs.autoEdit.timecodes">Таймкоды для укороченного видео</span>
+                                    </label>
+
+                                    <label class="output-toggle output-toggle--with-description" for="auto-edit-cut-more">
+                                        <input id="auto-edit-cut-more" type="checkbox" data-output-option>
+                                        <span class="output-toggle-track" aria-hidden="true"></span>
+                                        <span class="output-param-copy">
+                                            <span class="output-param-label" data-i18n="application.outputs.autoEdit.cutMore">Вырезать больше</span>
+                                            <span class="output-param-description" data-i18n="application.outputs.autoEdit.cutMore.description">Строже режем не только паузы и технические проблемы, но и отклонения от темы.</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="request-field">
+                    <label for="response-email">
+                        <i data-lucide="mail"></i>
+                        <span data-i18n="application.email.label">Email для получения результатов</span>
+                    </label>
+                    <div class="request-input-shell">
+                        <input id="response-email" type="email" inputmode="email" autocomplete="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="request-disclaimer" role="note">
+                        <i data-lucide="circle-alert" aria-hidden="true"></i>
+                        <p data-i18n="application.email.disclaimer">Если вы ВПЕРВЫЕ используете сервис, пожалуйста, свяжитесь с разработчиками, используя контакты ниже, чтобы к вашему email привязали бесплатные кредиты.</p>
+                    </div>
+                </div>
+
+                <div class="request-field">
+                    <label for="request-comment">
+                        <i data-lucide="message-square-text"></i>
+                        <span data-i18n="application.comment.label">Комментарий, если нужно</span>
+                    </label>
+                    <div class="request-input-shell">
+                        <input id="request-comment" type="text" placeholder="">
+                    </div>
+                </div>
+
+                <button class="request-send-button request-send-button--blocked" type="submit" disabled>
                     <span data-i18n="application.send">Создать</span>
                 </button>
             </form>
@@ -135,6 +235,14 @@
             var commentInput = document.getElementById('request-comment');
             var submitButton = form.querySelector('.request-send-button');
             var submitText = submitButton.querySelector('[data-i18n]');
+            var outputCards = Array.prototype.slice.call(document.querySelectorAll('.output-card'));
+            var outputCheckboxes = Array.prototype.slice.call(document.querySelectorAll('input[name="requested-output"]'));
+            var outputOptionInputs = Array.prototype.slice.call(document.querySelectorAll('[data-output-option]'));
+            var highlightCountInput = document.getElementById('highlights-count');
+            var highlightThumbnailsInput = document.getElementById('highlight-thumbnails');
+            var autoEditThumbnailInput = document.getElementById('auto-edit-thumbnail');
+            var autoEditTimecodesInput = document.getElementById('auto-edit-timecodes');
+            var autoEditCutMoreInput = document.getElementById('auto-edit-cut-more');
             var timecodesEndpoint = window.__siteData && window.__siteData.requests && window.__siteData.requests.timecodesEndpoint;
 
             function getCheckedValue(name, fallback) {
@@ -146,22 +254,96 @@
                 return getCheckedValue('detect-speakers', 'FALSE');
             }
 
+            function getSelectedOutputs() {
+                return outputCheckboxes.filter(function (input) {
+                    return input.checked;
+                });
+            }
+
+            function isOutputSelected(value) {
+                return outputCheckboxes.some(function (input) {
+                    return input.value === value && input.checked;
+                });
+            }
+
             function getTranslation(key, fallback) {
                 var lang = document.documentElement.lang;
                 var translations = (window.__translations && window.__translations[lang]) || {};
                 return translations[key] || fallback;
             }
 
+            function syncOutputCards() {
+                outputCards.forEach(function (card) {
+                    var checkbox = card.querySelector('input[name="requested-output"]');
+                    var panel = card.querySelector('.output-card-panel');
+                    var isSelected = checkbox && checkbox.checked;
+
+                    card.classList.toggle('is-selected', isSelected);
+                    card.classList.toggle('is-open', isSelected);
+                    card.setAttribute('aria-expanded', isSelected ? 'true' : 'false');
+                    if (panel) panel.hidden = !isSelected;
+                });
+            }
+
+            function normalizeHighlightCount(allowEmpty) {
+                if (!highlightCountInput) return;
+
+                var rawValue = highlightCountInput.value.replace(/\D/g, '');
+                if (!rawValue) {
+                    highlightCountInput.value = allowEmpty ? '' : '1';
+                    return;
+                }
+
+                var value = parseInt(rawValue, 10);
+                if (value < 1) value = 1;
+                if (value > 15) value = 15;
+                highlightCountInput.value = String(value);
+            }
+
+            function getHighlightCount() {
+                var value = parseInt(highlightCountInput.value, 10);
+                if (Number.isNaN(value)) return 5;
+                if (value < 1) return 1;
+                if (value > 15) return 15;
+                return value;
+            }
+
+            function buildInputArgs() {
+                var inputArgs = {
+                    user_inputs: {
+                        video_path: videoInput.value.trim(),
+                        language_code: getCheckedValue('language-code', 'ru'),
+                        detect_speakers: getSpeakerValue()
+                    }
+                };
+
+                if (isOutputSelected('timecodes')) {
+                    inputArgs.original_video_timecodes = {};
+                }
+
+                if (isOutputSelected('highlights')) {
+                    inputArgs.highlights = {
+                        num_clips: getHighlightCount(),
+                        thumbnails_needed: highlightThumbnailsInput.checked
+                    };
+                }
+
+                if (isOutputSelected('auto-edit')) {
+                    inputArgs.auto_edit = {
+                        thumbnail_needed: autoEditThumbnailInput.checked,
+                        timecodes_needed: autoEditTimecodesInput.checked,
+                        cut_more: autoEditCutMoreInput.checked
+                    };
+                }
+
+                return inputArgs;
+            }
+
             function buildPayload() {
                 return {
                     email: emailInput.value.trim(),
                     requested_at: new Date().toISOString(),
-                    pipeline: 'timecodes',
-                    inputs_json: JSON.stringify({
-                        video_path: videoInput.value.trim(),
-                        language_code: getCheckedValue('language-code', 'ru'),
-                        detect_speakers: getSpeakerValue()
-                    }),
+                    inputs_json: JSON.stringify(buildInputArgs()),
                     comment: commentInput.value.trim()
                 };
             }
@@ -181,20 +363,25 @@
             }
 
             function resetSubmitState() {
+                var hasSelectedOutput = getSelectedOutputs().length > 0;
+
                 submitButton.classList.remove('request-send-button--sent');
-                submitButton.disabled = false;
+                submitButton.classList.toggle('request-send-button--blocked', !hasSelectedOutput);
+                submitButton.disabled = !hasSelectedOutput;
                 submitText.setAttribute('data-i18n', 'application.send');
                 submitText.textContent = getTranslation('application.send', 'Create');
             }
 
             function markRequestSending() {
                 submitButton.classList.remove('request-send-button--sent');
+                submitButton.classList.remove('request-send-button--blocked');
                 submitButton.disabled = true;
                 submitText.setAttribute('data-i18n', 'application.sending');
                 submitText.textContent = getTranslation('application.sending', 'Sending...');
             }
 
             function markRequestSent() {
+                submitButton.classList.remove('request-send-button--blocked');
                 submitButton.classList.add('request-send-button--sent');
                 submitButton.disabled = true;
                 submitText.setAttribute('data-i18n', 'application.sent');
@@ -246,9 +433,32 @@
             document.querySelectorAll('input[name="language-code"], input[name="detect-speakers"]').forEach(function (input) {
                 input.addEventListener('change', resetSubmitState);
             });
+            outputCheckboxes.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    syncOutputCards();
+                    resetSubmitState();
+                });
+            });
+            outputOptionInputs.forEach(function (input) {
+                input.addEventListener('input', resetSubmitState);
+                input.addEventListener('change', resetSubmitState);
+            });
+            if (highlightCountInput) {
+                highlightCountInput.addEventListener('input', function () {
+                    normalizeHighlightCount(true);
+                });
+                highlightCountInput.addEventListener('change', function () {
+                    normalizeHighlightCount(false);
+                });
+            }
 
             form.addEventListener('submit', async function (event) {
                 event.preventDefault();
+                normalizeHighlightCount(false);
+                if (getSelectedOutputs().length === 0) {
+                    resetSubmitState();
+                    return;
+                }
                 if (!validateRequired(videoInput, 'YouTube link')) return;
                 if (!validateRequired(emailInput, 'Email')) return;
                 if (!form.reportValidity()) return;
