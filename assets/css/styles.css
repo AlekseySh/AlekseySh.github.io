@@ -1819,6 +1819,10 @@ body {
     cursor: pointer;
 }
 
+.output-toggle--disabled {
+    cursor: not-allowed;
+}
+
 .output-toggle--with-description {
     align-items: flex-start;
 }
@@ -1855,6 +1859,23 @@ body {
 
 .output-toggle input:checked + .output-toggle-track {
     background: var(--primary);
+}
+
+.output-toggle input:disabled + .output-toggle-track {
+    background: #e2e8f0;
+}
+
+.output-toggle input:disabled + .output-toggle-track::after {
+    background: #f8fafc;
+    box-shadow: none;
+}
+
+.output-toggle input:disabled ~ .output-param-label {
+    color: #94a3b8;
+}
+
+.output-toggle--disabled .output-unavailable {
+    margin-top: 0;
 }
 
 .output-toggle input:checked + .output-toggle-track::after {

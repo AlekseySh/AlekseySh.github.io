@@ -151,7 +151,7 @@ test.describe('application page request form', () => {
     await expect(page.locator('.output-card[data-output-card="highlights"] .output-description')).toHaveText('Получите короткие клипы из самых интересных моментов');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-title')).toHaveText('Автомонтаж');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-description')).toHaveText('Получите укороченное видео');
-    await expect(page.locator('.output-card[data-output-card="highlights"] .output-unavailable')).toHaveText('В разработке');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveText('В разработке');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveText('В разработке');
 
     const formOrder = await page.evaluate(() => {
@@ -185,9 +185,11 @@ test.describe('application page request form', () => {
     await expect(page.locator('#output-timecodes')).not.toBeChecked();
     await expect(page.locator('#output-highlights')).not.toBeChecked();
     await expect(page.locator('#output-auto-edit')).not.toBeChecked();
-    await expect(page.locator('#output-highlights')).toBeDisabled();
+    await expect(page.locator('#output-highlights')).toBeEnabled();
     await expect(page.locator('#output-auto-edit')).toBeDisabled();
-    await expect(page.locator('.output-card[data-output-card="highlights"]')).toHaveAttribute('aria-disabled', 'true');
+    await expect(page.locator('#highlight-thumbnails')).toBeDisabled();
+    await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
+    await expect(page.locator('.output-card[data-output-card="highlights"]')).not.toHaveAttribute('aria-disabled', 'true');
     await expect(page.locator('.output-card[data-output-card="auto-edit"]')).toHaveAttribute('aria-disabled', 'true');
     await expect(page.locator('.request-send-button')).toBeDisabled();
     await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
@@ -205,7 +207,7 @@ test.describe('application page request form', () => {
     await expect(page.locator('.application-hero h1')).toHaveText('Process my video with CUTTO');
     await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube or Twitch video link');
     await expect(page.locator('.request-disclaimer')).toContainText('If this is your FIRST TIME using the service');
-    await expect(page.locator('.output-card[data-output-card="highlights"] .output-unavailable')).toHaveText('Under development');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveText('Under development');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveText('Under development');
 
     const englishDescriptions = await page.locator('.output-card .output-description').allTextContents();
@@ -220,10 +222,9 @@ test.describe('application page request form', () => {
     }
   });
 
-  test('only allows timecodes to be selected for now', async ({ page }) => {
+  test('allows timecodes and highlights while keeping auto-edit unavailable', async ({ page }) => {
     await openApplicationPage(page);
 
-    await tryDisabledOutput(page, 'highlights');
     await tryDisabledOutput(page, 'auto-edit');
 
     await expect(page.locator('#output-highlights')).not.toBeChecked();
@@ -240,6 +241,25 @@ test.describe('application page request form', () => {
     await expect(page.locator('[data-output-panel="timecodes"]')).toHaveCount(0);
     await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
     await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
+
+    await chooseOutput(page, 'highlights');
+
+    await expect(page.locator('#output-highlights')).toBeChecked();
+    await expect(page.locator('.output-card[data-output-card="highlights"]')).toHaveClass(/is-selected/);
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeVisible();
+    await expect(page.locator('#highlights-count')).toHaveValue('5');
+    await expect(page.locator('#highlight-thumbnails')).toBeDisabled();
+    await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
+    await page.locator('label[for="highlight-thumbnails"]').click({ force: true });
+    await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
+    await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
+    await expect(page.locator('#output-auto-edit')).not.toBeChecked();
+
+    await chooseOutput(page, 'highlights');
+
+    await expect(page.locator('#output-highlights')).not.toBeChecked();
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
+    await expect(page.locator('.request-send-button')).toBeEnabled();
 
     await chooseOutput(page, 'timecodes');
 
@@ -263,12 +283,11 @@ test.describe('application page request form', () => {
     await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
   });
 
-  test('does not submit unavailable output cards', async ({ page }) => {
+  test('does not submit unavailable auto-edit output', async ({ page }) => {
     const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
 
     await openApplicationPage(page);
     await fillValidRequest(page);
-    await tryDisabledOutput(page, 'highlights');
     await tryDisabledOutput(page, 'auto-edit');
     await expect(page.locator('#output-highlights')).not.toBeChecked();
     await expect(page.locator('#output-auto-edit')).not.toBeChecked();
@@ -327,6 +346,38 @@ test.describe('application page request form', () => {
       original_video_timecodes: {}
     });
     expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
+  });
+
+  test('submits highlights with count and disabled thumbnails flag', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await fillValidRequest(page);
+    await chooseOutput(page, 'highlights');
+
+    await expect(page.locator('[data-output-panel="highlights"]')).toBeVisible();
+    await expect(page.locator('#highlight-thumbnails')).toBeDisabled();
+    await page.locator('label[for="highlight-thumbnails"]').click({ force: true });
+    await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
+
+    await clickSubmit(page);
+
+    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
+    expect(requests).toHaveLength(1);
+
+    const inputs = getInputsFromRequest(requests[0]);
+    expect(inputs).toEqual({
+      user_inputs: {
+        video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        language_code: 'ru',
+        detect_speakers: 'FALSE'
+      },
+      highlights: {
+        num_clips: 5,
+        thumbnails_needed: false
+      }
+    });
+    expectOnlyOutputArgs(inputs, ['highlights']);
   });
 
   test('submits trimmed payload and marks the request as sent', async ({ page }) => {
@@ -439,9 +490,9 @@ test.describe('application page request form', () => {
     await clickSubmit(page);
     await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
 
-    await tryDisabledOutput(page, 'highlights');
+    await tryDisabledOutput(page, 'auto-edit');
 
-    await expect(page.locator('#output-highlights')).not.toBeChecked();
+    await expect(page.locator('#output-auto-edit')).not.toBeChecked();
     await expect(page.locator('.request-send-button')).toBeDisabled();
     await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
   });
