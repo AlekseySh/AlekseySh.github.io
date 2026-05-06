@@ -16,6 +16,7 @@
     <script src="../assets/lang/en.js"></script>
     <script src="../assets/lang/ru.js"></script>
     <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/video-url-canonicalizer.js"></script>
     <script src="../assets/site-data.js"></script>
     <script src="../assets/js/site-data-loader.js"></script>
 </head>
@@ -46,6 +47,7 @@
                     <div class="request-input-shell">
                         <input id="video-path" type="url" inputmode="url" autocomplete="url" placeholder="https://www.youtube.com/watch?v=..." required>
                     </div>
+                    <p class="request-field-success" id="video-normalize-notice" data-i18n="application.video.normalized" hidden>We normalized your link.</p>
                 </div>
 
                 <fieldset class="request-field">
@@ -231,6 +233,7 @@
 
             var form = document.getElementById('timecode-request-form');
             var videoInput = document.getElementById('video-path');
+            var videoNormalizeNotice = document.getElementById('video-normalize-notice');
             var emailInput = document.getElementById('response-email');
             var commentInput = document.getElementById('request-comment');
             var submitButton = form.querySelector('.request-send-button');
@@ -358,6 +361,28 @@
                 return true;
             }
 
+            function setVideoNormalizeNotice(isVisible) {
+                if (!videoNormalizeNotice) return;
+                videoNormalizeNotice.hidden = !isVisible;
+            }
+
+            function canonicalizeVideoInput(showError) {
+                var previousValue = videoInput.value.trim();
+                var result = window.cuttoVideoUrls.canonicalizeVideoUrl(videoInput.value);
+                videoInput.setCustomValidity('');
+
+                if (result.ok) {
+                    videoInput.value = result.canonicalUrl;
+                    setVideoNormalizeNotice(result.canonicalUrl !== previousValue);
+                    return true;
+                }
+
+                setVideoNormalizeNotice(false);
+                videoInput.setCustomValidity(result.error);
+                if (showError) videoInput.reportValidity();
+                return false;
+            }
+
             function clearCustomError(input) {
                 input.setCustomValidity('');
             }
@@ -421,7 +446,13 @@
 
             videoInput.addEventListener('input', function () {
                 clearCustomError(videoInput);
+                setVideoNormalizeNotice(false);
                 resetSubmitState();
+            });
+            videoInput.addEventListener('blur', function () {
+                if (videoInput.value.trim()) {
+                    canonicalizeVideoInput(true);
+                }
             });
             emailInput.addEventListener('input', function () {
                 clearCustomError(emailInput);
@@ -460,6 +491,7 @@
                     return;
                 }
                 if (!validateRequired(videoInput, 'YouTube link')) return;
+                if (!canonicalizeVideoInput(true)) return;
                 if (!validateRequired(emailInput, 'Email')) return;
                 if (!form.reportValidity()) return;
 

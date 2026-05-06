@@ -67,6 +67,7 @@ window.__translations['ru'] = {
     "application.heading": "Обработать моё видео с CUTTO",
     "application.back": "назад",
     "application.video.label": "YouTube или Twitch видео",
+    "application.video.normalized": "Мы привели ссылку к нужному формату.",
     "application.email.label": "Email для получения результатов",
     "application.email.disclaimer": "Если вы ВПЕРВЫЕ используете сервис, пожалуйста, свяжитесь с разработчиками, используя контакты ниже, чтобы к вашему email привязали бесплатные кредиты.",
     "application.comment.label": "Комментарий для разработчиков, если нужно",
@@ -95,6 +96,9 @@ window.__translations['ru'] = {
     "application.sending": "Отправляем...",
     "application.sent": "Ваш запрос отправлен",
     "application.error.register": "Не удалось зарегистрировать запрос. Попробуйте еще раз.",
+    "application.error.youtubeUrl": "Вставьте ссылку YouTube на конкретное видео. Плейлисты, каналы, клипы и страницы поиска не поддерживаются.",
+    "application.error.twitchUrl": "Вставьте ссылку Twitch на конкретный VOD. Прямые эфиры, клипы, коллекции и списки видео не поддерживаются.",
+    "application.error.unsupportedVideoUrl": "Вставьте поддерживаемую ссылку на видео YouTube или Twitch.",
 
     "howItWorks.heading": "Как это работает?",
     "examples.heading": "Примеры",

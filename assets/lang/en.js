@@ -67,6 +67,7 @@ window.__translations['en'] = {
     "application.heading": "Process my video with CUTTO",
     "application.back": "back",
     "application.video.label": "YouTube or Twitch video link",
+    "application.video.normalized": "We normalized your link.",
     "application.email.label": "Email for receiving results",
     "application.email.disclaimer": "If this is your FIRST TIME using the service, please contact the developers using the contacts below so free credits can be linked to your email.",
     "application.comment.label": "Comment for developers, if needed",
@@ -95,6 +96,9 @@ window.__translations['en'] = {
     "application.sending": "Sending...",
     "application.sent": "Your request has been sent",
     "application.error.register": "Failed to register request. Please try again.",
+    "application.error.youtubeUrl": "Please paste a YouTube link to a specific video. Playlists, channels, clips, and search pages are not supported.",
+    "application.error.twitchUrl": "Please paste a Twitch link to a specific VOD. Live channels, clips, collections, and video lists are not supported.",
+    "application.error.unsupportedVideoUrl": "Please paste a supported YouTube or Twitch video link.",
 
     "howItWorks.heading": "How It Works?",
     "examples.heading": "Examples",

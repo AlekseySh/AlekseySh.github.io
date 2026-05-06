@@ -1527,6 +1527,13 @@ body {
     font-weight: 500;
 }
 
+.request-field-success {
+    margin: 0;
+    color: var(--success);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
 .request-disclaimer {
     display: grid;
     grid-template-columns: 22px minmax(0, 1fr);

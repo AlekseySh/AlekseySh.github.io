@@ -29,6 +29,25 @@ function readTranslations(lang) {
   return context.window.__translations[lang];
 }
 
+function readCanonicalizeVideoUrl(lang = 'en') {
+  const canonicalizerPath = path.join(repoRoot, 'assets', 'js', 'video-url-canonicalizer.js');
+  const context = {
+    URL,
+    document: {
+      documentElement: { lang }
+    },
+    window: {
+      __translations: translations
+    }
+  };
+
+  vm.runInNewContext(fs.readFileSync(canonicalizerPath, 'utf8'), context, {
+    filename: canonicalizerPath
+  });
+
+  return context.window.cuttoVideoUrls.canonicalizeVideoUrl;
+}
+
 const timecodesEndpoint = readTimecodesEndpoint();
 const translations = {
   en: readTranslations('en'),
@@ -121,6 +140,78 @@ test.describe('application page request form', () => {
     }
   });
 
+  test('canonicalizes supported YouTube and Twitch URL formats', async () => {
+    const canonicalizeVideoUrl = readCanonicalizeVideoUrl();
+    const cases = [
+      ['https://www.youtube.com/watch?v=SE5DyYk1yuk', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://m.youtube.com/watch?v=SE5DyYk1yuk', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://music.youtube.com/watch?v=SE5DyYk1yuk', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://youtu.be/SE5DyYk1yuk?si=abc', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube.com/live/_3rNyG-hEeM?si=abc', 'https://www.youtube.com/watch?v=_3rNyG-hEeM', 'youtube'],
+      ['https://www.youtube.com/shorts/SE5DyYk1yuk?t=1', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube.com/embed/SE5DyYk1yuk?start=10', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube.com/v/SE5DyYk1yuk?feature=share', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube.com/e/SE5DyYk1yuk?list=PLx', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube.com/watch_popup?v=SE5DyYk1yuk', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube-nocookie.com/embed/SE5DyYk1yuk', 'https://www.youtube.com/watch?v=SE5DyYk1yuk', 'youtube'],
+      ['https://www.youtube.com/watch?v=_3rNyG-hEeM&t=17092s', 'https://www.youtube.com/watch?v=_3rNyG-hEeM', 'youtube'],
+      ['https://www.youtube.com/watch?v=rhpj_69Qezg&list=PLx&index=1', 'https://www.youtube.com/watch?v=rhpj_69Qezg', 'youtube'],
+      ['https://www.twitch.tv/videos/123456789?t=5m10s', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://m.twitch.tv/videos/123456789', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://go.twitch.tv/videos/123456789', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://www.twitch.tv/somechannel/v/123456789?t=1h', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://www.twitch.tv/somechannel/video/123456789', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://player.twitch.tv/?video=123456789&parent=example.com', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://player.twitch.tv/?video=v123456789', 'https://www.twitch.tv/videos/123456789', 'twitch'],
+      ['https://www.twitch.tv/somechannel/schedule?vodID=123456789', 'https://www.twitch.tv/videos/123456789', 'twitch']
+    ];
+
+    for (const [rawUrl, canonicalUrl, platform] of cases) {
+      expect(canonicalizeVideoUrl(rawUrl)).toEqual({
+        ok: true,
+        canonicalUrl,
+        platform
+      });
+    }
+  });
+
+  test('rejects ambiguous and unsupported video URLs with platform-specific copy', async () => {
+    const canonicalizeVideoUrl = readCanonicalizeVideoUrl();
+    const youtubeError = translations.en['application.error.youtubeUrl'];
+    const twitchError = translations.en['application.error.twitchUrl'];
+    const unsupportedError = translations.en['application.error.unsupportedVideoUrl'];
+
+    expect(canonicalizeVideoUrl('https://www.youtube.com/playlist?list=PLx')).toEqual({
+      ok: false,
+      error: youtubeError,
+      platform: 'youtube'
+    });
+    expect(canonicalizeVideoUrl('https://www.youtube.com/watch?v=SE5DyYk1yuk&v=_3rNyG-hEeM')).toEqual({
+      ok: false,
+      error: youtubeError,
+      platform: 'youtube'
+    });
+    expect(canonicalizeVideoUrl('https://www.youtube.com/clip/UgkxExample')).toEqual({
+      ok: false,
+      error: youtubeError,
+      platform: 'youtube'
+    });
+    expect(canonicalizeVideoUrl('https://www.twitch.tv/somechannel')).toEqual({
+      ok: false,
+      error: twitchError,
+      platform: 'twitch'
+    });
+    expect(canonicalizeVideoUrl('https://player.twitch.tv/?channel=somechannel')).toEqual({
+      ok: false,
+      error: twitchError,
+      platform: 'twitch'
+    });
+    expect(canonicalizeVideoUrl('https://example.com/watch?v=SE5DyYk1yuk')).toEqual({
+      ok: false,
+      error: unsupportedError
+    });
+  });
+
   test('exposes and uses the configured timecodes endpoint', async ({ page }) => {
     const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
 
@@ -136,6 +227,82 @@ test.describe('application page request form', () => {
 
     expect(requests).toHaveLength(1);
     expect(requests[0].url()).toBe(timecodesEndpoint);
+  });
+
+  test('canonicalizes the video input on blur', async ({ page }) => {
+    await openApplicationPage(page);
+
+    await expect(page.locator('#video-normalize-notice')).toBeHidden();
+    await page.locator('#video-path').fill(' https://youtu.be/SE5DyYk1yuk?si=abc ');
+    await page.locator('#video-path').blur();
+
+    await expect(page.locator('#video-path')).toHaveValue('https://www.youtube.com/watch?v=SE5DyYk1yuk');
+    await expect(page.locator('#video-normalize-notice')).toBeVisible();
+    await expect(page.locator('#video-normalize-notice')).toHaveText('Мы привели ссылку к нужному формату.');
+
+    await page.locator('#video-path').fill('https://www.youtube.com/watch?v=_3rNyG-hEeM');
+    await expect(page.locator('#video-normalize-notice')).toBeHidden();
+    await page.locator('#video-path').blur();
+
+    await expect(page.locator('#video-path')).toHaveValue('https://www.youtube.com/watch?v=_3rNyG-hEeM');
+    await expect(page.locator('#video-normalize-notice')).toBeHidden();
+  });
+
+  test('submits only the canonical video_path for non-canonical supported URLs', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await page.locator('#video-path').fill('https://player.twitch.tv/?video=v123456789&parent=cutto.app');
+    await page.locator('#response-email').fill('user@example.com');
+    await chooseOutput(page, 'timecodes');
+    await clickSubmit(page);
+
+    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
+    expect(requests).toHaveLength(1);
+    expect(getInputsFromRequest(requests[0]).user_inputs.video_path).toBe('https://www.twitch.tv/videos/123456789');
+  });
+
+  test('blocks unsupported YouTube and Twitch URLs before submit', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await page.locator('#response-email').fill('user@example.com');
+    await chooseOutput(page, 'timecodes');
+
+    await page.locator('#video-path').fill('https://www.youtube.com/playlist?list=PLx');
+    await clickSubmit(page);
+
+    expect(requests).toHaveLength(0);
+    await expect(page.locator('#video-path')).toHaveJSProperty(
+      'validationMessage',
+      translations.ru['application.error.youtubeUrl']
+    );
+
+    await page.locator('#video-path').fill('https://www.twitch.tv/somechannel');
+    await clickSubmit(page);
+
+    expect(requests).toHaveLength(0);
+    await expect(page.locator('#video-path')).toHaveJSProperty(
+      'validationMessage',
+      translations.ru['application.error.twitchUrl']
+    );
+  });
+
+  test('shows exact English canonicalization errors after language switch', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await page.locator('.lang-btn[data-lang="en"]').click();
+    await page.locator('#video-path').fill('https://www.youtube.com/playlist?list=PLx');
+    await page.locator('#response-email').fill('user@example.com');
+    await chooseOutput(page, 'timecodes');
+    await clickSubmit(page);
+
+    expect(requests).toHaveLength(0);
+    await expect(page.locator('#video-path')).toHaveJSProperty(
+      'validationMessage',
+      'Please paste a YouTube link to a specific video. Playlists, channels, clips, and search pages are not supported.'
+    );
   });
 
   test('starts with default radio options selected and no output selected', async ({ page }) => {
