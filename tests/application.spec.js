@@ -348,7 +348,7 @@ test.describe('application page request form', () => {
     expect(disclaimerStyle.borderTopColor).toBe('rgb(254, 215, 170)');
     expect(parseFloat(disclaimerStyle.borderRadius)).toBeGreaterThanOrEqual(8);
     await expect(page.locator('input[name="language-code"][value="ru"]')).toBeChecked();
-    await expect(page.locator('input[name="detect-speakers"][value="FALSE"]')).toBeChecked();
+    await expect(page.locator('input[name="detect-speakers"]')).toHaveCount(0);
     await expect(page.locator('#output-timecodes')).not.toBeChecked();
     await expect(page.locator('#output-highlights')).not.toBeChecked();
     await expect(page.locator('#output-auto-edit')).not.toBeChecked();
@@ -508,7 +508,7 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
-        detect_speakers: 'FALSE'
+        detect_speakers: 'TRUE'
       },
       original_video_timecodes: {}
     });
@@ -537,7 +537,7 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
-        detect_speakers: 'FALSE'
+        detect_speakers: 'TRUE'
       },
       highlights: {
         num_clips: 5,
@@ -560,7 +560,6 @@ test.describe('application page request form', () => {
     await openApplicationPage(page);
     await fillValidRequest(page);
     await chooseRadio(page, 'language-code', 'en');
-    await chooseRadio(page, 'detect-speakers', 'TRUE');
     await chooseOutput(page, 'timecodes');
 
     const submitPromise = clickSubmit(page);
@@ -642,14 +641,6 @@ test.describe('application page request form', () => {
     await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
 
     await page.locator('#request-comment').fill('Updated comment');
-
-    await expect(page.locator('.request-send-button')).toBeEnabled();
-    await expect(page.locator('.request-send-button')).toContainText('Создать');
-
-    await clickSubmit(page);
-    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
-
-    await chooseRadio(page, 'detect-speakers', 'TRUE');
 
     await expect(page.locator('.request-send-button')).toBeEnabled();
     await expect(page.locator('.request-send-button')).toContainText('Создать');

@@ -67,23 +67,6 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="request-field">
-                    <legend>
-                        <i data-lucide="users"></i>
-                        <span data-i18n="application.speakers.label">Спикеры</span>
-                    </legend>
-                    <div class="request-choice-group">
-                        <label class="request-choice">
-                            <input type="radio" name="detect-speakers" value="FALSE" checked>
-                            <span data-i18n="application.speakers.single">Один</span>
-                        </label>
-                        <label class="request-choice">
-                            <input type="radio" name="detect-speakers" value="TRUE">
-                            <span data-i18n="application.speakers.multiple">Несколько</span>
-                        </label>
-                    </div>
-                </fieldset>
-
                 <fieldset class="request-field output-picker">
                     <legend>
                         <i data-lucide="package-check"></i>
@@ -253,10 +236,6 @@
                 return checked ? checked.value : fallback;
             }
 
-            function getSpeakerValue() {
-                return getCheckedValue('detect-speakers', 'FALSE');
-            }
-
             function getSelectedOutputs() {
                 return outputCheckboxes.filter(function (input) {
                     return input.checked;
@@ -316,7 +295,7 @@
                     user_inputs: {
                         video_path: videoInput.value.trim(),
                         language_code: getCheckedValue('language-code', 'ru'),
-                        detect_speakers: getSpeakerValue()
+                        detect_speakers: 'TRUE'
                     }
                 };
 
@@ -461,7 +440,7 @@
             commentInput.addEventListener('input', function () {
                 resetSubmitState();
             });
-            document.querySelectorAll('input[name="language-code"], input[name="detect-speakers"]').forEach(function (input) {
+            document.querySelectorAll('input[name="language-code"]').forEach(function (input) {
                 input.addEventListener('change', resetSubmitState);
             });
             outputCheckboxes.forEach(function (input) {
