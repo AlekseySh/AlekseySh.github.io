@@ -5,6 +5,7 @@ const { pathToFileURL } = require('url');
 const { test, expect } = require('@playwright/test');
 
 const repoRoot = path.resolve(__dirname, '..');
+const indexUrl = pathToFileURL(path.join(repoRoot, 'index.html')).href;
 const applicationUrl = pathToFileURL(path.join(repoRoot, 'application', 'index.html')).href;
 
 function readTimecodesEndpoint() {
@@ -58,6 +59,12 @@ const outputArgKeys = ['original_video_timecodes', 'highlights', 'auto_edit'];
 async function openApplicationPage(page) {
   await page.goto(applicationUrl);
   await expect(page.locator('#timecode-request-form')).toBeVisible();
+}
+
+async function openLandingPage(page) {
+  await page.goto(indexUrl);
+  await expect(page.locator('.hero')).toBeVisible();
+  await expect(page.locator('.examples-showcase')).toBeVisible();
 }
 
 async function fillValidRequest(page) {
@@ -120,6 +127,44 @@ function expectOnlyOutputArgs(inputs, expectedKeys) {
     }
   }
 }
+
+test.describe('landing page language switcher and examples', () => {
+  test('shows the switcher and localizes Russian example projects', async ({ page }) => {
+    await openLandingPage(page);
+
+    await expect(page.locator('.lang-switcher')).toBeVisible();
+    await expect(page.locator('.lang-btn[data-lang="ru"]')).toHaveClass(/active/);
+    await expect(page.locator('.hero-headline')).toContainText('От сырого видео к готовому контенту');
+    await expect(page.locator('.example-card-title').first()).toHaveText('[Бушвакер] История Китая: Империя Сун');
+    await expect(page.locator('.example-card')).toHaveCount(4);
+
+    await page.locator('.lang-btn[data-lang="en"]').click();
+
+    await expect(page.locator('.lang-btn[data-lang="en"]')).toHaveClass(/active/);
+    await expect(page.locator('.hero-headline')).toContainText('From raw video to upload-ready content');
+    await expect(page.locator('.example-card')).toHaveCount(4);
+    await expect(page.locator('.example-card-title').first()).toHaveText('[Bushwacker] History of China: Song Empire');
+    await expect(page.locator('.example-card-button-label').first()).toHaveText('open playlist');
+
+    await page.locator('.lang-btn[data-lang="ru"]').click();
+
+    await expect(page.locator('.lang-btn[data-lang="ru"]')).toHaveClass(/active/);
+    await expect(page.locator('.hero-headline')).toContainText('От сырого видео к готовому контенту');
+    await expect(page.locator('.example-card-title').first()).toHaveText('[Бушвакер] История Китая: Империя Сун');
+    await expect(page.locator('.example-card-button-label').first()).toHaveText('открыть плейлист');
+  });
+
+  test('reflects the language selected from the application page', async ({ page }) => {
+    await openApplicationPage(page);
+    await page.locator('.lang-btn[data-lang="en"]').click();
+
+    await openLandingPage(page);
+
+    await expect(page.locator('.lang-btn[data-lang="en"]')).toHaveClass(/active/);
+    await expect(page.locator('.hero-headline')).toContainText('From raw video to upload-ready content');
+    await expect(page.locator('.example-card-title').first()).toHaveText('[Bushwacker] History of China: Song Empire');
+  });
+});
 
 test.describe('application page request form', () => {
   test('keeps application translations in parity across supported languages', async () => {

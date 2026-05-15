@@ -27,11 +27,16 @@
         return getExampleItems()[exampleId] || null;
     }
 
-    function getExampleTitle(example) {
+    function getExampleTitle(example, lang) {
+        var titles = example && example.titles;
+        var localizedTitle = titles && lang && titles[lang];
+
+        if (typeof localizedTitle === 'string') return localizedTitle;
+
         return example && typeof example.title === 'string' ? example.title : '';
     }
 
-    function getExamplesForLanguage() {
+    function getExamplesForLanguage(lang) {
         var items = getExampleItems();
         var order = getExampleOrder();
         var examples = [];
@@ -47,7 +52,7 @@
             if (!example) continue;
             if (example.showOnHome === false) continue;
 
-            title = getExampleTitle(example);
+            title = getExampleTitle(example, lang);
 
             if (!title) continue;
 

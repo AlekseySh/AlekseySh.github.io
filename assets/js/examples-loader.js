@@ -2,7 +2,7 @@
     'use strict';
 
     function getCurrentLang() {
-        return localStorage.getItem('cutto_lang') || document.documentElement.lang || 'ru';
+        return document.documentElement.lang || 'ru';
     }
 
     function getExamplesForLanguage(lang) {

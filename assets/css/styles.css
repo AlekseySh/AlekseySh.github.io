@@ -33,12 +33,12 @@ body {
     display: block;
 }
 
-/* Language Switcher — temporarily hidden; change display to flex to re-enable */
+/* Language Switcher */
 .lang-switcher {
     position: fixed;
     top: 1rem;
     right: 1rem;
-    display: none;
+    display: flex;
     align-items: center;
     gap: 0.25rem;
     background: var(--bg-white);
