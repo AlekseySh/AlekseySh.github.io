@@ -647,7 +647,7 @@ test.describe('application page request form', () => {
         detect_speakers: 'TRUE'
       },
       original_video_timecodes: {
-        audio_book_from_orignal_audio: false
+        audio_book_from_original_audio: false
       }
     });
     expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
@@ -733,7 +733,7 @@ test.describe('application page request form', () => {
         detect_speakers: 'TRUE'
       },
       original_video_timecodes: {
-        audio_book_from_orignal_audio: true
+        audio_book_from_original_audio: true
       }
     });
     expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
