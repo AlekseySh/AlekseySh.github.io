@@ -353,7 +353,7 @@ test.describe('application page request form', () => {
     await expect(page.locator('.application-hero h1')).toHaveText('Обработать моё видео с CUTTO');
     await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube или Twitch видео');
     await expect(page.locator('.output-picker legend span')).toHaveText('Что создать?');
-    await expect(page.locator('.output-card[data-output-card="timecodes"] .output-title')).toHaveText('Таймкоды для исходного видео');
+    await expect(page.locator('.output-card[data-output-card="timecodes"] .output-title')).toHaveText('Главы (таймкоды) для исходного видео');
     await expect(page.locator('.output-card[data-output-card="timecodes"] .output-description')).toHaveText('Получите список глав в формате YouTube');
     await expect(page.locator('.output-card[data-output-card="highlights"] .output-title')).toHaveText('Хайлайты');
     await expect(page.locator('.output-card[data-output-card="highlights"] .output-description')).toHaveText('Получите короткие клипы из самых интересных моментов');
