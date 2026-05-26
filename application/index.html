@@ -88,6 +88,18 @@
                                     <span class="output-description" data-i18n="application.outputs.timecodes.description">Получите список глав в формате YouTube</span>
                                 </span>
                             </label>
+                            <div class="output-card-panel" data-output-panel="timecodes" hidden>
+                                <div class="output-param-grid">
+                                    <label class="output-toggle output-toggle--with-description" for="timecodes-audiobook">
+                                        <input id="timecodes-audiobook" type="checkbox" data-output-option>
+                                        <span class="output-toggle-track" aria-hidden="true"></span>
+                                        <span class="output-param-copy">
+                                            <span class="output-param-label" data-i18n="application.outputs.timecodes.audiobook">Сделать аудиокнигу из глав</span>
+                                            <span class="output-param-description" data-i18n="application.outputs.timecodes.audiobook.description">Получите папку с .mp3-файлами</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="output-card" data-output-card="highlights" aria-expanded="false">
@@ -141,6 +153,15 @@
                                         <input id="auto-edit-timecodes" type="checkbox" data-output-option>
                                         <span class="output-toggle-track" aria-hidden="true"></span>
                                         <span class="output-param-label" data-i18n="application.outputs.autoEdit.timecodes">Главы (таймкоды) для укороченного видео</span>
+                                    </label>
+
+                                    <label class="output-toggle output-toggle--with-description" for="auto-edit-audiobook">
+                                        <input id="auto-edit-audiobook" type="checkbox" data-output-option>
+                                        <span class="output-toggle-track" aria-hidden="true"></span>
+                                        <span class="output-param-copy">
+                                            <span class="output-param-label" data-i18n="application.outputs.autoEdit.audiobook">Сделать аудиокнигу из глав</span>
+                                            <span class="output-param-description" data-i18n="application.outputs.autoEdit.audiobook.description">Получите папку с .mp3-файлами</span>
+                                        </span>
                                     </label>
 
                                     <label class="output-toggle output-toggle--with-description" for="auto-edit-cut-more">
@@ -226,8 +247,10 @@
             var outputOptionInputs = Array.prototype.slice.call(document.querySelectorAll('[data-output-option]'));
             var highlightCountInput = document.getElementById('highlights-count');
             var highlightThumbnailsInput = document.getElementById('highlight-thumbnails');
+            var timecodesAudiobookInput = document.getElementById('timecodes-audiobook');
             var autoEditThumbnailInput = document.getElementById('auto-edit-thumbnail');
             var autoEditTimecodesInput = document.getElementById('auto-edit-timecodes');
+            var autoEditAudiobookInput = document.getElementById('auto-edit-audiobook');
             var autoEditCutMoreInput = document.getElementById('auto-edit-cut-more');
             var timecodesEndpoint = window.__siteData && window.__siteData.requests && window.__siteData.requests.timecodesEndpoint;
 
@@ -290,7 +313,16 @@
                 return value;
             }
 
+            function syncAutoEditAudiobookDependency() {
+                if (!autoEditAudiobookInput || !autoEditTimecodesInput) return;
+                if (autoEditAudiobookInput.checked) {
+                    autoEditTimecodesInput.checked = true;
+                }
+            }
+
             function buildInputArgs() {
+                syncAutoEditAudiobookDependency();
+
                 var inputArgs = {
                     user_inputs: {
                         video_path: videoInput.value.trim(),
@@ -300,7 +332,9 @@
                 };
 
                 if (isOutputSelected('timecodes')) {
-                    inputArgs.original_video_timecodes = {};
+                    inputArgs.original_video_timecodes = {
+                        audio_book_from_orignal_audio: timecodesAudiobookInput.checked
+                    };
                 }
 
                 if (isOutputSelected('highlights')) {
@@ -314,6 +348,7 @@
                     inputArgs.auto_edit = {
                         thumbnail_needed: autoEditThumbnailInput.checked,
                         timecodes_needed: autoEditTimecodesInput.checked,
+                        audio_book_from_edited_audio: autoEditAudiobookInput.checked,
                         cut_more: autoEditCutMoreInput.checked
                     };
                 }
@@ -453,6 +488,12 @@
                 input.addEventListener('input', resetSubmitState);
                 input.addEventListener('change', resetSubmitState);
             });
+            if (autoEditAudiobookInput) {
+                autoEditAudiobookInput.addEventListener('change', syncAutoEditAudiobookDependency);
+            }
+            if (autoEditTimecodesInput) {
+                autoEditTimecodesInput.addEventListener('change', syncAutoEditAudiobookDependency);
+            }
             if (highlightCountInput) {
                 highlightCountInput.addEventListener('input', function () {
                     normalizeHighlightCount(true);

@@ -399,11 +399,13 @@ test.describe('application page request form', () => {
     await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
     await expect(page.locator('#auto-edit-thumbnail')).toBeDisabled();
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
+    await expect(page.locator('#auto-edit-audiobook')).not.toBeChecked();
+    await expect(page.locator('#timecodes-audiobook')).not.toBeChecked();
     await expect(page.locator('.output-card[data-output-card="highlights"]')).not.toHaveAttribute('aria-disabled', 'true');
     await expect(page.locator('.output-card[data-output-card="auto-edit"]')).not.toHaveAttribute('aria-disabled', 'true');
     await expect(page.locator('.request-send-button')).toBeDisabled();
     await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
-    await expect(page.locator('[data-output-panel="timecodes"]')).toHaveCount(0);
+    await expect(page.locator('[data-output-panel="timecodes"]')).toBeHidden();
     await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
     await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
   });
@@ -430,6 +432,16 @@ test.describe('application page request form', () => {
       expect(description.startsWith('Get ')).toBe(true);
       expect(description).not.toMatch(/you get/i);
     }
+
+    await chooseOutput(page, 'timecodes');
+
+    await expect(page.locator('.output-card[data-output-card="timecodes"] .output-param-label')).toHaveText('Make audiobook from chapters');
+    await expect(page.locator('.output-card[data-output-card="timecodes"] .output-param-description')).toHaveText('Get folder of .mp3 files');
+
+    await chooseOutput(page, 'auto-edit');
+
+    await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-label')).toHaveText('Make audiobook from chapters');
+    await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-description')).toHaveText('Get folder of .mp3 files');
   });
 
   test('allows timecodes, highlights, and auto-edit options', async ({ page }) => {
@@ -442,17 +454,28 @@ test.describe('application page request form', () => {
     await expect(page.locator('[data-output-panel="auto-edit"]')).toBeVisible();
     await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
     await expect(page.locator('.request-send-button')).toBeEnabled();
-    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle')).toHaveCount(3);
+    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle')).toHaveCount(4);
     await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle').nth(0)).toHaveAttribute('for', 'auto-edit-timecodes');
-    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle').nth(1)).toHaveAttribute('for', 'auto-edit-cut-more');
-    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle').nth(2)).toHaveAttribute('for', 'auto-edit-thumbnail');
+    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle').nth(1)).toHaveAttribute('for', 'auto-edit-audiobook');
+    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle').nth(2)).toHaveAttribute('for', 'auto-edit-cut-more');
+    await expect(page.locator('[data-output-panel="auto-edit"] .output-toggle').nth(3)).toHaveAttribute('for', 'auto-edit-thumbnail');
+    await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-label')).toHaveText('Сделать аудиокнигу из глав');
+    await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-description')).toHaveText('Получите папку с .mp3-файлами');
 
     await page.locator('label[for="auto-edit-thumbnail"]').click({ force: true });
+    await page.locator('label[for="auto-edit-audiobook"]').click();
+    await expect(page.locator('#auto-edit-audiobook')).toBeChecked();
+    await expect(page.locator('#auto-edit-timecodes')).toBeChecked();
+
     await page.locator('label[for="auto-edit-timecodes"]').click();
+    await expect(page.locator('#auto-edit-audiobook')).toBeChecked();
+    await expect(page.locator('#auto-edit-timecodes')).toBeChecked();
+
     await page.locator('label[for="auto-edit-cut-more"]').click();
 
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
     await expect(page.locator('#auto-edit-timecodes')).toBeChecked();
+    await expect(page.locator('#auto-edit-audiobook')).toBeChecked();
     await expect(page.locator('#auto-edit-cut-more')).toBeChecked();
 
     await chooseOutput(page, 'auto-edit');
@@ -466,7 +489,13 @@ test.describe('application page request form', () => {
 
     await expect(page.locator('#output-timecodes')).toBeChecked();
     await expect(page.locator('.request-send-button')).toBeEnabled();
-    await expect(page.locator('[data-output-panel="timecodes"]')).toHaveCount(0);
+    await expect(page.locator('[data-output-panel="timecodes"]')).toBeVisible();
+    await expect(page.locator('[data-output-panel="timecodes"] .output-toggle')).toHaveCount(1);
+    await expect(page.locator('[data-output-panel="timecodes"] .output-toggle')).toHaveAttribute('for', 'timecodes-audiobook');
+    await expect(page.locator('[data-output-panel="timecodes"] .output-param-label')).toHaveText('Сделать аудиокнигу из глав');
+    await expect(page.locator('[data-output-panel="timecodes"] .output-param-description')).toHaveText('Получите папку с .mp3-файлами');
+    await page.locator('label[for="timecodes-audiobook"]').click();
+    await expect(page.locator('#timecodes-audiobook')).toBeChecked();
     await expect(page.locator('[data-output-panel="highlights"]')).toBeHidden();
     await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
 
@@ -492,6 +521,7 @@ test.describe('application page request form', () => {
     await chooseOutput(page, 'timecodes');
 
     await expect(page.locator('#output-timecodes')).not.toBeChecked();
+    await expect(page.locator('[data-output-panel="timecodes"]')).toBeHidden();
     await expect(page.locator('.request-send-button')).toBeDisabled();
     await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
   });
@@ -518,9 +548,11 @@ test.describe('application page request form', () => {
     await fillValidRequest(page);
     await chooseOutput(page, 'auto-edit');
     await page.locator('label[for="auto-edit-thumbnail"]').click({ force: true });
-    await page.locator('label[for="auto-edit-timecodes"]').click();
+    await page.locator('label[for="auto-edit-audiobook"]').click();
     await page.locator('label[for="auto-edit-cut-more"]').click();
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
+    await expect(page.locator('#auto-edit-audiobook')).toBeChecked();
+    await expect(page.locator('#auto-edit-timecodes')).toBeChecked();
     await clickSubmit(page);
 
     await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
@@ -536,7 +568,36 @@ test.describe('application page request form', () => {
       auto_edit: {
         thumbnail_needed: false,
         timecodes_needed: true,
+        audio_book_from_edited_audio: true,
         cut_more: true
+      }
+    });
+    expectOnlyOutputArgs(inputs, ['auto_edit']);
+  });
+
+  test('submits auto-edit audiobook flag as false by default', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await fillValidRequest(page);
+    await chooseOutput(page, 'auto-edit');
+    await clickSubmit(page);
+
+    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
+    expect(requests).toHaveLength(1);
+
+    const inputs = getInputsFromRequest(requests[0]);
+    expect(inputs).toEqual({
+      user_inputs: {
+        video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        language_code: 'ru',
+        detect_speakers: 'TRUE'
+      },
+      auto_edit: {
+        thumbnail_needed: false,
+        timecodes_needed: false,
+        audio_book_from_edited_audio: false,
+        cut_more: false
       }
     });
     expectOnlyOutputArgs(inputs, ['auto_edit']);
@@ -585,7 +646,9 @@ test.describe('application page request form', () => {
         language_code: 'ru',
         detect_speakers: 'TRUE'
       },
-      original_video_timecodes: {}
+      original_video_timecodes: {
+        audio_book_from_orignal_audio: false
+      }
     });
     expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
   });
@@ -636,6 +699,8 @@ test.describe('application page request form', () => {
     await fillValidRequest(page);
     await chooseRadio(page, 'language-code', 'en');
     await chooseOutput(page, 'timecodes');
+    await page.locator('label[for="timecodes-audiobook"]').click();
+    await expect(page.locator('#timecodes-audiobook')).toBeChecked();
 
     const submitPromise = clickSubmit(page);
 
@@ -667,7 +732,9 @@ test.describe('application page request form', () => {
         language_code: 'en',
         detect_speakers: 'TRUE'
       },
-      original_video_timecodes: {}
+      original_video_timecodes: {
+        audio_book_from_orignal_audio: true
+      }
     });
     expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
   });
