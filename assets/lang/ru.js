@@ -84,7 +84,6 @@ window.__translations['ru'] = {
     "application.outputs.timecodes.description": "Получите список глав в формате YouTube",
     "application.outputs.timecodes.audiobook": "Сделать аудиокнигу из глав",
     "application.outputs.timecodes.audiobook.description": "Получите папку с .mp3-файлами",
-    "application.outputs.underDevelopment": "В разработке",
     "application.outputs.highlights.title": "Хайлайты",
     "application.outputs.highlights.description": "Получите короткие клипы из самых интересных моментов",
     "application.outputs.highlights.count": "Количество хайлайтов",

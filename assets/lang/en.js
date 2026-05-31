@@ -84,7 +84,6 @@ window.__translations['en'] = {
     "application.outputs.timecodes.description": "Get a chapter list in YouTube format",
     "application.outputs.timecodes.audiobook": "Make audiobook from chapters",
     "application.outputs.timecodes.audiobook.description": "Get folder of .mp3 files",
-    "application.outputs.underDevelopment": "Under development",
     "application.outputs.highlights.title": "Highlights",
     "application.outputs.highlights.description": "Get short clips of the most interesting parts",
     "application.outputs.highlights.count": "Number of highlights",

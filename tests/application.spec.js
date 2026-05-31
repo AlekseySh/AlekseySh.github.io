@@ -366,8 +366,6 @@ test.describe('application page request form', () => {
     await expect(page.locator('.output-card[data-output-card="highlights"] .output-description')).toHaveText('Получите короткие клипы из самых интересных моментов');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-title')).toHaveText('Автомонтаж');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-description')).toHaveText('Получите укороченное видео');
-    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveCount(0);
-    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveCount(0);
 
     const formOrder = await page.evaluate(() => {
       const videoField = document.getElementById('video-path').closest('.request-field');
@@ -412,8 +410,6 @@ test.describe('application page request form', () => {
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
     await expect(page.locator('#auto-edit-audiobook')).not.toBeChecked();
     await expect(page.locator('#timecodes-audiobook')).not.toBeChecked();
-    await expect(page.locator('.output-card[data-output-card="highlights"]')).not.toHaveAttribute('aria-disabled', 'true');
-    await expect(page.locator('.output-card[data-output-card="auto-edit"]')).not.toHaveAttribute('aria-disabled', 'true');
     await expect(page.locator('.request-send-button')).toBeDisabled();
     await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
     await expect(page.locator('[data-output-panel="timecodes"]')).toBeHidden();
@@ -432,8 +428,6 @@ test.describe('application page request form', () => {
     await expect(page.locator('label[for="author-photos-link"] span')).toHaveText('Photos of authors (optional)');
     await expect(page.locator('#author-photos-help')).toHaveText('Paste a Google Drive link that anyone with the link can view. Use one subfolder per author. example');
     await expect(page.locator('.request-disclaimer')).toContainText('If this is your FIRST TIME using the service');
-    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveCount(0);
-    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveCount(0);
 
     const englishDescriptions = await page.locator('.output-card .output-description').allTextContents();
     expect(englishDescriptions).toEqual([
