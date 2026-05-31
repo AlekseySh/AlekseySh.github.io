@@ -55,6 +55,7 @@ const translations = {
   ru: readTranslations('ru')
 };
 const outputArgKeys = ['original_video_timecodes', 'highlights', 'auto_edit'];
+const authorPhotosExampleUrl = 'https://drive.google.com/drive/folders/1bmbtwm_ANTqn0fpLwJeA9RHmE-ZpIJvI?usp=sharing';
 
 async function openApplicationPage(page) {
   await page.goto(applicationUrl);
@@ -352,6 +353,12 @@ test.describe('application page request form', () => {
     await expect(page).toHaveTitle('Обработать моё видео с CUTTO');
     await expect(page.locator('.application-hero h1')).toHaveText('Обработать моё видео с CUTTO');
     await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube или Twitch видео');
+    await expect(page.locator('label[for="author-photos-link"] span')).toHaveText('Фото авторов (необязательно)');
+    await expect(page.locator('#author-photos-help')).toHaveText('Ссылка на Google Drive, доступная по ссылке. Внутри — папки с фото на каждого автора. пример');
+    await expect(page.locator('#author-photos-help .request-field-example-link')).toHaveAttribute('href', authorPhotosExampleUrl);
+    await expect(page.locator('#author-photos-help .request-field-example-link')).toHaveAttribute('target', '_blank');
+    await expect(page.locator('#author-photos-help .request-field-example-link')).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(page.locator('#author-photos-warning')).toBeHidden();
     await expect(page.locator('.output-picker legend span')).toHaveText('Что создать?');
     await expect(page.locator('.output-card[data-output-card="timecodes"] .output-title')).toHaveText('Главы (таймкоды) для исходного видео');
     await expect(page.locator('.output-card[data-output-card="timecodes"] .output-description')).toHaveText('Получите список глав в формате YouTube');
@@ -359,16 +366,20 @@ test.describe('application page request form', () => {
     await expect(page.locator('.output-card[data-output-card="highlights"] .output-description')).toHaveText('Получите короткие клипы из самых интересных моментов');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-title')).toHaveText('Автомонтаж');
     await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-description')).toHaveText('Получите укороченное видео');
-    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveText('В разработке');
-    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveText('В разработке');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveCount(0);
+    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveCount(0);
 
     const formOrder = await page.evaluate(() => {
+      const videoField = document.getElementById('video-path').closest('.request-field');
+      const authorPhotosField = document.getElementById('author-photos-link').closest('.request-field');
       const outputPicker = document.querySelector('.output-picker');
       const emailField = document.getElementById('response-email').closest('.request-field');
       const commentField = document.getElementById('request-comment').closest('.request-field');
       const sendButton = document.querySelector('.request-send-button');
 
-      return Boolean(outputPicker.compareDocumentPosition(emailField) & Node.DOCUMENT_POSITION_FOLLOWING)
+      return Boolean(videoField.compareDocumentPosition(authorPhotosField) & Node.DOCUMENT_POSITION_FOLLOWING)
+        && Boolean(authorPhotosField.compareDocumentPosition(outputPicker) & Node.DOCUMENT_POSITION_FOLLOWING)
+        && Boolean(outputPicker.compareDocumentPosition(emailField) & Node.DOCUMENT_POSITION_FOLLOWING)
         && Boolean(emailField.compareDocumentPosition(commentField) & Node.DOCUMENT_POSITION_FOLLOWING)
         && Boolean(commentField.compareDocumentPosition(sendButton) & Node.DOCUMENT_POSITION_FOLLOWING);
     });
@@ -395,9 +406,9 @@ test.describe('application page request form', () => {
     await expect(page.locator('#output-auto-edit')).not.toBeChecked();
     await expect(page.locator('#output-highlights')).toBeEnabled();
     await expect(page.locator('#output-auto-edit')).toBeEnabled();
-    await expect(page.locator('#highlight-thumbnails')).toBeDisabled();
+    await expect(page.locator('#highlight-thumbnails')).toBeEnabled();
     await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
-    await expect(page.locator('#auto-edit-thumbnail')).toBeDisabled();
+    await expect(page.locator('#auto-edit-thumbnail')).toBeEnabled();
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
     await expect(page.locator('#auto-edit-audiobook')).not.toBeChecked();
     await expect(page.locator('#timecodes-audiobook')).not.toBeChecked();
@@ -418,9 +429,11 @@ test.describe('application page request form', () => {
     await expect(page).toHaveTitle('Process my video with CUTTO');
     await expect(page.locator('.application-hero h1')).toHaveText('Process my video with CUTTO');
     await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube or Twitch video link');
+    await expect(page.locator('label[for="author-photos-link"] span')).toHaveText('Photos of authors (optional)');
+    await expect(page.locator('#author-photos-help')).toHaveText('Paste a Google Drive link that anyone with the link can view. Use one subfolder per author. example');
     await expect(page.locator('.request-disclaimer')).toContainText('If this is your FIRST TIME using the service');
-    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveText('Under development');
-    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveText('Under development');
+    await expect(page.locator('.output-card[data-output-card="highlights"] .output-toggle .output-unavailable')).toHaveCount(0);
+    await expect(page.locator('.output-card[data-output-card="auto-edit"] .output-unavailable')).toHaveCount(0);
 
     const englishDescriptions = await page.locator('.output-card .output-description').allTextContents();
     expect(englishDescriptions).toEqual([
@@ -444,6 +457,33 @@ test.describe('application page request form', () => {
     await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-description')).toHaveText('Get folder of .mp3 files');
   });
 
+  test('opens the author photos example link without filling the input', async ({ page }) => {
+    await openApplicationPage(page);
+
+    const link = page.locator('#author-photos-help .request-field-example-link');
+    const linkStyle = await link.evaluate((element) => {
+      const style = window.getComputedStyle(element);
+
+      return {
+        backgroundColor: style.backgroundColor,
+        color: style.color,
+        textDecorationLine: style.textDecorationLine
+      };
+    });
+
+    expect(linkStyle.backgroundColor).toBe('rgba(99, 102, 241, 0.1)');
+    expect(linkStyle.color).toBe('rgb(99, 102, 241)');
+    expect(linkStyle.textDecorationLine).toContain('underline');
+
+    const popupPromise = page.waitForEvent('popup');
+    await link.click();
+    const popup = await popupPromise;
+
+    await expect.poll(() => popup.url()).toBe(authorPhotosExampleUrl);
+    await popup.close();
+    await expect(page.locator('#author-photos-link')).toHaveValue('');
+  });
+
   test('allows timecodes, highlights, and auto-edit options', async ({ page }) => {
     await openApplicationPage(page);
 
@@ -462,7 +502,7 @@ test.describe('application page request form', () => {
     await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-label')).toHaveText('Сделать аудиокнигу из глав');
     await expect(page.locator('[data-output-panel="auto-edit"] label[for="auto-edit-audiobook"] .output-param-description')).toHaveText('Получите папку с .mp3-файлами');
 
-    await page.locator('label[for="auto-edit-thumbnail"]').click({ force: true });
+    await page.locator('label[for="auto-edit-thumbnail"]').click();
     await page.locator('label[for="auto-edit-audiobook"]').click();
     await expect(page.locator('#auto-edit-audiobook')).toBeChecked();
     await expect(page.locator('#auto-edit-timecodes')).toBeChecked();
@@ -477,6 +517,7 @@ test.describe('application page request form', () => {
     await expect(page.locator('#auto-edit-timecodes')).toBeChecked();
     await expect(page.locator('#auto-edit-audiobook')).toBeChecked();
     await expect(page.locator('#auto-edit-cut-more')).toBeChecked();
+    await expect(page.locator('#author-photos-warning')).toBeVisible();
 
     await chooseOutput(page, 'auto-edit');
 
@@ -505,10 +546,11 @@ test.describe('application page request form', () => {
     await expect(page.locator('.output-card[data-output-card="highlights"]')).toHaveClass(/is-selected/);
     await expect(page.locator('[data-output-panel="highlights"]')).toBeVisible();
     await expect(page.locator('#highlights-count')).toHaveValue('5');
-    await expect(page.locator('#highlight-thumbnails')).toBeDisabled();
+    await expect(page.locator('#highlight-thumbnails')).toBeEnabled();
     await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
-    await page.locator('label[for="highlight-thumbnails"]').click({ force: true });
+    await page.locator('label[for="highlight-thumbnails"]').click();
     await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
+    await expect(page.locator('#author-photos-warning')).toHaveText('Вставьте ссылку на фото авторов, чтобы создать обложки.');
     await expect(page.locator('[data-output-panel="auto-edit"]')).toBeHidden();
     await expect(page.locator('#output-auto-edit')).not.toBeChecked();
 
@@ -547,7 +589,7 @@ test.describe('application page request form', () => {
     await openApplicationPage(page);
     await fillValidRequest(page);
     await chooseOutput(page, 'auto-edit');
-    await page.locator('label[for="auto-edit-thumbnail"]').click({ force: true });
+    await page.locator('label[for="auto-edit-thumbnail"]').click();
     await page.locator('label[for="auto-edit-audiobook"]').click();
     await page.locator('label[for="auto-edit-cut-more"]').click();
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
@@ -567,6 +609,7 @@ test.describe('application page request form', () => {
       },
       auto_edit: {
         thumbnail_needed: false,
+        author_photo_dirs: null,
         timecodes_needed: true,
         audio_book_from_edited_audio: true,
         cut_more: true
@@ -595,6 +638,7 @@ test.describe('application page request form', () => {
       },
       auto_edit: {
         thumbnail_needed: false,
+        author_photo_dirs: null,
         timecodes_needed: false,
         audio_book_from_edited_audio: false,
         cut_more: false
@@ -653,7 +697,7 @@ test.describe('application page request form', () => {
     expectOnlyOutputArgs(inputs, ['original_video_timecodes']);
   });
 
-  test('submits highlights with count and disabled thumbnails flag', async ({ page }) => {
+  test('submits highlights with count and thumbnail photo dirs as null when thumbnails are off', async ({ page }) => {
     const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
 
     await openApplicationPage(page);
@@ -661,9 +705,10 @@ test.describe('application page request form', () => {
     await chooseOutput(page, 'highlights');
 
     await expect(page.locator('[data-output-panel="highlights"]')).toBeVisible();
-    await expect(page.locator('#highlight-thumbnails')).toBeDisabled();
-    await page.locator('label[for="highlight-thumbnails"]').click({ force: true });
+    await expect(page.locator('#highlight-thumbnails')).toBeEnabled();
+    await page.locator('label[for="highlight-thumbnails"]').click();
     await expect(page.locator('#highlight-thumbnails')).not.toBeChecked();
+    await expect(page.locator('#author-photos-warning')).toBeVisible();
 
     await clickSubmit(page);
 
@@ -679,10 +724,54 @@ test.describe('application page request form', () => {
       },
       highlights: {
         num_clips: 5,
-        thumbnails_needed: false
+        thumbnails_needed: false,
+        author_photo_dirs: null
       }
     });
     expectOnlyOutputArgs(inputs, ['highlights']);
+  });
+
+  test('submits author photo dirs inside each thumbnail output config', async ({ page }) => {
+    const authorPhotoLink = 'https://drive.google.com/drive/folders/authors';
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await fillValidRequest(page);
+    await page.locator('#author-photos-link').fill(` ${authorPhotoLink} `);
+    await chooseOutput(page, 'highlights');
+    await page.locator('label[for="highlight-thumbnails"]').click();
+    await chooseOutput(page, 'auto-edit');
+    await page.locator('label[for="auto-edit-thumbnail"]').click();
+    await expect(page.locator('#highlight-thumbnails')).toBeChecked();
+    await expect(page.locator('#auto-edit-thumbnail')).toBeChecked();
+    await expect(page.locator('#author-photos-warning')).toBeHidden();
+
+    await clickSubmit(page);
+
+    await expect(page.locator('.request-send-button')).toContainText('Ваш запрос отправлен');
+    expect(requests).toHaveLength(1);
+
+    const inputs = getInputsFromRequest(requests[0]);
+    expect(inputs).toEqual({
+      user_inputs: {
+        video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        language_code: 'ru',
+        detect_speakers: 'TRUE'
+      },
+      highlights: {
+        num_clips: 5,
+        thumbnails_needed: true,
+        author_photo_dirs: authorPhotoLink
+      },
+      auto_edit: {
+        thumbnail_needed: true,
+        author_photo_dirs: authorPhotoLink,
+        timecodes_needed: false,
+        audio_book_from_edited_audio: false,
+        cut_more: false
+      }
+    });
+    expectOnlyOutputArgs(inputs, ['highlights', 'auto_edit']);
   });
 
   test('submits trimmed payload and marks the request as sent', async ({ page }) => {

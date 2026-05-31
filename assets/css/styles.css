@@ -1464,6 +1464,7 @@ body {
 }
 
 .request-field {
+    --request-field-icon-size: 18px;
     display: grid;
     gap: 0.55rem;
     min-width: 0;
@@ -1487,10 +1488,13 @@ body {
 }
 
 .request-field label i,
-.request-field legend i {
-    width: 18px;
-    height: 18px;
+.request-field > label svg,
+.request-field legend i,
+.request-field legend svg {
+    width: var(--request-field-icon-size);
+    height: var(--request-field-icon-size);
     color: var(--primary);
+    flex: 0 0 var(--request-field-icon-size);
 }
 
 .request-input-shell {
@@ -1532,6 +1536,53 @@ body {
     color: var(--success);
     font-size: 0.86rem;
     font-weight: 700;
+}
+
+.request-field-help,
+.request-field-warning {
+    margin: 0;
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.request-field-help {
+    color: var(--text-muted);
+    margin-left: calc(var(--request-field-icon-size) + 0.45rem);
+}
+
+.request-field-example {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-left: 0.35rem;
+}
+
+.request-field-example-link {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 0.1rem 0.45rem;
+    border: 1px solid rgba(99, 102, 241, 0.24);
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    font-weight: 800;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 2px;
+}
+
+.request-field-example-link:hover,
+.request-field-example-link:focus-visible {
+    background: rgba(99, 102, 241, 0.16);
+    color: #4f46e5;
+}
+
+.request-field-warning {
+    color: #c2410c;
 }
 
 .request-disclaimer {
@@ -1716,7 +1767,8 @@ body {
     color: var(--primary);
 }
 
-.output-icon i {
+.output-icon i,
+.output-icon svg {
     width: 30px;
     height: 30px;
 }
@@ -1994,7 +2046,8 @@ body {
         height: 48px;
     }
 
-    .output-icon i {
+    .output-icon i,
+    .output-icon svg {
         width: 26px;
         height: 26px;
     }

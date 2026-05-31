@@ -50,6 +50,25 @@
                     <p class="request-field-success" id="video-normalize-notice" data-i18n="application.video.normalized" hidden>We normalized your link.</p>
                 </div>
 
+                <div class="request-field">
+                    <label for="author-photos-link">
+                        <i data-lucide="images"></i>
+                        <span data-i18n="application.authorPhotos.label">Фото авторов (необязательно)</span>
+                    </label>
+                    <p class="request-field-help" id="author-photos-help">
+                        <span data-i18n="application.authorPhotos.description">Ссылка на Google Drive, доступная по ссылке. Внутри — папки с фото на каждого автора.</span>
+                        <span class="request-field-example">
+                            <a class="request-field-example-link" href="https://drive.google.com/drive/folders/1bmbtwm_ANTqn0fpLwJeA9RHmE-ZpIJvI?usp=sharing" target="_blank" rel="noopener noreferrer">
+                                <span data-i18n="application.authorPhotos.exampleLink">пример</span>
+                            </a>
+                        </span>
+                    </p>
+                    <div class="request-input-shell">
+                        <input id="author-photos-link" type="url" inputmode="url" autocomplete="url" placeholder="https://drive.google.com/..." aria-describedby="author-photos-help author-photos-warning">
+                    </div>
+                    <p class="request-field-warning" id="author-photos-warning" data-i18n="application.authorPhotos.warning" role="alert" hidden>Вставьте ссылку на фото авторов, чтобы создать обложки.</p>
+                </div>
+
                 <fieldset class="request-field">
                     <legend>
                         <i data-lucide="globe-2"></i>
@@ -123,11 +142,10 @@
                                         <span class="output-param-label" data-i18n="application.outputs.highlights.count">Количество хайлайтов</span>
                                     </label>
 
-                                    <label class="output-toggle output-toggle--disabled" for="highlight-thumbnails" aria-disabled="true">
-                                        <input id="highlight-thumbnails" type="checkbox" data-output-option disabled>
+                                    <label class="output-toggle" for="highlight-thumbnails">
+                                        <input id="highlight-thumbnails" type="checkbox" data-output-option>
                                         <span class="output-toggle-track" aria-hidden="true"></span>
                                         <span class="output-param-label" data-i18n="application.outputs.highlights.thumbnails">Создавать обложки</span>
-                                        <span class="output-unavailable" data-i18n="application.outputs.underDevelopment">В разработке</span>
                                     </label>
                                 </div>
                             </div>
@@ -173,11 +191,10 @@
                                         </span>
                                     </label>
 
-                                    <label class="output-toggle output-toggle--disabled" for="auto-edit-thumbnail" aria-disabled="true">
-                                        <input id="auto-edit-thumbnail" type="checkbox" data-output-option disabled>
+                                    <label class="output-toggle" for="auto-edit-thumbnail">
+                                        <input id="auto-edit-thumbnail" type="checkbox" data-output-option>
                                         <span class="output-toggle-track" aria-hidden="true"></span>
                                         <span class="output-param-label" data-i18n="application.outputs.autoEdit.thumbnail">Создать обложку</span>
-                                        <span class="output-unavailable" data-i18n="application.outputs.underDevelopment">В разработке</span>
                                     </label>
                                 </div>
                             </div>
@@ -238,6 +255,8 @@
             var form = document.getElementById('timecode-request-form');
             var videoInput = document.getElementById('video-path');
             var videoNormalizeNotice = document.getElementById('video-normalize-notice');
+            var authorPhotosInput = document.getElementById('author-photos-link');
+            var authorPhotosWarning = document.getElementById('author-photos-warning');
             var emailInput = document.getElementById('response-email');
             var commentInput = document.getElementById('request-comment');
             var submitButton = form.querySelector('.request-send-button');
@@ -252,7 +271,12 @@
             var autoEditTimecodesInput = document.getElementById('auto-edit-timecodes');
             var autoEditAudiobookInput = document.getElementById('auto-edit-audiobook');
             var autoEditCutMoreInput = document.getElementById('auto-edit-cut-more');
+            var thumbnailInputs = [highlightThumbnailsInput, autoEditThumbnailInput].filter(function (input) {
+                return input;
+            });
             var timecodesEndpoint = window.__siteData && window.__siteData.requests && window.__siteData.requests.timecodesEndpoint;
+            var GOOGLE_DRIVE_HOSTS = ['drive.google.com', 'www.drive.google.com'];
+            var authorPhotosMissingWarningActive = false;
 
             function getCheckedValue(name, fallback) {
                 var checked = document.querySelector('input[name="' + name + '"]:checked');
@@ -320,6 +344,11 @@
                 }
             }
 
+            function getAuthorPhotoDirs(thumbnailsNeeded) {
+                if (!thumbnailsNeeded || !authorPhotosInput) return null;
+                return authorPhotosInput.value.trim();
+            }
+
             function buildInputArgs() {
                 syncAutoEditAudiobookDependency();
 
@@ -338,15 +367,19 @@
                 }
 
                 if (isOutputSelected('highlights')) {
+                    var highlightsThumbnailsNeeded = highlightThumbnailsInput.checked;
                     inputArgs.highlights = {
                         num_clips: getHighlightCount(),
-                        thumbnails_needed: highlightThumbnailsInput.checked
+                        thumbnails_needed: highlightsThumbnailsNeeded,
+                        author_photo_dirs: getAuthorPhotoDirs(highlightsThumbnailsNeeded)
                     };
                 }
 
                 if (isOutputSelected('auto-edit')) {
+                    var autoEditThumbnailNeeded = autoEditThumbnailInput.checked;
                     inputArgs.auto_edit = {
-                        thumbnail_needed: autoEditThumbnailInput.checked,
+                        thumbnail_needed: autoEditThumbnailNeeded,
+                        author_photo_dirs: getAuthorPhotoDirs(autoEditThumbnailNeeded),
                         timecodes_needed: autoEditTimecodesInput.checked,
                         audio_book_from_edited_audio: autoEditAudiobookInput.checked,
                         cut_more: autoEditCutMoreInput.checked
@@ -378,6 +411,81 @@
             function setVideoNormalizeNotice(isVisible) {
                 if (!videoNormalizeNotice) return;
                 videoNormalizeNotice.hidden = !isVisible;
+            }
+
+            function hasAuthorPhotosLink() {
+                return authorPhotosInput && authorPhotosInput.value.trim().length > 0;
+            }
+
+            function isGoogleDriveLink(value) {
+                try {
+                    var url = new URL(value);
+                    var host = url.hostname.toLowerCase();
+                    return url.protocol === 'https:' && GOOGLE_DRIVE_HOSTS.indexOf(host) !== -1;
+                } catch (error) {
+                    return false;
+                }
+            }
+
+            function setAuthorPhotosWarning(isVisible, key, fallback) {
+                if (!authorPhotosWarning) return;
+                if (key) {
+                    authorPhotosWarning.setAttribute('data-i18n', key);
+                    authorPhotosWarning.textContent = getTranslation(key, fallback);
+                }
+                authorPhotosWarning.hidden = !isVisible;
+            }
+
+            function uncheckThumbnailInputs() {
+                thumbnailInputs.forEach(function (input) {
+                    input.checked = false;
+                });
+            }
+
+            function validateAuthorPhotosLink(showError) {
+                if (!authorPhotosInput || !hasAuthorPhotosLink()) {
+                    if (authorPhotosInput) authorPhotosInput.setCustomValidity('');
+                    if (authorPhotosMissingWarningActive) {
+                        setAuthorPhotosWarning(true, 'application.authorPhotos.warning', 'Please paste an author photo folder link to create thumbnails.');
+                    } else {
+                        setAuthorPhotosWarning(false);
+                    }
+                    return true;
+                }
+
+                if (isGoogleDriveLink(authorPhotosInput.value.trim())) {
+                    authorPhotosMissingWarningActive = false;
+                    authorPhotosInput.setCustomValidity('');
+                    setAuthorPhotosWarning(false);
+                    return true;
+                }
+
+                authorPhotosMissingWarningActive = false;
+                var message = getTranslation('application.authorPhotos.invalid', 'Please paste a valid Google Drive link.');
+                authorPhotosInput.setCustomValidity(message);
+                setAuthorPhotosWarning(true, 'application.authorPhotos.invalid', message);
+                uncheckThumbnailInputs();
+                if (showError) authorPhotosInput.reportValidity();
+                return false;
+            }
+
+            function validateThumbnailPhotoLink() {
+                if (!hasAuthorPhotosLink()) {
+                    authorPhotosMissingWarningActive = true;
+                    if (authorPhotosInput) authorPhotosInput.setCustomValidity('');
+                    setAuthorPhotosWarning(true, 'application.authorPhotos.warning', 'Please paste an author photo folder link to create thumbnails.');
+                    return false;
+                }
+
+                return validateAuthorPhotosLink(false);
+            }
+
+            function enforceThumbnailPhotoLink(input) {
+                if (!input || !input.checked || validateThumbnailPhotoLink()) return;
+
+                input.checked = false;
+                if (authorPhotosInput) authorPhotosInput.focus();
+                resetSubmitState();
             }
 
             function canonicalizeVideoInput(showError) {
@@ -468,6 +576,16 @@
                     canonicalizeVideoInput(true);
                 }
             });
+            authorPhotosInput.addEventListener('input', function () {
+                if (!hasAuthorPhotosLink()) {
+                    uncheckThumbnailInputs();
+                }
+                validateAuthorPhotosLink(false);
+                resetSubmitState();
+            });
+            authorPhotosInput.addEventListener('blur', function () {
+                validateAuthorPhotosLink(true);
+            });
             emailInput.addEventListener('input', function () {
                 clearCustomError(emailInput);
                 resetSubmitState();
@@ -487,6 +605,11 @@
             outputOptionInputs.forEach(function (input) {
                 input.addEventListener('input', resetSubmitState);
                 input.addEventListener('change', resetSubmitState);
+            });
+            thumbnailInputs.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    enforceThumbnailPhotoLink(input);
+                });
             });
             if (autoEditAudiobookInput) {
                 autoEditAudiobookInput.addEventListener('change', syncAutoEditAudiobookDependency);
@@ -512,6 +635,7 @@
                 }
                 if (!validateRequired(videoInput, 'YouTube link')) return;
                 if (!canonicalizeVideoInput(true)) return;
+                if (!validateAuthorPhotosLink(true)) return;
                 if (!validateRequired(emailInput, 'Email')) return;
                 if (!form.reportValidity()) return;
 
