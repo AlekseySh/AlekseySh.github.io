@@ -51,20 +51,25 @@
                 </div>
 
                 <div class="request-field">
-                    <label for="author-photos-link">
+                    <label for="author-photo-link-1">
                         <i data-lucide="images"></i>
                         <span data-i18n="application.authorPhotos.label">Фото авторов (необязательно)</span>
                     </label>
                     <p class="request-field-help" id="author-photos-help">
-                        <span data-i18n="application.authorPhotos.description">Ссылка на Google Drive, доступная по ссылке. Внутри — папки с фото на каждого автора.</span>
+                        <span data-i18n="application.authorPhotos.description">Один автор — одна папка на Google Drive с включённым доступом на просмотр.</span>
                         <span class="request-field-example">
                             <a class="request-field-example-link" href="https://drive.google.com/drive/folders/1bmbtwm_ANTqn0fpLwJeA9RHmE-ZpIJvI?usp=sharing" target="_blank" rel="noopener noreferrer">
                                 <span data-i18n="application.authorPhotos.exampleLink">пример</span>
                             </a>
                         </span>
                     </p>
-                    <div class="request-input-shell">
-                        <input id="author-photos-link" type="url" inputmode="url" autocomplete="url" placeholder="https://drive.google.com/..." aria-describedby="author-photos-help author-photos-warning">
+                    <div class="author-photos-list" id="author-photos-list">
+                        <div class="author-photo-row" data-author-photo-row>
+                            <div class="request-input-shell author-photo-input-shell">
+                                <input id="author-photo-link-1" class="author-photo-input" data-author-photo-input type="url" inputmode="url" autocomplete="url" placeholder="https://drive.google.com/..." aria-describedby="author-photos-help author-photos-warning">
+                            </div>
+                            <div class="author-photo-actions" data-author-photo-actions></div>
+                        </div>
                     </div>
                     <p class="request-field-warning" id="author-photos-warning" data-i18n="application.authorPhotos.warning" role="alert" hidden>Вставьте ссылку на фото авторов, чтобы создать обложки.</p>
                 </div>
@@ -255,7 +260,7 @@
             var form = document.getElementById('timecode-request-form');
             var videoInput = document.getElementById('video-path');
             var videoNormalizeNotice = document.getElementById('video-normalize-notice');
-            var authorPhotosInput = document.getElementById('author-photos-link');
+            var authorPhotosList = document.getElementById('author-photos-list');
             var authorPhotosWarning = document.getElementById('author-photos-warning');
             var emailInput = document.getElementById('response-email');
             var commentInput = document.getElementById('request-comment');
@@ -276,6 +281,7 @@
             });
             var timecodesEndpoint = window.__siteData && window.__siteData.requests && window.__siteData.requests.timecodesEndpoint;
             var GOOGLE_DRIVE_HOSTS = ['drive.google.com', 'www.drive.google.com'];
+            var MAX_AUTHOR_PHOTO_ROWS = 4;
             var authorPhotosMissingWarningActive = false;
 
             function getCheckedValue(name, fallback) {
@@ -344,9 +350,28 @@
                 }
             }
 
+            function getAuthorPhotoInputs() {
+                if (!authorPhotosList) return [];
+                return Array.prototype.slice.call(authorPhotosList.querySelectorAll('[data-author-photo-input]'));
+            }
+
+            function getAuthorPhotoRows() {
+                if (!authorPhotosList) return [];
+                return Array.prototype.slice.call(authorPhotosList.querySelectorAll('[data-author-photo-row]'));
+            }
+
+            function getAuthorPhotoLinks() {
+                return getAuthorPhotoInputs().map(function (input) {
+                    return input.value.trim();
+                }).filter(function (value) {
+                    return value.length > 0;
+                });
+            }
+
             function getAuthorPhotoDirs(thumbnailsNeeded) {
-                if (!thumbnailsNeeded || !authorPhotosInput) return null;
-                return authorPhotosInput.value.trim();
+                var links = getAuthorPhotoLinks();
+                if (!thumbnailsNeeded || links.length === 0) return null;
+                return links;
             }
 
             function buildInputArgs() {
@@ -414,7 +439,7 @@
             }
 
             function hasAuthorPhotosLink() {
-                return authorPhotosInput && authorPhotosInput.value.trim().length > 0;
+                return getAuthorPhotoLinks().length > 0;
             }
 
             function isGoogleDriveLink(value) {
@@ -436,6 +461,188 @@
                 authorPhotosWarning.hidden = !isVisible;
             }
 
+            function setAuthorPhotoInputsValidity(message, targetInput) {
+                getAuthorPhotoInputs().forEach(function (input) {
+                    input.setCustomValidity(input === targetInput ? message : '');
+                });
+            }
+
+            function buildAuthorPhotoAction(kind) {
+                var button = document.createElement('button');
+                var icon = document.createElement('i');
+                var label = document.createElement('span');
+                var translationKey = kind === 'add' ? 'application.authorPhotos.add' : 'application.authorPhotos.remove';
+                var fallback = kind === 'add' ? 'Add author photo link' : 'Remove author photo link';
+                var labelText = getTranslation(translationKey, fallback);
+
+                button.type = 'button';
+                button.className = 'author-photo-action author-photo-action--' + kind;
+                button.setAttribute('data-author-photo-' + kind, '');
+                button.setAttribute('aria-label', labelText);
+                button.title = labelText;
+
+                icon.setAttribute('data-lucide', kind === 'add' ? 'plus' : 'minus');
+                label.className = 'sr-only';
+                label.setAttribute('data-i18n', translationKey);
+                label.textContent = labelText;
+
+                button.appendChild(icon);
+                button.appendChild(label);
+
+                if (kind === 'add') {
+                    button.addEventListener('click', addAuthorPhotoRow);
+                } else {
+                    button.addEventListener('click', function () {
+                        var row = button.closest('[data-author-photo-row]');
+                        if (row) removeAuthorPhotoRow(row);
+                    });
+                }
+
+                return button;
+            }
+
+            function syncAuthorPhotoActions() {
+                var rows = getAuthorPhotoRows();
+                var inputLabel = getTranslation('application.authorPhotos.label', 'Photos of authors (optional)');
+
+                rows.forEach(function (row, index) {
+                    var actions = row.querySelector('[data-author-photo-actions]');
+                    var input = row.querySelector('[data-author-photo-input]');
+                    var shouldShowRemove = rows.length > 1 || (input && input.value.trim().length > 0);
+
+                    if (input) {
+                        input.id = 'author-photo-link-' + (index + 1);
+                        if (index > 0) {
+                            input.setAttribute('aria-label', inputLabel);
+                        } else {
+                            input.removeAttribute('aria-label');
+                        }
+                    }
+                    if (!actions) return;
+
+                    actions.textContent = '';
+                    if (shouldShowRemove) {
+                        actions.appendChild(buildAuthorPhotoAction('remove'));
+                    }
+                    if (index === rows.length - 1 && rows.length < MAX_AUTHOR_PHOTO_ROWS) {
+                        actions.appendChild(buildAuthorPhotoAction('add'));
+                    }
+                });
+
+                if (window.lucide && window.lucide.createIcons) {
+                    window.lucide.createIcons();
+                }
+            }
+
+            function bindAuthorPhotoInput(input) {
+                input.addEventListener('input', function () {
+                    if (!hasAuthorPhotosLink()) {
+                        uncheckThumbnailInputs();
+                    }
+                    validateAuthorPhotosLink(false);
+                    syncAuthorPhotoActions();
+                    resetSubmitState();
+                });
+                input.addEventListener('blur', function () {
+                    validateAuthorPhotosLink(true);
+                });
+            }
+
+            function createAuthorPhotoRow() {
+                var row = document.createElement('div');
+                var shell = document.createElement('div');
+                var input = document.createElement('input');
+                var actions = document.createElement('div');
+
+                row.className = 'author-photo-row';
+                row.setAttribute('data-author-photo-row', '');
+
+                shell.className = 'request-input-shell author-photo-input-shell';
+
+                input.className = 'author-photo-input';
+                input.setAttribute('data-author-photo-input', '');
+                input.type = 'url';
+                input.inputMode = 'url';
+                input.autocomplete = 'url';
+                input.placeholder = 'https://drive.google.com/...';
+                input.setAttribute('aria-describedby', 'author-photos-help author-photos-warning');
+                input.setAttribute('aria-label', getTranslation('application.authorPhotos.label', 'Photos of authors (optional)'));
+
+                actions.className = 'author-photo-actions';
+                actions.setAttribute('data-author-photo-actions', '');
+
+                shell.appendChild(input);
+                row.appendChild(shell);
+                row.appendChild(actions);
+
+                bindAuthorPhotoInput(input);
+
+                return row;
+            }
+
+            function canAddAuthorPhotoRow(showError) {
+                var rows = getAuthorPhotoRows();
+                var inputs = getAuthorPhotoInputs();
+                var emptyInput = inputs.find(function (input) {
+                    return input.value.trim().length === 0;
+                });
+
+                if (rows.length >= MAX_AUTHOR_PHOTO_ROWS) return false;
+                if (emptyInput) {
+                    setAuthorPhotoInputsValidity('', null);
+                    setAuthorPhotosWarning(true, 'application.authorPhotos.addFirst', 'Paste a valid author photo folder link before adding another author.');
+                    if (showError) emptyInput.focus();
+                    return false;
+                }
+
+                return validateAuthorPhotosLink(showError);
+            }
+
+            function addAuthorPhotoRow() {
+                var row;
+
+                if (!authorPhotosList || !canAddAuthorPhotoRow(true)) return;
+
+                row = createAuthorPhotoRow();
+                authorPhotosList.appendChild(row);
+                syncAuthorPhotoActions();
+                validateAuthorPhotosLink(false);
+                resetSubmitState();
+                row.querySelector('[data-author-photo-input]').focus();
+            }
+
+            function removeAuthorPhotoRow(row) {
+                var rows = getAuthorPhotoRows();
+                var inputs = getAuthorPhotoInputs();
+                var rowIndex = rows.indexOf(row);
+                var firstInput = inputs[0];
+
+                if (!row || rowIndex === -1) return;
+
+                if (rows.length === 1) {
+                    if (firstInput) {
+                        firstInput.value = '';
+                        firstInput.setCustomValidity('');
+                    }
+                } else if (rowIndex === 0) {
+                    inputs.forEach(function (input, index) {
+                        if (index < inputs.length - 1) {
+                            input.value = inputs[index + 1].value;
+                        }
+                    });
+                    rows[rows.length - 1].remove();
+                } else {
+                    row.remove();
+                }
+
+                syncAuthorPhotoActions();
+                if (!hasAuthorPhotosLink()) {
+                    uncheckThumbnailInputs();
+                }
+                validateAuthorPhotosLink(false);
+                resetSubmitState();
+            }
+
             function uncheckThumbnailInputs() {
                 thumbnailInputs.forEach(function (input) {
                     input.checked = false;
@@ -443,8 +650,13 @@
             }
 
             function validateAuthorPhotosLink(showError) {
-                if (!authorPhotosInput || !hasAuthorPhotosLink()) {
-                    if (authorPhotosInput) authorPhotosInput.setCustomValidity('');
+                var invalidInput = getAuthorPhotoInputs().find(function (input) {
+                    var value = input.value.trim();
+                    return value.length > 0 && !isGoogleDriveLink(value);
+                });
+
+                if (!hasAuthorPhotosLink()) {
+                    setAuthorPhotoInputsValidity('', null);
                     if (authorPhotosMissingWarningActive) {
                         setAuthorPhotosWarning(true, 'application.authorPhotos.warning', 'Please paste an author photo folder link to create thumbnails.');
                     } else {
@@ -453,26 +665,26 @@
                     return true;
                 }
 
-                if (isGoogleDriveLink(authorPhotosInput.value.trim())) {
+                if (!invalidInput) {
                     authorPhotosMissingWarningActive = false;
-                    authorPhotosInput.setCustomValidity('');
+                    setAuthorPhotoInputsValidity('', null);
                     setAuthorPhotosWarning(false);
                     return true;
                 }
 
                 authorPhotosMissingWarningActive = false;
                 var message = getTranslation('application.authorPhotos.invalid', 'Please paste a valid Google Drive link.');
-                authorPhotosInput.setCustomValidity(message);
+                setAuthorPhotoInputsValidity(message, invalidInput);
                 setAuthorPhotosWarning(true, 'application.authorPhotos.invalid', message);
                 uncheckThumbnailInputs();
-                if (showError) authorPhotosInput.reportValidity();
+                if (showError) invalidInput.reportValidity();
                 return false;
             }
 
             function validateThumbnailPhotoLink() {
                 if (!hasAuthorPhotosLink()) {
                     authorPhotosMissingWarningActive = true;
-                    if (authorPhotosInput) authorPhotosInput.setCustomValidity('');
+                    setAuthorPhotoInputsValidity('', null);
                     setAuthorPhotosWarning(true, 'application.authorPhotos.warning', 'Please paste an author photo folder link to create thumbnails.');
                     return false;
                 }
@@ -484,7 +696,8 @@
                 if (!input || !input.checked || validateThumbnailPhotoLink()) return;
 
                 input.checked = false;
-                if (authorPhotosInput) authorPhotosInput.focus();
+                var firstAuthorPhotoInput = getAuthorPhotoInputs()[0];
+                if (firstAuthorPhotoInput) firstAuthorPhotoInput.focus();
                 resetSubmitState();
             }
 
@@ -576,16 +789,7 @@
                     canonicalizeVideoInput(true);
                 }
             });
-            authorPhotosInput.addEventListener('input', function () {
-                if (!hasAuthorPhotosLink()) {
-                    uncheckThumbnailInputs();
-                }
-                validateAuthorPhotosLink(false);
-                resetSubmitState();
-            });
-            authorPhotosInput.addEventListener('blur', function () {
-                validateAuthorPhotosLink(true);
-            });
+            getAuthorPhotoInputs().forEach(bindAuthorPhotoInput);
             emailInput.addEventListener('input', function () {
                 clearCustomError(emailInput);
                 resetSubmitState();
@@ -655,6 +859,12 @@
             if (window.lucide && window.lucide.createIcons) {
                 window.lucide.createIcons();
             }
+            syncAuthorPhotoActions();
+            document.querySelectorAll('.lang-btn').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    window.setTimeout(syncAuthorPhotoActions, 0);
+                });
+            });
         })();
     </script>
 </body>

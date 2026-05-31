@@ -353,8 +353,8 @@ test.describe('application page request form', () => {
     await expect(page).toHaveTitle('Обработать моё видео с CUTTO');
     await expect(page.locator('.application-hero h1')).toHaveText('Обработать моё видео с CUTTO');
     await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube или Twitch видео');
-    await expect(page.locator('label[for="author-photos-link"] span')).toHaveText('Фото авторов (необязательно)');
-    await expect(page.locator('#author-photos-help')).toHaveText('Ссылка на Google Drive, доступная по ссылке. Внутри — папки с фото на каждого автора. пример');
+    await expect(page.locator('label[for="author-photo-link-1"] span')).toHaveText('Фото авторов (необязательно)');
+    await expect(page.locator('#author-photos-help')).toHaveText('Один автор — одна папка на Google Drive с включённым доступом на просмотр. пример');
     await expect(page.locator('#author-photos-help .request-field-example-link')).toHaveAttribute('href', authorPhotosExampleUrl);
     await expect(page.locator('#author-photos-help .request-field-example-link')).toHaveAttribute('target', '_blank');
     await expect(page.locator('#author-photos-help .request-field-example-link')).toHaveAttribute('rel', 'noopener noreferrer');
@@ -369,7 +369,7 @@ test.describe('application page request form', () => {
 
     const formOrder = await page.evaluate(() => {
       const videoField = document.getElementById('video-path').closest('.request-field');
-      const authorPhotosField = document.getElementById('author-photos-link').closest('.request-field');
+      const authorPhotosField = document.getElementById('author-photo-link-1').closest('.request-field');
       const outputPicker = document.querySelector('.output-picker');
       const emailField = document.getElementById('response-email').closest('.request-field');
       const commentField = document.getElementById('request-comment').closest('.request-field');
@@ -410,6 +410,24 @@ test.describe('application page request form', () => {
     await expect(page.locator('#auto-edit-thumbnail')).not.toBeChecked();
     await expect(page.locator('#auto-edit-audiobook')).not.toBeChecked();
     await expect(page.locator('#timecodes-audiobook')).not.toBeChecked();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(1);
+    await expect(page.locator('[data-author-photo-add]')).toHaveCount(1);
+    await expect(page.locator('[data-author-photo-remove]')).toHaveCount(0);
+    expect(await page.locator('[data-author-photo-add]').evaluate((button) => (
+      !button.closest('.request-input-shell')
+    ))).toBe(true);
+    expect(await page.locator('[data-author-photo-add]').evaluate((button) => {
+      const style = window.getComputedStyle(button);
+      return {
+        backgroundColor: style.backgroundColor,
+        width: style.width,
+        height: style.height
+      };
+    })).toEqual({
+      backgroundColor: 'rgb(99, 102, 241)',
+      width: '56px',
+      height: '56px'
+    });
     await expect(page.locator('.request-send-button')).toBeDisabled();
     await expect(page.locator('.request-send-button')).toHaveClass(/request-send-button--blocked/);
     await expect(page.locator('[data-output-panel="timecodes"]')).toBeHidden();
@@ -425,8 +443,9 @@ test.describe('application page request form', () => {
     await expect(page).toHaveTitle('Process my video with CUTTO');
     await expect(page.locator('.application-hero h1')).toHaveText('Process my video with CUTTO');
     await expect(page.locator('label[for="video-path"] span')).toHaveText('YouTube or Twitch video link');
-    await expect(page.locator('label[for="author-photos-link"] span')).toHaveText('Photos of authors (optional)');
-    await expect(page.locator('#author-photos-help')).toHaveText('Paste a Google Drive link that anyone with the link can view. Use one subfolder per author. example');
+    await expect(page.locator('label[for="author-photo-link-1"] span')).toHaveText('Photos of authors (optional)');
+    await expect(page.locator('#author-photos-help')).toHaveText('Paste one Google Drive folder link per author. Each link must be shared to view. example');
+    await expect(page.locator('[data-author-photo-add]')).toHaveAttribute('aria-label', 'Add author photo link');
     await expect(page.locator('.request-disclaimer')).toContainText('If this is your FIRST TIME using the service');
 
     const englishDescriptions = await page.locator('.output-card .output-description').allTextContents();
@@ -475,7 +494,53 @@ test.describe('application page request form', () => {
 
     await expect.poll(() => popup.url()).toBe(authorPhotosExampleUrl);
     await popup.close();
-    await expect(page.locator('#author-photos-link')).toHaveValue('');
+    await expect(page.locator('#author-photo-link-1')).toHaveValue('');
+  });
+
+  test('adds and removes author photo link rows up to the four row limit', async ({ page }) => {
+    await openApplicationPage(page);
+
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(1);
+
+    await page.locator('[data-author-photo-add]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(1);
+    await expect(page.locator('#author-photos-warning')).toHaveText('Вставьте корректную ссылку на фото автора, прежде чем добавлять следующего.');
+
+    await page.locator('#author-photo-link-1').fill('https://example.com/not-drive');
+    await page.locator('[data-author-photo-add]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(1);
+    await expect(page.locator('#author-photos-warning')).toHaveText('Вставьте корректную ссылку на Google Drive.');
+
+    await page.locator('#author-photo-link-1').fill('https://drive.google.com/drive/folders/author-1');
+    await page.locator('[data-author-photo-add]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(2);
+    await expect(page.locator('#author-photo-link-2')).toBeFocused();
+
+    await page.locator('#author-photo-link-2').fill('https://drive.google.com/drive/folders/author-2');
+    await page.locator('[data-author-photo-add]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(3);
+
+    await page.locator('#author-photo-link-3').fill('https://www.drive.google.com/drive/folders/author-3');
+    await page.locator('[data-author-photo-add]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(4);
+    await expect(page.locator('[data-author-photo-add]')).toHaveCount(0);
+    await expect(page.locator('[data-author-photo-remove]')).toHaveCount(4);
+    await expect(page.locator('[data-author-photo-row]').first().locator('[data-author-photo-remove]')).toHaveCount(1);
+
+    await page.locator('[data-author-photo-row]').first().locator('[data-author-photo-remove]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(3);
+    await expect(page.locator('#author-photo-link-1')).toHaveValue('https://drive.google.com/drive/folders/author-2');
+    await expect(page.locator('[data-author-photo-add]')).toHaveCount(1);
+
+    await page.locator('[data-author-photo-row]').nth(1).locator('[data-author-photo-remove]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(2);
+    await expect(page.locator('#author-photo-link-1')).toHaveValue('https://drive.google.com/drive/folders/author-2');
+
+    await page.locator('[data-author-photo-row]').first().locator('[data-author-photo-remove]').click();
+    await expect(page.locator('[data-author-photo-input]')).toHaveCount(1);
+    await expect(page.locator('#author-photo-link-1')).toHaveValue('');
+    await expect(page.locator('[data-author-photo-remove]')).toHaveCount(0);
+    await expect(page.locator('[data-author-photo-add]')).toHaveCount(1);
   });
 
   test('allows timecodes, highlights, and auto-edit options', async ({ page }) => {
@@ -726,12 +791,17 @@ test.describe('application page request form', () => {
   });
 
   test('submits author photo dirs inside each thumbnail output config', async ({ page }) => {
-    const authorPhotoLink = 'https://drive.google.com/drive/folders/authors';
+    const authorPhotoLinks = [
+      'https://drive.google.com/drive/folders/author-1',
+      'https://www.drive.google.com/drive/folders/author-2'
+    ];
     const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
 
     await openApplicationPage(page);
     await fillValidRequest(page);
-    await page.locator('#author-photos-link').fill(` ${authorPhotoLink} `);
+    await page.locator('#author-photo-link-1').fill(` ${authorPhotoLinks[0]} `);
+    await page.locator('[data-author-photo-add]').click();
+    await page.locator('#author-photo-link-2').fill(` ${authorPhotoLinks[1]} `);
     await chooseOutput(page, 'highlights');
     await page.locator('label[for="highlight-thumbnails"]').click();
     await chooseOutput(page, 'auto-edit');
@@ -755,17 +825,37 @@ test.describe('application page request form', () => {
       highlights: {
         num_clips: 5,
         thumbnails_needed: true,
-        author_photo_dirs: authorPhotoLink
+        author_photo_dirs: authorPhotoLinks
       },
       auto_edit: {
         thumbnail_needed: true,
-        author_photo_dirs: authorPhotoLink,
+        author_photo_dirs: authorPhotoLinks,
         timecodes_needed: false,
         audio_book_from_edited_audio: false,
         cut_more: false
       }
     });
     expectOnlyOutputArgs(inputs, ['highlights', 'auto_edit']);
+  });
+
+  test('does not submit when an added author photo row is invalid', async ({ page }) => {
+    const requests = await mockTimecodesEndpoint(page, (route) => fulfillJson(route, 200, { ok: true }));
+
+    await openApplicationPage(page);
+    await fillValidRequest(page);
+    await page.locator('#author-photo-link-1').fill('https://drive.google.com/drive/folders/author-1');
+    await page.locator('[data-author-photo-add]').click();
+    await page.locator('#author-photo-link-2').fill('https://example.com/not-drive');
+    await chooseOutput(page, 'timecodes');
+
+    await clickSubmit(page);
+
+    expect(requests).toHaveLength(0);
+    await expect(page.locator('#author-photos-warning')).toHaveText('Вставьте корректную ссылку на Google Drive.');
+    await expect(page.locator('#author-photo-link-2')).toHaveJSProperty(
+      'validationMessage',
+      'Вставьте корректную ссылку на Google Drive.'
+    );
   });
 
   test('submits trimmed payload and marks the request as sent', async ({ page }) => {
