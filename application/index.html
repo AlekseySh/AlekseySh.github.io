@@ -368,9 +368,9 @@
                 });
             }
 
-            function getAuthorPhotoDirs(thumbnailsNeeded) {
-                var links = getAuthorPhotoLinks();
-                if (!thumbnailsNeeded || links.length === 0) return null;
+            function getAuthorPhotoDirs() {
+                var links = getAuthorPhotoLinks().filter(isGoogleDriveLink);
+                if (links.length === 0) return null;
                 return links;
             }
 
@@ -381,6 +381,7 @@
                     user_inputs: {
                         video_path: videoInput.value.trim(),
                         language_code: getCheckedValue('language-code', 'ru'),
+                        author_photo_dirs: getAuthorPhotoDirs(),
                         detect_speakers: 'TRUE'
                     }
                 };
@@ -395,8 +396,7 @@
                     var highlightsThumbnailsNeeded = highlightThumbnailsInput.checked;
                     inputArgs.highlights = {
                         num_clips: getHighlightCount(),
-                        thumbnails_needed: highlightsThumbnailsNeeded,
-                        author_photo_dirs: getAuthorPhotoDirs(highlightsThumbnailsNeeded)
+                        thumbnails_needed: highlightsThumbnailsNeeded
                     };
                 }
 
@@ -404,7 +404,6 @@
                     var autoEditThumbnailNeeded = autoEditThumbnailInput.checked;
                     inputArgs.auto_edit = {
                         thumbnail_needed: autoEditThumbnailNeeded,
-                        author_photo_dirs: getAuthorPhotoDirs(autoEditThumbnailNeeded),
                         timecodes_needed: autoEditTimecodesInput.checked,
                         audio_book_from_edited_audio: autoEditAudiobookInput.checked,
                         cut_more: autoEditCutMoreInput.checked

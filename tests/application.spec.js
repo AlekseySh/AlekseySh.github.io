@@ -664,11 +664,11 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
+        author_photo_dirs: null,
         detect_speakers: 'TRUE'
       },
       auto_edit: {
         thumbnail_needed: false,
-        author_photo_dirs: null,
         timecodes_needed: true,
         audio_book_from_edited_audio: true,
         cut_more: true
@@ -693,11 +693,11 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
+        author_photo_dirs: null,
         detect_speakers: 'TRUE'
       },
       auto_edit: {
         thumbnail_needed: false,
-        author_photo_dirs: null,
         timecodes_needed: false,
         audio_book_from_edited_audio: false,
         cut_more: false
@@ -747,6 +747,7 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
+        author_photo_dirs: null,
         detect_speakers: 'TRUE'
       },
       original_video_timecodes: {
@@ -779,18 +780,18 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
+        author_photo_dirs: null,
         detect_speakers: 'TRUE'
       },
       highlights: {
         num_clips: 5,
-        thumbnails_needed: false,
-        author_photo_dirs: null
+        thumbnails_needed: false
       }
     });
     expectOnlyOutputArgs(inputs, ['highlights']);
   });
 
-  test('submits author photo dirs inside each thumbnail output config', async ({ page }) => {
+  test('submits author photo dirs once in user inputs for thumbnail outputs', async ({ page }) => {
     const authorPhotoLinks = [
       'https://drive.google.com/drive/folders/author-1',
       'https://www.drive.google.com/drive/folders/author-2'
@@ -820,21 +821,22 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'ru',
+        author_photo_dirs: authorPhotoLinks,
         detect_speakers: 'TRUE'
       },
       highlights: {
         num_clips: 5,
-        thumbnails_needed: true,
-        author_photo_dirs: authorPhotoLinks
+        thumbnails_needed: true
       },
       auto_edit: {
         thumbnail_needed: true,
-        author_photo_dirs: authorPhotoLinks,
         timecodes_needed: false,
         audio_book_from_edited_audio: false,
         cut_more: false
       }
     });
+    expect(inputs.highlights).not.toHaveProperty('author_photo_dirs');
+    expect(inputs.auto_edit).not.toHaveProperty('author_photo_dirs');
     expectOnlyOutputArgs(inputs, ['highlights', 'auto_edit']);
   });
 
@@ -903,6 +905,7 @@ test.describe('application page request form', () => {
       user_inputs: {
         video_path: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
         language_code: 'en',
+        author_photo_dirs: null,
         detect_speakers: 'TRUE'
       },
       original_video_timecodes: {
